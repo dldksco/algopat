@@ -2,6 +2,7 @@ from pydantic import BaseModel
 from typing import List
 
 class ProblemData(BaseModel):
+    openai_api_key: str
     elementId: str
     submissionId: str
     username: str

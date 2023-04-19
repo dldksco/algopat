@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from myclass.problem import ProblemData
-import uvicorn
+from processing.processing import processing
 
 app = FastAPI()
 
@@ -10,5 +10,5 @@ async def health_check():
 
 @app.post("/process")
 async def process_data(data: ProblemData):
-    print(data)
+    await processing(data)
     return {"status": "OK!"}
