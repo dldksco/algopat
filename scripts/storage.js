@@ -4,7 +4,6 @@ chrome.storage.local.get('isSync', (data) => {
   if (!data || !data.isSync) {
     keys.forEach((key) => {
       chrome.storage.sync.get(key, (data) => {
-        console.log("data ", data)
         chrome.storage.local.set({ [key]: data[key] });
       });
     });

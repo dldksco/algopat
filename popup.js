@@ -5,12 +5,26 @@ let action = false;
 
 $('#authenticate').on('click', () => {
 
-  oAuth2.begin();
-
-  // if (action) {
-  //   oAuth2.begin();
-  // }
+  if (action) {
+    oAuth2.begin();
+  } 
 });
+
+$('#api_key_button').on('click', () => {
+
+  const check = $('#api_key_form').attr('hidden')
+
+  if(check) {
+    $('#api_key_form').attr('hidden', false);
+  } else {
+    $('#api_key_form').attr('hidden', true);
+  }
+})
+
+$('#api_key_save').on('click', () => {
+  const value = $('#api_key').val()
+  chrome.storage.local.set({"gpt_key" : value}, () => {})
+})
 
 /* Get URL for welcome page */
 $('#welcome_URL').attr('href', `chrome-extension://${chrome.runtime.id}/welcome.html`);
@@ -29,21 +43,22 @@ chrome.storage.local.get('BaekjoonHub_token', (data) => {
     xhr.addEventListener('readystatechange', function () {
       if (xhr.readyState === 4) {
         if (xhr.status === 200) {
+          $('#commit_mode').show();
           /* Show MAIN FEATURES */
-          chrome.storage.local.get('mode_type', (data2) => {
-            if (data2 && data2.mode_type === 'commit') {
-              $('#commit_mode').show();
-              /* Get problem stats and repo link */
-              chrome.storage.local.get(['stats', 'BaekjoonHub_hook'], (data3) => {
-                const BaekjoonHubHook = data3.BaekjoonHub_hook;
-                if (BaekjoonHubHook) {
-                  $('#repo_url').html(`Your Repo: <a target="blank" style="color: cadetblue !important;" href="https://github.com/${BaekjoonHubHook}">${BaekjoonHubHook}</a>`);
-                }
-              });
-            } else {
-              $('#hook_mode').show();
-            }
-          });
+          // chrome.storage.local.get('mode_type', (data2) => {
+          //   if (data2 && data2.mode_type === 'commit') {
+          //     $('#commit_mode').show();
+          //     /* Get problem stats and repo link */
+          //     chrome.storage.local.get(['stats', 'BaekjoonHub_hook'], (data3) => {
+          //       const BaekjoonHubHook = data3.BaekjoonHub_hook;
+          //       if (BaekjoonHubHook) {
+          //         $('#repo_url').html(`Your Repo: <a target="blank" style="color: cadetblue !important;" href="https://github.com/${BaekjoonHubHook}">${BaekjoonHubHook}</a>`);
+          //       }
+          //     });
+          //   } else {
+          //     $('#hook_mode').show();
+          //   }
+          // });
         } else if (xhr.status === 401) {
           // bad oAuth
           // reset token and redirect to authorization process again!
@@ -79,4 +94,10 @@ chrome.storage.local.get('bjhEnable', (data4) => {
  */
 $('#onffbox').on('click', () => {
   chrome.storage.local.set({ bjhEnable: $('#onffbox').is(':checked') }, () => {});
+});
+
+
+chrome.storage.local.get(['gpt_key'], (data) => {
+  if(data?.gpt_key)
+    $('#api_key').attr('value', data.gpt_key)
 });

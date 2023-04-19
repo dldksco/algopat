@@ -39,16 +39,24 @@ function startLoader() {
           console.log("보낼 데이터 ", bojData)
 
           //fetch 요청
-          fetch('https://70.12.247.167:8000/process', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(bojData)
-          })
-          .then(response => response.json())
-          .then(data => console.log(data))
-          .catch(error => console.error(error));
+          // fetch('https://70.12.247.167:8000/process', {
+          //   method: 'POST',
+          //   headers: {
+          //     'Content-Type': 'application/json'
+          //   },
+          //   body: JSON.stringify(bojData)
+          // })
+          // .then(response => response.json())
+          // .then(data => {
+          //   markUploadedCSS();
+          // })
+          // .catch(error => {
+          //   // markUploadFailedCSS();
+          //   toastThenStopLoader("실패했습니다", error);
+          //   console.error(error)
+          // })
+          
+          
           // await beginUpload(bojData);
         }
       }
