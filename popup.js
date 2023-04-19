@@ -4,9 +4,12 @@
 let action = false;
 
 $('#authenticate').on('click', () => {
-  if (action) {
-    oAuth2.begin();
-  }
+
+  oAuth2.begin();
+
+  // if (action) {
+  //   oAuth2.begin();
+  // }
 });
 
 /* Get URL for welcome page */
