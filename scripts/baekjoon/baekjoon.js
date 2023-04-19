@@ -25,7 +25,7 @@ function startLoader() {
     if (!enable) stopLoader();
     else if (isExistResultTable()) {
       const table = findFromResultTable();
-      console.log("table ",table)
+      // console.log("table ",table)
       if (isEmpty(table)) return;
       const data = table[0];
       if (data.hasOwnProperty('username') && data.hasOwnProperty('resultCategory')) {
@@ -35,7 +35,29 @@ function startLoader() {
           console.log('풀이가 맞았습니다. 업로드를 시작합니다.');
           startUpload();
           const bojData = await findData();
-          await beginUpload(bojData);
+
+          console.log("보낼 데이터 ", bojData)
+
+          //fetch 요청
+          // fetch('https://70.12.247.167:8000/process', {
+          //   method: 'POST',
+          //   headers: {
+          //     'Content-Type': 'application/json'
+          //   },
+          //   body: JSON.stringify(bojData)
+          // })
+          // .then(response => response.json())
+          // .then(data => {
+          //   markUploadedCSS();
+          // })
+          // .catch(error => {
+          //   // markUploadFailedCSS();
+          //   toastThenStopLoader("실패했습니다", error);
+          //   console.error(error)
+          // })
+          
+          
+          // await beginUpload(bojData);
         }
       }
     }
@@ -100,7 +122,7 @@ async function beginUpload(bojData) {
       return;
     }
     /* 신규 제출 번호라면 새롭게 커밋  */
-    await uploadOneSolveProblemOnGit(bojData, markUploadedCSS);
+    // await uploadOneSolveProblemOnGit(bojData, markUploadedCSS);
   }
 }
 

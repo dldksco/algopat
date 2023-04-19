@@ -1,11 +1,9 @@
 // /* Sync to local storage */
 chrome.storage.local.get('isSync', (data) => {
-  console.log(data)
   keys = ['BaekjoonHub_token', 'BaekjoonHub_username', 'pipe_baekjoonhub', 'stats', 'BaekjoonHub_hook', 'mode_type'];
   if (!data || !data.isSync) {
     keys.forEach((key) => {
       chrome.storage.sync.get(key, (data) => {
-        console.log("data ", data)
         chrome.storage.local.set({ [key]: data[key] });
       });
     });

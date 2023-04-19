@@ -12,7 +12,16 @@
   <body>
     <div class="ui grid container">
       <div class="sixteen wide center aligned column">
-        <h1 id="title">한글은 됨?<span style="color: #0078c3">Hub</span></h1>
+        <h1 id="title">
+          <span style="color: #0078c3">A</span>
+          <span style="color: #0078c3">L</span>
+          <span style="color: #22b17a">G</span>
+          <span style="color: #0078c3">O</span>
+          <span style="color: #22b17a">P</span>
+          <span style="color: #0078c3">A</span>
+          <span style="color: #22b17a">T</span>
+
+        </h1>
         <p id="caption">Sync your code from BOJ to GitHub</p>
         <br />
         <!-- Authentication mode -->
@@ -20,7 +29,6 @@
           <p class="onboarding">
             <br />
             Authenticate with GitHub to use
-            <strong>Baekjoon<span style="color: #f18500">Hub</span></strong>
           </p>
           <button id="authenticate" class="ui secondary button">
             <i class="icon github"></i>
@@ -44,8 +52,9 @@
         <div id="commit_mode" hidden>
           <p id="repo_url" class="ui small header" style="margin-top: 5px; margin-bottom: 6px !important"></p>
           <div class="ui small header" style="margin-bottom: 5px; margin-top: 0px !important">
-            Want more features?
-            <a style="color: rgb(10, 89, 92) !important" target="_blank" href="https://github.com/BaekjoonHub/BaekjoonHub/labels/feature">Request a feature!</a>
+            연동 성공
+            <!-- Want more features? -->
+            <!-- <a style="color: rgb(10, 89, 92) !important" target="_blank" href="https://github.com/BaekjoonHub/BaekjoonHub/labels/feature">Request a feature!</a> -->
           </div>
         </div>
 
@@ -56,15 +65,22 @@
             <span id="onffball"></span>
           </label>
         </div>
+
+        <button id="api_key_button"> api key </button>
+
+        <div id="api_key_form" hidden="true">
+            api key : <input id="api_key" type="password"/>
+            <button id="api_key_save">저장</button>
+        </div>
       </div>
 
       <!-- Generate Socials -->
-      <div id="socials" class="sixteen wide column">
+      <!-- <div id="socials" class="sixteen wide column">
         <a title="BaekjoonHub GitHub" href="https://github.com/BaekjoonHub/BaekjoonHub" target="_blank"><i class="ui black github icon"></i></a>
         <a title="Email" href="mailto:flaxinger@gmail.com" target="_blank"><i class="ui red envelope icon"></i></a>
         <a title="Patch Notes" href="https://github.com/BaekjoonHub/BaekjoonHub/blob/v.1.0.2/Patch_Notes/1.0.2.md" target="_blank"><i class="ui list alternate outline icon"></i></a>
         <a title="BaekjoonHub Home" id="welcome_URL" href="" target="_blank"><i class="ui grey home icon"></i></a>
-      </div>
+      </div> -->
     </div>
 
     <script src="scripts/oauth2.js"></script>
