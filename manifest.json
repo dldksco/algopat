@@ -1,9 +1,9 @@
 {
   "manifest_version": 3,
-  "name": "가칭도구",
-  "description": "Automatically integrate your BOJ submissions to GitHub",
-  "homepage_url": "https://github.com/BaekjoonHub/BaekjoonHub",
-  "version": "1.1.13",
+  "name": "ALGOPAT",
+  "description": "Refactor the algorithm code",
+  "homepage_url": "https://github.com/",
+  "version": "0.1",
   "author": "flaxinger",
   "action": {
     "default_icon": "assets/thumb.png",
@@ -31,7 +31,7 @@
   "web_accessible_resources": [
     {
       "matches": ["<all_urls>"],
-      "resources": ["library/jquery-3.3.1.min.js", "library/semantic.min.js", "popup.html", "popup.js", "welcome.html", "welcome.js"]
+      "resources": ["library/jquery-3.3.1.min.js", "library/semantic.min.js", "popup.html", "popup.js"]
     }
   ],
   "content_scripts": [

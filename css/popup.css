@@ -71,3 +71,23 @@ body {
   border: 0px solid #2f5496;
   background: #2f5496;
 }
+
+#api_key_button {
+  margin-top: 20px;
+}
+
+.container {
+	display: flex;
+  /* justify-content: flex-start; */
+  gap: 10px;
+  flex-wrap: wrap;
+	align-content: stretch;
+}
+
+#api_key {
+  width: 150px;
+}
+
+#api_key_model {
+  width: 205px;
+}

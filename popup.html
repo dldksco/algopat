@@ -1,89 +1,110 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="stylesheet" href="css/popup.css" />
-    <script src="/library/jquery-3.3.1.min.js"></script>
 
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css" rel="stylesheet" />
-    <script src="/library/semantic.min.js"></script>
-  </head>
+<head>
+  <meta charset="UTF-8" />
+  <link rel="stylesheet" href="css/popup.css" />
+  <script src="/library/jquery-3.3.1.min.js"></script>
 
-  <body>
-    <div class="ui grid container">
-      <div class="sixteen wide center aligned column">
-        <h1 id="title">
-          <span style="color: #0078c3">A</span>
-          <span style="color: #0078c3">L</span>
-          <span style="color: #22b17a">G</span>
-          <span style="color: #0078c3">O</span>
-          <span style="color: #22b17a">P</span>
-          <span style="color: #0078c3">A</span>
-          <span style="color: #22b17a">T</span>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css" rel="stylesheet" />
+  <script src="/library/semantic.min.js"></script>
+</head>
 
-        </h1>
-        <p id="caption">Sync your code from BOJ to GitHub</p>
-        <br />
-        <!-- Authentication mode -->
-        <div id="auth_mode" hidden>
-          <p class="onboarding">
-            <br />
-            Authenticate with GitHub to use
-          </p>
-          <button id="authenticate" class="ui secondary button">
-            <i class="icon github"></i>
-            Authenticate
-          </button>
-        </div>
+<body>
+  <div class="ui grid container">
+    <div class="sixteen wide center aligned column">
+      <h1 id="title">
+        <span style="color: #0078c3">A</span>
+        <span style="color: #0078c3">L</span>
+        <span style="color: #22b17a">G</span>
+        <span style="color: #0078c3">O</span>
+        <span style="color: #22b17a">P</span>
+        <span style="color: #0078c3">A</span>
+        <span style="color: #22b17a">T</span>
 
-        <!-- Repo Hook mode -->
-        <div id="hook_mode" hidden>
-          <p class="onboarding">
-            <br />
-            Set up repository hook to use
-            <strong>Baekjoon<span style="color: #0078c3">Hub</span></strong>
-          </p>
-          <a id="hook_URL" href="" target="blank" class="ui secondary button">
-            <i class="icon github"></i>
-            Set up Hook
-          </a>
-        </div>
+      </h1>
+      <p id="caption">Refactor the algorithm code</p>
+      <br />
+      <!-- Authentication mode -->
+      <div id="auth_mode" hidden>
+        <p class="onboarding">
+          <br />
+          Authenticate with GitHub to use
+        </p>
+        <button id="authenticate" class="ui secondary button">
+          <i class="icon github"></i>
+          Authenticate
+        </button>
+      </div>
 
-        <div id="commit_mode" hidden>
-          <p id="repo_url" class="ui small header" style="margin-top: 5px; margin-bottom: 6px !important"></p>
-          <div class="ui small header" style="margin-bottom: 5px; margin-top: 0px !important">
-            연동 성공
-            <!-- Want more features? -->
-            <!-- <a style="color: rgb(10, 89, 92) !important" target="_blank" href="https://github.com/BaekjoonHub/BaekjoonHub/labels/feature">Request a feature!</a> -->
-          </div>
-        </div>
+      <!-- Repo Hook mode -->
+      <div id="hook_mode" hidden>
+        <p class="onboarding">
+          <br />
+          Set up repository hook to use
+          <strong>Baekjoon<span style="color: #0078c3">Hub</span></strong>
+        </p>
+        <a id="hook_URL" href="" target="blank" class="ui secondary button">
+          <i class="icon github"></i>
+          Set up Hook
+        </a>
+      </div>
 
-        <!-- 기능 on/off -->
-        <div style="margin-top: 10px">
-          <input type="checkbox" id="onffbox" />
-          <label for="onffbox" id="onffmain">
-            <span id="onffball"></span>
-          </label>
-        </div>
-
-        <button id="api_key_button"> api key </button>
-
-        <div id="api_key_form" hidden="true">
-            api key : <input id="api_key" type="password"/>
-            <button id="api_key_save">저장</button>
+      <div id="commit_mode" hidden>
+        <p id="repo_url" class="ui small header" style="margin-top: 5px; margin-bottom: 6px !important"></p>
+        <div class="ui small header" style="margin-bottom: 5px; margin-top: 0px !important">
+          
+          <!-- Want more features? -->
+          <!-- <a style="color: rgb(10, 89, 92) !important" target="_blank" href="https://github.com/BaekjoonHub/BaekjoonHub/labels/feature">Request a feature!</a> -->
         </div>
       </div>
 
-      <!-- Generate Socials -->
-      <!-- <div id="socials" class="sixteen wide column">
-        <a title="BaekjoonHub GitHub" href="https://github.com/BaekjoonHub/BaekjoonHub" target="_blank"><i class="ui black github icon"></i></a>
-        <a title="Email" href="mailto:flaxinger@gmail.com" target="_blank"><i class="ui red envelope icon"></i></a>
-        <a title="Patch Notes" href="https://github.com/BaekjoonHub/BaekjoonHub/blob/v.1.0.2/Patch_Notes/1.0.2.md" target="_blank"><i class="ui list alternate outline icon"></i></a>
-        <a title="BaekjoonHub Home" id="welcome_URL" href="" target="_blank"><i class="ui grey home icon"></i></a>
-      </div> -->
-    </div>
+      <!-- 기능 on/off -->
+      <div style="margin-top: 10px">
+        <input type="checkbox" id="onffbox" />
+        <label for="onffbox" id="onffmain">
+          <span id="onffball"></span>
+        </label>
+      </div>
 
-    <script src="scripts/oauth2.js"></script>
-    <script type="text/javascript" src="popup.js"></script>
-  </body>
+      <button class="ui green button" id="api_key_button">api key</button>
+
+      <!-- <div id="api_key_form" hidden="true">
+        api key : <input id="api_key" type="password" />
+        <button id="api_key_save">저장</button>
+      </div> -->
+
+      <div id="api_key_form" style="padding: 3%; display: none;">
+        <div class="ui divider"></div>
+        <div class="container">
+          <div class="row">
+            <div class="ui labeled input">
+              <div class="ui label">
+                Model
+              </div>
+              <!-- <input type="text" placeholder="mysite.com"> -->
+              
+              <select id="api_key_model" class="selection dropdown">
+                <option selected="" value="all">gpt-3.5-turbo</option>
+              </select>
+            </div>
+          </div>
+          <div class="row">
+            <div class="ui labeled input">
+              <div class="ui label">
+                Key
+              </div>
+              <input type="text" id="api_key" placeholder="mysite.com">
+              <div class="ui button" id="api_key_save">저장</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="scripts/oauth2.js"></script>
+  <script type="text/javascript" src="popup.js"></script>
+</body>
+
 </html>

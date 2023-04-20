@@ -32,7 +32,7 @@ function startLoader() {
         const { username, resultCategory } = data;
         if (username === findUsername() && resultCategory.includes(RESULT_CATEGORY.RESULT_ACCEPTED)) {
           stopLoader();
-          console.log('풀이가 맞았습니다. 업로드를 시작합니다.');
+          console.log('풀이가 맞았습니다. 전송을 시작합니다..');
           startUpload();
           const bojData = await findData();
 
