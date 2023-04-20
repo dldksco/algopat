@@ -1,8 +1,8 @@
-#BaekjoonHub_progress_anchor_element {
+#Algopat_progress_anchor_element {
   margin-right: 20px !important;
 }
 
-.BaekjoonHub_progress {
+.Algopat_progress {
   display: inline-block;
   pointer-events: none;
   width: 0.8em;
@@ -19,7 +19,7 @@
   }
 }
 
-#BaekjoonHub_progress_elem.markuploadfailed {
+#Algopat_progress_elem.markuploadfailed {
   display: inline-block;
   transform: rotate(45deg);
   height: 13px;
@@ -28,7 +28,7 @@
   border-right: 3px solid red;
 }
 
-#BaekjoonHub_progress_elem.markuploaded {
+#Algopat_progress_elem.markuploaded {
   display: inline-block;
   transform: rotate(45deg);
   height: 13px;

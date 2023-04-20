@@ -1,8 +1,8 @@
 {
-  "name": "BaekjoonHub",
+  "name": "algopat",
   "version": "1.0.0",
   "private": true,
-  "description": "Automatically integrate your BOJ submissions to GitHub",
+  "description": "Refactor the algorithm code",
   "scripts": {
     "setup": "npm i",
     "format": "prettier --write scripts/**.js",

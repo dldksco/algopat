@@ -2,14 +2,14 @@
  * 로딩 버튼 추가
  */
 function startUpload() {
-  let elem = document.getElementById('BaekjoonHub_progress_anchor_element');
+  let elem = document.getElementById('Algopat_progress_anchor_element');
   if (elem !== undefined) {
     elem = document.createElement('span');
-    elem.id = 'BaekjoonHub_progress_anchor_element';
+    elem.id = 'Algopat_progress_anchor_element';
     elem.className = 'runcode-wrapper__8rXm';
     elem.style = 'margin-left: 10px;padding-top: 0px;';
   }
-  elem.innerHTML = `<div id="BaekjoonHub_progress_elem" class="BaekjoonHub_progress"></div>`;
+  elem.innerHTML = `<div id="Algopat_progress_elem" class="Algopat_progress"></div>`;
   const target = document.getElementById('status-table')?.childNodes[1].childNodes[0].childNodes[3] || document.querySelector('div.table-responsive > table > tbody > tr > td:nth-child(5)');
   target.append(elem);
   if (target.childNodes.length > 0) {
@@ -23,7 +23,7 @@ function startUpload() {
  */
 function markUploadedCSS() {
   uploadState.uploading = false;
-  const elem = document.getElementById('BaekjoonHub_progress_elem');
+  const elem = document.getElementById('Algopat_progress_elem');
   elem.className = 'markuploaded';
   // 1초후 창 닫기
   // setTimeout(() => {
@@ -36,7 +36,7 @@ function markUploadedCSS() {
  */
 function markUploadFailedCSS() {
   uploadState.uploading = false;
-  const elem = document.getElementById('BaekjoonHub_progress_elem');
+  const elem = document.getElementById('Algopat_progress_elem');
   elem.className = 'markuploadfailed';
 }
 
