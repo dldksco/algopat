@@ -196,10 +196,8 @@ function parseProblemDescription(doc = document) {
   const problem_limit = Array.from(doc.getElementById('problem_limit').querySelectorAll('ul li'), x => unescapeHtml(x.innerHTML))
   const problem_info = Array.from(doc.getElementById('problem-info').querySelectorAll('tbody tr td'), x => x.innerText)
   
-  console.log(problem_info[0])
   const problem_info_time_limit = problem_info[0]
   const problem_info_space_limit = problem_info[1]
-
 
   // console.log("problem_limit ", problem_limit)
   if (problemId && problem_description) {

@@ -15,7 +15,7 @@ chrome.storage.local.get('isSync', (data) => {
     // if (debug)
     // console.log('Upload Completed. Local Storage status:', data);
     // if (debug)
-    console.log('BaekjoonHub Local storage already synced!');
+    // console.log('BaekjoonHub Local storage already synced!');
   }
 });
 

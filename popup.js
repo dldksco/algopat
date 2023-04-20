@@ -1,6 +1,5 @@
 /* global oAuth2 */
 /* eslint no-undef: "error" */
-
 let action = false;
 
 $('#authenticate').on('click', () => {
@@ -11,14 +10,7 @@ $('#authenticate').on('click', () => {
 });
 
 $('#api_key_button').on('click', () => {
-
-  const check = $('#api_key_form').attr('hidden')
-
-  if(check) {
-    $('#api_key_form').attr('hidden', false);
-  } else {
-    $('#api_key_form').attr('hidden', true);
-  }
+  $("#api_key_form").toggle();
 })
 
 $('#api_key_save').on('click', () => {
