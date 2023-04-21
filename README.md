@@ -5,8 +5,6 @@ ChatGPT & LangChain을 활용한 알고리즘 소스코드 효율성 분석 플�
 
 프로젝트 URL : [AlGoPaT](https://algopat.kr)
 
-프로젝트 UCC : [AlGoPaT - UCC]("")
-
 프로젝트 기간: 2023.04.10 ~ ing
 
 ## 프로젝트 소개 (배경, 개요)
@@ -32,56 +30,6 @@ ChatGPT & LangChain을 활용한 알고리즘 소스코드 효율성 분석 플�
 3. 알고리즘 소스 코드 분석 (논리적인 이유, 시각적 통계자료 제공)
 4. 게시판 (CRUD)
 
-## 사용 기술
-
-- 이슈 관리 : Jira
-- 형상 관리 : Git, Gitlab
-- 의사소통, 협업: Notion, Mattermost, Discord
-- 개발환경
-  - OS : Window10
-  - IDE : Intellij, VSCode
-  - EC2 : Ubuntu 20.04 LTS (GNU/Linux 5.4.0-1018-aws x86_64)
-  - Database : Mariadb 10.6
-  - SSH : Windows Terminal, MobaXterm
-  - CI/CD : Jenkins
-  - Reverse Proxy : Nginx
-  - SSL : CertBot, Let's Encrypt
-- 프론트엔드 (React)
-  - Typescript
-  - React
-  - Recoil
-  - React-Query
-  - Vite
-  - Chrome extension (javascript)
-- 백엔드 (SpringBoot)
-  - Springboot Starter Data JPA
-  - Springboot Starter Security
-  - JWT
-  - Apache Kafka
-  - google http client gson
-  - jsoup
-  - lombok
-  - spring boot devtools
-  - mariadb java client
-  - Redis
-- 백엔드 (FastAPI)
-  - asyncio
-  - pydub
-  - MariaDB
-  - Apache Kafka
-  - gunicorn
-  - uvicorn
-  - Chat GPT API
-  - LangChain 라이브러리
-  - Redis
-
-## 프로젝트 파일 구조
-
-### 백엔드(Spring Boot)
-
-### 프론트엔드
-
-### 백엔드(Fast API)
 
 ## 역할 분배
 
@@ -96,17 +44,12 @@ ChatGPT & LangChain을 활용한 알고리즘 소스코드 효율성 분석 플�
 
 ## 프로젝트 산출물
 
-### 기능 기획서
-
 ---
 
 ### 시스템 아키택쳐
 
 ![아키텍쳐](./image/system.png)
 
----
-
-### API 명세서
 
 ---
 
@@ -122,8 +65,6 @@ ChatGPT & LangChain을 활용한 알고리즘 소스코드 효율성 분석 플�
 ![mockup](./image/mockup2.png)
 
 ---
-
-## 서비스 동작 이미지와 설명
 
 ## 프로젝트 참고 링크
 
