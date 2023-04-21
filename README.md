@@ -52,7 +52,7 @@ ChatGPT & LangChain을 활용한 알고리즘 소스코드 효율성 분석 플�
   - Recoil
   - React-Query
   - Vite
-  - sockjs-Client
+  - Chrome extension (javascript)
 - 백엔드 (SpringBoot)
   - Springboot Starter Data JPA
   - Springboot Starter Security
