@@ -7,6 +7,7 @@ SUMMARY_PROMPT_INFO_TMPL = (
     "--------\n"
     "{problem_info_origin}\n"
     "--------\n"
+    "CONSTRAINTS:\n"
     "A summary of the inputs and outputs should include information about the names of the variables, their definitions, and their scope\n"
     "If the information given is not in English, it must be translated into English\n"
     "You should respond only as described below\n"

@@ -1,27 +1,17 @@
 from myclass.problem import ProblemData
-from utils.utils import count_token
 from langchain.chat_models import ChatOpenAI
-from chain.problem.summary_info import summary_info_chain
+from processing.problem.summary_info import summary_info
+from processing.problem.summary_description import summary_description
 
-async def processing(data):
+async def processing(data : ProblemData):
     if (True):
-        chat_llm = ChatOpenAI(temperature=0, openai_api_key=data.openai_api_key)
-        problem_info_origin = await build_problem_info_origin(data)
-        token_length = await count_token(problem_info_origin)
-        print(token_length)
-        if token_length < 2000:
-            chain = await summary_info_chain(chat_llm)
-            summary_info_result = await chain.arun(problem_info_origin = problem_info_origin)
-            print(summary_info_result)
+        chat_llm_0 = ChatOpenAI(temperature=0, openai_api_key=data.openai_api_key)
+        # chat_llm_1 = ChatOpenAI(temperature=0.1, openai_api_key=data.openai_api_key)
+        chat_llm_3 = ChatOpenAI(temperature=0.3, openai_api_key=data.openai_api_key)
+        # chat_llm_10 = ChatOpenAI(temperature=1, openai_api_key=data.openai_api_key)
+        summary_info_result = await summary_info(chat_llm_0, data)
+        print(summary_info_result)
+        summary_description_result = await summary_description(chat_llm_0, data, summary_info_result)
+        print(summary_description_result)
         
-async def build_problem_info_origin(data : ProblemData):
-    problem_info_origin = f" \
-        입력 : {data.problem_input} \n\
-        출력 : {data.problem_output} \n\
-        문제 제약조건 : {data.problem_limit} \n\
-        문제 유형 : {data.problem_tags} \n\
-        문제 시간제한 : {data.problem_info_time_limit} \n\
-        문제 공간제한 : {data.problem_info_space_limit} \n\
-    "
-    return problem_info_origin
         
