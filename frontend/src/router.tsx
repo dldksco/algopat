@@ -4,7 +4,13 @@ import { ExceptionPage } from "./page/ExceptionPage/ExceptionPage";
 import { CodePage } from "./page/CodePage/CodePage";
 import { Main } from "./page/NormalPage/main/Main";
 import { Community } from "./page/NormalPage/community/Community";
+import { Create } from "./page/NormalPage/community/create/Create";
+import { Detail } from "./page/NormalPage/community/detail/Detail";
+import { Modify } from "./page/NormalPage/community/modify/Modify";
+import { Profile } from "./page/NormalPage/mypage/profile/Profile";
+import { Activity } from "./page/NormalPage/mypage/activity/Activity";
 import { MyPage } from "./page/NormalPage/mypage/MyPage";
+import { List } from "./page/NormalPage/community/list/list";
 
 const router: RouteObject[] = [
   {
@@ -19,16 +25,18 @@ const router: RouteObject[] = [
         path: "/community",
         element: <Community />,
         children: [
-          { path: "create", element: <>aa</> },
-          { path: "detail/:id", element: <>bb</> },
-          { path: "modify/:id", element: <>cc</> },
+          {index : true, element : <List/>},
+          { path: "create", element: <Create/> },
+          { path: "detail/:id", element: <Detail/> },
+          { path: "modify/:id", element: <Modify/> },
         ],
       },
       {
         path: "/mypage",
-        element: <MyPage />,
+        element: <MyPage/>,
         children: [
-          { path: "activity", element: <>dd</> },
+          {index : true, element: <Profile />},
+          { path: "activity", element: <Activity/> },
         ],
       },
     ],
