@@ -10,7 +10,7 @@ import { Modify } from "./page/NormalPage/community/modify/Modify";
 import { Profile } from "./page/NormalPage/mypage/profile/Profile";
 import { Activity } from "./page/NormalPage/mypage/activity/Activity";
 import { MyPage } from "./page/NormalPage/mypage/MyPage";
-import { List } from "./page/NormalPage/community/list/list";
+import { List } from "./page/NormalPage/community/list/List";
 
 const router: RouteObject[] = [
   {
