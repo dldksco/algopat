@@ -1,0 +1,1 @@
+export const atomTest = 1;

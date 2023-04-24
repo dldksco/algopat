@@ -1,21 +1,21 @@
 import { RouteObject } from "react-router-dom";
-import { NormalPage } from "./page/NormalPage/NormalPage";
-import { ExceptionPage } from "./page/ExceptionPage/ExceptionPage";
-import { CodePage } from "./page/CodePage/CodePage";
-import { Main } from "./page/NormalPage/main/Main";
-import { Community } from "./page/NormalPage/community/Community";
-import { Create } from "./page/NormalPage/community/create/Create";
-import { Detail } from "./page/NormalPage/community/detail/Detail";
-import { Modify } from "./page/NormalPage/community/modify/Modify";
-import { Profile } from "./page/NormalPage/mypage/profile/Profile";
-import { Activity } from "./page/NormalPage/mypage/activity/Activity";
-import { MyPage } from "./page/NormalPage/mypage/MyPage";
-import { List } from "./page/NormalPage/community/list/List";
+import { Normal } from "./page/normal/Normal";
+import { Main } from "./page/main/Main";
+import { Community } from "./page/community/Community";
+import { List } from "./page/community/list/List";
+import { Create } from "./page/community/create/Create";
+import { Detail } from "./page/community/detail/Detail";
+import { Modify } from "./page/community/modify/Modify";
+import { MyPage } from "./page/mypage/MyPage";
+import { Profile } from "./page/mypage/profile/Profile";
+import { Activity } from "./page/mypage/activity/Activity";
+import { Code } from "./page/code/code";
+import { Exception } from "./page/exception/Exception";
 
 const router: RouteObject[] = [
   {
     path: "/",
-    element: <NormalPage />,
+    element: <Normal />,
     children: [
       {
         index: true,
@@ -35,7 +35,7 @@ const router: RouteObject[] = [
         path: "/mypage",
         element: <MyPage/>,
         children: [
-          {index : true, element: <Profile />},
+          {index : true, element: <Profile/>},
           { path: "activity", element: <Activity/> },
         ],
       },
@@ -43,11 +43,11 @@ const router: RouteObject[] = [
   },
   {
     path: "/code",
-    element: <CodePage />,
+    element: <Code/>,
   },
   {
     path: "*",
-    element: <ExceptionPage />,
+    element: <Exception/>,
     children: [
       //   { path: "login-success", element: <LoginSuccess /> },
       //   { path: "*", element: <Page404 /> },

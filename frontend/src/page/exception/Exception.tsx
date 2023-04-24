@@ -1,5 +1,5 @@
 
-export const ExceptionPage = () => {
+export const Exception = () => {
   return (
     <div>ExceptionPage</div>
   )
