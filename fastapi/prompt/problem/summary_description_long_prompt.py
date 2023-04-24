@@ -33,6 +33,7 @@ SUMMARY_PROMPT_DESCRIPTION_LONG_TMPL = (
     "Remember to get the best possible time complexity. Avoid inefficient algorithms (if possible)\n"
     "Don't consider Bruteforce(if possible)\n"
     "If the description given is not in English, it must be translated into English\n"
+    "Please write all data in sentence form, not list form.\n"
     "You should respond only as described below\n"
 
     "RESPONSE FORMAT:\n"

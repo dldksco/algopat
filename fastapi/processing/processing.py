@@ -2,6 +2,8 @@ from myclass.problem import ProblemData
 from langchain.chat_models import ChatOpenAI
 from processing.problem.summary_info import summary_info
 from processing.problem.summary_description import summary_description
+from processing.usercode.summary_code_complexity import summary_code_complexity
+from parser.problem.parse_summary import parse_summary
 
 async def processing(data : ProblemData):
     if (True):
@@ -16,6 +18,11 @@ async def processing(data : ProblemData):
 
         # 문제 요약 정보를 참고하여 모범 답안 생성 (시간 복잡도, 공간 복잡도)
         summary_description_result = await summary_description(chat_llm_0, data, summary_info_result)
-        print("모범 답안 결과임 : \n", summary_description_result)
+        print(summary_description_result)
+        summary_text = f"problem_id = {data.problemId}\n {summary_info_result} \n {summary_description_result}"
+        summary_json = await parse_summary(chat_llm_0, summary_text)
+        summary_code_complexity_result = await summary_code_complexity(chat_llm_0, data, summary_json)
+        return summary_code_complexity_result
+    
         
         
