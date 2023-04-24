@@ -10,5 +10,5 @@ async def health_check():
 
 @app.post("/process")
 async def process_data(data: ProblemData):
-    await processing(data)
-    return {"status": "OK!"}
+    output = await processing(data)
+    return output
