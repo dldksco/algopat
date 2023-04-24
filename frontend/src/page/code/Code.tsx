@@ -1,4 +1,4 @@
-export const CodePage = () => {
+export const Code = () => {
   return (
     <div>CodePage</div>
   )

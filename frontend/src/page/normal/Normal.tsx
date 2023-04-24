@@ -1,6 +1,6 @@
 import { Outlet } from "react-router-dom"
 
-export const NormalPage = () => {
+export const Normal = () => {
   return (
     <div>NormalPage
       <Outlet/>
