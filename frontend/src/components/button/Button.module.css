@@ -1,10 +1,8 @@
 .button {
-  border: 1.5px solid black;
+  border: 1.5px solid var(--font-color);
   display: inline-block;
   padding: 10px 20px;
   border-radius: 20px;
-  background-color: rgba(0, 0, 0, 0);
-  color: black;
   transition: 0.25s;
   font-size: 1rem;
   cursor: pointer;
