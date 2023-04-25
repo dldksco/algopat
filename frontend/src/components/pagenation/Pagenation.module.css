@@ -9,7 +9,6 @@
   padding: 3px;
   cursor: pointer;
   transition: 0.15s;
-  color: var(--font-color);
 }
 .pagination .noWork {
   margin-left: 5px;

@@ -1,10 +1,8 @@
 :root {
-  --background-color: #313131;
-  --font-color: #ececec;
-  --fade-font-color: #8d8d8d;
-  --green-color: #95f49e;
-  --red-color: #e89393;
-  --blue-color: #5b69ea;
-  --modal-background: rgb(52, 52, 52);
-  --broadcast-color: rgb(25, 25, 25);
+  --font-color: #ffffff;
+  --background-color: black;
+}
+
+*{
+  color:var(--font-color);
 }
