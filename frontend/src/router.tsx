@@ -9,7 +9,7 @@ import { Modify } from "./page/community/modify/Modify";
 import { MyPage } from "./page/mypage/MyPage";
 import { Profile } from "./page/mypage/profile/Profile";
 import { Activity } from "./page/mypage/activity/Activity";
-import { Code } from "./page/code/code";
+import { Code } from "./page/code/Code";
 import { Exception } from "./page/exception/Exception";
 
 const router: RouteObject[] = [
