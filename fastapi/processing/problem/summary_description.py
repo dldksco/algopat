@@ -4,16 +4,20 @@ from utils.utils import count_token
 from chain.problem.summary_description import summary_description_chain
 from chain.problem.summary_description_long import summary_description_long_chain
 from langchain.text_splitter import TokenTextSplitter
+import logging 
+
+# logger 설정 
+logger = logging.getLogger()
 
 async def summary_description(chat_llm : ChatOpenAI, data : ProblemData, problem_info : str):
     problem_description_origin = data.problem_description
     token_length = await count_token(problem_description_origin)
-    print(token_length)
+    logger.info("token_length2", token_length)
     if (token_length < 2000):
-        print("토큰 길이 2000 미만임 !!!")
+        logger.info("토큰 길이 2000 미만임 !!!")
         return await summary_description_short(chat_llm, problem_info, problem_description_origin)
     else:
-        print("토큰 길이 2000 이상임 !!!")
+        logger.info("토큰 길이 2000 이상임 !!!")
         return await summary_description_long(chat_llm, problem_info, problem_description_origin)
         
 async def summary_description_short(chat_llm : ChatOpenAI, problem_info : str, problem_description_origin : str):
