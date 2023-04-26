@@ -2,6 +2,11 @@ from pydantic import BaseModel, Field
 from typing import List
 
 class ProblemData(BaseModel):
+
+    # def __init__(self, dictionary):
+    #     for key, value in dictionary.items():
+    #         setattr(self, key, value)
+
     openai_api_key: str
     elementId: str
     submissionId: str
@@ -38,3 +43,8 @@ class ProblemSummary(BaseModel):
     problem_space_limit: str = Field(description="problem space limit")
     problem_time_limit: str = Field(description="problem time limit")
     problem_algorithm_type: str = Field(description="problem algorithm type")
+
+class DictToClass:
+    def __init__(self, dictionary):
+        for key, value in dictionary.items():
+            setattr(self, key, value)

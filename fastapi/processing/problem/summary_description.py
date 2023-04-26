@@ -10,8 +10,10 @@ async def summary_description(chat_llm : ChatOpenAI, data : ProblemData, problem
     token_length = await count_token(problem_description_origin)
     print(token_length)
     if (token_length < 2000):
+        print("토큰 길이 2000 미만임 !!!")
         return await summary_description_short(chat_llm, problem_info, problem_description_origin)
     else:
+        print("토큰 길이 2000 이상임 !!!")
         return await summary_description_long(chat_llm, problem_info, problem_description_origin)
         
 async def summary_description_short(chat_llm : ChatOpenAI, problem_info : str, problem_description_origin : str):
@@ -26,7 +28,7 @@ async def summary_description_short(chat_llm : ChatOpenAI, problem_info : str, p
 async def summary_description_long(chat_llm : ChatOpenAI, problem_info : str, problem_description_origin : str):
 
     chain = await summary_description_long_chain(chat_llm)
-    text_splitter = TokenTextSplitter(chunk_size=1000, chunk_overlap=0, encoding_name="cl100k_base")
+    text_splitter = TokenTextSplitter(chunk_size=1000, chunk_overlap=0)
     texts = text_splitter.split_text(problem_description_origin)
 
     first_text = ""
