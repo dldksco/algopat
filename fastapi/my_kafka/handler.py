@@ -3,7 +3,8 @@ from processing.processing import processing
 from myclass.problem import ProblemData
 import json
 
-kafka_servers = ["localhost:9092", "localhost:9093", "localhost:9094"]
+# kafka_servers = ["localhost:9092", "localhost:9093", "localhost:9094"]  .
+kafka_servers = ["host.docker.internal:9092", "host.docker.internal:9093", "host.docker.internal:9094"]
 
 async def consume_problem_summary(topic : str):
     print("topic : " + topic)
