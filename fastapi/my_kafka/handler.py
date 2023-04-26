@@ -2,33 +2,44 @@ from aiokafka import AIOKafkaConsumer, AIOKafkaProducer
 from processing.processing import processing
 from myclass.problem import ProblemData
 import json
+import logging 
 
-# kafka_servers = ["localhost:9092", "localhost:9093", "localhost:9094"]  .
-kafka_servers = ["host.docker.internal:9092", "host.docker.internal:9093", "host.docker.internal:9094"]
+# 카프카 서버 정보
+kafka_servers = ["localhost:9092", "localhost:9093", "localhost:9094"]  
+# kafka_servers = ["host.docker.internal:9092", "host.docker.internal:9093", "host.docker.internal:9094"]
 
+# logger 설정 
+logger = logging.getLogger()
+
+# Consumer 
+# 카프카를 통해 consume한 문제 정보를 통해 GPT 응답 생성 
 async def consume_problem_summary(topic : str):
-    print("topic : " + topic)
+    logger.info("listen to 토픽 : " + topic)
+
     consumer = AIOKafkaConsumer(
         topic,
         bootstrap_servers = kafka_servers,
         value_deserializer=lambda m: json.loads(m.decode("utf-8"))
     )
-    await consumer.start()
-    try:
-        async for msg in consumer:
-            print("로직 실행 !!!")
-            
-            data = ProblemData(**msg.value)
-            
-            await processing(data)
-    finally:
-        await consumer.stop()
 
+    await consumer.start()
+
+    try:
+        async for msg in consumer:            
+            data = ProblemData(**msg.value) # Dict to Class Type (카프카를 통해 consume한 데이터를 Python 클래스 형태로 변환)
+            await processing(data) # 비즈니스 로직 수행 
+    finally:
+        await consumer.stop() # anomaly 상태일 때 종료 
+
+
+# Producer
+# 카프카로 메시지 전송 함수 
 async def send_alert(topic : str, message):
-    print("topic : " + topic)
+    logger.info("Send to 토픽 : " + topic)
+
     producer = AIOKafkaProducer(
         bootstrap_servers = kafka_servers,
-        value_serializer = lambda m : m.encode("utf-8")
+        value_serializer = lambda m : m.encode("utf-8") 
     )
 
     await producer.start()
