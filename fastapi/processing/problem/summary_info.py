@@ -21,7 +21,7 @@ async def summary_info_short(chat_llm : ChatOpenAI, problem_info_origin : str):
 
 async def summary_info_long(chat_llm : ChatOpenAI, problem_info_origin : str):
     chain = await summary_info_long_chain(chat_llm)
-    text_splitter = TokenTextSplitter(chunk_size=1000, chunk_overlap=0, encoding_name="cl100k_base")
+    text_splitter = TokenTextSplitter(chunk_size=1000, chunk_overlap=0)
     texts = text_splitter.split_text(problem_info_origin)
     
     first_text = ""
