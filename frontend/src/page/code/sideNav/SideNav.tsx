@@ -14,7 +14,7 @@ import sort_tier_img from "@/assets/img/code/sort_tier.png";
 import { Problem } from "./problem/Problem";
 
 export const SideNav = () => {
-  const isOpen = [false, false, false, false, false];
+  //const isOpen = [false, false, false, false, false];
   const dummy_data = [
     {
       level: "16",
@@ -47,6 +47,11 @@ export const SideNav = () => {
   return (
     <div className={style.sideNav}>
       <p>코드 분석</p>
+      <div>
+        {/* 서버에 올릴때 변수 미사용으로 인한 오류 발생 -> 임시 사용 */}
+          <FontAwesomeIcon icon={faArrowUpWideShort} />
+          <FontAwesomeIcon icon={faArrowDown19} />
+        </div>
       <div></div>
       <div className={style.sort_button_group}>
         <div className={style.sort_button}>
