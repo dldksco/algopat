@@ -1,0 +1,28 @@
+.sideNav {
+  background-color: #28292C;
+  color: white;
+  height: 100%;
+}
+.sideNav .sort_button_group {
+  display: flex;
+  justify-content: space-around;
+}
+.sideNav .sort_button_group .sort_button {
+  display: flex;
+  justify-content: center;
+  align-items: baseline;
+  width: 60px;
+  padding: 5px 10px;
+  border: 1px solid white;
+  border-radius: 10px;
+  cursor: pointer;
+}
+.sideNav .sort_button_group .sort_button img {
+  display: inline;
+}
+.sideNav p {
+  padding: 8%;
+  margin: 0;
+  font-size: 1.2rem;
+  font-weight: 600;
+}/*# sourceMappingURL=SideNav.module.css.map */
