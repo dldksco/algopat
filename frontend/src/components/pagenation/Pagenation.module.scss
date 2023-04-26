@@ -1,0 +1,54 @@
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+
+  .page_number {
+    margin-left: 5px;
+    margin-right: 5px;
+    padding: 3px;
+    cursor: pointer;
+    transition: 0.15s;
+  }
+
+  .noWork {
+    margin-left: 5px;
+    margin-right: 5px;
+    padding: 3px;
+    pointer-events: none;
+    color: var(--fade-font-color);
+  }
+
+  .nowPage {
+    cursor: pointer;
+    color: rgb(82, 82, 250);
+    margin-left: 5px;
+    margin-right: 5px;
+    transition: 0.15s;
+    padding: 3px;
+  }
+
+  .page_number:hover {
+    color: rgb(157, 157, 157);
+  }
+
+  .nowPage:hover {
+    color: rgb(68, 169, 231);
+  }
+
+  @media screen and (max-width: 768px) {
+    .page_number {
+      margin-left: 3px;
+      margin-right: 3px;
+    }
+    .noWork {
+      margin-left: 3px;
+      margin-right: 3px;
+    }
+    .nowPage {
+      margin-left: 3px;
+      margin-right: 3px;
+    }
+  }
+}

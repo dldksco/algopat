@@ -1,0 +1,19 @@
+.header {
+  height: 80px;
+  background-color: var(--background-color);
+  padding: 0 4%;
+  display: flex;
+  justify-content: space-between;
+}
+.header .logo {
+  margin-top: auto;
+  margin-bottom: auto;
+}
+.header .menu {
+  display: flex;
+  font-weight: 600;
+  justify-content: space-around;
+  align-items: center;
+  font-size: 1.5rem;
+  width: 30%;
+}/*# sourceMappingURL=Header.module.css.map */
