@@ -1,0 +1,16 @@
+.topbar {
+  width: 100%;
+  height: 80px;
+  border-bottom: var(--font-color) solid 1px;
+  border-top: var(--font-color) solid 1px;
+  display: flex;
+  align-items: center;
+  background-color: #28292C;
+  justify-content: space-between;
+}
+.topbar .content span {
+  margin: 0 30px;
+}
+.topbar .logout {
+  margin-right: 40px;
+}/*# sourceMappingURL=Activity.module.css.map */

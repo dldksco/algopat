@@ -1,5 +1,4 @@
-import React from 'react'
-import style from "./Activity.module.scss";
+import style from "./Activity.module.css";
 import logout from "@/assets/img/mypage/logout.png";
 
 export const Activity = () => {
