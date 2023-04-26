@@ -1,4 +1,4 @@
-import style from "./MyPage.module.scss";
+import style from "./MyPage.module.css";
 import git from "@/assets/img/mypage/git.png";
 import tier from "@/assets/img/mypage/tier.png";
 import { Activity } from "./activity/Activity";
