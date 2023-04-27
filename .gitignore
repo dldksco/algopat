@@ -63,8 +63,8 @@ out/
 atlassian-ide-plugin.xml
 
 # Spring 
-resources/**
-api-gateway/src/main/resources/**
+api-gateway/src/main/resources/application.yml
+api-gateway/src/main/resources/application.properties
 **/gradle/**
 **/gradlew
 **/gradlew.bat
