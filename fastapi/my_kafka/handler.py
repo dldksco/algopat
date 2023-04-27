@@ -4,7 +4,7 @@ from myclass.problem import ProblemData
 import json
 import logging 
 
-# 카프카 서버 정보
+# 카프카 서버 정보!!!
 # kafka_servers = ["localhost:9092", "localhost:9093", "localhost:9094"]  
 kafka_servers = ["host.docker.internal:9092", "host.docker.internal:9093", "host.docker.internal:9094"]
 # kafka_servers = ["kafka1:9092", "kafka2:9093", "kafka3:9094"]
