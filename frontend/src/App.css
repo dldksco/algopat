@@ -1,10 +1,11 @@
 :root {
   --font-color: #ffffff;
   --background-color: black;
-  --mypage-backgroud-color: #28292C;
-  --code-background-color: #242F3C;
+  --mypage-backgroud-color: #28292c;
+  --code-background-color: #242f3c;
 }
 
-*{
-  color:var(--font-color);
+div,
+button {
+  color: var(--font-color);
 }
