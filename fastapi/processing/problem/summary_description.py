@@ -12,7 +12,7 @@ logger = logging.getLogger()
 async def summary_description(chat_llm : ChatOpenAI, data : ProblemData, problem_info : str):
     problem_description_origin = data.problem_description
     token_length = await count_token(problem_description_origin)
-    logger.info("token_length2", token_length)
+    logger.info(f"token_length2{token_length}")
     if (token_length < 2000):
         logger.info("토큰 길이 2000 미만임 !!!")
         return await summary_description_short(chat_llm, problem_info, problem_description_origin)
