@@ -1,4 +1,5 @@
 import style from "./Code.module.css";
+import PolynomialChart from "./graph/PolynomialChart";
 import { SideNav } from "./sideNav/SideNav";
 
 export const Code = () => {
@@ -9,7 +10,9 @@ export const Code = () => {
       </div>
       <div className={style.rightTab}>
         <div style={{fontSize: "3rem", color: "gray"}}>ALGOPAT</div>
+        <PolynomialChart></PolynomialChart>
       </div>
     </div>
   );
 };
+
