@@ -4,12 +4,13 @@ from processing.problem.summary_info import summary_info
 from processing.problem.summary_description import summary_description
 from processing.usercode.summary_code_complexity import summary_code_complexity
 from myparser.problem.parse_summary import parse_summary
+from my_kafka.handler import send
 import logging
 
 # logger 설정 
 logger = logging.getLogger()
 
-# GPT 응답 생성 함수 
+# GPT 응답 생성 함수
 async def processing(data : ProblemData):
 
     if (True):
@@ -33,6 +34,8 @@ async def processing(data : ProblemData):
         logger.info("json 타입으로 변환: ", summary_json)
 
         summary_code_complexity_result = await summary_code_complexity(chat_llm_0, data, summary_json)
+
+        send("alert", "ok")
         return summary_code_complexity_result
     
         

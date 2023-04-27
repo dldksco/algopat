@@ -5,8 +5,8 @@ import json
 import logging 
 
 # 카프카 서버 정보
-kafka_servers = ["localhost:9092", "localhost:9093", "localhost:9094"]  
-# kafka_servers = ["host.docker.internal:9092", "host.docker.internal:9093", "host.docker.internal:9094"]
+# kafka_servers = ["localhost:9092", "localhost:9093", "localhost:9094"]  
+kafka_servers = ["host.docker.internal:9092", "host.docker.internal:9093", "host.docker.internal:9094"]
 
 # logger 설정 
 logger = logging.getLogger()
@@ -34,7 +34,7 @@ async def consume_problem_summary(topic : str):
 
 # Producer
 # 카프카로 메시지 전송 함수 
-async def send_alert(topic : str, message):
+async def send(topic : str, message):
     logger.info("Send to 토픽 : " + topic)
 
     producer = AIOKafkaProducer(

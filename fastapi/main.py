@@ -30,6 +30,6 @@ async def process_data(data: ProblemData):
 @app.on_event("startup")
 async def startup_event():
     logger.info("usercode 리스너 시작!!!")
-    create_task(consume_problem_summary("usercode"))
+    create_task(consume_problem_summary("usercode")) # Topic : usercode
 
 
