@@ -68,7 +68,6 @@ api-gateway/src/main/resources/application.properties
 
 
 
-
 # Cursive Clojure plugin
 .idea/replstate.xml
 
