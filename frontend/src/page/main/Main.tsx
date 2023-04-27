@@ -6,11 +6,8 @@ import code2 from "@/assets/img/main/code2.png";
 import code3 from "@/assets/img/main/code3.png";
 import gpticon from "@/assets/img/main/gpticon.png";
 import bird from "@/assets/img/main/bird.png";
-import { useNavigate } from "react-router-dom";
 
 export const Main = () => {
-  const navigate = useNavigate();
-
   return (
     <div className={style.mainpage}>
       <div className={style.fpage}>
@@ -18,18 +15,23 @@ export const Main = () => {
           <h1 style={{ border: "none" }}>ALGOPAT</h1>
           <p>여러분의 코딩 문제 풀이를</p>
           <p>피드백 해드립니다!</p>
-          <Button
-            content="설치하기"
-            style={{
-              backgroundColor: "var(--background-color)",
-              borderRadius: "0px",
-            }}
-            onClick={() => {
-              window.location.href =
-                "https://chrome.google.com/webstore/detail/algopat/kgajbdbdokjnkmbjngibhjknlkfikace?hl=ko";
-            }}
-          />
-          <FontAwesomeIcon icon={faArrowUp} />
+          <div className={style.button_hover}>
+            <Button
+              content="설치하기"
+              style={{
+                backgroundColor: "var(--background-color)",
+                borderRadius: "0px",
+                padding: "10px 35px 10px 20px",
+              }}
+              onClick={() => {
+                window.location.href =
+                  "https://chrome.google.com/webstore/detail/algopat/kgajbdbdokjnkmbjngibhjknlkfikace?hl=ko";
+              }}
+            />
+            <div className={style.button_arrow}>
+              <FontAwesomeIcon icon={faArrowUp} />
+            </div>
+          </div>
         </div>
         <div
           className={style.code_background}

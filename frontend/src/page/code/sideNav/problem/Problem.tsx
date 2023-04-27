@@ -21,7 +21,6 @@ interface Solve {
 }
 
 export const Problem = ({ data }: ProblemProps) => {
-
   const [isOpen, setIsOpen] = useState(false);
 
   // 이벤트는 코드 내에
@@ -45,16 +44,16 @@ export const Problem = ({ data }: ProblemProps) => {
       </div>
       {isOpen
         ? data.solved.map((el) => (
-            <>
+            <div key={uuidv4()}>
               <hr color="gray" />
-              <div key={uuidv4()} className={style.solved}>
+              <div className={style.solved}>
                 풀이-{el.submissionId}
                 <div className={style.trash_icon}>
                   <FontAwesomeIcon icon={faTrash} />
                 </div>
                 <div style={{ clear: "both" }}></div>
               </div>
-            </>
+            </div>
           ))
         : null}
     </>
