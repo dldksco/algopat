@@ -1,34 +1,32 @@
 .sideNav {
-    background-color: #28292C;
-    color: white;
-    height: 100%;
+  background-color: #28292c;
+  color: white;
+  height: 100%;
+  text-align: center;
 
-    .sort_button_group {
-        display: flex;
-        justify-content: space-around;
-        .sort_button {
-            display: flex;
-            justify-content: center;
-            align-items: baseline;
-            width: 60px;
-            padding: 5px 10px;
-            border: 1px solid white;
-            border-radius: 10px;
-            cursor: pointer;
+  .sort_button_group {
+    display: flex;
+    justify-content: space-around;
+    .sort_button {
+      display: flex;
+      justify-content: center;
+      align-items: baseline;
+      width: 60px;
+      padding: 5px 10px;
+      border: 1px solid white;
+      border-radius: 10px;
+      cursor: pointer;
 
-            img {
-                display: inline;
-            }
-        }
-
-
+      img {
+        display: inline;
+      }
     }
+  }
 
-    p {
-        padding: 8%;
-        margin: 0;
-        font-size: 1.2rem;
-        font-weight: 600;
-    }
+  p {
+    padding: 8%;
+    margin: 0;
+    font-size: 1.2rem;
+    font-weight: 600;
+  }
 }
-

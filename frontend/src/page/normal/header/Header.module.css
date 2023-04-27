@@ -8,6 +8,7 @@
 .header .logo {
   margin-top: auto;
   margin-bottom: auto;
+  cursor: pointer;
 }
 .header .menu {
   display: flex;
@@ -16,4 +17,7 @@
   align-items: center;
   font-size: 1.5rem;
   width: 30%;
+}
+.header .menu :nth-child(n) {
+  cursor: pointer;
 }/*# sourceMappingURL=Header.module.css.map */
