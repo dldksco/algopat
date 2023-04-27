@@ -3,7 +3,6 @@ from asyncio import create_task
 from myclass.problem import ProblemData
 from processing.processing import processing
 from my_kafka.handler import consume_problem_summary
-from my_kafka.handler import send_alert
 import logging
 from config.logger_config import setup_logging # logger_config 모듈 임포트 
 
