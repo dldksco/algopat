@@ -8,10 +8,7 @@ import {
   faHouse,
   faUser,
 } from "@fortawesome/free-solid-svg-icons";
-import {
-  faArrowDown91,
-  faArrowDown19,
-} from "@fortawesome/free-solid-svg-icons";
+import { faArrowDown91 } from "@fortawesome/free-solid-svg-icons";
 import style from "./SideNav.module.css";
 import sort_tier_img from "@/assets/img/code/sort_tier.png";
 import { Problem } from "./problem/Problem";

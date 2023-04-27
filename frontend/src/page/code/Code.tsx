@@ -1,5 +1,5 @@
 import style from "./Code.module.css";
-import PolynomialChart from "./graph/PolynomialChart";
+// import PolynomialChart from "./graph/PolynomialChart";
 import { useState } from "react";
 import { SideNav } from "./sideNav/SideNav";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
