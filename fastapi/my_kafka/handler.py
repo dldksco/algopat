@@ -22,8 +22,8 @@ async def consume_problem_summary(topic : str):
         group_id="group-algopat",
         bootstrap_servers = kafka_servers,
         value_deserializer=lambda m: json.loads(m.decode("utf-8")),
-        max_poll_interval_ms=500000,  # Increase this value to increase the rebalance timeout
-        max_poll_records=500,   
+        session_timeout_ms=500000,  # Increase this value if needed
+        heartbeat_interval_ms=500000  # Increase this value if needed
     )
 
     await consumer.start()
