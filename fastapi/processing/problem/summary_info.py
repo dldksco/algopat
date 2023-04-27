@@ -4,6 +4,10 @@ from utils.utils import count_token
 from chain.problem.summary_info import summary_info_chain
 from chain.problem.summary_info_long import summary_info_long_chain
 from langchain.text_splitter import TokenTextSplitter
+from logging import getLogger
+
+# logger 설정 
+logger = getLogger()
 
 async def summary_info(chat_llm : ChatOpenAI, data : ProblemData):
     problem_info_origin = await build_problem_info_origin(data)
@@ -29,7 +33,7 @@ async def summary_info_long(chat_llm : ChatOpenAI, problem_info_origin : str):
     existing_summary = ""
     texts_len = len(texts)
     for i in range(texts_len):
-        print(f"iter_count = {i + 1}/{texts_len}, token: {await count_token(texts[i])}")
+        logger.info(f"iter_count = {i + 1}/{texts_len}, token: {await count_token(texts[i])}")
         if i > 0:
             first_text = texts[i - 1]
         second_text = texts[i]
