@@ -28,6 +28,7 @@
   margin: 0;
   font-size: 1.2rem;
   font-weight: 600;
+  display: inline-block;
 }
 .sideNav .nav_header {
   text-align: left;
@@ -51,12 +52,18 @@
 
 @media screen and (max-width: 768px) {
   .sideNav {
-    background-color: #28292c;
-    color: white;
     height: 100%;
+    min-height: 500px;
+    border: 1px solid white;
   }
   .sideNav .x_button {
-    display: inline;
+    display: inline-block;
+    font-size: 1.2rem;
+    margin-left: 140px;
+    transition: 0.2s;
     cursor: pointer;
+  }
+  .sideNav .x_button:hover {
+    color: gray;
   }
 }/*# sourceMappingURL=SideNav.module.css.map */

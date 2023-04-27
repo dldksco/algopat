@@ -3,7 +3,6 @@ import { faClock } from "@fortawesome/free-regular-svg-icons";
 import { v4 as uuidv4 } from "uuid";
 import {
   faArrowDownWideShort,
-  faArrowUpWideShort,
   faCircleXmark,
   faCommentDots,
   faHouse,
@@ -60,12 +59,10 @@ export const SideNav = ({
 
   return (
     <div className={style.sideNav}>
-      <p>
-        코드 분석
-        <div className={style.x_button} onClick={xButtonClick}>
-          <FontAwesomeIcon icon={faCircleXmark} style={{ float: "right" }} />
-        </div>
-      </p>
+      <p>코드 분석</p>
+      <div className={style.x_button} onClick={xButtonClick}>
+        <FontAwesomeIcon icon={faCircleXmark} />
+      </div>
 
       <div className={style.sort_button_group}>
         <div className={style.sort_button}>
