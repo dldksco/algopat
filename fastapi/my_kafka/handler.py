@@ -19,6 +19,7 @@ async def consume_problem_summary(topic : str):
 
     consumer = AIOKafkaConsumer(
         topic,
+        group_id="group-algopat",
         bootstrap_servers = kafka_servers,
         value_deserializer=lambda m: json.loads(m.decode("utf-8"))
     )
