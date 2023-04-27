@@ -132,11 +132,12 @@ function parsingResultTableList(doc) {
             toastThenStopLoader(msg, err)
           }
           const idx = img.getAttribute('src').match('[0-9]+\\.svg')[0].replace('.svg', '')
+          const problemId = a.getAttribute('href').replace(/^.*\/([0-9]+)$/, '$1')
           // const level = bj_level[idx]
           return {
-            problemId: a.getAttribute('href').replace(/^.*\/([0-9]+)$/, '$1'),
+            problemId,
             title: a.getAttribute('data-original-title'),
-            level: idx
+            level: unrankedFilter(idx, problemId),
           };
         default:
           return x.innerText.trim();
@@ -369,4 +370,32 @@ async function findHtmlDocumentByUrl(url) {
       const parser = new DOMParser();
       return parser.parseFromString(text, 'text/html');
     });
+}
+
+
+async function unrankedFilter(num, problemId) {
+
+  // if (num != 0) return num;
+
+  const result = await fetch(`https://solved.ac/api/v3/problem/show?problemId=${problemId}`, { method: 'GET' });
+
+
+
+  // const xhr = new XMLHttpRequest();
+  // xhr.addEventListener('readystatechange', function () {
+  //   if (xhr.readyState === 4) {
+  //     if (xhr.status === 200) {
+  //       that.finish(xhr.responseText.match(/access_token=([^&]*)/)[1]);
+  //     } else {
+  //       chrome.runtime.sendMessage({
+  //         closeWebPage: true,
+  //         isSuccess: false,
+  //       });
+  //     }
+  //   }
+  // });
+  // xhr.open('POST', this.ACCESS_TOKEN_URL, true);
+  // xhr.send(data);
+
+  return result
 }
