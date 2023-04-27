@@ -4,7 +4,6 @@ from processing.problem.summary_info import summary_info
 from processing.problem.summary_description import summary_description
 from processing.usercode.summary_code_complexity import summary_code_complexity
 from myparser.problem.parse_summary import parse_summary
-from my_kafka.handler import send
 import logging
 
 # logger 설정 
