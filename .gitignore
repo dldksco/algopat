@@ -65,10 +65,6 @@ atlassian-ide-plugin.xml
 # Spring 
 api-gateway/src/main/resources/application.yml
 api-gateway/src/main/resources/application.properties
-**/gradle/**
-**/gradlew
-**/gradlew.bat
-**/settings.gradle
 
 
 
