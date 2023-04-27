@@ -12,6 +12,7 @@ import {
 import style from "./SideNav.module.css";
 import sort_tier_img from "@/assets/img/code/sort_tier.png";
 import { Problem } from "./problem/Problem";
+import { Button } from "@/components/button/Button";
 
 export const SideNav = () => {
   //const isOpen = [false, false, false, false, false];
@@ -46,13 +47,7 @@ export const SideNav = () => {
 
   return (
     <div className={style.sideNav}>
-      <p>코드 분석</p>
-      <div>
-        {/* 서버에 올릴때 변수 미사용으로 인한 오류 발생 -> 임시 사용 */}
-          <FontAwesomeIcon icon={faArrowUpWideShort} />
-          <FontAwesomeIcon icon={faArrowDown19} />
-        </div>
-      <div></div>
+      <p style={{ textAlign: "left" }}>코드 분석</p>
       <div className={style.sort_button_group}>
         <div className={style.sort_button}>
           <FontAwesomeIcon icon={faClock} />
@@ -70,6 +65,12 @@ export const SideNav = () => {
         <Problem key={uuidv4()} data={el} />
       ))}
       <hr />
+
+      <Button
+        content="더보기"
+        style={{ marginTop: "20px", backgroundColor: "#28292C" }}
+        onClick={() => {}}
+      />
     </div>
   );
 };

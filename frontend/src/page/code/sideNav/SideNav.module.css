@@ -1,7 +1,8 @@
 .sideNav {
-  background-color: #28292C;
+  background-color: #28292c;
   color: white;
   height: 100%;
+  text-align: center;
 }
 .sideNav .sort_button_group {
   display: flex;

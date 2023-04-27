@@ -6,22 +6,28 @@ import code2 from "@/assets/img/main/code2.png";
 import code3 from "@/assets/img/main/code3.png";
 import gpticon from "@/assets/img/main/gpticon.png";
 import bird from "@/assets/img/main/bird.png";
+import { useNavigate } from "react-router-dom";
 
 export const Main = () => {
+  const navigate = useNavigate();
+
   return (
     <div className={style.mainpage}>
       <div className={style.fpage}>
         <div className={style.content}>
-          <h1 style={{border:"none"}}>ALGOPAT</h1>
+          <h1 style={{ border: "none" }}>ALGOPAT</h1>
           <p>여러분의 코딩 문제 풀이를</p>
           <p>피드백 해드립니다!</p>
           <Button
-            content="바로 시작하기"
+            content="설치하기"
             style={{
               backgroundColor: "var(--background-color)",
               borderRadius: "0px",
             }}
-            onClick={() => {}}
+            onClick={() => {
+              window.location.href =
+                "https://chrome.google.com/webstore/detail/algopat/kgajbdbdokjnkmbjngibhjknlkfikace?hl=ko";
+            }}
           />
           <FontAwesomeIcon icon={faArrowUp} />
         </div>
@@ -68,7 +74,10 @@ export const Main = () => {
         <div className={style.contentbox}>
           <div
             className={style.gptbox}
-            style={{ background: "linear-gradient(to top, var(--background-color), #874747)" }}
+            style={{
+              background:
+                "linear-gradient(to top, var(--background-color), #874747)",
+            }}
           >
             <img src={bird} alt="" />
             <h1>Lang Chain</h1>
@@ -76,8 +85,12 @@ export const Main = () => {
             <p>만들어, GPT가 맥락을 파악하여</p>
             <p>코드를 이해할 수 있도록 하는 기술</p>
           </div>
-          <div className={style.gptbox}
-          style={{ background: "linear-gradient(to top, var(--background-color), #578547)" }}
+          <div
+            className={style.gptbox}
+            style={{
+              background:
+                "linear-gradient(to top, var(--background-color), #578547)",
+            }}
           >
             <img src={gpticon} alt="" />
             <h1>CHAT GPT</h1>
@@ -87,17 +100,17 @@ export const Main = () => {
           </div>
         </div>
         <Button
-            content="바로 시작하기"
-            style={{
-              backgroundColor: "#61ff71",
-              color:"black",
-              border:"1px solid black",
-              fontSize:"1.3rem",
-              fontWeight:"700",
-              padding:"20px 60px"
-            }}
-            onClick={() => {}}
-          />
+          content="바로 시작하기"
+          style={{
+            backgroundColor: "#61ff71",
+            color: "black",
+            border: "1px solid black",
+            fontSize: "1.3rem",
+            fontWeight: "700",
+            padding: "20px 60px",
+          }}
+          onClick={() => {}}
+        />
       </div>
     </div>
   );

@@ -1,21 +1,25 @@
 .header {
-    height: 80px;
-    background-color: var(--background-color);
-    padding: 0 4%;
+  height: 80px;
+  background-color: var(--background-color);
+  padding: 0 4%;
+  display: flex;
+  justify-content: space-between;
+
+  .logo {
+    margin-top: auto;
+    margin-bottom: auto;
+    cursor: pointer;
+  }
+
+  .menu {
     display: flex;
-    justify-content: space-between;
-
-    .logo {
-        margin-top: auto;
-        margin-bottom: auto;
+    font-weight: 600;
+    justify-content: space-around;
+    align-items: center;
+    font-size: 1.5rem;
+    width: 30%;
+    :nth-child(n) {
+      cursor: pointer;
     }
-
-    .menu {
-        display: flex;
-        font-weight: 600;
-        justify-content: space-around;
-        align-items: center;
-        font-size: 1.5rem;
-        width: 30%;
-    }
+  }
 }
