@@ -2,7 +2,9 @@
   background-color: #28292c;
   color: white;
   height: 100%;
-  text-align: center;
+}
+.sideNav .x_button {
+  display: none;
 }
 .sideNav .sort_button_group {
   display: flex;
@@ -26,4 +28,35 @@
   margin: 0;
   font-size: 1.2rem;
   font-weight: 600;
+}
+.sideNav .nav_header {
+  text-align: left;
+  padding-top: 5%;
+  padding-left: 10%;
+  font-size: 1.2rem;
+}
+.sideNav .nav_header .nav_header_tag {
+  position: relative;
+  font-size: 1.2rem;
+  margin-left: 3%;
+  margin-top: 5px;
+}
+.sideNav .nav_header .nav_header_tag :nth-child(n) {
+  cursor: pointer;
+}
+.sideNav .nav_header .nav_header_tag :nth-child(1) {
+  position: absolute;
+  left: -10%;
+}
+
+@media screen and (max-width: 768px) {
+  .sideNav {
+    background-color: #28292c;
+    color: white;
+    height: 100%;
+  }
+  .sideNav .x_button {
+    display: inline;
+    cursor: pointer;
+  }
 }/*# sourceMappingURL=SideNav.module.css.map */
