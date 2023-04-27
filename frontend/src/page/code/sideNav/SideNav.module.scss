@@ -60,7 +60,6 @@
 @media screen and (max-width: 768px) {
   .sideNav {
     height: 100%;
-    min-height: 500px;
     border: 1px solid white;
 
     .x_button {
@@ -73,6 +72,9 @@
       &:hover {
         color: gray;
       }
+    }
+    .nav_header {
+      margin-bottom: 50px;
     }
   }
 }

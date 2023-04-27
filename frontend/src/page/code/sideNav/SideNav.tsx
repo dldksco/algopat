@@ -84,7 +84,11 @@ export const SideNav = ({
 
       <Button
         content="더보기"
-        style={{ marginTop: "20px", backgroundColor: "#28292C" }}
+        style={{
+          margin: "20px auto",
+          backgroundColor: "#28292C",
+          display: "block",
+        }}
         onClick={() => {}}
       />
       <hr />
