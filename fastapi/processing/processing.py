@@ -35,7 +35,7 @@ async def processing(data : ProblemData):
 
         summary_code_complexity_result = await summary_code_complexity(chat_llm_0, data, summary_json)
 
-        send("alert", "ok")
+        
         return summary_code_complexity_result
     
         
