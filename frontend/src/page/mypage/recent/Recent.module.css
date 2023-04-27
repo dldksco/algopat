@@ -1,0 +1,25 @@
+.box {
+  margin: 5% auto;
+  border: 1px solid;
+  border-color: var(--font-color);
+  width: 80%;
+  height: 800px;
+}
+.box .recentTitle {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-top: 4%;
+  margin-left: 4%;
+}
+.box .whichBoard {
+  border-bottom: 1px solid white;
+  padding-bottom: 5px;
+  display: flex;
+  justify-content: flex-start;
+  margin: 2% 5%;
+}
+.box .whichBoard div {
+  margin-right: 13%;
+  font-size: 1rem;
+  cursor: pointer;
+}/*# sourceMappingURL=Recent.module.css.map */

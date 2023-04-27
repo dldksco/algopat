@@ -10,7 +10,9 @@
 }
 .topbar .content span {
   margin: 0 30px;
+  cursor: pointer;
 }
 .topbar .logout {
   margin-right: 40px;
+  cursor: pointer;
 }/*# sourceMappingURL=Activity.module.css.map */

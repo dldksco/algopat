@@ -1,48 +1,5 @@
 .mypage {
   width: 100%;
   background-color: var(--mypage-bk-color);
-  .profilebox {
-    margin: 5% auto;
-    border: 1px solid;
-    border-color: var(--font-color);
-    // width: 1400px;
-    width: 80%;
-    height: 800px;
-    .profiletitle {
-      font-size: 1.5rem;
-      font-weight: 600;
-      margin-top: 4%;
-      margin-left: 4%;
-    }
-    .profileimage {
-      background-color: var(--font-color);
-      margin: 3% 4% 2% 4%;
-      width: 150px;
-      height: 150px;
-      border-radius: 100%;
-      box-shadow: 3px 3px 3px 3px black;
-    }
-    .profileinfo {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin: 0 4%;
-      .gitinfo {
-        p {
-          font-size: 1.3rem;
-        }
-      }
-      .setting {
-        font-size: 1.1rem;
-        font-weight: 600;
-      }
-    }
-    .grass {
-      border: 1px solid;
-      border-color: var(--font-color);
-      width: 92%;
-      height: 300px;
-      margin: 1% auto;
-    }
-  }
+  
 }
