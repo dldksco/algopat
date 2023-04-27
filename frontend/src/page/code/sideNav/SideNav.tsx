@@ -4,6 +4,10 @@ import { v4 as uuidv4 } from "uuid";
 import {
   faArrowDownWideShort,
   faArrowUpWideShort,
+  faCircleXmark,
+  faCommentDots,
+  faHouse,
+  faUser,
 } from "@fortawesome/free-solid-svg-icons";
 import {
   faArrowDown91,
@@ -13,9 +17,15 @@ import style from "./SideNav.module.css";
 import sort_tier_img from "@/assets/img/code/sort_tier.png";
 import { Problem } from "./problem/Problem";
 import { Button } from "@/components/button/Button";
+import { useNavigate } from "react-router-dom";
 
-export const SideNav = () => {
+export const SideNav = ({
+  setIsSidenavOpen,
+}: {
+  setIsSidenavOpen: React.Dispatch<React.SetStateAction<boolean>>;
+}) => {
   //const isOpen = [false, false, false, false, false];
+
   const dummy_data = [
     {
       level: "16",
@@ -44,10 +54,19 @@ export const SideNav = () => {
       ],
     },
   ];
+  const navigate = useNavigate();
+
+  const xButtonClick = () => setIsSidenavOpen(false);
 
   return (
     <div className={style.sideNav}>
-      <p style={{ textAlign: "left" }}>코드 분석</p>
+      <p>
+        코드 분석
+        <div className={style.x_button} onClick={xButtonClick}>
+          <FontAwesomeIcon icon={faCircleXmark} style={{ float: "right" }} />
+        </div>
+      </p>
+
       <div className={style.sort_button_group}>
         <div className={style.sort_button}>
           <FontAwesomeIcon icon={faClock} />
@@ -71,6 +90,27 @@ export const SideNav = () => {
         style={{ marginTop: "20px", backgroundColor: "#28292C" }}
         onClick={() => {}}
       />
+      <hr />
+      <div className={style.nav_header}>
+        <div className={style.nav_header_tag}>
+          <div onClick={() => navigate("/")}>
+            <FontAwesomeIcon icon={faHouse} />
+          </div>
+          <span onClick={() => navigate("/")}>메인페이지</span>
+        </div>
+        <div className={style.nav_header_tag}>
+          <div onClick={() => navigate("/")}>
+            <FontAwesomeIcon icon={faCommentDots} />
+          </div>
+          <span onClick={() => navigate("/")}>커뮤니티</span>
+        </div>
+        <div className={style.nav_header_tag}>
+          <div onClick={() => navigate("/")}>
+            <FontAwesomeIcon icon={faUser} />
+          </div>
+          <span onClick={() => navigate("/")}>마이페이지</span>
+        </div>
+      </div>
     </div>
   );
 };

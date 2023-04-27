@@ -2,7 +2,10 @@
   background-color: #28292c;
   color: white;
   height: 100%;
-  text-align: center;
+
+  .x_button {
+    display: none;
+  }
 
   .sort_button_group {
     display: flex;
@@ -28,5 +31,40 @@
     margin: 0;
     font-size: 1.2rem;
     font-weight: 600;
+  }
+
+  .nav_header {
+    text-align: left;
+    padding-top: 5%;
+    padding-left: 10%;
+    font-size: 1.2rem;
+
+    .nav_header_tag {
+      position: relative;
+      font-size: 1.2rem;
+      margin-left: 3%;
+      margin-top: 5px;
+
+      :nth-child(n) {
+        cursor: pointer;
+      }
+      :nth-child(1) {
+        position: absolute;
+        left: -10%;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .sideNav {
+    background-color: #28292c;
+    color: white;
+    height: 100%;
+
+    .x_button {
+      display: inline;
+      cursor: pointer;
+    }
   }
 }
