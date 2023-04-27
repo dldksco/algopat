@@ -20,17 +20,17 @@ async def processing(data : ProblemData):
 
         # 문제 요약 정보 생성 
         summary_info_result = await summary_info(chat_llm_0, data)
-        logger.info("크롤링 문제 정보 요약 : ", summary_info_result)
+        logger.info("크롤링 문제 정보 요약 : " + summary_info_result)
 
         # 문제 요약 정보를 참고하여 모범 답안 생성 (시간 복잡도, 공간 복잡도)
         summary_description_result = await summary_description(chat_llm_0, data, summary_info_result)
-        logger.info("문제 정보 요약: ", summary_description_result)
+        logger.info("문제 정보 요약: " + summary_description_result)
         summary_text = f"problem_id = {data.problemId}\n {summary_info_result} \n {summary_description_result}"
 
         summary_json = await parse_summary(chat_llm_0, summary_text)
 
 
-        logger.info("json 타입으로 변환: ", summary_json)
+        logger.info("json 타입으로 변환: " + summary_json)
 
         summary_code_complexity_result = await summary_code_complexity(chat_llm_0, data, summary_json)
 
