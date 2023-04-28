@@ -1,16 +1,16 @@
 import { RouteObject } from "react-router-dom";
-import { Normal } from "./page/normal/Normal";
-import { Main } from "./page/main/Main";
-import { Community } from "./page/community/Community";
-import { List } from "./page/community/list/List";
-import { Create } from "./page/community/create/Create";
-import { Detail } from "./page/community/detail/Detail";
-import { Modify } from "./page/community/modify/Modify";
-import { MyPage } from "./page/mypage/MyPage";
-import { Profile } from "./page/mypage/profile/Profile";
-import { Activity } from "./page/mypage/activity/Activity";
-import { Code } from "./page/code/Code";
-import { Exception } from "./page/exception/Exception";
+import { Normal } from "./pages/normal/Normal";
+import { Main } from "./pages/main/Main";
+import { Community } from "./pages/community/Community";
+import { List } from "./pages/community/list/List";
+import { Create } from "./pages/community/create/Create";
+import { Detail } from "./pages/community/detail/Detail";
+import { Modify } from "./pages/community/modify/Modify";
+import { MyPage } from "./pages/mypage/MyPage";
+import { Profile } from "./pages/mypage/profile/Profile";
+import { Activity } from "./pages/mypage/activity/Activity";
+import { Code } from "./pages/code/Code";
+import { Exception } from "./pages/exception/Exception";
 
 const router: RouteObject[] = [
   {
@@ -25,29 +25,29 @@ const router: RouteObject[] = [
         path: "/community",
         element: <Community />,
         children: [
-          {index : true, element : <List/>},
-          { path: "create", element: <Create/> },
-          { path: "detail/:id", element: <Detail/> },
-          { path: "modify/:id", element: <Modify/> },
+          { index: true, element: <List /> },
+          { path: "create", element: <Create /> },
+          { path: "detail/:id", element: <Detail /> },
+          { path: "modify/:id", element: <Modify /> },
         ],
       },
       {
         path: "/mypage",
-        element: <MyPage/>,
+        element: <MyPage />,
         children: [
-          {index : true, element: <Profile/>},
-          { path: "activity", element: <Activity/> },
+          { index: true, element: <Profile /> },
+          { path: "activity", element: <Activity /> },
         ],
       },
     ],
   },
   {
     path: "/code",
-    element: <Code/>,
+    element: <Code />,
   },
   {
     path: "*",
-    element: <Exception/>,
+    element: <Exception />,
     children: [
       //   { path: "login-success", element: <LoginSuccess /> },
       //   { path: "*", element: <Page404 /> },

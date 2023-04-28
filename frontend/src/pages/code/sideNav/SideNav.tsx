@@ -9,11 +9,13 @@ import {
   faUser,
 } from "@fortawesome/free-solid-svg-icons";
 import { faArrowDown91 } from "@fortawesome/free-solid-svg-icons";
-import style from "./SideNav.module.css";
-import sort_tier_img from "@/assets/img/code/sort_tier.png";
-import { Problem } from "./problem/Problem";
-import { Button } from "@/components/button/Button";
 import { useNavigate } from "react-router-dom";
+import sort_tier_img from "@/assets/img/code/sort_tier.png";
+
+import { Button } from "@/components/button/Button";
+import { Problem } from "./problem/Problem";
+
+import style from "./SideNav.module.css";
 
 export const SideNav = ({
   setIsSidenavOpen,
@@ -97,16 +99,16 @@ export const SideNav = ({
           <span onClick={() => navigate("/")}>메인페이지</span>
         </div>
         <div className={style.nav_header_tag}>
-          <div onClick={() => navigate("/")}>
+          <div onClick={() => navigate("/community")}>
             <FontAwesomeIcon icon={faCommentDots} />
           </div>
-          <span onClick={() => navigate("/")}>커뮤니티</span>
+          <span onClick={() => navigate("/community")}>커뮤니티</span>
         </div>
         <div className={style.nav_header_tag}>
-          <div onClick={() => navigate("/")}>
+          <div onClick={() => navigate("/mypage")}>
             <FontAwesomeIcon icon={faUser} />
           </div>
-          <span onClick={() => navigate("/")}>마이페이지</span>
+          <span onClick={() => navigate("/mypage")}>마이페이지</span>
         </div>
       </div>
     </div>
