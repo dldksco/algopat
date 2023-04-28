@@ -2,7 +2,7 @@ import style from "./MyPage.module.css";
 import { Activity } from "./activity/Activity";
 import { useRecoilValue } from "recoil";
 import { Profile } from "./profile/Profile";
-import { activityBarState } from "./activity/Activity.atom";
+import { activityBarState } from "../../atoms/activity.atom";
 import { useEffect } from "react";
 import { Recent } from "./recent/Recent";
 

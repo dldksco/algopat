@@ -1,7 +1,7 @@
 import { useRecoilState, useSetRecoilState } from "recoil";
 import style from "./Activity.module.css";
 import logout from "@/assets/img/mypage/logout.png";
-import {activityBarState} from "./Activity.atom";
+import {activityBarState} from "../../../atoms/activity.atom";
 
 export const Activity = () => {
   
