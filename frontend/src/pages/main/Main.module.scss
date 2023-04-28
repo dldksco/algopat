@@ -32,15 +32,15 @@
         position: relative;
         display: inline-block;
         cursor: pointer;
+        transition: 0.25s;
 
-        &:hover .button_arrow {
+        &:nth-child(n):hover {
           color: gray;
         }
 
         .button_arrow {
           position: absolute;
-          transition: 0.25s;
-          top: 10px;
+          top: 12.5px;
           left: 75%;
           transform: rotate(45deg);
         }

@@ -19,7 +19,6 @@ export const Main = () => {
             <Button
               content="설치하기"
               style={{
-                backgroundColor: "var(--background-color)",
                 borderRadius: "0px",
                 padding: "10px 35px 10px 20px",
               }}
@@ -28,9 +27,7 @@ export const Main = () => {
                   "https://chrome.google.com/webstore/detail/algopat/kgajbdbdokjnkmbjngibhjknlkfikace?hl=ko";
               }}
             />
-            <div className={style.button_arrow}>
-              <FontAwesomeIcon icon={faArrowUp} />
-            </div>
+            <FontAwesomeIcon icon={faArrowUp} className={style.button_arrow} />
           </div>
         </div>
         <div

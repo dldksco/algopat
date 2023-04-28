@@ -26,14 +26,14 @@
   position: relative;
   display: inline-block;
   cursor: pointer;
+  transition: 0.25s;
 }
-.mainpage .fpage .content .button_hover:hover .button_arrow {
+.mainpage .fpage .content .button_hover:nth-child(n):hover {
   color: gray;
 }
 .mainpage .fpage .content .button_hover .button_arrow {
   position: absolute;
-  transition: 0.25s;
-  top: 10px;
+  top: 12.5px;
   left: 75%;
   transform: rotate(45deg);
 }

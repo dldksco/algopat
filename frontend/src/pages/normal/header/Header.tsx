@@ -9,6 +9,7 @@ export const Header = () => {
       <img className={style.logo} onClick={() => navigate("/")} src={logo} />
       <div className={style.menu}>
         <div onClick={() => navigate("/code")}>코드분석</div>
+        <div onClick={() => navigate("/ranking")}>랭킹</div>
         <div onClick={() => navigate("/community")}>커뮤니티</div>
         <div onClick={() => navigate("/mypage")}>로그인</div>
       </div>

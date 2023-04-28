@@ -17,10 +17,15 @@
     justify-content: space-around;
     align-items: center;
     font-size: 1.5rem;
-    width: 32%;
+    width: 35%;
 
     :nth-child(n) {
       cursor: pointer;
+      transition: 0.25s;
+
+      &:hover {
+        color: gray;
+      }
     }
   }
 }
@@ -28,7 +33,7 @@
 @media screen and (max-width: 1200px) {
   .header {
     .menu {
-      width: 32%;
+      width: 36%;
       min-width: 260px;
       font-size: 1.1rem;
     }
