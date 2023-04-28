@@ -12,6 +12,12 @@ kafka_servers = ["host.docker.internal:9092", "host.docker.internal:9093", "host
 # logger 설정 
 logger = logging.getLogger()
 
+producer = AIOKafkaProducer(
+    bootstrap_servers = kafka_servers,
+    value_serializer = lambda m : m.encode("utf-8") 
+)
+producer.start()
+
 # Consumer 
 # 카프카를 통해 consume한 문제 정보를 통해 GPT 응답 생성 
 async def consume_problem_summary(topic : str):
@@ -23,7 +29,8 @@ async def consume_problem_summary(topic : str):
         bootstrap_servers = kafka_servers,
         value_deserializer=lambda m: json.loads(m.decode("utf-8")),
         session_timeout_ms=60000,  # Increase this value if needed
-        heartbeat_interval_ms=20000  # Increase this value if needed
+        heartbeat_interval_ms=20000,  # Increase this value if needed
+        max_poll_interval_ms=500000
     )
 
     await consumer.start()
@@ -37,11 +44,6 @@ async def consume_problem_summary(topic : str):
         await consumer.stop() # anomaly 상태일 때 종료 
 
 
-producer = AIOKafkaProducer(
-    bootstrap_servers = kafka_servers,
-    value_serializer = lambda m : m.encode("utf-8") 
-)
-producer.start()
 
 # Producer
 # 카프카로 메시지 전송 함수 
