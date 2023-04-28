@@ -25,6 +25,11 @@ async function findData(data) {
       })
       data = selectBestSubmissionList(table)[0];
     }
+
+    if (data.level == 0) {
+      data.level = await findLevelByPromblemId(data.problemId)
+    }
+
     if (isNaN(Number(data.problemId)) || Number(data.problemId) < 1000) throw new Error(`정책상 대회 문제는 업로드 되지 않습니다. 대회 문제가 아니라고 판단된다면 이슈로 남겨주시길 바랍니다.\n문제 ID: ${data.problemId}`);
     data = { ...data, ...await findProblemInfoAndSubmissionCode(data.problemId, data.submissionId) };
     // const detail = makeDetailMessageAndReadme(data);
@@ -137,7 +142,7 @@ function parsingResultTableList(doc) {
           return {
             problemId,
             title: a.getAttribute('data-original-title'),
-            level: unrankedFilter(idx, problemId),
+            level: idx,
           };
         default:
           return x.innerText.trim();
@@ -372,30 +377,29 @@ async function findHtmlDocumentByUrl(url) {
     });
 }
 
+async function findLevelByPromblemId(problemId) {
 
-async function unrankedFilter(num, problemId) {
+  let result = 0;
 
-  // if (num != 0) return num;
+  const doc = findHtmlDocumentByUrl(`https://www.acmicpc.net/problem/${problemId}`);
+  const img_src = (await doc).getElementsByClassName("solvedac-tier")[0].attributes[0].value;
 
-  const result = await fetch(`https://solved.ac/api/v3/problem/show?problemId=${problemId}`, { method: 'GET' });
+  const match = img_src.match(/tier\/(\d+).svg/)
+  if (match) {
+    result = match[1]
+  }
 
-
-
-  // const xhr = new XMLHttpRequest();
-  // xhr.addEventListener('readystatechange', function () {
-  //   if (xhr.readyState === 4) {
-  //     if (xhr.status === 200) {
-  //       that.finish(xhr.responseText.match(/access_token=([^&]*)/)[1]);
-  //     } else {
-  //       chrome.runtime.sendMessage({
-  //         closeWebPage: true,
-  //         isSuccess: false,
-  //       });
-  //     }
-  //   }
-  // });
-  // xhr.open('POST', this.ACCESS_TOKEN_URL, true);
-  // xhr.send(data);
-
-  return result
+  return result;
 }
+
+
+// async function unrankedFilter(num, problemId) {
+
+//   // if (num != 0) return num;
+
+//   const result = findHtmlDocumentByUrl(`https://www.acmicpc.net/problem/${problemId}`);
+
+//   console.log(result)
+
+//   return result
+// }
