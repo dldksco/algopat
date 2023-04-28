@@ -6,18 +6,17 @@ import { activityBarState } from "../../atoms/activity.atom";
 import { useEffect } from "react";
 import { Recent } from "./recent/Recent";
 
-
 export const MyPage = () => {
- const content = useRecoilValue(activityBarState);
-  useEffect(()=>{
-    console.log(`content changed by menubar: ${content}`)
-  })
+  const content = useRecoilValue(activityBarState);
+  useEffect(() => {
+    console.log(`content changed by menubar: ${content}`);
+  });
 
   let componentToRender;
 
-  if (content === 'myprofile') {
+  if (content === "myprofile") {
     componentToRender = <Profile />;
-  } else if (content === 'recent') {
+  } else if (content === "recent") {
     componentToRender = <Recent />;
   }
 
@@ -25,8 +24,8 @@ export const MyPage = () => {
     <>
       <div className={style.mypage}>
         <div style={{ height: "30px" }}></div>
-          <Activity/>
-          {componentToRender}
+        <Activity />
+        {componentToRender}
         <div style={{ height: "120px" }}></div>
       </div>
     </>
