@@ -22,8 +22,8 @@ async def consume_problem_summary(topic : str):
         group_id="group-algopat",
         bootstrap_servers = kafka_servers,
         value_deserializer=lambda m: json.loads(m.decode("utf-8")),
-        session_timeout_ms=500000,  # Increase this value if needed
-        heartbeat_interval_ms=500000  # Increase this value if needed
+        session_timeout_ms=60000,  # Increase this value if needed
+        heartbeat_interval_ms=20000  # Increase this value if needed
     )
 
     await consumer.start()
@@ -37,18 +37,16 @@ async def consume_problem_summary(topic : str):
         await consumer.stop() # anomaly 상태일 때 종료 
 
 
+producer = AIOKafkaProducer(
+    bootstrap_servers = kafka_servers,
+    value_serializer = lambda m : m.encode("utf-8") 
+)
+producer.start()
+
 # Producer
 # 카프카로 메시지 전송 함수 
 async def send(topic : str, message):
     logger.info("Send to 토픽 : " + topic)
-
-    producer = AIOKafkaProducer(
-        bootstrap_servers = kafka_servers,
-        value_serializer = lambda m : m.encode("utf-8") 
-    )
-
-    await producer.start()
-
     await producer.send_and_wait(topic, message)
 
 
