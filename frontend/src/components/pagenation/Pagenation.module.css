@@ -31,16 +31,17 @@
 .pagination .nowPage:hover {
   color: rgb(68, 169, 231);
 }
+
 @media screen and (max-width: 768px) {
-  .pagination .page_number {
+  .page_number {
     margin-left: 3px;
     margin-right: 3px;
   }
-  .pagination .noWork {
+  .noWork {
     margin-left: 3px;
     margin-right: 3px;
   }
-  .pagination .nowPage {
+  .nowPage {
     margin-left: 3px;
     margin-right: 3px;
   }

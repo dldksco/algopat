@@ -40,7 +40,11 @@
   position: relative;
   font-size: 1.2rem;
   margin-left: 3%;
-  margin-top: 5px;
+  margin-top: 10px;
+  transition: 0.25s;
+}
+.sideNav .nav_header .nav_header_tag:hover :nth-child(n) {
+  color: gray;
 }
 .sideNav .nav_header .nav_header_tag :nth-child(n) {
   cursor: pointer;

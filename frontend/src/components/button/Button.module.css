@@ -3,11 +3,11 @@
   display: inline-block;
   padding: 10px 20px;
   border-radius: 20px;
+  background-color: var(--background-color);
   transition: 0.25s;
   font-size: 1rem;
   cursor: pointer;
 }
 .button:hover {
-  background-color: gray;
   color: gray;
 }/*# sourceMappingURL=Button.module.css.map */

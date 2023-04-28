@@ -7,6 +7,7 @@ import {
   faCommentDots,
   faHouse,
   faUser,
+  faTrophy,
 } from "@fortawesome/free-solid-svg-icons";
 import { faArrowDown91 } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
@@ -97,6 +98,12 @@ export const SideNav = ({
             <FontAwesomeIcon icon={faHouse} />
           </div>
           <span onClick={() => navigate("/")}>메인페이지</span>
+        </div>
+        <div className={style.nav_header_tag}>
+          <div onClick={() => navigate("/community")}>
+            <FontAwesomeIcon icon={faTrophy} />
+          </div>
+          <span onClick={() => navigate("/ranking")}>랭킹</span>
         </div>
         <div className={style.nav_header_tag}>
           <div onClick={() => navigate("/community")}>

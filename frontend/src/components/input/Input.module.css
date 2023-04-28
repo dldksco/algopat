@@ -1,0 +1,23 @@
+.input_text {
+  width: 200px;
+  font-size: 1rem;
+  padding: 10px 20px;
+  border: 1.5px solid var(--font-color);
+  background-color: var(--background-color);
+  color: var(--font-color);
+  border-radius: 18px;
+}
+
+.input_text:focus {
+  outline: none;
+}
+
+.input_text::-moz-placeholder {
+  font-size: 1rem;
+  color: var(--fade-font-color);
+}
+
+.input_text::placeholder {
+  font-size: 1rem;
+  color: var(--fade-font-color);
+}/*# sourceMappingURL=Input.module.css.map */
