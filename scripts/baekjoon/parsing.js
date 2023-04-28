@@ -25,6 +25,11 @@ async function findData(data) {
       })
       data = selectBestSubmissionList(table)[0];
     }
+
+    if (data.level == 0) {
+      data.level = await findLevelByPromblemId(data.problemId)
+    }
+
     if (isNaN(Number(data.problemId)) || Number(data.problemId) < 1000) throw new Error(`정책상 대회 문제는 업로드 되지 않습니다. 대회 문제가 아니라고 판단된다면 이슈로 남겨주시길 바랍니다.\n문제 ID: ${data.problemId}`);
     data = { ...data, ...await findProblemInfoAndSubmissionCode(data.problemId, data.submissionId) };
     // const detail = makeDetailMessageAndReadme(data);
@@ -126,17 +131,18 @@ function parsingResultTableList(doc) {
           const img = x.querySelector('img.solvedac-tier');
           const a = x.querySelector('a.problem_title');
           if (isNull(a)) return null;
-          if (isNull(img)){
+          if (isNull(img)) {
             const msg = "[백준허브 연동 에러] 현재 백준 업로드는 Solved.ac 연동이 필수입니다. 만약 Solved.ac 연동 후에도 이 창이 보인다면 개발자에게 리포팅해주세요."
             const err = "SolvedAC is not integrated with this BOJ account"
             toastThenStopLoader(msg, err)
           }
           const idx = img.getAttribute('src').match('[0-9]+\\.svg')[0].replace('.svg', '')
-          const level = bj_level[idx]
+          const problemId = a.getAttribute('href').replace(/^.*\/([0-9]+)$/, '$1')
+          // const level = bj_level[idx]
           return {
-            problemId: a.getAttribute('href').replace(/^.*\/([0-9]+)$/, '$1'),
+            problemId,
             title: a.getAttribute('data-original-title'),
-            level: level
+            level: idx,
           };
         default:
           return x.innerText.trim();
@@ -147,7 +153,7 @@ function parsingResultTableList(doc) {
     for (let j = 0; j < headers.length; j++) {
       obj[headers[j]] = cells[j];
     }
-    obj = { ...obj, ...obj.result, ...obj.problemId};
+    obj = { ...obj, ...obj.result, ...obj.problemId };
     list.push(obj);
   }
   log('TableList', list);
@@ -195,15 +201,15 @@ function parseProblemDescription(doc = document) {
   const problem_tags = Array.from(doc.getElementById('problem_tags').querySelectorAll('a.spoiler-link'), x => x.innerText)
   const problem_limit = Array.from(doc.getElementById('problem_limit').querySelectorAll('ul li'), x => unescapeHtml(x.innerHTML))
   const problem_info = Array.from(doc.getElementById('problem-info').querySelectorAll('tbody tr td'), x => x.innerText)
-  
+
   const problem_info_time_limit = problem_info[0]
   const problem_info_space_limit = problem_info[1]
 
   // console.log("problem_limit ", problem_limit)
   if (problemId && problem_description) {
     log(`문제번호 ${problemId}의 내용을 저장합니다.`);
-    updateProblemsFromStats({ problemId, problem_description, problem_input, problem_output, problem_tags, problem_limit, problem_info_time_limit, problem_info_space_limit});
-    return { problemId, problem_description, problem_input, problem_output, problem_tags, problem_limit, problem_info_time_limit, problem_info_space_limit};
+    updateProblemsFromStats({ problemId, problem_description, problem_input, problem_output, problem_tags, problem_limit, problem_info_time_limit, problem_info_space_limit });
+    return { problemId, problem_description, problem_input, problem_output, problem_tags, problem_limit, problem_info_time_limit, problem_info_space_limit };
   }
   return {};
 }
@@ -261,7 +267,7 @@ async function findProblemInfoAndSubmissionCode(problemId, submissionId) {
       .then(([description, code, solvedJson]) => {
         // console.log("description ", description)
         const { problem_description, problem_input, problem_output, problem_tags, problem_limit, problem_info_space_limit, problem_info_time_limit } = description;
-        return { problemId, submissionId, code, problem_description, problem_input, problem_output, problem_tags, problem_limit, problem_info_space_limit,problem_info_time_limit };
+        return { problemId, submissionId, code, problem_description, problem_input, problem_output, problem_tags, problem_limit, problem_info_space_limit, problem_info_time_limit };
       })
       .catch((err) => {
         console.log('error ocurred: ', err);
@@ -370,3 +376,30 @@ async function findHtmlDocumentByUrl(url) {
       return parser.parseFromString(text, 'text/html');
     });
 }
+
+async function findLevelByPromblemId(problemId) {
+
+  let result = 0;
+
+  const doc = findHtmlDocumentByUrl(`https://www.acmicpc.net/problem/${problemId}`);
+  const img_src = (await doc).getElementsByClassName("solvedac-tier")[0].attributes[0].value;
+
+  const match = img_src.match(/tier\/(\d+).svg/)
+  if (match) {
+    result = match[1]
+  }
+
+  return result;
+}
+
+
+// async function unrankedFilter(num, problemId) {
+
+//   // if (num != 0) return num;
+
+//   const result = findHtmlDocumentByUrl(`https://www.acmicpc.net/problem/${problemId}`);
+
+//   console.log(result)
+
+//   return result
+// }

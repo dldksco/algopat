@@ -6,7 +6,7 @@ $('#authenticate').on('click', () => {
 
   if (action) {
     oAuth2.begin();
-  } 
+  }
 });
 
 $('#api_key_button').on('click', () => {
@@ -15,7 +15,7 @@ $('#api_key_button').on('click', () => {
 
 $('#api_key_save').on('click', () => {
   const value = $('#api_key').val()
-  chrome.storage.local.set({"gpt_key" : value}, () => {})
+  chrome.storage.local.set({ "gpt_key": value }, () => { })
 })
 
 /* Get URL for welcome page */
@@ -74,10 +74,10 @@ chrome.storage.local.get('BaekjoonHub_token', (data) => {
 chrome.storage.local.get('bjhEnable', (data4) => {
   if (data4.bjhEnable === undefined) {
     $('#onffbox').prop('checked', true);
-    chrome.storage.local.set({ bjhEnable: $('#onffbox').is(':checked') }, () => {});
+    chrome.storage.local.set({ bjhEnable: $('#onffbox').is(':checked') }, () => { });
   } else {
     $('#onffbox').prop('checked', data4.bjhEnable);
-    chrome.storage.local.set({ bjhEnable: $('#onffbox').is(':checked') }, () => {});
+    chrome.storage.local.set({ bjhEnable: $('#onffbox').is(':checked') }, () => { });
   }
 });
 
@@ -85,11 +85,11 @@ chrome.storage.local.get('bjhEnable', (data4) => {
   활성화 버튼 클릭 시 storage에 활성 여부 데이터를 저장.
  */
 $('#onffbox').on('click', () => {
-  chrome.storage.local.set({ bjhEnable: $('#onffbox').is(':checked') }, () => {});
+  chrome.storage.local.set({ bjhEnable: $('#onffbox').is(':checked') }, () => { });
 });
 
 
 chrome.storage.local.get(['gpt_key'], (data) => {
-  if(data?.gpt_key)
+  if (data?.gpt_key)
     $('#api_key').attr('value', data.gpt_key)
 });

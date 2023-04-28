@@ -66,13 +66,13 @@ function compareSubmission(a, b) {
   // prettier-ignore-start
   /* eslint-disable */
   return a.runtime === b.runtime
-          ? a.memory === b.memory
-            ? a.codeLength === b.codeLength
-              ? -(a.submissionId - b.submissionId)
-              : a.codeLength - b.codeLength
-            : a.memory - b.memory
-          : a.runtime - b.runtime
-  ;
+    ? a.memory === b.memory
+      ? a.codeLength === b.codeLength
+        ? -(a.submissionId - b.submissionId)
+        : a.codeLength - b.codeLength
+      : a.memory - b.memory
+    : a.runtime - b.runtime
+    ;
   /* eslint-enable */
   // prettier-ignore-end
 }
@@ -119,7 +119,7 @@ function convertResultTableHeader(header) {
 }
 
 function convertImageTagAbsoluteURL(doc = document) {
-  if(isNull(doc)) return;
+  if (isNull(doc)) return;
   // img tag replace Relative URL to Absolute URL.
   Array.from(doc.getElementsByTagName('img'), (x) => {
     x.setAttribute('src', x.currentSrc);
