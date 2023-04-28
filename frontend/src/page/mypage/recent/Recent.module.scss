@@ -1,0 +1,27 @@
+.box {
+    margin: 5% auto;
+    border: 1px solid;
+    border-color: var(--font-color);
+    // width: 1400px;
+    width: 80%;
+    height: 800px;
+    .recentTitle {
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin-top: 4%;
+      margin-left: 4%;
+    }
+    .whichBoard{
+        border-bottom: 1px solid white;
+        padding-bottom: 5px;
+        display: flex;
+        justify-content: flex-start;
+        margin: 2% 5%;
+
+        div{
+            margin-right: 13%;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+    }
+  }

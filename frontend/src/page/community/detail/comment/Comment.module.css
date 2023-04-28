@@ -1,0 +1,42 @@
+.user {
+  margin-left: auto;
+  margin-right: auto;
+  border: 1px solid #6C6C6F;
+  border-radius: 7px;
+  background-color: #6C6C6F;
+  height: 35px;
+  width: 90%;
+  text-align: left;
+  padding-left: 1rem;
+  display: flex;
+  align-items: center;
+}
+.user img {
+  max-height: 1rem;
+  width: auto;
+  margin-right: 7px;
+}
+.user span {
+  font-size: 1rem;
+}
+
+.comment {
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 10px;
+  min-height: 50px;
+  height: auto;
+  width: 90%;
+  text-align: left;
+  padding-left: 20px;
+  position: relative;
+}
+.comment span {
+  font-size: 1rem;
+}
+.comment .recommend {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  margin-right: 10px;
+}/*# sourceMappingURL=Comment.module.css.map */

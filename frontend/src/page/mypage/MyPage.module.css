@@ -1,45 +1,4 @@
 .mypage {
   width: 100%;
   background-color: var(--mypage-bk-color);
-}
-.mypage .profilebox {
-  margin: 5% auto;
-  border: 1px solid;
-  border-color: var(--font-color);
-  width: 80%;
-  height: 800px;
-}
-.mypage .profilebox .profiletitle {
-  font-size: 1.5rem;
-  font-weight: 600;
-  margin-top: 4%;
-  margin-left: 4%;
-}
-.mypage .profilebox .profileimage {
-  background-color: var(--font-color);
-  margin: 3% 4% 2% 4%;
-  width: 150px;
-  height: 150px;
-  border-radius: 100%;
-  box-shadow: 3px 3px 3px 3px black;
-}
-.mypage .profilebox .profileinfo {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin: 0 4%;
-}
-.mypage .profilebox .profileinfo .gitinfo p {
-  font-size: 1.3rem;
-}
-.mypage .profilebox .profileinfo .setting {
-  font-size: 1.1rem;
-  font-weight: 600;
-}
-.mypage .profilebox .grass {
-  border: 1px solid;
-  border-color: var(--font-color);
-  width: 92%;
-  height: 300px;
-  margin: 1% auto;
 }/*# sourceMappingURL=MyPage.module.css.map */
