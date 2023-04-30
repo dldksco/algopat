@@ -1,12 +1,17 @@
-import { useRecoilState, useSetRecoilState } from "recoil";
 import style from "./Activity.module.css";
 import logout from "@/assets/img/mypage/logout.png";
-import {activityBarState} from "../../../atoms/activity.atom";
 
-export const Activity = () => {
-  
-  //const [activityBar, setActivityBar] = useRecoilState(activityBarState);
-  const onBarClick = useSetRecoilState(activityBarState);
+export type barProps ="myprofile" | "recent";
+
+
+interface ActivityProps{
+  selected: (eventData: barProps) => void;
+}
+
+export const Activity = (props: ActivityProps) => {
+  const onBarClick = (barcontent: barProps) =>{
+    props.selected(barcontent);
+  };
 
   return (
     <div className={style.topbar}>

@@ -1,19 +1,21 @@
 import style from "./MyPage.module.css";
-import { Activity } from "./activity/Activity";
-import { useRecoilValue} from "recoil";
+import { Activity, barProps } from "./activity/Activity";
 import { Profile } from "./profile/Profile";
-import { activityBarState } from "../../atoms/activity.atom";
 import { useState } from "react";
 import { Recent } from "./recent/Recent";
 
 
 export const MyPage = () => {
-  const content = useRecoilValue(activityBarState);
+  const [activityBarState, setActivityBarState] = useState<barProps>("myprofile");
   
+  function handleBarClick(selected: barProps){
+    setActivityBarState(selected);
+  }
+
   let componentToRender;
-  if (content === "myprofile") {
+  if (activityBarState === "myprofile") {
     componentToRender = <Profile />;
-  } else if (content === "recent") {
+  } else if (activityBarState === "recent") {
     componentToRender = <Recent />;
   }
 
@@ -21,7 +23,7 @@ export const MyPage = () => {
     <>
       <div className={style.mypage}>
         <div className={style.buffer}></div>
-        <Activity />
+        <Activity selected={handleBarClick}/>
         {componentToRender}
         <div style={{ height: "120px" }}></div>
       </div>
