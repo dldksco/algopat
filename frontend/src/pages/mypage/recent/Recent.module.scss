@@ -1,27 +1,52 @@
 .box {
     margin: 5% auto;
     border: 1px solid;
-    border-color: var(--font-color);
-    // width: 1400px;
+    border-color: var(--mypage-font-color);
     width: 80%;
-    height: 800px;
+    height: 800px;    
     .recentTitle {
       font-size: 1.5rem;
+      color: var(--mypage-font-color);
       font-weight: 600;
       margin-top: 4%;
       margin-left: 4%;
     }
     .whichBoard{
-        border-bottom: 1px solid white;
-        padding-bottom: 5px;
+        color: var(--mypage-font-color);
+        border-bottom: 1.5px solid var(--mypage-font-color);
+        padding-bottom:10px;
         display: flex;
         justify-content: flex-start;
-        margin: 2% 5%;
+        margin-left: 5%;
+        margin-right: 5%;
+        margin-top: 2%;
+        position: relative;
 
         div{
-            margin-right: 13%;
+            margin-right: 7%;
             font-size: 1rem;
             cursor: pointer;
+            .icon{
+              margin-left: 4px;
+              font-size: 1rem;
+            }
+        }
+        .bar {
+          position: absolute;
+          bottom: 0;
+          height: 4px;
+          border-radius: 10px;
+          background-color: white;
+          opacity: 1;
+          transition: transform 0.3s ease-in-out;
         }
     }
   }
+
+  
+@media screen and (max-width: 768px) {
+  .box {
+    width: 768px;
+  }
+}
+

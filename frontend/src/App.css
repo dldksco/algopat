@@ -2,8 +2,12 @@
   --font-color: #ffffff;
   --fade-font-color: rgb(161, 161, 161);
   --background-color: black;
-  --mypage-backgroud-color: #28292c;
+  --mypage-background-color: #28292c;
+  --mypage-nav-color: #28292c;
+  --box-color: #ffffff;
+  --mypage-box-color: rgb(236, 236, 236, 0.3);
   --code-background-color: #242f3c;
+  --mypage-font-color: #ECECEC;
 }
 
 div,

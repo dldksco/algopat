@@ -1,4 +1,8 @@
 .mypage {
   width: 100%;
-  background-color: var(--mypage-bk-color);
+  background-color: var(--mypage-background-color);
+}
+.mypage .buffer {
+  height: 50px;
+  background-color: var(--mypage-background-color);
 }/*# sourceMappingURL=MyPage.module.css.map */
