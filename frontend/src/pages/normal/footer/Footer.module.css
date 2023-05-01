@@ -1,6 +1,9 @@
 .footer {
   height: 300px;
   width: 100%;
+  max-width: var(--max-width);
+  margin-right: auto;
+  margin-left: auto;
   background-color: #d4d4d4;
   color: black;
   display: flex;

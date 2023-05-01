@@ -4,17 +4,23 @@ import { Footer } from "./footer/Footer";
 
 export const Normal = () => {
   return (
-    <>
+    <div
+      style={{
+        width: "100%",
+        backgroundColor: "var(--background-color)",
+      }}
+    >
       <Header />
       <div
         style={{
-          width: "100%",
-          backgroundColor: "var(--background-color)",
+          maxWidth: "var(--max-width)",
+          marginLeft: "auto",
+          marginRight: "auto",
         }}
       >
         <Outlet />
       </div>
-      <Footer/>
-    </>
+      <Footer />
+    </div>
   );
 };
