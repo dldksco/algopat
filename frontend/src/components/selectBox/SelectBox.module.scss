@@ -1,0 +1,24 @@
+@use "../../../_var.scss";
+
+.select_box {
+  margin: 0;
+  min-width: 0;
+  width: 100px;
+  height: 40px;
+  padding: 10px 10px;
+  font-size: 1em;
+  border: 1.5px solid var(--font-color);
+  color: var(--font-color);
+  border-radius: 15px;
+  background-color: transparent;
+
+  &:focus {
+    outline: none;
+  }
+}
+
+.option {
+  color: var(--font-color);
+  background-color: var(--background-color);
+  border: none;
+}
