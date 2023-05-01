@@ -1,11 +1,10 @@
-
 /**
- * 
+ *
  * 너무 긴 문자열 앞부분만 보여주기
- * @param title : 자를 문자열
+ * @param str : 자를 문자열
  * @param num : 자를 갯수
- * @returns 
+ * @returns
  */
 
-  export const stringCutter = (title: string, num: number) => title.slice(0, num) + (title.length > num ? "..." : "");
-  
+export const stringCutter = (str: string, num: number) =>
+  str.slice(0, num) + (str.length > num ? "..." : "");

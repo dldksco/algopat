@@ -1,0 +1,24 @@
+.post {
+  height: 280px;
+  border: 2px solid var(--font-color);
+  border-radius: 20px;
+  margin: 0 6%;
+  padding: 6% 2.5%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.post p {
+  margin: 0;
+  color: var(--fade-font-color);
+}
+.post hr {
+  width: 100%;
+}
+.post .post_buttom {
+  display: flex;
+  justify-content: space-around;
+}
+.post .post_buttom div {
+  font-size: 1.2rem;
+}/*# sourceMappingURL=Post.module.css.map */
