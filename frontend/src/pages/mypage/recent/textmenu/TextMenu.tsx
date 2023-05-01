@@ -3,18 +3,12 @@ import style from "./TextMenu.module.css";
 import { useState } from "react";
 
 
-
 export const TextMenu = () => {
-    const [isChecked, setIsChecked] = useState(false);
-    function handleChecked(event : React.ChangeEvent<HTMLInputElement>){
-        setIsChecked(event?.target.checked);
-    }
     return (
         <>
         <div className={style.description}>
             <span>n개의 작성한 글이 있습니다.</span>
             <div className={style.selectBox}> 
-            <input type="checkbox" checked={isChecked} onChange={handleChecked}/>
             전체선택</div>
             <div className={style.buttonContainer}>
                 <Button className={style.deleteButton}content="삭제" onClick={()=>{}}></Button>
