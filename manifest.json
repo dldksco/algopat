@@ -54,7 +54,8 @@
         "https://www.acmicpc.net/*"
       ],
       "css": [
-        "css/baekjoon/inject.css"
+        "css/baekjoon/inject.css",
+        "css/toast.css"
       ],
       "js": [
         "library/sha1.min.js",

@@ -1,51 +1,45 @@
 const ToastType = {
-    Danger : "#eb3b5a",
+    Danger: "#eb3b5a",
     Warning: "#fdcb6e",
-    Succes : "#00b894",
+    Succes: "#00b894",
 }
 
-  
 class Toast {
-    constructor(message,color,time){
+    constructor(message, color, time) {
         log('Constructor', message)
         this.message = message;
         this.color = color;
         this.time = time;
         this.element = null;
-        var element = document.createElement('div');
-        element.className = "toast-notification";
+        const element = document.createElement('div');
+        element.className = "toast toast--yellow";
         this.element = element;
-        var countElements = document.getElementsByClassName("toast-notification");
 
-        element.style.opacity=0.8;
+        element.innerHTML +=
+            `<div class="toast__icon">
+            <svg version="1.1" class="toast__svg" xmlns="http://www.w3.org/2000/svg"
+              xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 301.691 301.691"
+              style="enable-background:new 0 0 301.691 301.691;" xml:space="preserve">
+              <g>
+                <polygon points="119.151,0 129.6,218.406 172.06,218.406 182.54,0  "></polygon>
+                <rect x="130.563" y="261.168" width="40.525" height="40.523"></rect>
+              </g>
+            </svg>
+          </div>`
 
-        element.style.marginBottom = (countElements.length * 55) + "px";
-
-        element.style.backgroundColor = this.color;
-
-        var message = document.createElement("div");
-        message.className = "message-container";
-        message.textContent = this.message;
-
-        element.appendChild(message);
-
-        var close = document.createElement("div");
-        close.className = "close-notification";
-
-        var icon = document.createElement("i");
-        icon.className = "lni lni-close";
-
-        close.appendChild(icon);
-
-        element.append(close);
+        element.innerHTML +=
+            `<div class="toast__content">
+                <p class="toast__type">Warning</p>
+                <p class="toast__message">${message}</p>
+            </div>`
 
         document.body.appendChild(element);
 
-        setTimeout(function() {
+        setTimeout(function () {
             element.remove();
         }, this.time);
 
-        element.addEventListener("click",()=>{
+        element.addEventListener("click", () => {
             element.remove();
         })
         log('Closed')

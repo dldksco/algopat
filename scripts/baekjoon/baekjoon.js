@@ -20,6 +20,11 @@ if (!isNull(username)) {
 
 function startLoader() {
   loader = setInterval(async () => {
+
+    if (isProgressRefactoring()) {
+      toastThenStopLoader("아직 리팩토링이 진행중입니다", "리팩토링 진행중")
+    }
+
     // 기능 Off시 작동하지 않도록 함
     const enable = await checkEnable();
     if (!enable) stopLoader();
@@ -38,6 +43,10 @@ function startLoader() {
 
           console.log("보낼 데이터 ", bojData)
 
+
+          // 리팩토링 상태 진행중으로 변경
+          chrome.storage.local.set({ commit_state: "progress" }, () => { });
+
           //fetch 요청
           // fetch('https://70.12.247.167:8000/process', {
           //   method: 'POST',
@@ -55,8 +64,7 @@ function startLoader() {
           //   toastThenStopLoader("실패했습니다", error);
           //   console.error(error)
           // })
-          
-          
+
           // await beginUpload(bojData);
         }
       }
@@ -75,58 +83,14 @@ function toastThenStopLoader(toastMessage, errorMessage) {
   throw new Error(errorMessage);
 }
 
-/* 파싱 직후 실행되는 함수 */
-async function beginUpload(bojData) {
-  log('bojData', bojData);
-  if (isNotEmpty(bojData)) {
-    const stats = await getStats();
-    const hook = await getHook();
-
-    const currentVersion = stats.version;
-    console.log('버전이 뭐니?');
-
-    
-
-    chrome.storage.local.set({"key" : bojData}, () => {
-      // if (debug)
-      console.log('성공!');
+async function isProgressRefactoring() {
+  return new Promise((resolve, reject) => {
+    chrome.storage.local.get('commit_state', (data) => {
+      if (data.commit_state == "progress") {
+        resolve(true)
+      }
     });
+    resolve(false)
+  })
 
-    console.log(bojData);
-    console.log(stats);
-    console.log(stats.version);
-    /* 버전 차이가 발생하거나, 해당 hook에 대한 데이터가 없는 경우 localstorage의 Stats 값을 업데이트하고, version을 최신으로 변경한다 */
-    if (isNull(currentVersion) || currentVersion !== getVersion() || isNull(await getStatsSHAfromPath(hook))) {
-      await versionUpdate();
-    }
-
-    // chrome.storage.local.get(["key"]).then((result) => {
-    //   console.log("get!!!!")
-    //   console.log(result)
-    //   // const temp = JSON.parse(result)
-    //   // console.log(result, temp)
-    //   console.log("Value currently is " + result.key);
-    // });
-
-    /* 현재 제출하려는 소스코드가 기존 업로드한 내용과 같다면 중지 */
-    cachedSHA = await getStatsSHAfromPath(`${hook}/${bojData.directory}/${bojData.fileName}`);
-    calcSHA = calculateBlobSHA(bojData.code);
-    log('cachedSHA', cachedSHA, 'calcSHA', calcSHA);
-
-    console.log(bojData);
-    console.log('출력을 해보자');
-
-    if (cachedSHA == calcSHA) {
-      markUploadedCSS();
-      console.log(`현재 제출번호를 업로드한 기록이 있습니다.` /* submissionID ${bojData.submissionId}` */);
-      return;
-    }
-    /* 신규 제출 번호라면 새롭게 커밋  */
-    // await uploadOneSolveProblemOnGit(bojData, markUploadedCSS);
-  }
-}
-
-async function versionUpdate() {
-  log('start versionUpdate');
-  log('stats updated.');
 }
