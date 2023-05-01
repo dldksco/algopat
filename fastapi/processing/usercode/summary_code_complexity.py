@@ -3,26 +3,53 @@ from myclass.problem import ProblemSummary
 from myclass.problem import ProblemData
 from utils.utils import count_token, preprocessing_code
 from chain.usercode.summary_code_complexity import summary_code_complexity_chain
+from chain.usercode.summary_code_complexity_long import summary_code_complexity_long_chain
 from langchain.text_splitter import TokenTextSplitter
-import re
+from logging import getLogger
+
+# logger 설정 
+logger = getLogger()
 
 async def summary_code_complexity(chat_llm : ChatOpenAI, data : ProblemData, problem_summary : ProblemSummary):
     problem_info = await build_problem_info(problem_summary, data)
-    print(problem_info)
+    logger.info(problem_info)
     preprocessed_code = await preprocessing_code(data.code, data.language)
-    print(preprocessed_code)
+    logger.info(preprocessed_code)
     token_length = await count_token(preprocessed_code)
-    print(token_length)
+    logger.info(token_length)
     if token_length < 2000:
         return await summary_code_complexity_short(chat_llm, preprocessed_code, problem_info)
     else :
-        pass
+        return await summary_code_complexity_long(chat_llm, preprocessed_code, problem_info)
     
     
 async def summary_code_complexity_short(chat_llm : ChatOpenAI, code : str, problem_info : ProblemSummary):
     chain = await summary_code_complexity_chain(chat_llm)
     summary_code_complexity_result = await chain.arun(problem_info = problem_info, user_code = code)
     return summary_code_complexity_result
+
+async def summary_code_complexity_long(chat_llm : ChatOpenAI, code : str, problem_info : ProblemSummary):
+    chain = await summary_code_complexity_long_chain(chat_llm)
+    text_splitter = TokenTextSplitter(chunk_size=600, chunk_overlap=0, encoding_name="cl100k_base")
+    codes = text_splitter.split_text(code)
+    
+    first_code=""
+    second_code=""
+    existing_result=""
+    codes_len = len(codes)
+    for i in range(codes_len):
+        logger.info(f"iter_count = {i + 1}/{codes_len}, token: {await count_token(codes[i])}")
+        if (i > 0):
+            first_code = codes[i - 1]
+        second_code = codes[i]
+        existing_result = await chain.arun(
+            problem_info = problem_info,
+            existing_result = existing_result,
+            first_code = first_code,
+            second_code = second_code
+        )
+    result = existing_result
+    return result
     
 async def build_problem_info(problem_summary : ProblemSummary, data : ProblemData):
     problem_info = f"\

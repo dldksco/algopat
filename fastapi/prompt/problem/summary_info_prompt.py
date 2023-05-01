@@ -14,12 +14,12 @@ SUMMARY_PROMPT_INFO_TMPL = (
     "Please write all data in sentence form, not list form.\n"
     "RESPONSE FORMAT:\n"
     "--------\n"
-    "gpt_problem_summary_input: <Summarized input information>\n"
-    "gpt_problem_summary_output: <Summarized output information>\n"
-    "gpt_problem_summary_constraints: <Summarized constraints of problem>"
-    "problem_algorithm_type: <algorithm type, replace comma with space>\n"
-    "problem_time_limit: <time limit>\n"
-    "problem_space_limit: <space limit>\n"
+    "gpt_problem_summary_input: <Summarized input information>,\n"
+    "gpt_problem_summary_output: <Summarized output information>,\n"
+    "gpt_problem_summary_constraints: <Summarized constraints of problem>,"
+    "problem_algorithm_type: <algorithm type, replace comma with space>,\n"
+    "problem_time_limit: <time limit>,\n"
+    "problem_space_limit: <space limit>,\n"
     "--------\n"
 )
 
