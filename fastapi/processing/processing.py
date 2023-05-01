@@ -4,6 +4,7 @@ from processing.problem.summary_info import summary_info
 from processing.problem.summary_description import summary_description
 from processing.usercode.summary_code_complexity import summary_code_complexity
 from processing.usercode.summary_code_refactor import summary_code_refactor
+from processing.translator.translate_text import translate_texts
 from myparser.problem.parse_summary import parse_summary
 from myparser.usercode.parse_summary_code import parse_summary_code
 from asyncio import gather
@@ -18,14 +19,12 @@ async def processing(data : ProblemData):
 
     open_brace = '{'
     close_brace = '}'
+    chat_llm_0 = ChatOpenAI(temperature=0, openai_api_key=data.openai_api_key, request_timeout=120)
+    # chat_llm_1 = ChatOpenAI(temperature=0.1, openai_api_key=data.openai_api_key)
+    chat_llm_3 = ChatOpenAI(temperature=0.3, openai_api_key=data.openai_api_key, request_timeout=120)
+    # chat_llm_10 = ChatOpenAI(temperature=1, openai_api_key=data.openai_api_key)
+    json_chain = await json_formatter(chat_llm_0)
     if (True):
-        chat_llm_0 = ChatOpenAI(temperature=0, openai_api_key=data.openai_api_key, request_timeout=120)
-        # chat_llm_1 = ChatOpenAI(temperature=0.1, openai_api_key=data.openai_api_key)
-        chat_llm_3 = ChatOpenAI(temperature=0.3, openai_api_key=data.openai_api_key, request_timeout=120)
-        # chat_llm_10 = ChatOpenAI(temperature=1, openai_api_key=data.openai_api_key)
-        
-        json_chain = await json_formatter(chat_llm_0)
-
         # 문제 요약 정보 생성 
         logger.info("크롤링 문제 정보 요약 시작")
         summary_info_result = await summary_info(chat_llm_0, data)
@@ -56,7 +55,12 @@ async def processing(data : ProblemData):
         summary_code_json = await parse_summary_code(chat_llm_0, preprocessed_summary_code)
         logger.info("코드 요약 json 타입으로 변환 완료")
         
-        return summary_code_json
+        logger.info("데이터 번역 작업 시작")
+        result = await translate_texts(chat_llm_0, summary_code_json)
+        logger.info("데이터 번역 작업 완료")
+        result.total_score = (result.gpt_solution_time_score + result.gpt_solution_space_score + result.gpt_solution_clean_score) // 3
+        
+        return result
     
         
         
