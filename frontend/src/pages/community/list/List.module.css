@@ -1,3 +1,8 @@
 .list {
   width: 100%;
+}
+.list .board_components {
+  width: 90%;
+  margin-left: auto;
+  margin-right: auto;
 }/*# sourceMappingURL=List.module.css.map */

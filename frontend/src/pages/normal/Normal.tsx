@@ -14,6 +14,7 @@ export const Normal = () => {
       <div
         style={{
           maxWidth: "var(--max-width)",
+          minHeight: "calc(100vh - 350px)",
           marginLeft: "auto",
           marginRight: "auto",
           paddingLeft: "2%",
