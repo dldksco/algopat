@@ -22,7 +22,6 @@ async def summary_code_complexity(chat_llm : ChatOpenAI, data : ProblemData, pro
     else :
         return await summary_code_complexity_long(chat_llm, preprocessed_code, problem_info)
     
-    
 async def summary_code_complexity_short(chat_llm : ChatOpenAI, code : str, problem_info : ProblemSummary):
     chain = await summary_code_complexity_chain(chat_llm)
     summary_code_complexity_result = await chain.arun(problem_info = problem_info, user_code = code)
