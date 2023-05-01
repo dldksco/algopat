@@ -1,0 +1,22 @@
+.maintxt {
+  border-bottom: 1px solid var(--mypage-box-color);
+  margin: 0px auto;
+  width: 90%;
+  height: 120px;
+  display: flex;
+}
+.maintxt div {
+  padding-top: 16px;
+}
+.maintxt .title {
+  width: 60%;
+  text-align: left;
+}
+.maintxt .date {
+  width: 30%;
+  text-align: center;
+}
+.maintxt .views {
+  width: 10%;
+  text-align: center;
+}/*# sourceMappingURL=TextForm.module.css.map */

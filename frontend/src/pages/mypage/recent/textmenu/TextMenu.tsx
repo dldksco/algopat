@@ -1,9 +1,16 @@
 import { Button } from "@/components/button/Button";
 import style from "./TextMenu.module.css";
+import { v4 as uuidv4 } from "uuid";
 import { useState } from "react";
+import { TextForm } from "./textform/TextForm";
 
 
 export const TextMenu = () => {
+    const dummyData = [
+        { title: "[백준1] 배열 돌리기 5 매우 쉽게 잘 푸는 법", date: "2020.02.21", views: 20 },
+        { title: "[백준2] 배열 돌리기 5 매우 쉽게 잘 푸는 법", date: "2020.02.23", views: 30 },
+        { title: "[백준3] 배열 돌리기 5 매우 쉽게 잘 푸는 법", date: "2020.02.24", views: 21 },
+      ];
     return (
         <>
         <div className={style.description}>
@@ -16,14 +23,12 @@ export const TextMenu = () => {
             </div>
             <div className={style.context}>
                 <div className={style.title}>제목</div>
-                <div className={style.date}>날짜</div>
+                <div className={style.date}>작성일</div>
                 <div className={style.views}>조회수</div>
             </div>
-            <div className={style.maintxt}>
-                <div className={style.title}>백준문제 2323번 도와주세요!</div>
-                <div className={style.date}>2023.10.29</div>
-                <div className={style.views}>29</div>
-            </div>
+            {dummyData.map((el)=>(
+            <TextForm key={uuidv4()} data={el}/>
+            ))}
         </>
     )
 }
