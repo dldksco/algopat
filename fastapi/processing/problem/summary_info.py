@@ -12,7 +12,7 @@ logger = getLogger()
 async def summary_info(chat_llm : ChatOpenAI, data : ProblemData):
     problem_info_origin = await build_problem_info_origin(data)
     token_length = await count_token(problem_info_origin)
-    print(token_length)
+    logger.info(token_length)
     if token_length < 2000:
         return await summary_info_short(chat_llm, problem_info_origin)
     else:

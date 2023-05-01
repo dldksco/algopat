@@ -1,5 +1,5 @@
 from pydantic import BaseModel, Field
-from typing import List
+from typing import List, Optional
 
 class ProblemData(BaseModel):
     openai_api_key: str
@@ -26,15 +26,15 @@ class ProblemData(BaseModel):
     problem_info_time_limit: str
     
 class ProblemSummary(BaseModel):
-    problem_id: int = Field(description="problem identifier")
-    gpt_problem_summary_description: str = Field(description="problem description")
-    gpt_problem_summary_input: str = Field(description="problem input information")
-    gpt_problem_summary_constraints: str = Field(description="detailed input scope")
-    gpt_problem_summary_output: str = Field(description="problem output information, including detailed scope")
-    gpt_time_complexity: str = Field(description="problem time complexity")
-    gpt_time_complexity_reason: str = Field(description="reason for the time complexity")
-    gpt_space_complexity: str = Field(description="problem space complexity")
-    gpt_space_complexity_reason: str = Field(description="reason for the space complexity")
-    problem_space_limit: str = Field(description="problem space limit")
-    problem_time_limit: str = Field(description="problem time limit")
-    problem_algorithm_type: str = Field(description="problem algorithm type")
+    problem_id: Optional[int] = None
+    gpt_problem_summary_description: Optional[str] = None
+    gpt_problem_summary_input: Optional[str] = None
+    gpt_problem_summary_constraints: Optional[str] = None
+    gpt_problem_summary_output: Optional[str] = None
+    gpt_time_complexity: Optional[str] = None
+    gpt_time_complexity_reason: Optional[str] = None
+    gpt_space_complexity: Optional[str] = None
+    gpt_space_complexity_reason: Optional[str] = None
+    problem_space_limit: Optional[str] = None
+    problem_time_limit: Optional[str] = None
+    problem_algorithm_type: Optional[str] = None

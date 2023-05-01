@@ -36,11 +36,11 @@ SUMMARY_PROMPT_DESCRIPTION_LONG_TMPL = (
 
     "RESPONSE FORMAT:\n"
     "--------\n"
-    "gpt_problem_summary_description: <summarized problem description>\n"
-    "gpt_time_complexity: <best guess of time complexity given information, problem description. only Big O Notation>\n"
-    "gpt_time_complexity_reason: <reason of time complexity>"
-    "gpt_space_complexity: <best guess of spatial complexity given information, problem description. only Big O Notation>\n"
-    "gpt_space_complexity_reason: <reason of spatial complexity>"
+    "gpt_problem_summary_description: <summarized problem description>,\n"
+    "gpt_time_complexity: <best guess of time complexity given information, problem description. only Big O Notation>,\n"
+    "gpt_time_complexity_reason: <reason of time complexity>,\n"
+    "gpt_space_complexity: <best guess of spatial complexity given information, problem description. only Big O Notation>,\n"
+    "gpt_space_complexity_reason: <reason of spatial complexity>,\n"
     "--------\n"
 )
 

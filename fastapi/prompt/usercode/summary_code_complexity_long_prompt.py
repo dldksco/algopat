@@ -1,17 +1,28 @@
 from langchain.prompts import PromptTemplate
 
-SUMMARY_CODE_COMPLEXITY_TMPL = (
-    "CONSTRAINTS:\n"
+SUMMARY_CODE_COMPLEXITY_LONG_TMPL = (
+"CONSTRAINTS:\n"
     "Your job is to estimate the time complexity and space complexity of the user's algorithmic problem code.\n"
+    "I have provide an existing result up to a certain point\n"
+    "EXISTING RESULT: \n"
+    "--------\n"
+    "{existing_result}\n"
+    "--------\n"
+    "CONSTRAINTS:\n"
     "We provide you with the problem information and the user's code.\n"
     "PROBLEM INFORMATION:\n"
     "--------\n"
     "{problem_info}\n"
     "--------\n"
+    "CONSTRAINTS:\n"
+    "provide two codes below, divided into 700 tokens\n"
     "USER CODE:\n"
-    "--------\n"
-    "{user_code}\n"
-    "--------\n"
+    "----(first code)----\n"
+    "{first_code}\n"
+    "----(first code end)----\n"
+    "----(second code)----\n"
+    "{second_code}\n"
+    "----(second code end)----\n"
     "CONSTRAINTS:\n"
     "don't miss any rationale for time complexity and space complexity in user's code.\n"
     "if the code is recursive, make sure that the ground truth is set properly and include it in the rationale for calculating the time complexity.\n"
@@ -41,11 +52,11 @@ SUMMARY_CODE_COMPLEXITY_TMPL = (
     "gpt_solution_space_score: <Max(space complexity score, 100 * (1 - memory / time limit)) (only number)>,\n"
     "gpt_solution_space_complexity_good_point: <The good things about code related to space complexity>,\n"
     "gpt_solution_space_complexity_bad_point: <The bad things about code related to space complexity>,\n"  
-    "gpt_improving_space_complexity_suggestion: <How to improve the space complexity of user's code (numbered list, as detailed as possible)>,\n" 
+    "gpt_improving_space_complexity_suggestion: <How to improve the space complexity of user's code (numbered list, as detailed as possible)>,\n"
     "--------\n"
 )
 
-SUMMARY_CODE_COMPLEXITY = PromptTemplate(
-    input_variables=["problem_info", "user_code"],
-    template=SUMMARY_CODE_COMPLEXITY_TMPL,
+SUMMARY_CODE_COMPLEXITY_LONG = PromptTemplate(
+    input_variables=["existing_result", "problem_info", "first_code", "second_code"],
+    template=SUMMARY_CODE_COMPLEXITY_LONG_TMPL,
 )
