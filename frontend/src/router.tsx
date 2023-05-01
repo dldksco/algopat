@@ -8,12 +8,12 @@ import { Detail } from "./pages/community/detail/Detail";
 import { Modify } from "./pages/community/modify/Modify";
 import { MyPage } from "./pages/mypage/MyPage";
 import { Profile } from "./pages/mypage/profile/Profile";
-import { Activity } from "./pages/mypage/activity/Activity";
 import { Code } from "./pages/code/Code";
 import { Exception } from "./pages/exception/Exception";
 import { Ranking } from "./pages/ranking/Ranking";
 import { RankingMain } from "./pages/ranking/rankingMain/RankingMain";
 import { RankingDetail } from "./pages/ranking/rankingDetail/RankingDetail";
+import { Recent } from "./pages/mypage/recent/Recent";
 
 const router: RouteObject[] = [
   {
@@ -47,7 +47,7 @@ const router: RouteObject[] = [
         element: <MyPage />,
         children: [
           { index: true, element: <Profile /> },
-          { path: "activity", element: <Activity /> },
+          { path: "recent", element: <Recent /> },
         ],
       },
     ],
