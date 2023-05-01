@@ -9,14 +9,10 @@ import { faBell, faComment, faPen, faThumbsUp} from "@fortawesome/free-solid-svg
 import style from "./Recent.module.css";
 import { Pagenation } from "@/components/pagenation/Pagenation";
 
-type recentItem = "text" | "comment" | "recommend" | "alarm";
-
-export interface recentProps{
-  selected: string;
-}
+export type recentItem = "text" | "comment" | "recommend" | "alarm";
 
 export const Recent = () => {
-  const [selectedMenuItem, setSelectedMenuItem] = useState("text");
+  const [selectedMenuItem, setSelectedMenuItem] = useState<recentItem>("text");
 
   const handleMenuItemClick = (item: recentItem) => {
     setSelectedMenuItem(item);
@@ -34,7 +30,6 @@ export const Recent = () => {
       const position = buttonRect.left - containerRect.left;
       const width = buttonRect?.width;
   
-      // Update the position of the bar
       bar.style.transform = `translateX(${position}px)`;
       bar.style.width = `${width}px`;
       console.log("button", width);  
@@ -66,6 +61,18 @@ export const Recent = () => {
       bar.style.width = `${width}px`;
   }, []);
 
+  let requestId: number | undefined;
+  const handleResize = () => {
+    if (requestId !== undefined) {
+      window.cancelAnimationFrame(requestId);
+    }
+    requestId = window.requestAnimationFrame(() => {
+      handleMenuItemClick(selectedMenuItem);
+    });
+  };
+  
+  window.addEventListener("resize", handleResize);
+  
   return (
     <>
       <div className={style.box}>

@@ -1,12 +1,15 @@
 import { Button } from "@/components/button/Button";
 import style from "./TextMenu.module.css";
+import { useState } from "react";
+
 
 export const TextMenu = () => {
     return (
         <>
         <div className={style.description}>
             <span>n개의 작성한 글이 있습니다.</span>
-            <div className={style.selectBox}> 전체선택</div>
+            <div className={style.selectBox}> 
+            전체선택</div>
             <div className={style.buttonContainer}>
                 <Button className={style.deleteButton}content="삭제" onClick={()=>{}}></Button>
             </div>
