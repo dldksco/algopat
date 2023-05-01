@@ -96,7 +96,7 @@ export const List = () => {
         <Button
           content="글쓰기"
           onClick={() => {}}
-          style={{ float: "right", marginTop: "15px", marginRight: "10px" }}
+          style={{ float: "right", marginTop: "15px", marginRight: "4%" }}
         />
         <div style={{ clear: "both" }} />
       </div>
