@@ -1,6 +1,7 @@
 /* global oAuth2 */
 /* eslint no-undef: "error" */
 let action = false;
+const blockElement = `#popup_container #col div[style*="display: block"]`
 
 $('#authenticate').on('click', () => {
 
@@ -9,18 +10,19 @@ $('#authenticate').on('click', () => {
   }
 });
 
+// 임시
 $('#api_key_button').on('click', () => {
-  $("#api_key_form").toggle();
+  $("#auth_mode").hide();
+
+  $("#commit_mode").show();
+  $('#gear_icon').show();
+
 })
 
 $('#api_key_save').on('click', () => {
   const value = $('#api_key').val()
   chrome.storage.local.set({ "gpt_key": value }, () => { })
 })
-
-/* Get URL for welcome page */
-$('#welcome_URL').attr('href', `chrome-extension://${chrome.runtime.id}/welcome.html`);
-$('#hook_URL').attr('href', `chrome-extension://${chrome.runtime.id}/welcome.html`);
 
 chrome.storage.local.get('BaekjoonHub_token', (data) => {
   const token = data.BaekjoonHub_token;
@@ -36,21 +38,8 @@ chrome.storage.local.get('BaekjoonHub_token', (data) => {
       if (xhr.readyState === 4) {
         if (xhr.status === 200) {
           $('#commit_mode').show();
-          /* Show MAIN FEATURES */
-          // chrome.storage.local.get('mode_type', (data2) => {
-          //   if (data2 && data2.mode_type === 'commit') {
-          //     $('#commit_mode').show();
-          //     /* Get problem stats and repo link */
-          //     chrome.storage.local.get(['stats', 'BaekjoonHub_hook'], (data3) => {
-          //       const BaekjoonHubHook = data3.BaekjoonHub_hook;
-          //       if (BaekjoonHubHook) {
-          //         $('#repo_url').html(`Your Repo: <a target="blank" style="color: cadetblue !important;" href="https://github.com/${BaekjoonHubHook}">${BaekjoonHubHook}</a>`);
-          //       }
-          //     });
-          //   } else {
-          //     $('#hook_mode').show();
-          //   }
-          // });
+          $('#gear_icon').show();
+
         } else if (xhr.status === 401) {
           // bad oAuth
           // reset token and redirect to authorization process again!
@@ -93,3 +82,31 @@ chrome.storage.local.get(['gpt_key'], (data) => {
   if (data?.gpt_key)
     $('#api_key').attr('value', data.gpt_key)
 });
+
+
+// 세팅 박스 클릭
+$('#gear_icon').on('click', () => {
+
+  // alert($(blockElement))
+
+  const blockElementId = $(blockElement)[0].id;
+
+  console.log(blockElementId)
+
+  $(blockElement).hide();
+
+  if (blockElementId == 'commit_mode') {
+    $("#setting_mode").show();
+  } else {
+    $("#commit_mode").show();
+  }
+});
+
+// function resizePopup() {
+//   var popup = document.getElementById('popup');
+//   var content = document.getElementById('popup_container');
+//   var height = content.scrollHeight;
+//   popup.style.height = height + 'px';
+// }
+
+// window.addEventListener('load', resizePopup);

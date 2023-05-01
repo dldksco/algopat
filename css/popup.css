@@ -1,12 +1,18 @@
 body {
   width: 350px;
+  height: 100%;
   background-color: white !important;
   padding: 10px;
   text-align: center;
   transition: background-color 0.75s ease;
   font-size: 13px;
 
+  
   font-family: 'Helvetica Neue', 'Lucida Grande', sans-serif;
+}
+
+#popup_container {
+  height: 100%;
 }
 
 #title {
@@ -91,3 +97,10 @@ body {
 #api_key_model {
   width: 205px;
 }
+
+#gear_icon {
+  position: absolute;
+  right: 2px;
+  cursor: pointer;
+}
+
