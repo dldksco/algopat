@@ -16,6 +16,8 @@ export const Normal = () => {
           maxWidth: "var(--max-width)",
           marginLeft: "auto",
           marginRight: "auto",
+          paddingLeft: "2%",
+          paddingRight: "2%",
         }}
       >
         <Outlet />
