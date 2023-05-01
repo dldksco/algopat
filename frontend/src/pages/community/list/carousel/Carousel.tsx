@@ -4,6 +4,8 @@ import "slick-carousel/slick/slick-theme.css";
 import { v4 as uuidv4 } from "uuid";
 import { Post } from "./post/Post";
 import style from "./Carousel.module.css";
+import { useEffect, useState } from "react";
+import { isMobile } from "../../hooks/func";
 
 export const Carousel = () => {
   // 더미 데이터 대신에 RQ를 여기서 실행
@@ -54,14 +56,19 @@ export const Carousel = () => {
       likedCount: 14,
     },
   ];
+
   const settings = {
     infinite: true,
     speed: 350,
-    slidesToShow: 3,
+    slidesToShow: isMobile() ? 1 : 3,
     slidesToScroll: 1,
   };
+
   return (
-    <div className={style.carousel}>
+    <div
+      className={style.carousel}
+      style={isMobile() ? { width: "85%" } : undefined}
+    >
       <Slider {...settings}>
         {dumy.map((el) => {
           return <Post key={uuidv4()} data={el} />;
