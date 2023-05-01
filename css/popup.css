@@ -15,6 +15,18 @@ body {
   height: 100%;
 }
 
+#commit_state_text {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+
+}
+
+#code_link {
+
+}
+
 #title {
   font-family: 'Norwester', 'Helvetica Neue', 'Lucida Grande', sans-serif;
   font-size: 30px;
@@ -104,3 +116,41 @@ body {
   cursor: pointer;
 }
 
+#gear_icon:hover {
+  color: gray;
+}
+
+#result_link {
+  margin-top: -10px;
+  color: rgb(10, 89, 92) !important
+}
+
+.spinner {
+  display: inline-block;
+  margin-top: -19px;
+  border: 3px solid rgba(0, 0, 0, 0.1);
+  border-top-color: #3bafda;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  animation: spin 1s infinite linear;
+}
+
+.completed_icon {
+  display: inline-block;
+  margin-top: -16px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background-color: #1c7cd6;
+  text-align: center;
+  color: white;
+  font-size: 12px;
+  line-height: 16px;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

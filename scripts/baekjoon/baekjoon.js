@@ -38,6 +38,9 @@ function startLoader() {
 
           console.log("보낼 데이터 ", bojData)
 
+          // 리팩토링 상태 진행중으로 변경
+          chrome.storage.local.set({ commit_state: "progress" }, () => { });
+
           //fetch 요청
           // fetch('https://70.12.247.167:8000/process', {
           //   method: 'POST',
@@ -55,8 +58,7 @@ function startLoader() {
           //   toastThenStopLoader("실패했습니다", error);
           //   console.error(error)
           // })
-          
-          
+
           // await beginUpload(bojData);
         }
       }
@@ -85,9 +87,9 @@ async function beginUpload(bojData) {
     const currentVersion = stats.version;
     console.log('버전이 뭐니?');
 
-    
 
-    chrome.storage.local.set({"key" : bojData}, () => {
+
+    chrome.storage.local.set({ "key": bojData }, () => {
       // if (debug)
       console.log('성공!');
     });

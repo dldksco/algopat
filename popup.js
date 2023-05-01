@@ -4,7 +4,6 @@ let action = false;
 const blockElement = `#popup_container #col div[style*="display: block"]`
 
 $('#authenticate').on('click', () => {
-
   if (action) {
     oAuth2.begin();
   }
@@ -24,6 +23,32 @@ $('#api_key_save').on('click', () => {
   chrome.storage.local.set({ "gpt_key": value }, () => { })
 })
 
+/*
+  활성화 버튼 클릭 시 storage에 활성 여부 데이터를 저장.
+ */
+$('#onffbox').on('click', () => {
+  chrome.storage.local.set({ bjhEnable: $('#onffbox').is(':checked') }, () => { });
+});
+
+
+// 세팅 박스 클릭
+$('#gear_icon').on('click', () => {
+
+  const blockElementId = $(blockElement)[0].id;
+
+  $(blockElement).hide();
+
+  if (blockElementId == 'commit_mode') {
+    $("#setting_mode").show();
+  } else {
+    $("#commit_mode").show();
+  }
+});
+
+///////////////////////////////////////////////////////////////////////////////////
+/*
+  깃허브 auth 로그인
+ */
 chrome.storage.local.get('BaekjoonHub_token', (data) => {
   const token = data.BaekjoonHub_token;
   if (token === null || token === undefined) {
@@ -57,6 +82,7 @@ chrome.storage.local.get('BaekjoonHub_token', (data) => {
   }
 });
 
+
 /*
   초기에 활성화 데이터가 존재하는지 확인, 없으면 새로 생성, 있으면 있는 데이터에 맞게 버튼 조정
  */
@@ -71,42 +97,28 @@ chrome.storage.local.get('bjhEnable', (data4) => {
 });
 
 /*
-  활성화 버튼 클릭 시 storage에 활성 여부 데이터를 저장.
+  코드 리팩토링 상태
  */
-$('#onffbox').on('click', () => {
-  chrome.storage.local.set({ bjhEnable: $('#onffbox').is(':checked') }, () => { });
+chrome.storage.local.get('commit_state', (data) => {
+
+  if (!data.commit_state || data.commit_state == "none") {
+    $('#commit_state_text').html('<p>진행중인 코드 분석이 없습니다</p>');
+  } else if (data.commit_state == "progress") {
+    $('#commit_state_text').html('<p>코드 분석이 진행중입니다</p><div class="spinner"></div>');
+  } else if (data.commit_state == "completed") {
+    $('#commit_state_text').html('<p>코드 분석이 완료되었습니다</p><div class="completed_icon">✓</div>');
+    $('#commit_state_text').after('<a id="result_link" target="_blank" href="https://github.com/">분석 결과 보기</a>');
+
+  }
 });
 
 
+/*
+  gpt 키
+ */
 chrome.storage.local.get(['gpt_key'], (data) => {
   if (data?.gpt_key)
     $('#api_key').attr('value', data.gpt_key)
 });
 
 
-// 세팅 박스 클릭
-$('#gear_icon').on('click', () => {
-
-  // alert($(blockElement))
-
-  const blockElementId = $(blockElement)[0].id;
-
-  console.log(blockElementId)
-
-  $(blockElement).hide();
-
-  if (blockElementId == 'commit_mode') {
-    $("#setting_mode").show();
-  } else {
-    $("#commit_mode").show();
-  }
-});
-
-// function resizePopup() {
-//   var popup = document.getElementById('popup');
-//   var content = document.getElementById('popup_container');
-//   var height = content.scrollHeight;
-//   popup.style.height = height + 'px';
-// }
-
-// window.addEventListener('load', resizePopup);
