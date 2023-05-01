@@ -1,6 +1,6 @@
 import { Outlet } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
-import { Comment } from "./detail/comment/Comment";
+import { Comment } from "@/components/comment/Comment";
 import { Input } from "@/components/input/Input";
 import { useState } from "react";
 import { Pagenation } from "@/components/pagenation/Pagenation";
