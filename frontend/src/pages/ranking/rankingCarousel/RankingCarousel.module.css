@@ -1,0 +1,37 @@
+.carousel {
+  width: 90%;
+  height: 280px;
+  border: 2px solid var(--font-color);
+  border-radius: 20px;
+  margin: 0 6%;
+  padding: 6% 2.5%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.carousel img {
+  display: inline-block;
+  width: 100px;
+}
+.carousel .content {
+  border: 1px solid white;
+  text-align: center;
+}
+.carousel p {
+  margin: 0;
+  color: var(--fade-font-color);
+}
+.carousel hr {
+  width: 100%;
+}
+.carousel .post_buttom {
+  display: flex;
+  justify-content: space-around;
+}
+.carousel .post_buttom div {
+  font-size: 1.2rem;
+}
+
+.slick-center {
+  background-color: red;
+}/*# sourceMappingURL=RankingCarousel.module.css.map */
