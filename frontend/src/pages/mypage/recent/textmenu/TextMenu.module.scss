@@ -9,9 +9,9 @@
     div{
         position: absolute;
     }
-    .selectBox{
+    .checkBox{
         right:150px;
-        width:60px;
+        width:80px;
     }
     .buttonContainer{
         right:20px;
@@ -33,18 +33,17 @@
     height: 60px;
     display: flex;
     align-items: center;
-    position: relative;
-    div{
-        position: absolute;
-    }
     .title{
-        right: 70%;
+        width:60%;
+        text-align: center;
     }
     .date{
-        right: 200px;
+        width:30%;
+        text-align: center;
     }
     .views{
-        right: 20px;
+        width: 10%;
+        text-align: center;
     }
 }
 .maintxt{

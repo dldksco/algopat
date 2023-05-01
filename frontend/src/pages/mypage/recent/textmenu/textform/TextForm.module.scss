@@ -1,0 +1,26 @@
+.maintxt{
+    border-bottom: 1px solid var(--mypage-box-color);
+    margin: 0px auto;
+    width: 90%;
+    height: 120px;
+    display: flex;
+    div{
+        padding-top: 16px;
+    }
+    .checkbox{
+        margin-right: 10px;
+    }
+    .title{
+        width:60%;
+        text-align: left;
+    }
+    .date{
+        width:30%;
+        text-align: center;
+    }
+    .views{
+        width: 10%;
+        text-align: center;
+    
+    }
+}
