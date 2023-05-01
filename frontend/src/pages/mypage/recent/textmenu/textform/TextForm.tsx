@@ -1,3 +1,4 @@
+import { useState } from "react";
 import style from "./TextForm.module.css";
 
 interface TextSet{
@@ -15,6 +16,7 @@ export const TextForm = ({data}: TextSet) => {
     return (
         <>
             <div className={style.maintxt}>
+                <div className={style.checkbox}><input type="checkbox" /></div>
                 <div className={style.title}> {title} </div>
                 <div className={style.date}> {date} </div>
                 <div className={style.views}> {views} </div>

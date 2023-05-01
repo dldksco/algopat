@@ -12,7 +12,7 @@
       margin-left: 4%;
     }
     .profileimage {
-      background-color: var(--font-color);
+      background-size: cover;
       margin: 3% 4% 2% 4%;
       width: 150px;
       height: 150px;
@@ -32,13 +32,10 @@
       .setting {
         font-size: 1.1rem;
         font-weight: 600;
+        .renew{
+          cursor: pointer;
+        }
       }
     }
-    .grass {
-      border: 1px solid;
-      border-color: var(--font-color);
-      width: 92%;
-      height: 300px;
-      margin: 1% auto;
-    }
+    
   }

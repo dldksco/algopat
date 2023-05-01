@@ -8,6 +8,9 @@
 .maintxt div {
   padding-top: 16px;
 }
+.maintxt .checkbox {
+  margin-right: 10px;
+}
 .maintxt .title {
   width: 60%;
   text-align: left;

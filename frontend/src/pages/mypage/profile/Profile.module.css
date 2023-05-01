@@ -12,7 +12,7 @@
   margin-left: 4%;
 }
 .box .profileimage {
-  background-color: var(--font-color);
+  background-size: cover;
   margin: 3% 4% 2% 4%;
   width: 150px;
   height: 150px;
@@ -32,10 +32,6 @@
   font-size: 1.1rem;
   font-weight: 600;
 }
-.box .grass {
-  border: 1px solid;
-  border-color: var(--font-color);
-  width: 92%;
-  height: 300px;
-  margin: 1% auto;
+.box .profileinfo .setting .renew {
+  cursor: pointer;
 }/*# sourceMappingURL=Profile.module.css.map */

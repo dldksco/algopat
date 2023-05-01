@@ -10,9 +10,9 @@
 .description div {
   position: absolute;
 }
-.description .selectBox {
+.description .checkBox {
   right: 150px;
-  width: 60px;
+  width: 80px;
 }
 .description .buttonContainer {
   right: 20px;
