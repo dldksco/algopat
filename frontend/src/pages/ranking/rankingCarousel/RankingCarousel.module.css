@@ -3,6 +3,7 @@
   border-radius: 20px;
   display: flex;
   align-items: center;
+  padding-bottom: 1%;
 }
 .ranking_carousel .menu {
   padding-left: 2%;
@@ -15,6 +16,9 @@
   margin-top: 2%;
   height: 200px;
   width: 75%;
+  background-color: black;
+  border-radius: 20px;
+  padding-top: 1%;
 }
 .ranking_carousel .carousel img {
   display: inline-block;

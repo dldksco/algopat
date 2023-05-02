@@ -42,11 +42,15 @@ export const RankingCarousel = () => {
     if (rank < 5) {
       return "#7A4613";
     } else if (5 <= rank && rank < 10) {
-      return "gray";
-    } else if (10 <= rank && rank < 16) {
-      return "red";
+      return "#24415C";
+    } else if (10 <= rank && rank < 15) {
+      return "#CB8400";
+    } else if (15 <= rank && rank < 20) {
+      return "#1EC08B";
+    } else if (20 <= rank && rank < 25) {
+      return "#008CC3";
     } else {
-      return "black";
+      return "#CD004F";
     }
   };
 
@@ -169,8 +173,16 @@ export const RankingCarousel = () => {
       style={{ backgroundColor: `${backgroundColorFilter(centerIndex)}` }}
     >
       <div className={style.menu}>
-        <SelectBox options={levelRank} setValue={setlevelRankSelect} />
-        <SelectBox options={levelNumber} setValue={setlevelNumberSelect} />
+        <SelectBox
+          style={{ width: "60%" }}
+          options={levelRank}
+          setValue={setlevelRankSelect}
+        />
+        <SelectBox
+          style={{ width: "60%" }}
+          options={levelNumber}
+          setValue={setlevelNumberSelect}
+        />
       </div>
       <div className={style.carousel}>
         <Slider ref={sliderRef} {...settings}>
@@ -189,7 +201,7 @@ export const RankingCarousel = () => {
                 <img
                   src={`https://static.solved.ac/tier_small/${v.level}.svg`}
                 />
-                <p>{bj_level[v.level]}</p>
+                <p>{v.center ? bj_level[v.level] : ""}</p>
               </div>
             );
           })}
