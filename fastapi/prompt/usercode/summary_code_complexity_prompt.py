@@ -2,7 +2,8 @@ from langchain.prompts import PromptTemplate
 
 SUMMARY_CODE_COMPLEXITY_TMPL = (
     "CONSTRAINTS:\n"
-    "Your job is to estimate the time complexity and space complexity of the user's algorithmic problem code.\n"
+    "You're a programming expert.\n"
+    "Your job is to estimate the time complexity and space complexity of the user's algorithmic problem code step by step.\n"
     "We provide you with the problem information and the user's code.\n"
     "PROBLEM INFORMATION:\n"
     "--------\n"

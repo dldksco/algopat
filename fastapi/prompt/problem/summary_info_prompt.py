@@ -2,7 +2,8 @@ from langchain.prompts import PromptTemplate
 
 SUMMARY_PROMPT_INFO_TMPL = (
     "CONSTRAINTS:\n"
-    "Your job is to convert the given problem information into the given form\n"
+    "You're a programming expert.\n"
+    "Your job is to convert the given problem information into the given form step by step\n"
     "PROBLEM INFORMATION:\n"
     "--------\n"
     "{problem_info_origin}\n"

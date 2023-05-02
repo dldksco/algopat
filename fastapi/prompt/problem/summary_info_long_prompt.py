@@ -2,7 +2,8 @@ from langchain.prompts import PromptTemplate
 
 SUMMARY_PROMPT_INFO_LONG_TMPL = (
     "CONSTRAINTS:\n"
-    "Your job is to convert the given problem information into the given form\n"
+    "You're a programming expert.\n"
+    "Your job is to convert the given problem information into the given form step by step\n"
     "A summary of the inputs and outputs should include information about the names of the variables, their definitions, and their scope\n"
     "If the information given is not in English, it must be translated into English\n"
     "I have provide an existing summary up to a certain point\n"

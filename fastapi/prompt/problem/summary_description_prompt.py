@@ -2,7 +2,8 @@ from langchain.prompts import PromptTemplate
 
 SUMMARY_PROMPT_DESCRIPTION_TMPL = (
     "CONSTRAINTS:\n"
-    "Your job is to summarize the problem description\n"
+    "You're a programming expert.\n"
+    "Your job is to summarize the problem description step by step\n"
     "And to estimate the expected time complexity and space complexity of the solution\n"
     "Below is the problem information for your reference\n"
     "PROBLEM INFORMATION:\n"
