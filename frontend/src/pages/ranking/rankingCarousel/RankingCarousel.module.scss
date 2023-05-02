@@ -1,42 +1,62 @@
-.carousel {
-  width: 90%;
-
-  height: 280px;
+.ranking_carousel {
   border: 2px solid var(--font-color);
   border-radius: 20px;
-  margin: 0 6%;
-  padding: 6% 2.5%;
   display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 1%;
 
-  img {
-    display: inline-block;
-    width: 100px;
-  }
-
-  .content {
-    border: 1px solid white;
-    text-align: center;
-  }
-
-  p {
-    margin: 0;
-    color: var(--fade-font-color);
-  }
-  hr {
-    width: 100%;
-  }
-
-  .post_buttom {
+  .menu {
+    padding-left: 2%;
+    width: 20%;
     display: flex;
-    justify-content: space-around;
+    gap: 10px;
+    flex-direction: column;
+  }
+  .carousel {
+    margin-top: 2%;
+    margin-bottom: 1%;
 
-    div {
-      font-size: 1.2rem;
+    height: 200px;
+    width: 75%;
+    background-color: black;
+    border-radius: 20px;
+    padding-top: 1%;
+    img {
+      display: inline-block;
+      width: 80px;
+      // transition: all 0.1s ease-in-out;
+    }
+
+    .slider {
+      .content {
+        width: 10%;
+        display: flex;
+        text-align: center;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .center_side {
+        img {
+          width: 100px;
+        }
+      }
+
+      .center {
+        img {
+          width: 120px;
+        }
+      }
+    }
+
+    p {
+      margin: 0;
+    }
+
+    .post_buttom {
+      display: flex;
+      justify-content: space-around;
     }
   }
-}
-.slick-center {
-  background-color: red;
 }
