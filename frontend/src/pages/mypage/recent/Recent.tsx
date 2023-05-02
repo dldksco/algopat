@@ -82,13 +82,13 @@ export const Recent = () => {
             작성글 <FontAwesomeIcon icon={faPen} className={style.icon} style={{"fontSize": "0.8rem"}}/>
           </div>
           <div className={style.comment} id="comment" onClick={() => handleMenuItemClick("comment")}>
-            작성 댓글 <FontAwesomeIcon icon = {faComment} className={style.icon}/>
+            댓글 <FontAwesomeIcon icon = {faComment} className={style.icon}/>
           </div>
           <div className={style.recommend} id="recommend" onClick={() => handleMenuItemClick("recommend")}>
-            추천한 글 <FontAwesomeIcon icon = {faThumbsUp} className={style.icon}/>
+            추천 <FontAwesomeIcon icon = {faThumbsUp} className={style.icon}/>
             </div>
           <div className={style.alarm} id="alarm" onClick={() => handleMenuItemClick("alarm")}>
-            최근 활동 내역 <FontAwesomeIcon icon={faBell} className={style.icon}/>
+            최근 활동 <FontAwesomeIcon icon={faBell} className={style.icon}/>
           </div>
           <div className={style.bar} id="bar">
           </div>

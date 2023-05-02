@@ -25,7 +25,7 @@ export const MyPage = () => {
         <div className={style.buffer}></div>
         <Activity selected={handleBarClick}/>
         {componentToRender}
-        <div style={{ height: "120px" }}></div>
+        <div style={{ height: "5%" }}></div>
       </div>
     </>
   );

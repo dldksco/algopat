@@ -56,16 +56,11 @@ export const Profile = () => {
                   alt="solvedAC icon"
                 />
               </p>
-              <p className={style.git}>
-                Git Repository 연동
-                <img
-                  src={git}
-                  style={{ marginLeft: "6px", width: "19px", height: "auto" }}
-                  alt="github icon"
-                />
-              </p>
+              
             </div>
+            
           </div>
+          
           <Grid/>
         </div>
           </>

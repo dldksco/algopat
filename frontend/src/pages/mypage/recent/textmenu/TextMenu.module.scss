@@ -1,8 +1,8 @@
 .description{
     color: var(--font-color);
     padding-top: 5px;
+    margin-left: 2%;
     height: 40px;
-    margin: 0 5%;
     display: flex;
     align-items: center;
     position: relative;
@@ -14,7 +14,7 @@
         width:80px;
     }
     .buttonContainer{
-        right:20px;
+        right:5%;
         .deleteButton{
             color: black;
             text-align: center;
@@ -29,7 +29,7 @@
     border-bottom: 1px solid var(--mypage-box-color);
     margin: 0px auto;
     margin-top: 5px;
-    width: 90%;
+    width: 98%;
     height: 60px;
     display: flex;
     align-items: center;
@@ -46,23 +46,23 @@
         text-align: center;
     }
 }
-.maintxt{
-    border-bottom: 1px solid var(--mypage-box-color);
-    margin: 0px auto;
-    width: 90%;
-    height: 120px;
-    position: relative;
-    div{
-        position: absolute;
-        top: 20px;
+@media screen and (max-width: 768px) {
+    .description {
+        display: none;
     }
-    .title{
-        right: 80%;
-    }
-    .date{
-        right: 170px;
-    }
-    .views{
-        right: 30px;
+    .context{    
+        display: none;
+        .title{
+            width:50%;
+        }
+        .date{
+            width:30%;
+            text-align: center;
+        }
+        .views{
+            width: 20%;
+            text-align: center;
+        }
     }
 }
+  

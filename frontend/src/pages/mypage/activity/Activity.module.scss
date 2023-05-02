@@ -8,13 +8,14 @@
     background-color: var(--mypage-nav-color);
     justify-content: space-between;
     .content{
+        width: 60%;
         span{
-            margin: 0 30px;
+            margin: 0 5%;
             cursor: pointer;
         }
     }
     .logout{
-        margin-right: 40px;
+        margin-right: 5%;
         cursor: pointer;
     }
 }

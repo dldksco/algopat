@@ -20,7 +20,7 @@ export const Activity = (props: ActivityProps) => {
           <span onClick={()=> onBarClick("recent")}>최근 활동</span>
           </div>
         <div className={style.logout} onClick={()=>{}}>
-            <img src={logout} style={{marginRight: "10px"}} alt="logout icon" />
+            <img src={logout} style={{marginRight: "7px", width:"12px", height: "12px"}} alt="logout icon" />
             로그아웃</div>
     </div>
 );

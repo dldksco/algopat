@@ -15,14 +15,12 @@ export const TextMenu = () => {
         <>
         <div className={style.description}>
             <span>n개의 작성한 글이 있습니다.</span>
-            <div className={style.checkBox}>
-            <input type="checkbox" /> 
-            전체선택</div>
             <div className={style.buttonContainer}>
                 <Button className={style.deleteButton}content="삭제" onClick={()=>{}}></Button>
             </div>
             </div>
             <div className={style.context}>
+                <div className={style.checkbox}><input type="checkbox" /></div>
                 <div className={style.title}>제목</div>
                 <div className={style.date}>작성일</div>
                 <div className={style.views}>조회수</div>

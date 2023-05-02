@@ -1,7 +1,7 @@
 .maintxt{
     border-bottom: 1px solid var(--mypage-box-color);
     margin: 0px auto;
-    width: 90%;
+    width: 98%;
     height: 120px;
     display: flex;
     div{
@@ -24,3 +24,39 @@
     
     }
 }
+
+@media screen and (max-width: 768px) {
+    .maintxt{
+        border-bottom: 1px solid var(--mypage-box-color);
+        margin: 0px auto;
+        width: 98%;
+        height: 80px;
+        display: block;
+        div{
+            padding-top: 16px;
+        }
+        .checkbox{
+            display: none;
+        }
+        .title{
+            width:100%;
+            text-align: left;
+        }
+        .date{
+            text-align: left;
+            display: inline-block;
+        }
+        .views::before{
+            content: "[";
+        }
+        .views{
+            display: inline;
+            width: 20%;
+            text-align: left;
+        }
+        .views::after{
+            content: "]";
+        }
+    }
+}
+  
