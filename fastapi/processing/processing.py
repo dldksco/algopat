@@ -101,34 +101,33 @@ async def processing(data : ProblemData):
         summary_code_json = await parse_summary_code(chat_llm_0, preprocessed_summary_code)
         logger.info("코드 요약 json 타입으로 변환 완료")
 
-
-        ### GPT평가 DB 접근 ### 
-        logger.info("GPT평가 DB 접근")
-        GPTSolutionData = GPTSolution(
-            user_submit_solution_seq = user_submit_solution_seq,
-            gpt_solution_time_complexity = summary_code_json.gpt_solution_time_complexity,
-            gpt_solution_time_complexity_reason = summary_code_json.gpt_solution_time_complexity_reason,
-            gpt_solution_time_score = summary_code_json.gpt_solution_time_score,
-            gpt_solution_time_complexity_good_point = summary_code_json.gpt_solution_time_complexity_good_point,
-            gpt_solution_time_complexity_bad_point = summary_code_json.gpt_solution_time_complexity_bad_point,
-            gpt_improving_time_complexity_suggestion = summary_code_json.gpt_improving_time_complexity_suggestion,
-            gpt_solution_space_complexity = summary_code_json.gpt_solution_space_complexity,
-            gpt_solution_space_complexity_reason = summary_code_json.gpt_solution_space_complexity_reason,
-            gpt_solution_space_score = summary_code_json.gpt_solution_space_score,
-            gpt_solution_space_complexity_good_point = summary_code_json.gpt_solution_space_complexity_good_point,
-            gpt_solution_space_complexity_bad_point = summary_code_json.gpt_solution_space_complexity_bad_point,
-            gpt_improving_space_complexity_suggestion = summary_code_json.gpt_improving_space_complexity_suggestion,
-            gpt_solution_clean_score = summary_code_json.gpt_solution_clean_score,
-            gpt_solution_refactoring_suggestion = summary_code_json.gpt_solution_refactoring_suggestion,
-            total_score = summary_code_json.total_score
-        )
-        logger.info("GPT평가 DB 저장")
-        await insert_gpt_solution(GPTSolutionData, await get_session())
-        
         logger.info("데이터 번역 작업 시작")
         result = await translate_texts(chat_llm_0, summary_code_json)
         logger.info("데이터 번역 작업 완료")
         result.total_score = (result.gpt_solution_time_score + result.gpt_solution_space_score + result.gpt_solution_clean_score) // 3
+        
+        ### GPT평가 DB 접근 ### 
+        logger.info("GPT평가 DB 접근")
+        GPTSolutionData = GPTSolution(
+            user_submit_solution_seq = user_submit_solution_seq,
+            gpt_solution_time_complexity = result.gpt_solution_time_complexity,
+            gpt_solution_time_complexity_reason = result.gpt_solution_time_complexity_reason,
+            gpt_solution_time_score = result.gpt_solution_time_score,
+            gpt_solution_time_complexity_good_point = result.gpt_solution_time_complexity_good_point,
+            gpt_solution_time_complexity_bad_point = result.gpt_solution_time_complexity_bad_point,
+            gpt_improving_time_complexity_suggestion = result.gpt_improving_time_complexity_suggestion,
+            gpt_solution_space_complexity = result.gpt_solution_space_complexity,
+            gpt_solution_space_complexity_reason = result.gpt_solution_space_complexity_reason,
+            gpt_solution_space_score = result.gpt_solution_space_score,
+            gpt_solution_space_complexity_good_point = result.gpt_solution_space_complexity_good_point,
+            gpt_solution_space_complexity_bad_point = result.gpt_solution_space_complexity_bad_point,
+            gpt_improving_space_complexity_suggestion = result.gpt_improving_space_complexity_suggestion,
+            gpt_solution_clean_score = result.gpt_solution_clean_score,
+            gpt_solution_refactoring_suggestion = result.gpt_solution_refactoring_suggestion,
+            total_score = result.total_score
+        )
+        logger.info("GPT평가 DB 저장")
+        await insert_gpt_solution(GPTSolutionData, await get_session())
         
         return result
     

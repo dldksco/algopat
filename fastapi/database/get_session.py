@@ -3,7 +3,6 @@ from sqlalchemy.orm import sessionmaker
 import json
 
 from database.problem import insert_problem, insert_gpt_problem_summary, insert_user_submit_problem, get_problem
-from database.get_session import get_session
 from myclass.problem import ProblemSummary
 from pydantic import BaseModel
 
