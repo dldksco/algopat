@@ -1,6 +1,7 @@
 from langchain.chat_models import ChatOpenAI
 from myclass.problem import ProblemData
 from utils.utils import count_token
+from utils.log_decorator import log_decorator
 from chain.problem.summary_description import summary_description_chain
 from chain.problem.summary_description_long import summary_description_long_chain
 from langchain.text_splitter import TokenTextSplitter
@@ -9,6 +10,7 @@ from logging import getLogger
 # logger 설정 
 logger = getLogger()
 
+@log_decorator("문제 설명 요약")
 async def summary_description(chat_llm : ChatOpenAI, data : ProblemData, problem_info : str):
     problem_description_origin = data.problem_description
     token_length = await count_token(problem_description_origin)

@@ -46,17 +46,19 @@ async def insert_problem(data : ProblemData, session):
         session.add(problem)
     await session.commit()
     await session.refresh(problem)
+    await session.close()
 
-
-async def get_problem(problem_id : str, session):
+async def check_problem_is_exist(problem_id : str, session):
     
     result = await session.execute(select(Problem).filter(Problem.problem_id == problem_id))
     problem = result.scalar()
 
     if problem is None:
-        return True # 문제 정보 저장 가능 
+        await session.close()
+        return False # 문제 정보 없음
     else:
-        return False # 이미 문제 정보 존재 
+        await session.close()
+        return True # 문제 정보 있음
     # raise HTTPException(status_code=409, detail="Problem is exist")
 
 # =================================================================================
@@ -72,7 +74,7 @@ class UserSubmitProblem(Base):
     user_submit_problem_created_at = Column(DateTime)
 
 
-async def insert_user_submit_problem(data, session):
+async def insert_user_submit_problem(data : ProblemData, session):
     user_submit_problem = UserSubmitProblem(
         problem_id = data.problem_id,
         user_seq = data.user_seq,
@@ -84,9 +86,14 @@ async def insert_user_submit_problem(data, session):
         session.add(user_submit_problem)
     await session.commit()
     await session.refresh(user_submit_problem)
+    await session.close()
 
-    return user_submit_problem.user_submit_problem_seq
+    return user_submit_problem
 
+async def get_user_submit_problem(problem_id : str, session):
+    result = await session.execute(select(UserSubmitProblem).filter(UserSubmitProblem.problem_id == problem_id))
+    await session.close()
+    return result.scalar()
 
 
 #===============================================================================
@@ -107,7 +114,7 @@ class UserSubmitSolution(Base):
     user_submit_solution_memory = Column(String(255))
     problem_id = Column(String(255), nullable=False)
 
-async def insert_user_submit_solution(data, session):
+async def insert_user_submit_solution(data : ProblemData, session):
     user_submit_solution = UserSubmitSolution( 
         user_submit_problem_seq = data.user_submit_problem_seq,
         user_submit_solution_time = data.user_submit_solution_time,
@@ -125,6 +132,7 @@ async def insert_user_submit_solution(data, session):
         session.add(user_submit_solution)
     await session.commit()
     await session.refresh(user_submit_solution)
+    await session.close()
 
     return user_submit_solution.user_submit_solution_seq
 
@@ -141,10 +149,11 @@ class GPTProblemSummary(Base):
     gpt_problem_summary_description = Column(String(2048))
     gpt_problem_summary_input = Column(String(2048))
     gpt_problem_summary_output = Column(String(2048))
-    gpt_time_complexcity = Column(String(255))
-    gpt_time_complexcity_reason = Column(String(2048))
-    gpt_space_complexcity = Column(String(255))
-    gpt_space_complexcity_reason = Column(String(2048))
+    gpt_problem_summary_constraints = Column(String(2048))
+    gpt_time_complexity = Column(String(255))
+    gpt_time_complexity_reason = Column(String(2048))
+    gpt_space_complexity = Column(String(255))
+    gpt_space_complexity_reason = Column(String(2048))
     problem_algorithm_type = Column(String(255))
     problem_time_limit = Column(String(255))
     problem_space_limit = Column(String(255))
@@ -156,10 +165,11 @@ async def insert_gpt_problem_summary(data, session):
         gpt_problem_summary_description = data.gpt_problem_summary_description,
         gpt_problem_summary_input = data.gpt_problem_summary_input,
         gpt_problem_summary_output = data.gpt_problem_summary_output,
-        gpt_time_complexcity = data.gpt_time_complexity,
-        gpt_time_complexcity_reason = data.gpt_time_complexity_reason,
-        gpt_space_complexcity = data.gpt_space_complexity,
-        gpt_space_complexcity_reason = data.gpt_space_complexity_reason,
+        gpt_problem_summary_constraints = data.gpt_problem_summary_constraints,
+        gpt_time_complexity = data.gpt_time_complexity,
+        gpt_time_complexity_reason = data.gpt_time_complexity_reason,
+        gpt_space_complexity = data.gpt_space_complexity,
+        gpt_space_complexity_reason = data.gpt_space_complexity_reason,
         problem_algorithm_type = data.problem_algorithm_type,
         problem_time_limit = data.problem_time_limit,
         problem_space_limit = data.problem_space_limit
@@ -170,16 +180,25 @@ async def insert_gpt_problem_summary(data, session):
         session.add(gpt_problem_summary)
     await session.commit()
     await session.refresh(gpt_problem_summary)
+    await session.close()
 
-async def get_gpt_problem_summary(problem_id : str, session):
+async def check_gpt_problem_summary_is_exist(problem_id : str, session):
     
     result = await session.execute(select(GPTProblemSummary).filter(GPTProblemSummary.problem_id == problem_id))
     problem = result.scalar()
 
     if problem is None:
-        return True # GPT 문제 요약 정보 저장 가능 
+        await session.close()
+        return False # 문제 요약 정보 없음
     else:
-        return False # 이미 GPT 문제 요약 정보 존재 
+        await session.close()
+        return True # 문제 요약 정보 존재
+        
+async def get_gpt_problem_summary(problem_id : str, session):
+    
+    result = await session.execute(select(GPTProblemSummary).filter(GPTProblemSummary.problem_id == problem_id))
+    await session.close()
+    return result.scalar()
     
 #==================================================================================================================
 
@@ -231,5 +250,6 @@ async def insert_gpt_solution(data, session):
         session.add(gpt_solution)
     await session.commit()
     await session.refresh(gpt_solution)
+    await session.close()
 
 
