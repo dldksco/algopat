@@ -22,8 +22,9 @@ async_session = sessionmaker(engine, expire_on_commit=False, class_=AsyncSession
 async def get_session() -> AsyncSession:
     async with async_session() as session:
         yield session
-    
+        
 Base = declarative_base()
+
 async def create_tables():
     async with engine.begin() as conn:
         await conn.run_sync(Base.metadata.create_all, tables=[Problem.__table__])
