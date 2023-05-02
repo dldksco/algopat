@@ -19,7 +19,7 @@ async def processing(data : ProblemData):
 
     open_brace = '{'
     close_brace = '}'
-    chat_llm_0 = ChatOpenAI(temperature=0, openai_api_key=data.openai_api_key, request_timeout=120)
+    chat_llm_0 = ChatOpenAI(temperature=0, openai_api_key=data.openai_api_key, request_timeout=120, model_name="gpt-4")
     # chat_llm_1 = ChatOpenAI(temperature=0.1, openai_api_key=data.openai_api_key)
     chat_llm_3 = ChatOpenAI(temperature=0.3, openai_api_key=data.openai_api_key, request_timeout=120)
     # chat_llm_10 = ChatOpenAI(temperature=1, openai_api_key=data.openai_api_key)

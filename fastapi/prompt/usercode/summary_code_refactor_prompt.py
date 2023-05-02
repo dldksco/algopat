@@ -2,7 +2,8 @@ from langchain.prompts import PromptTemplate
 
 SUMMARY_CODE_REFACTORING_TMPL = (
     "CONSTRAINTS:\n"
-    "Your task is to provide a clean code score for the user's code, along with refactoring suggestions.\n"
+    "You're a programming expert.\n"
+    "Your task is to provide a clean code score for the user's code, along with refactoring suggestions step by step.\n"
     "The problem information and the user's code are as follows:\n"
     "PROBLEM INFORMATION:\n"
     "--------\n"
