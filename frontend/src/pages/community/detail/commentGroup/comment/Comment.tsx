@@ -27,7 +27,7 @@ export const Comment = ({ data }: CommentSet) => {
       <div className={style.comment}>
         <span>{comment}</span>
         <div className={style.recommend}>
-          <FontAwesomeIcon icon={faThumbsUp}></FontAwesomeIcon>
+          <FontAwesomeIcon icon={faThumbsUp} />
           {recommend}
         </div>
       </div>
