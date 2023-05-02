@@ -42,7 +42,9 @@
   .box{
     width: 100%;
     .setting {
-     display: none;
+      .renew::before{
+        content: "티어 연동";
+      }
     }
     overflow-x: auto;
   }

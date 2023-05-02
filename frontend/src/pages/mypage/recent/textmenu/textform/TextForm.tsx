@@ -1,4 +1,3 @@
-import { useState } from "react";
 import style from "./TextForm.module.css";
 
 interface TextSet{
