@@ -27,7 +27,7 @@ logger = getLogger()
 # GPT 응답 생성 함수
 @time_logger("GPT 비즈니스 로직")
 async def processing(data : ProblemData):
-
+    
     open_brace = '{'
     close_brace = '}'
     chat_llm_0 = ChatOpenAI(temperature=0, openai_api_key=data.openai_api_key, request_timeout=120)
@@ -85,5 +85,6 @@ async def processing(data : ProblemData):
     await save_gpt_solution(user_submit_solution_seq, result)
     
     return result
-    
+
+
         
