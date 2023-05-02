@@ -33,6 +33,7 @@ export const SelectBox = ({
 
   return (
     <select
+      title="selectbox"
       className={style.select_box}
       value={select}
       onChange={(e) => chageValue(e)}

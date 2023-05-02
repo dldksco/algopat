@@ -7,10 +7,11 @@ import { useEffect, useRef, useState } from "react";
 import style from "./RankingCarousel.module.css";
 import "./carousel.css";
 import { SelectBox } from "@/components/selectBox/SelectBox";
-import { Button } from "@/components/button/Button";
+
+const MAX_LEGNTH = 30;
 
 export const RankingCarousel = () => {
-  const initData = Array.from({ length: 31 }, (_, i) => {
+  const initData = Array.from({ length: MAX_LEGNTH }, (_, i) => {
     return {
       level: i + 1,
       center: false,
@@ -37,12 +38,13 @@ export const RankingCarousel = () => {
   ];
 
   const backgroundColorFilter = (rank: number) => {
-    if (1 <= rank && rank < 6) {
-      return "black";
-    } else if (6 <= rank && rank < 11) {
-      return "black";
-    } else if (11 <= rank && rank < 16) {
-      return "black";
+    console.log(rank);
+    if (rank < 5) {
+      return "#7A4613";
+    } else if (5 <= rank && rank < 10) {
+      return "gray";
+    } else if (10 <= rank && rank < 16) {
+      return "red";
     } else {
       return "black";
     }
@@ -80,13 +82,12 @@ export const RankingCarousel = () => {
     "Ruby III",
     "Ruby II",
     "Ruby I",
-    "Master",
   ];
 
   const [levelNumberSelect, setlevelNumberSelect] = useState(
     levelNumber[0].value
   );
-  const [levelRankSelect, setlevelRankSelect] = useState(levelRank[0].name);
+  const [levelRankSelect, setlevelRankSelect] = useState(levelRank[0].value);
   const [levelData, setLevelData] = useState(initData);
   const [centerIndex, setCenterIndex] = useState(0);
   const sliderRef = useRef<Slider>(null);
@@ -95,7 +96,7 @@ export const RankingCarousel = () => {
     className: style.slider,
     centerPadding: "60px",
     centerMode: true,
-    infinite: false,
+    infinite: true,
     speed: 350,
     slidesToShow: 5,
     slidesToScroll: 1,
@@ -124,7 +125,7 @@ export const RankingCarousel = () => {
       });
 
       // right
-      if (index + 1 < 31) {
+      if (index + 1 < MAX_LEGNTH) {
         setLevelData((prev) => {
           prev[index + 1].right = true;
           return [...prev];
@@ -149,21 +150,18 @@ export const RankingCarousel = () => {
   };
 
   // 셀렉트 박스 선택에 따라 슬라이드 이동
+  // 랭크 선택
+  useEffect(() => {
+    if (!sliderRef.current) return;
+    sliderRef.current.slickGoTo(Number(levelRankSelect) * 5);
+  }, [levelRankSelect]);
   // 숫자 선택
   useEffect(() => {
-    console.log(centerIndex, levelNumberSelect);
     if (!sliderRef.current) return;
     sliderRef.current.slickGoTo(
       Math.floor(centerIndex / 5) * 5 + Number(levelNumberSelect)
     );
   }, [levelNumberSelect]);
-  // 랭크 선택
-  // useEffect(() => {
-  //   // if (!sliderRef.current) return;
-  //   // sliderRef.current.slickGoTo(
-  //   //   Math.floor(centerIndex / 5) * 5 + Number(levelNumberSelect)
-  //   // );
-  // }, [levelRankSelect]);
 
   return (
     <div
@@ -171,8 +169,8 @@ export const RankingCarousel = () => {
       style={{ backgroundColor: `${backgroundColorFilter(centerIndex)}` }}
     >
       <div className={style.menu}>
-        <SelectBox options={levelNumber} setValue={setlevelNumberSelect} />
         <SelectBox options={levelRank} setValue={setlevelRankSelect} />
+        <SelectBox options={levelNumber} setValue={setlevelNumberSelect} />
       </div>
       <div className={style.carousel}>
         <Slider ref={sliderRef} {...settings}>

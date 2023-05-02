@@ -5,8 +5,10 @@
   align-items: center;
 }
 .ranking_carousel .menu {
+  padding-left: 2%;
   width: 20%;
   display: flex;
+  gap: 10px;
   flex-direction: column;
 }
 .ranking_carousel .carousel {
