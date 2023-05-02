@@ -7,6 +7,8 @@ import { useEffect, useRef, useState } from "react";
 import style from "./RankingCarousel.module.css";
 import "./carousel.css";
 import { SelectBox } from "@/components/selectBox/SelectBox";
+import { backgroundColorFilter } from "../hooks/func";
+import { bj_level } from "@/variable/variable";
 
 const MAX_LEGNTH = 30;
 
@@ -37,56 +39,6 @@ export const RankingCarousel = () => {
     { value: "5", name: "Ruby" },
   ];
 
-  const backgroundColorFilter = (rank: number) => {
-    if (rank < 5) {
-      return "#7A4613";
-    } else if (5 <= rank && rank < 10) {
-      return "#24415C";
-    } else if (10 <= rank && rank < 15) {
-      return "#CB8400";
-    } else if (15 <= rank && rank < 20) {
-      return "#1EC08B";
-    } else if (20 <= rank && rank < 25) {
-      return "#008CC3";
-    } else {
-      return "#CD004F";
-    }
-  };
-
-  const bj_level = [
-    "Unrated",
-    "Bronze V",
-    "Bronze IV",
-    "Bronze III",
-    "Bronze II",
-    "Bronze I",
-    "Silver V",
-    "Silver IV",
-    "Silver III",
-    "Silver II",
-    "Silver I",
-    "Gold V",
-    "Gold IV",
-    "Gold III",
-    "Gold II",
-    "Gold I",
-    "Platinum V",
-    "Platinum IV",
-    "Platinum III",
-    "Platinum II",
-    "Platinum I",
-    "Diamond V",
-    "Diamond IV",
-    "Diamond III",
-    "Diamond II",
-    "Diamond I",
-    "Ruby V",
-    "Ruby IV",
-    "Ruby III",
-    "Ruby II",
-    "Ruby I",
-  ];
-
   const [levelNumberSelect, setlevelNumberSelect] = useState(
     levelNumber[0].value
   );
@@ -94,6 +46,64 @@ export const RankingCarousel = () => {
   const [levelData, setLevelData] = useState(initData);
   const [centerIndex, setCenterIndex] = useState(0);
   const sliderRef = useRef<Slider>(null);
+
+  const onInitCallback = () => {
+    const index = centerIndex;
+
+    // center
+    setLevelData((prev) => {
+      prev[index].center = true;
+      return [...prev];
+    });
+
+    // right
+    setLevelData((prev) => {
+      prev[index + 1].right = true;
+      return [...prev];
+    });
+  };
+
+  const afterChangeCallback = (index: number) => {
+    setCenterIndex(index);
+
+    //selectbox 초기화
+    setlevelRankSelect(Math.floor(index / 5).toString());
+    setlevelNumberSelect("0");
+
+    // 초기화
+    setLevelData((prev) =>
+      prev.map((v) => {
+        return { ...v, left: false, right: false, center: false };
+      })
+    );
+
+    // left
+    if (index - 1 >= 0) {
+      setLevelData((prev) => {
+        prev[index - 1].left = true;
+        return [...prev];
+      });
+    }
+
+    // center
+    setLevelData((prev) => {
+      prev[index].center = true;
+      return [...prev];
+    });
+
+    // right
+    if (index + 1 < MAX_LEGNTH) {
+      setLevelData((prev) => {
+        prev[index + 1].right = true;
+        return [...prev];
+      });
+    }
+  };
+
+  const contentClick = (index: number) => {
+    if (!sliderRef.current) return;
+    sliderRef.current.slickGoTo(index);
+  };
 
   const settings: Settings = {
     className: style.slider,
@@ -103,62 +113,8 @@ export const RankingCarousel = () => {
     speed: 350,
     slidesToShow: 5,
     slidesToScroll: 1,
-    afterChange: (index: number) => {
-      setCenterIndex(index);
-
-      //selectbox 초기화
-      setlevelRankSelect(Math.floor(index / 5).toString());
-      setlevelNumberSelect("0");
-
-      // 초기화
-      setLevelData((prev) =>
-        prev.map((v) => {
-          return { ...v, left: false, right: false, center: false };
-        })
-      );
-
-      // left
-      if (index - 1 >= 0) {
-        setLevelData((prev) => {
-          prev[index - 1].left = true;
-          return [...prev];
-        });
-      }
-
-      // center
-      setLevelData((prev) => {
-        prev[index].center = true;
-        return [...prev];
-      });
-
-      // right
-      if (index + 1 < MAX_LEGNTH) {
-        setLevelData((prev) => {
-          prev[index + 1].right = true;
-          return [...prev];
-        });
-      }
-    },
-    onInit: () => {
-      const index = centerIndex;
-
-      // center
-      setLevelData((prev) => {
-        prev[index].center = true;
-        return [...prev];
-      });
-
-      // right
-      setLevelData((prev) => {
-        prev[index + 1].right = true;
-        return [...prev];
-      });
-    },
-  };
-
-  const contentClick = (index: number) => {
-    if (!sliderRef.current) return;
-    sliderRef.current.slickGoTo(index);
+    afterChange: afterChangeCallback,
+    onInit: onInitCallback,
   };
 
   // 셀렉트 박스 선택에 따라 슬라이드 이동
