@@ -3,13 +3,13 @@
     border: 1px solid;
     border-color: var(--mypage-font-color);
     width: 80%;
-    height: 800px;    
+    height: auto;
+    padding: 4%;    
     .recentTitle {
       font-size: 1.5rem;
       color: var(--mypage-font-color);
       font-weight: 600;
-      margin-top: 4%;
-      margin-left: 4%;
+      margin-bottom: 5%;
     }
     .whichBoard{
         color: var(--mypage-font-color);
@@ -17,8 +17,8 @@
         padding-bottom:10px;
         display: flex;
         justify-content: flex-start;
-        margin-left: 5%;
-        margin-right: 5%;
+        margin-left: 1%;
+        margin-right: 1%;
         margin-top: 2%;
         position: relative;
 
@@ -32,7 +32,7 @@
             }
         }
         .bar {
-          position: absolute;
+          position: absolute;                                            
           bottom: 0;
           height: 4px;
           border-radius: 10px;
@@ -46,7 +46,23 @@
   
 @media screen and (max-width: 768px) {
   .box {
-    width: 768px;
+    width: 100%;
+    height: auto;
+    .whichBoard{
+      overflow-x: scroll;
+      .text{
+        min-width: 70px;
+      }
+      .comment{
+        min-width: 60px;
+      }
+      .recommend{
+        min-width: 60px;
+      }
+      .alarm{
+        min-width: 100px;
+      }
+    }
   }
 }
 

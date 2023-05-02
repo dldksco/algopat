@@ -1,8 +1,8 @@
 .description {
   color: var(--font-color);
   padding-top: 5px;
+  margin-left: 2%;
   height: 40px;
-  margin: 0 5%;
   display: flex;
   align-items: center;
   position: relative;
@@ -15,7 +15,7 @@
   width: 80px;
 }
 .description .buttonContainer {
-  right: 20px;
+  right: 5%;
 }
 .description .buttonContainer .deleteButton {
   color: black;
@@ -30,7 +30,7 @@
   border-bottom: 1px solid var(--mypage-box-color);
   margin: 0px auto;
   margin-top: 5px;
-  width: 90%;
+  width: 98%;
   height: 60px;
   display: flex;
   align-items: center;
@@ -48,23 +48,22 @@
   text-align: center;
 }
 
-.maintxt {
-  border-bottom: 1px solid var(--mypage-box-color);
-  margin: 0px auto;
-  width: 90%;
-  height: 120px;
-  position: relative;
-}
-.maintxt div {
-  position: absolute;
-  top: 20px;
-}
-.maintxt .title {
-  right: 80%;
-}
-.maintxt .date {
-  right: 170px;
-}
-.maintxt .views {
-  right: 30px;
+@media screen and (max-width: 768px) {
+  .description {
+    display: none;
+  }
+  .context {
+    display: none;
+  }
+  .context .title {
+    width: 50%;
+  }
+  .context .date {
+    width: 30%;
+    text-align: center;
+  }
+  .context .views {
+    width: 20%;
+    text-align: center;
+  }
 }/*# sourceMappingURL=TextMenu.module.css.map */

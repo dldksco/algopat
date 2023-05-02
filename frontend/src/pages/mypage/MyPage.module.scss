@@ -1,8 +1,9 @@
 .mypage {
   width: 100%;
+  padding-bottom: 5%;
   background-color: var(--mypage-background-color);
   .buffer{
-    height: 50px;
+    height: 0px;
     background-color: var(--mypage-background-color);
   }
 }

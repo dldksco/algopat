@@ -1,19 +1,18 @@
 .box {
+    padding: 4%;
     margin: 5% auto;
     border: 1px solid;
     border-color: var(--font-color);
     // width: 1400px;
     width: 80%;
-    height: 800px;
+    height: auto;
     .profiletitle {
-      font-size: 1.5rem;
+      font-size: 1.36em;
       font-weight: 600;
-      margin-top: 4%;
-      margin-left: 4%;
     }
     .profileimage {
       background-size: cover;
-      margin: 3% 4% 2% 4%;
+      margin-top: 4%;
       width: 150px;
       height: 150px;
       border-radius: 100%;
@@ -22,20 +21,29 @@
     .profileinfo {
       display: flex;
       justify-content: space-between;
-      align-items: center;
-      margin: 0 4%;
+      align-items: end;
       .gitinfo {
         p {
           font-size: 1.3rem;
         }
       }
-      .setting {
-        font-size: 1.1rem;
-        font-weight: 600;
-        .renew{
-          cursor: pointer;
-        }
+    }
+    .setting {
+      font-size: 1.1rem;
+      font-weight: 600;
+      .renew{
+        cursor: pointer;
       }
     }
-    
   }
+
+  
+@media screen and (max-width: 768px) {
+  .box{
+    width: 100%;
+    .setting {
+     display: none;
+    }
+    overflow-x: auto;
+  }
+}

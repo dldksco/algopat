@@ -8,11 +8,14 @@
   background-color: var(--mypage-nav-color);
   justify-content: space-between;
 }
+.topbar .content {
+  width: 60%;
+}
 .topbar .content span {
-  margin: 0 30px;
+  margin: 0 5%;
   cursor: pointer;
 }
 .topbar .logout {
-  margin-right: 40px;
+  margin-right: 5%;
   cursor: pointer;
 }/*# sourceMappingURL=Activity.module.css.map */
