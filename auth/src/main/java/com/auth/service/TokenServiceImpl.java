@@ -1,10 +1,12 @@
 package com.auth.service;
 
 import com.auth.domain.ErrorCode;
+import com.auth.domain.RefreshToken;
 import com.auth.dto.TokenDTO;
 import com.auth.dto.TokenGenerateDTO;
 import com.auth.domain.TokenStatus;
 import com.auth.exception.BaseException;
+import com.auth.repository.RefreshTokenRepository;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jws;
@@ -24,6 +26,7 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class TokenServiceImpl implements TokenService {
+  private final RefreshTokenRepository refreshTokenRepository;
   @Value("${secret-key}")
   private String SECRET_KEY;
   private static final long ACCESS_TOKEN_EXPIRATION_TIME = 10; // 1 day (in milliseconds)
@@ -50,6 +53,7 @@ public class TokenServiceImpl implements TokenService {
         .setExpiration(new Date(System.currentTimeMillis() + REFRESH_TOKEN_EXPIRATION_TIME))
         .signWith(getSigningKey(), SignatureAlgorithm.HS256)
         .compact();
+    refreshTokenRepository.save(RefreshToken.builder().refreshToken(token).userGithubId(tokenGenerateDTO.getUserGithubId()).build());
     return TokenDTO.builder().token(token).build();
   }
   @Override

@@ -20,9 +20,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class TokenController {
   private final TokenService tokenService;
-  @GetMapping("/refreshToken")
+  @GetMapping("/refreshtoken")
   public ResponseEntity<?> checkRefreshTokenIssueAccessToken(HttpServletRequest request) {
-    System.out.println("gd");
     Cookie[] cookies = request.getCookies();
     String refreshToken = null;
 
