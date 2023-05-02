@@ -38,7 +38,6 @@ export const RankingCarousel = () => {
   ];
 
   const backgroundColorFilter = (rank: number) => {
-    console.log(rank);
     if (rank < 5) {
       return "#7A4613";
     } else if (5 <= rank && rank < 10) {
@@ -107,6 +106,10 @@ export const RankingCarousel = () => {
     afterChange: (index: number) => {
       setCenterIndex(index);
 
+      //selectbox 초기화
+      setlevelRankSelect(Math.floor(index / 5).toString());
+      setlevelNumberSelect("0");
+
       // 초기화
       setLevelData((prev) =>
         prev.map((v) => {
@@ -153,6 +156,11 @@ export const RankingCarousel = () => {
     },
   };
 
+  const contentClick = (index: number) => {
+    if (!sliderRef.current) return;
+    sliderRef.current.slickGoTo(index);
+  };
+
   // 셀렉트 박스 선택에 따라 슬라이드 이동
   // 랭크 선택
   useEffect(() => {
@@ -163,7 +171,7 @@ export const RankingCarousel = () => {
   useEffect(() => {
     if (!sliderRef.current) return;
     sliderRef.current.slickGoTo(
-      Math.floor(centerIndex / 5) * 5 + Number(levelNumberSelect)
+      Number(levelRankSelect) * 5 + Number(levelNumberSelect)
     );
   }, [levelNumberSelect]);
 
@@ -177,11 +185,13 @@ export const RankingCarousel = () => {
           style={{ width: "60%" }}
           options={levelRank}
           setValue={setlevelRankSelect}
+          value={levelRankSelect}
         />
         <SelectBox
           style={{ width: "60%" }}
           options={levelNumber}
           setValue={setlevelNumberSelect}
+          value={levelNumberSelect}
         />
       </div>
       <div className={style.carousel}>
@@ -197,6 +207,7 @@ export const RankingCarousel = () => {
                   (v.center ? style.center : "")
                 }
                 key={uuidv4()}
+                onClick={() => contentClick(v.level - 1)}
               >
                 <img
                   src={`https://static.solved.ac/tier_small/${v.level}.svg`}

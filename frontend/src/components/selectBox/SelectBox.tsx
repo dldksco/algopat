@@ -6,6 +6,7 @@ interface SelectBoxProps extends HTMLAttributes<HTMLSelectElement> {
   options: Options[];
   readonly?: boolean;
   setValue: (val: string) => void;
+  value: string;
 }
 
 interface Options {
@@ -23,19 +24,18 @@ export const SelectBox = ({
   defaultValue,
   readonly,
   setValue,
+  value,
   ...props
 }: SelectBoxProps) => {
-  const [select, setSelect] = useState(defaultValue);
   const chageValue = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setValue(e.target.value);
-    setSelect(e.target.value);
   };
 
   return (
     <select
       title="selectbox"
       className={style.select_box}
-      value={select}
+      value={value}
       onChange={(e) => chageValue(e)}
       {...props}
     >
