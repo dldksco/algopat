@@ -1,0 +1,48 @@
+.detail {
+  span {
+    margin-right: 20px;
+  }
+  .center {
+    width: auto;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .content {
+    margin-top: 20px;
+    width: auto;
+    margin-left: auto;
+    margin-right: auto;
+    span {
+      float: left;
+      margin-top: 10px;
+    }
+    textarea {
+      resize: none;
+      min-height: 200px;
+      width: 90%;
+      padding: 10px 20px;
+      border-radius: 20px;
+      color: var(--font-color);
+      background-color: var(--mypage-box-color);
+    }
+    &::after {
+      content: "";
+      clear: both;
+    }
+  }
+
+  .recommand {
+    width: 160px;
+    text-align: center;
+    padding: 10px 0px;
+    border-radius: 10px;
+    margin: 30px auto 50px;
+    background-color: var(--mypage-box-color);
+    cursor: pointer;
+    span {
+      margin-left: 10px;
+      margin-right: 0;
+    }
+  }
+}
