@@ -5,6 +5,7 @@ from processing.processing import processing
 from my_kafka.handler import consume_problem_summary
 import logging
 from config.logger_config import setup_logging # logger_config 모듈 임포트 
+from database.get_session import create_tables
 
 # logger 기본 설정 호출 
 setup_logging()
@@ -22,6 +23,7 @@ async def health_check():
 # GPT 응답 생성 로직 
 @app.post("/process")
 async def process_data(data: ProblemData):
+    await create_tables()
     output = await processing(data)
     return output
 

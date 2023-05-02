@@ -32,7 +32,7 @@ async def consume_problem_summary(topic : str):
     try:
         async for msg in consumer:            
             data = ProblemData(**msg.value) # Dict to Class Type (카프카를 통해 consume한 데이터를 Python 클래스 형태로 변환)
-            result = await processing(data) # 비즈니스 로직 수행 
+            await processing(data) # 비즈니스 로직 수행 
             await send("alert", "ok") # 로직 완료 알림 전송 
     finally:
         await consumer.stop() # anomaly 상태일 때 종료 
