@@ -6,7 +6,7 @@ from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm import declarative_base
 from database.problem import UserSubmitSolution, GPTSolution, Problem, UserSubmitProblem, GPTProblemSummary
-
+from contextlib import asynccontextmanager
 
 from utils.shared_env import mariadb_config
 
@@ -18,6 +18,7 @@ engine = create_async_engine(DATABASE_URL, echo=True)
 async_session = sessionmaker(engine, expire_on_commit=False, class_=AsyncSession)
 
 # session 정보 가져오기 
+@asynccontextmanager
 async def get_session() -> AsyncSession:
     async with async_session() as session:
         yield session
