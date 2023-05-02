@@ -34,6 +34,9 @@ dependencies {
 	//feign client
 	implementation "org.springframework.cloud:spring-cloud-starter-openfeign:3.1.1"
 
+	//Redis
+	implementation group: 'org.springframework.boot', name: 'spring-boot-starter-data-redis'
+
 
 
 
