@@ -12,14 +12,14 @@ Base = declarative_base() # ORM 매핑을 위한 기본 클래스
 # 문제 테이블 
 class Problem(Base):
     __tablename__ = "problem"
-    __table_args__ = {"schema" : "test"}
+    __table_args__ = {"schema" : "algopat"}
 
     problem_id = Column(String(255), primary_key=True, nullable=False)
     problem_title = Column(String(2048))
     problem_level = Column(String(2048))
-    problem_desc = Column(String(2048))
-    problem_input = Column(String(2048))
-    problem_output = Column(String(2048))
+    problem_desc = Column(Text)
+    problem_input = Column(Text)
+    problem_output = Column(Text)
     problem_tag = Column(String(2048))
     problem_limit = Column(String(2048))
     problem_time_limit = Column(String(255))
@@ -64,7 +64,7 @@ async def get_problem(problem_id : str, session):
 # 회원 푼 문제 테이블 
 class UserSubmitProblem(Base):
     __tablename__ = "user_submit_problem"
-    __table_args__ = {"schema" : "test"}
+    __table_args__ = {"schema" : "algopat"}
 
     user_submit_problem_seq = Column(BigInteger, primary_key=True, index=True, autoincrement=True)
     problem_id = Column(String(255), nullable=False, index=True)
@@ -94,7 +94,7 @@ async def insert_user_submit_problem(data, session):
 # 회원 제출 코드 테이블
 class UserSubmitSolution(Base):
     __tablename__ = "user_submit_solution"
-    __table_args__ = {"schema" : "test"}
+    __table_args__ = {"schema" : "algopat"}
 
     user_submit_solution_seq = Column(BigInteger, primary_key=True, index=True, autoincrement=True)
     user_submit_problem_seq = Column(BigInteger, nullable=False, index=True)
@@ -134,7 +134,7 @@ async def insert_user_submit_solution(data, session):
 # GPT 문제 요약 테이블 
 class GPTProblemSummary(Base):
     __tablename__ = "gpt_problem_summary"
-    __table_args__ = {"schema" : "test"}
+    __table_args__ = {"schema" : "algopat"}
 
     gpt_problem_summary_seq = Column(BigInteger, primary_key=True, index=True, autoincrement=True)
     problem_id = Column(String(255), nullable=False)
@@ -186,7 +186,7 @@ async def get_gpt_problem_summary(problem_id : str, session):
 # GPT 평가 테이블 
 class GPTSolution(Base):
     __tablename__ = "gpt_solution"
-    __table_args__ = {"schema" : "test"}
+    __table_args__ = {"schema" : "algopat"}
 
     gpt_solution_seq = Column(BigInteger, primary_key=True, index=True, autoincrement=True)
     user_submit_solution_seq = Column(BigInteger, index=True, nullable=False)
