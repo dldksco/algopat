@@ -28,7 +28,7 @@ class ProblemData(BaseModel):
     
 class ProblemSummary(BaseModel):
     problem_id: Optional[int] = None
-    gpt_problem_summary_description: Optional[str] = None
+    gpt_problem_summary_description: Optional[str] = "nothing"
     gpt_problem_summary_input: Optional[str] = None
     gpt_problem_summary_constraints: Optional[str] = None
     gpt_problem_summary_output: Optional[str] = None

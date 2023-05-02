@@ -2,7 +2,7 @@ from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
 from sqlalchemy.orm import sessionmaker
 import json
 
-from database.problem import insert_problem, insert_gpt_problem_summary, insert_user_submit_problem, get_problem
+from database.problem import insert_problem, insert_gpt_problem_summary, insert_user_submit_problem, check_problem_is_exist
 from myclass.problem import ProblemSummary
 from pydantic import BaseModel
 
