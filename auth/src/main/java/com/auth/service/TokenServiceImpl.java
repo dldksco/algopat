@@ -91,7 +91,7 @@ public class TokenServiceImpl implements TokenService {
   public Cookie createRefreshTokenCookie(TokenDTO tokenDTO) {
     Cookie refreshTokenCookie = new Cookie("refreshToken", tokenDTO.getToken());
     refreshTokenCookie.setHttpOnly(true);
-//    refreshTokenCookie.setSecure(true); // HTTPS를 사용하는 경우에만 쿠키를 전송합니다.
+    refreshTokenCookie.setSecure(true); // HTTPS를 사용하는 경우에만 쿠키를 전송합니다.
     refreshTokenCookie.setPath("/");
     refreshTokenCookie.setMaxAge((int)REFRESH_TOKEN_EXPIRATION_TIME);
     return refreshTokenCookie;
