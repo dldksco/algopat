@@ -13,6 +13,7 @@ public class WebConfig implements WebMvcConfigurer {
         .allowedOriginPatterns("*")
         .allowedMethods("GET", "POST", "PUT", "DELETE", "HEAD", "OPTIONS")
         .allowCredentials(true)
-        .maxAge(3600);
+        .maxAge(3600)
+        .allowedHeaders("*");
   }
 }
