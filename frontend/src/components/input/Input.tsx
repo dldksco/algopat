@@ -30,7 +30,7 @@ export const Input = ({
       placeholder={placeholder}
       value={input}
       onKeyDown={(event) => {
-        if (event.key === "Enter") onKeyDown();
+        if (event.key === "Enter") onKeyDown(event);
       }}
       disabled={disabled === undefined ? false : disabled}
       {...props}

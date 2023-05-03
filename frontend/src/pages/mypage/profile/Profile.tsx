@@ -75,7 +75,7 @@ export const Profile = () => {
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     console.log(event, "키보드 이벤트");
     console.log(event.key, "입력");
-    if (event.key === "Enter") {
+
       console.log("enter!!");
       setInputValue(event.currentTarget.value);
       userCheck(event.currentTarget.value).then((response) => {
@@ -100,8 +100,8 @@ export const Profile = () => {
           console.log("123123");
           window.alert("인증 성공");
         }
-      });
-    }
+      );
+
   };
   // const buttonClickTier = async()=>{
   //   console.log("button");
@@ -181,10 +181,12 @@ export const Profile = () => {
                     input={inputValue}
                     setInput={setInputValue}
                     onKeyDown={handleKeyDown}
-                  /> */}
-                </div>
-              </Modal>
-            )}
+                  />
+                  }
+                  </div>
+                </Modal>
+                )}
+            </div>
           </div>
         </div>
         <Grid />
