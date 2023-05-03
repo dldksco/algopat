@@ -43,8 +43,11 @@ public class AuthServiceImpl implements AuthService {
     LoginProcessDTO loginProcessDTO = new LoginProcessDTO();
     GithubAccessTokenResponseDTO githubAccessTokenResponseDTO = requestGithubAccessToken(
         githubCodeResponseDTO);
+    System.out.println("githubcode: "+ githubCodeResponseDTO.getCode());
+    System.out.println("githubAccess: "+githubAccessTokenResponseDTO.getGitHubaAccessToken());
     System.out.println("1");
     GithubUserResponseDTO githubUserResponseDTO = requestGithubUserId(githubAccessTokenResponseDTO);
+    System.out.println("githubid:"+ githubUserResponseDTO.getUserGithubId());
 System.out.println("2");
     TokenDTO accessToken = tokenService.generateAccessToken(
         TokenGenerateDTO.builder().userGithubId(githubUserResponseDTO.getUserGithubId()).build());
@@ -81,7 +84,7 @@ System.out.println("3");
       GithubAccessTokenResponseDTO githubAccessTokenResponseDTO) {
     String githubaAccessToken = githubAccessTokenResponseDTO.getGitHubaAccessToken();
     String url = "https://api.github.com/user";
-
+    System.out.println("method"+ githubaAccessToken);
     HttpHeaders headers = new HttpHeaders();
     headers.setAccept(Collections.singletonList(MediaType.valueOf("application/vnd.github+json")));
     headers.set("Authorization", "Bearer " + githubaAccessToken);

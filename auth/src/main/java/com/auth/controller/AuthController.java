@@ -31,11 +31,6 @@ public class AuthController {
   public RedirectView getCode (@RequestParam("code") String code, HttpServletResponse response){
     LoginProcessDTO loginProcessDTO =authService.loginProcess(GithubCodeResponseDTO.builder().code(code).build());
     response.addHeader("Authorization",loginProcessDTO.getAccessToken());
-    response.setHeader("Access-Control-Allow-Origin", "*");
-    response.setHeader("Access-Control-Allow-Credentials", "true");
-    response.setHeader("Access-Control-Allow-Methods","*");
-    response.setHeader("Access-Control-Max-Age", "3600");
-    response.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Key, Authorization");
     response.addCookie(loginProcessDTO.getCookie());
     RedirectView redirectView = new RedirectView();
     redirectView.setUrl("https://algopat/login-success");
