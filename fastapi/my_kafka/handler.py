@@ -48,7 +48,7 @@ async def send(topic : str, key: str, message: str):
     )
     await producer.start()
     logger.info("Send to 토픽 : " + topic)
-    await producer.send_and_wait(topic, key, message)
+    await producer.send_and_wait(topic, key.encode("utf-8"), message.encode("utf-8"))
     await producer.stop()
 
 
