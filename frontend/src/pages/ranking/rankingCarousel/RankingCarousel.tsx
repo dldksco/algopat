@@ -9,6 +9,8 @@ import "./carousel.css";
 import { SelectBox } from "@/components/selectBox/SelectBox";
 import { backgroundColorFilter } from "../hooks/func";
 import { bj_level } from "@/variable/variable";
+import { useRecoilState } from "recoil";
+import { centerIndexState } from "@/atoms/ranking.atom";
 
 const MAX_LEGNTH = 30;
 
@@ -44,7 +46,8 @@ export const RankingCarousel = () => {
   );
   const [levelRankSelect, setlevelRankSelect] = useState(levelRank[0].value);
   const [levelData, setLevelData] = useState(initData);
-  const [centerIndex, setCenterIndex] = useState(0);
+  const [centerIndex, setCenterIndex] = useRecoilState(centerIndexState);
+  // const [centerIndex, setCenterIndex] = useState(0);
   const sliderRef = useRef<Slider>(null);
 
   const onInitCallback = () => {
@@ -64,7 +67,7 @@ export const RankingCarousel = () => {
   };
 
   const afterChangeCallback = (index: number) => {
-    setCenterIndex(index);
+    setCenterIndex(index + 1);
 
     //selectbox 초기화
     setlevelRankSelect(Math.floor(index / 5).toString());

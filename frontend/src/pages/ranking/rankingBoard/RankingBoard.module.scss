@@ -1,4 +1,5 @@
 .header_container {
+  margin-top: 30px;
   height: 50px;
   width: 100%;
   display: grid;
@@ -20,8 +21,18 @@
   align-items: center;
   font-size: 1rem;
   border-bottom: 1px solid gray;
+  cursor: pointer;
   color: var(--font-color);
   padding: 0 3%;
+
+  .row_number {
+    display: flex;
+    align-items: center;
+  }
+
+  &:hover {
+    background-color: gray;
+  }
 }
 
 @media screen and (max-width: 1000px) {
