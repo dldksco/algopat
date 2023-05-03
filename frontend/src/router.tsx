@@ -49,7 +49,10 @@ const router: RouteObject[] = [
         element: <MyPage />,
         children: [
           { index: true, element: <Profile /> },
-          { path: "recent", element: <Recent /> },
+          {
+            path: "recent",
+            element: <Recent />,
+          },
         ],
       },
       {
