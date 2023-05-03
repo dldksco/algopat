@@ -48,7 +48,13 @@ async def send(topic : str, key: str, message: str):
     )
     await producer.start()
     logger.info("Send to 토픽 : " + topic)
-    await producer.send_and_wait(topic, key.encode("utf-8"), message.encode("utf-8"))
+
+    # 이미 bytes 타입인지 확인
+    key_bytes = key.encode("utf-8") if isinstance(key, str) else key
+    message_bytes = message.encode("utf-8") if isinstance(message, str) else message
+
+    await producer.send_and_wait(topic, key_bytes, message_bytes)
+    logger.info("알림 메시지 전송 완료")
     await producer.stop()
 
 
