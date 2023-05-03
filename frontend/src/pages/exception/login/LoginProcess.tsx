@@ -1,3 +1,3 @@
 export const LoginProcess = () => {
-  return <div>LoginProcessasdfasdfasdf</div>;
+  return <div>LoginProcess</div>;
 };
