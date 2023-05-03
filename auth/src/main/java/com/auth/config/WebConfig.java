@@ -1,6 +1,5 @@
 package com.auth.config;
 
-import com.auth.filter.CustomCorsFilter;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
