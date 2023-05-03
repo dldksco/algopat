@@ -14,6 +14,8 @@ import { Ranking } from "./pages/ranking/Ranking";
 import { RankingMain } from "./pages/ranking/rankingMain/RankingMain";
 import { RankingDetail } from "./pages/ranking/rankingDetail/RankingDetail";
 import { Recent } from "./pages/mypage/recent/Recent";
+import { LoginSuccess } from "./pages/exception/login/LoginSuccess";
+import { LoginProcess } from "./pages/exception/login/LoginProcess";
 
 const router: RouteObject[] = [
   {
@@ -50,19 +52,20 @@ const router: RouteObject[] = [
           { path: "recent", element: <Recent /> },
         ],
       },
+      {
+        path: "*",
+        element: <Exception />,
+        children: [
+          { path: "login-process", element: <LoginProcess /> },
+          { path: "login-success", element: <LoginSuccess /> },
+          //   { path: "*", element: <Page404 /> },
+        ],
+      },
     ],
   },
   {
     path: "/code",
     element: <Code />,
-  },
-  {
-    path: "*",
-    element: <Exception />,
-    children: [
-      //   { path: "login-success", element: <LoginSuccess /> },
-      //   { path: "*", element: <Page404 /> },
-    ],
   },
 ];
 
