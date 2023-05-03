@@ -44,7 +44,7 @@ async def consume_problem_summary(topic : str):
 async def send(topic : str, key: str, message: str):
     producer = AIOKafkaProducer(
         bootstrap_servers = kafka_servers,
-        value_serializer = lambda m : m.encode("utf-8") 
+        value_serializer = lambda m : m.encode("utf-8") if isinstance(m, str) else m
     )
     await producer.start()
     logger.info("Send to 토픽 : " + topic)
