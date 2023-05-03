@@ -12,11 +12,8 @@ logger = getLogger()
 
 async def summary_code_complexity(chat_llm : ChatOpenAI, data : ProblemData, problem_summary : ProblemSummary):
     problem_info = await build_problem_info(problem_summary, data)
-    logger.info(problem_info)
     preprocessed_code = await preprocessing_code(data.code, data.language)
-    logger.info(preprocessed_code)
     token_length = await count_token(preprocessed_code)
-    logger.info(token_length)
     if token_length < 2000:
         return await summary_code_complexity_short(chat_llm, preprocessed_code, problem_info)
     else :
