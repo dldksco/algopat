@@ -33,24 +33,7 @@ public class AuthController {
     response.addHeader("Authorization",loginProcessDTO.getAccessToken());
     response.addCookie(loginProcessDTO.getCookie());
     RedirectView redirectView = new RedirectView();
-//    redirectView.setUrl("https://algopat.kr/login-success");
-    redirectView.setUrl("https://naver.com");
-    return redirectView;
-  }
-
-
-  public RedirectView test (@RequestParam("code") String code, HttpServletResponse response){
-    response.addHeader("Authorization","1234");
-    System.out.println("test"+code);
-    RedirectView redirectView = new RedirectView();
-    redirectView.setUrl("https://algopat.kr/test/auth/test");
-    return redirectView;
-  }
-  @GetMapping("/test")
-  public RedirectView test2 (){
-    System.out.println("test2");
-    RedirectView redirectView = new RedirectView();
-    redirectView.setUrl("https://algopat/login-success");
+    redirectView.setUrl("https://algopat.kr/login-success");
     return redirectView;
   }
 
@@ -60,11 +43,6 @@ public class AuthController {
   public RedirectView redirect(HttpServletResponse response){
     RedirectView redirectView = new RedirectView();
     String githubRedirectURL = authService.setGithubRedirectURL();
-    response.setHeader("Access-Control-Allow-Origin", "*");
-    response.setHeader("Access-Control-Allow-Credentials", "true");
-    response.setHeader("Access-Control-Allow-Methods","*");
-    response.setHeader("Access-Control-Max-Age", "3600");
-    response.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Key, Authorization");
     redirectView.setUrl(githubRedirectURL);
 
     return redirectView;
