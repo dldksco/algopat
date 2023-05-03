@@ -12,16 +12,6 @@ export default defineConfig({
         secure: false,
         rewrite: (path) => path.replace(/^\/api/, "/api/v3/user/show"),
       },
-      "/test": {
-        target: "https://github.com",
-        changeOrigin: true,
-        secure: false,
-        rewrite: (path) =>
-          path.replace(
-            /^\/test/,
-            "/login/oauth/authorize?client_id=62a8bd9fd0300fdc6d37"
-          ),
-      },
       // "/api":{
       //   target: 'http://127.0.0.1:5000',
       //   changeOrigin: true,
