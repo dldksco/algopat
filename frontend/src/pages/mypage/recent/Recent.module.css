@@ -10,36 +10,6 @@
   font-size: 1.5rem;
   color: var(--mypage-font-color);
   font-weight: 600;
-  margin-bottom: 5%;
-}
-.box .whichBoard {
-  color: var(--mypage-font-color);
-  border-bottom: 1.5px solid var(--mypage-font-color);
-  padding-bottom: 10px;
-  display: flex;
-  justify-content: flex-start;
-  margin-left: 1%;
-  margin-right: 1%;
-  margin-top: 2%;
-  position: relative;
-}
-.box .whichBoard div {
-  margin-right: 7%;
-  font-size: 1rem;
-  cursor: pointer;
-}
-.box .whichBoard div .icon {
-  margin-left: 4px;
-  font-size: 1rem;
-}
-.box .whichBoard .bar {
-  position: absolute;
-  bottom: 0;
-  height: 4px;
-  border-radius: 10px;
-  background-color: white;
-  opacity: 1;
-  transition: transform 0.3s ease-in-out;
 }
 
 @media screen and (max-width: 768px) {

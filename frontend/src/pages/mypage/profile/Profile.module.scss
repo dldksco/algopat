@@ -41,11 +41,7 @@
 @media screen and (max-width: 768px) {
   .box{
     width: 100%;
-    .setting {
-      .renew::before{
-        content: "티어 연동";
-      }
-    }
     overflow-x: auto;
+    
   }
 }
