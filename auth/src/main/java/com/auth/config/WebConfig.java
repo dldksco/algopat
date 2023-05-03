@@ -44,13 +44,13 @@ public class WebConfig implements WebMvcConfigurer {
     source.registerCorsConfiguration("/**", config);
     return new CorsFilter(source);
   }
-  @Bean
-  public FilterRegistrationBean<CustomCorsFilter> customCorsFilterRegistration() {
-    FilterRegistrationBean<CustomCorsFilter> registration = new FilterRegistrationBean<>();
-    registration.setFilter(new CustomCorsFilter());
-    registration.addUrlPatterns("/*");
-    registration.setName("customCorsFilter");
-    registration.setOrder(1);
-    return registration;
-  }
+//  @Bean
+//  public FilterRegistrationBean<CustomCorsFilter> customCorsFilterRegistration() {
+//    FilterRegistrationBean<CustomCorsFilter> registration = new FilterRegistrationBean<>();
+//    registration.setFilter(new CustomCorsFilter());
+//    registration.addUrlPatterns("/*");
+//    registration.setName("customCorsFilter");
+//    registration.setOrder(1);
+//    return registration;
+//  }
 }
