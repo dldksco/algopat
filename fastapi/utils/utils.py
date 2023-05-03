@@ -1,5 +1,6 @@
 import tiktoken
 import re
+from datetime import datetime
 
 encoding = tiktoken.encoding_for_model("gpt-3.5-turbo")
 
@@ -51,4 +52,14 @@ async def parse_lang_type(lang_type : str):
         return 'python'
     else:
         return 'unknown'
+    
+    
+async def parse_date_format(origin_date : str):
+    origin_date_format = "%Y년 %m월 %d일 %H:%M:%S"
+    date_format = "%Y-%m-%d %H:%M:%S"
+    
+    origin_datetime_obj = datetime.strptime(origin_date, origin_date_format)
+    timestamp_str = origin_datetime_obj.strftime(date_format)
+    return timestamp_str
+    
     

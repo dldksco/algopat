@@ -3,7 +3,7 @@ import database.problem as db_problem
 from database.problem import UserSubmitProblem, UserSubmitSolution, GPTSolution
 from database.get_session import get_session
 from logging import getLogger
-from datetime import datetime 
+from utils.utils import parse_date_format
 # logger 설정 
 logger = getLogger()
 
@@ -44,14 +44,16 @@ async def get_gpt_problem_summary(problem_id : str):
 
 async def save_user_submit_solution_origin(user_submit_problem_seq : int, problem_id : str, data : ProblemData):
     logger.info("회원 제출 코드 DB 접근")
-
+    
+    origin_date_format = "%Y년 %m월 %d일 %H:%M:%S"
     date_format = "%Y-%m-%d %H:%M:%S"
 
+    
     async with get_session() as session:
         ### 회원 제출 코드 DB 접근 ### 
         UserSubmitSolutionData = UserSubmitSolution(
             user_submit_problem_seq = user_submit_problem_seq,
-            user_submit_solution_time = datetime.strptime(data.submissionTime, date_format), 
+            user_submit_solution_time = await parse_date_format(data.submissionTime), 
             user_submit_solution_result = data.result,
             user_submit_solution_result_category = data.resultCategory,
             user_submit_solution_language = data.language,
