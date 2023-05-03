@@ -15,6 +15,10 @@ logger = logging.getLogger()
 
 app = FastAPI()
 
+@app.on_event("startup")
+async def create_tables_on_startup():
+    await create_tables()
+
 # health 체크 
 @app.get("/health")
 async def health_check():
