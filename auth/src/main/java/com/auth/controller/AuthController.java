@@ -33,9 +33,27 @@ public class AuthController {
     response.addHeader("Authorization",loginProcessDTO.getAccessToken());
     response.addCookie(loginProcessDTO.getCookie());
     RedirectView redirectView = new RedirectView();
+    redirectView.setUrl("https://algopat.kr/login-success");
+    return redirectView;
+  }
+
+
+  public RedirectView test (@RequestParam("code") String code, HttpServletResponse response){
+    response.addHeader("Authorization","1234");
+    System.out.println("test"+code);
+    RedirectView redirectView = new RedirectView();
+    redirectView.setUrl("https://algopat.kr/test/auth/test");
+    return redirectView;
+  }
+  @GetMapping("/test")
+  public RedirectView test2 (){
+    System.out.println("test2");
+    RedirectView redirectView = new RedirectView();
     redirectView.setUrl("https://algopat/login-success");
     return redirectView;
   }
+
+
 
   @GetMapping("/github")
   public RedirectView redirect(HttpServletResponse response){
