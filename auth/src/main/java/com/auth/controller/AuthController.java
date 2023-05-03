@@ -38,10 +38,16 @@ public class AuthController {
   }
 
   @GetMapping("/github")
-  public RedirectView redirect(){
+  public RedirectView redirect(HttpServletResponse response){
     RedirectView redirectView = new RedirectView();
     String githubRedirectURL = authService.setGithubRedirectURL();
+    response.setHeader("Access-Control-Allow-Origin", "*");
+    response.setHeader("Access-Control-Allow-Credentials", "true");
+    response.setHeader("Access-Control-Allow-Methods","*");
+    response.setHeader("Access-Control-Max-Age", "3600");
+    response.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Key, Authorization");
     redirectView.setUrl(githubRedirectURL);
+
     return redirectView;
   }
 
