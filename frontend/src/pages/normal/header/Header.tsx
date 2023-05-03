@@ -4,6 +4,7 @@ import { faBars, faXmark } from "@fortawesome/free-solid-svg-icons";
 import logo from "@/assets/img/logo.png";
 import style from "./Header.module.css";
 import { useState } from "react";
+import { $ } from "@/connect/axios";
 
 export const Header = () => {
   const navigate = useNavigate();
@@ -27,7 +28,16 @@ export const Header = () => {
         <div onClick={() => moveNav("/code")}>코드분석</div>
         <div onClick={() => moveNav("/ranking")}>랭킹</div>
         <div onClick={() => moveNav("/community")}>커뮤니티</div>
-        <div onClick={() => moveNav("/mypage")}>로그인</div>
+        <div
+          onClick={() => {
+            // moveNav("/mypage");
+            $.get("/auth/github").then((res) => {
+              console.log(res);
+            });
+          }}
+        >
+          로그인
+        </div>
       </div>
       <div className={style.bars}>
         {!isOpen ? (
