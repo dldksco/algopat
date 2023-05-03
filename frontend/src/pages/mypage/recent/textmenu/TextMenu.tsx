@@ -1,10 +1,11 @@
 import { Button } from "@/components/button/Button";
-import style from "./TextMenu.module.css";
 import { v4 as uuidv4 } from "uuid";
 import { TextForm } from "./textform/TextForm";
+import style from "./TextMenu.module.css";
 
 export const TextMenu = () => {
-
+    // 애니메이션 1: 이전 메뉴 불러오기
+    
     const dummyData = [
         { title: "[백준1] 배열 돌리기 5 매우 쉽게 잘 푸는 법", date: "2020.02.21", views: 20 },
         { title: "[백준2] 배열 돌리기 5 매우 쉽게 잘 푸는 법", date: "2020.02.23", views: 30 },
