@@ -33,7 +33,7 @@ async def consume_problem_summary(topic : str):
         async for msg in consumer:            
             data = ProblemData(**msg.value) # Dict to Class Type (카프카를 통해 consume한 데이터를 Python 클래스 형태로 변환)
             await processing(data) # 비즈니스 로직 수행 
-            await send("alert", "ok") # 로직 완료 알림 전송 
+            await send("alert", "9999", "ok") # 로직 완료 알림 전송 
     finally:
         await consumer.stop() # anomaly 상태일 때 종료 
 
@@ -41,14 +41,14 @@ async def consume_problem_summary(topic : str):
 
 # Producer
 # 카프카로 메시지 전송 함수 
-async def send(topic : str, message):
+async def send(topic : str, key: str, message: str):
     producer = AIOKafkaProducer(
         bootstrap_servers = kafka_servers,
         value_serializer = lambda m : m.encode("utf-8") 
     )
     await producer.start()
     logger.info("Send to 토픽 : " + topic)
-    await producer.send_and_wait(topic, message)
+    await producer.send_and_wait(topic, key, message)
     await producer.stop()
 
 
