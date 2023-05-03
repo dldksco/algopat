@@ -138,7 +138,7 @@ export const Profile = () => {
               {modalOpen && (
               <Modal setModalOpen={setModalOpen}>
                 <div className={style.modal} style={{margin:"10px 20px"}}><h1>Solved AC 티어 연동하기</h1>
-                <p>solved ac id를 입력해주세요!</p>
+                <p>solved ac id를 입력해주세요!!</p>
                 {<Input
                     type="text"
                     placeholder="Enter text here"
