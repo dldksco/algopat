@@ -63,7 +63,7 @@ export const Profile = () => {
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     console.log(event, "키보드 이벤트");
     console.log(event.key, "입력");
-    if(event.key ==="Enter"){
+
       console.log("enter!!");
       setInputValue(event.currentTarget.value);
       userCheck(event.currentTarget.value).then(
@@ -93,7 +93,7 @@ export const Profile = () => {
           }
         }
       );
-    }
+
   };
   
   const dummyData ={
@@ -145,7 +145,8 @@ export const Profile = () => {
                     input={inputValue}
                     setInput={setInputValue}
                     onKeyDown={handleKeyDown}
-                  />}
+                  />
+                  }
                   </div>
                 </Modal>
                 )}
