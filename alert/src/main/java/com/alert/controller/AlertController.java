@@ -66,4 +66,9 @@ public class AlertController {
     emitService.emitMessageToUser(userSinks, userSeq, message);
   }
 
+  @GetMapping("/health")
+  public String healthCheck() {
+    return "ok";
+  }
+
 }
