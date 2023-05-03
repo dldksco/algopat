@@ -4,7 +4,6 @@ import { faBars, faXmark } from "@fortawesome/free-solid-svg-icons";
 import logo from "@/assets/img/logo.png";
 import style from "./Header.module.css";
 import { useState } from "react";
-import { $ } from "@/connect/axios";
 
 export const Header = () => {
   const navigate = useNavigate();
@@ -31,9 +30,9 @@ export const Header = () => {
         <div
           onClick={() => {
             // moveNav("/mypage");
-            $.get("/auth/github").then((res) => {
-              console.log(res);
-            });
+            window.open(
+              "https://github.com/login/oauth/authorize?client_id=62a8bd9fd0300fdc6d37"
+            );
           }}
         >
           로그인
