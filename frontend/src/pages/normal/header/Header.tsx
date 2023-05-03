@@ -5,6 +5,7 @@ import logo from "@/assets/img/logo.png";
 import style from "./Header.module.css";
 import { useState } from "react";
 import { $ } from "@/connect/axios";
+import axios from "axios";
 
 export const Header = () => {
   const navigate = useNavigate();
@@ -31,7 +32,10 @@ export const Header = () => {
         <div
           onClick={() => {
             // moveNav("/mypage");
-            $.get("/auth/github").then((res) => {
+            // window.open(
+            //   "https://github.com/login/oauth/authorize?client_id=62a8bd9fd0300fdc6d37&redirect_uri=http://algopat.kr/test/auth/code"
+            // );
+            axios.get("/test").then((res) => {
               console.log(res);
             });
           }}

@@ -1,1 +1,1 @@
-{"version":3,"sources":[],"names":[],"mappings":"","file":"CommentGroup.module.css"}
+{"version":3,"sources":["CommentGroup.module.scss","CommentGroup.module.css"],"names":[],"mappings":"AAAA;EACE,gBAAA;EACA,WAAA;EACA,iBAAA;EACA,kBAAA;ACCF;ADCE;EACE,YAAA;EACA,iBAAA;EACA,UAAA;EACA,kBAAA;EACA,mBAAA;EACA,wBAAA;EACA,yCAAA;ACCJ","file":"CommentGroup.module.css"}
