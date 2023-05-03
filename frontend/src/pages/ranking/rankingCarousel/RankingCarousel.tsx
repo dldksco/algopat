@@ -141,13 +141,13 @@ export const RankingCarousel = () => {
     >
       <div className={style.menu}>
         <SelectBox
-          style={{ width: "60%" }}
+          style={{ width: "60%", height: "10%" }}
           options={levelRank}
           setValue={setlevelRankSelect}
           value={levelRankSelect}
         />
         <SelectBox
-          style={{ width: "60%" }}
+          style={{ width: "60%", height: "10%" }}
           options={levelNumber}
           setValue={setlevelNumberSelect}
           value={levelNumberSelect}

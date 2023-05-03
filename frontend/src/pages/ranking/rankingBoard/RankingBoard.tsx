@@ -70,7 +70,7 @@ export const RankingBoard = () => {
             key={uuidv4()}
             className={style.content_container}
             style={{ gridTemplateColumns: grid }}
-            onClick={() => navigate("/code")}
+            onClick={() => navigate(`detail/${content.number}`)}
           >
             <div
               className={style.row_number}
