@@ -6,7 +6,7 @@ import style from "./Input.module.css";
 interface InputProps extends HTMLAttributes<HTMLInputElement> {
   type?: string;
   input: string;
-  onKeyDown: any;
+  onKeyDown?: any;
   disabled?: boolean;
   setInput: React.Dispatch<React.SetStateAction<string>>;
 }
