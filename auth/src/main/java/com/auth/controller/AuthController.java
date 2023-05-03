@@ -33,7 +33,8 @@ public class AuthController {
     response.addHeader("Authorization",loginProcessDTO.getAccessToken());
     response.addCookie(loginProcessDTO.getCookie());
     RedirectView redirectView = new RedirectView();
-    redirectView.setUrl("https://algopat.kr/login-success");
+//    redirectView.setUrl("https://algopat.kr/login-success");
+    redirectView.setUrl("https://naver.com");
     return redirectView;
   }
 
