@@ -38,7 +38,7 @@ public class AuthController {
     response.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Key, Authorization");
     response.addCookie(loginProcessDTO.getCookie());
     RedirectView redirectView = new RedirectView();
-    redirectView.setUrl("http://localhost:28082/auth/code/test");
+    redirectView.setUrl("https://algopat/login-success");
     return redirectView;
   }
 
