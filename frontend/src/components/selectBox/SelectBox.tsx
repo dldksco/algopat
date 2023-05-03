@@ -37,15 +37,11 @@ export const SelectBox = ({
       className={style.select_box}
       value={value}
       onChange={(e) => chageValue(e)}
+      disabled={readonly}
       {...props}
     >
       {options.map((option) => (
-        <option
-          className={style.option}
-          key={uuidv4()}
-          value={option.value}
-          disabled={readonly}
-        >
+        <option className={style.option} key={uuidv4()} value={option.value}>
           {option.name}
         </option>
       ))}

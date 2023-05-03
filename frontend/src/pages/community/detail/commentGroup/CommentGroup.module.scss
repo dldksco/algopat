@@ -1,0 +1,16 @@
+.content {
+  margin-top: 20px;
+  width: auto;
+  margin-left: auto;
+  margin-right: auto;
+
+  textarea {
+    resize: none;
+    min-height: 200px;
+    width: 90%;
+    padding: 10px 20px;
+    border-radius: 20px;
+    color: var(--font-color);
+    background-color: var(--mypage-box-color);
+  }
+}

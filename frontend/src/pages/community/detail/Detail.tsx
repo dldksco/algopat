@@ -2,18 +2,26 @@ import Editor from "@monaco-editor/react";
 import { faThumbsUp } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Input } from "@/components/input/Input";
-import { useState } from "react";
-import style from "./Detail.module.css";
+import { useRef, useState } from "react";
 import { CommentGroup } from "./commentGroup/CommentGroup";
+import { SelectBox } from "@/components/selectBox/SelectBox";
+import style from "./Detail.module.css";
 
 export const Detail = () => {
-  const dumy2 = "//여기에 코드 더미데이터 들어감\n //되냐?";
-
   const [input, setInput] = useState("글의 제목");
+  const dumy2 =
+    "//여기에 코드 더미데이터 들어감\n// 되 냐?\nconst sad = 23123123123;";
+  const editorRef = useRef<any>(null);
+
+  function handleEditorDidMount(editor: any) {
+    editorRef.current = editor;
+    // editorRef.current?.getValue() => 이걸로 값에 접근
+  }
+
   return (
     <div className={style.detail}>
       <div className={style.center}>
-        <span>제목</span>
+        <span style={{ marginRight: "20px" }}>제목</span>
         <Input
           input={input}
           setInput={setInput}
@@ -33,20 +41,21 @@ export const Detail = () => {
         />
       </div>
       <div className={style.center} style={{ marginTop: "20px" }}>
-        <span>언어</span>
-        <Input
-          input={"JAVA"}
-          setInput={setInput}
-          disabled={true}
+        <span style={{ marginRight: "20px" }}>언어</span>
+        <SelectBox
+          value="JAVA"
+          options={[{ value: "JAVA", name: "JAVA" }]}
+          setValue={setInput}
+          readonly={true}
           style={{
             backgroundColor: "var(--mypage-box-color)",
             border: "none",
-            width: "12%",
+            width: "140px",
           }}
         />
       </div>
       <div className={style.center} style={{ marginTop: "20px" }}>
-        <span>코드</span>
+        <span style={{ marginRight: "20px" }}>코드</span>
         <div
           style={{
             position: "relative",
@@ -60,10 +69,12 @@ export const Detail = () => {
             width="100%"
             defaultLanguage="javascript"
             defaultValue={dumy2}
+            onMount={handleEditorDidMount}
             theme="vs-dark"
             options={{
               insertSpaces: true,
-              tabSize: 2,
+              tabSize: 4,
+              fontSize: 16,
               readOnly: true,
             }}
           />
