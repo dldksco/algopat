@@ -43,12 +43,13 @@ public class AuthServiceImpl implements AuthService {
     LoginProcessDTO loginProcessDTO = new LoginProcessDTO();
     GithubAccessTokenResponseDTO githubAccessTokenResponseDTO = requestGithubAccessToken(
         githubCodeResponseDTO);
+    System.out.println("1");
     GithubUserResponseDTO githubUserResponseDTO = requestGithubUserId(githubAccessTokenResponseDTO);
-
+System.out.println("2");
     TokenDTO accessToken = tokenService.generateAccessToken(
         TokenGenerateDTO.builder().userGithubId(githubUserResponseDTO.getUserGithubId()).build());
     loginProcessDTO.setAccessToken(accessToken.getToken());
-
+System.out.println("3");
     TokenDTO refreshToken = tokenService.generateRefreshToken(
         TokenGenerateDTO.builder().userGithubId(githubUserResponseDTO.getUserGithubId()).build());
     Cookie cookie = tokenService.createRefreshTokenCookie(refreshToken);
