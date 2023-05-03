@@ -9,12 +9,16 @@ import com.auth.service.TokenService;
 import javax.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.view.RedirectView;
 
 @RestController
@@ -23,6 +27,8 @@ public class AuthController {
   private final AuthService authService;
 
   private final TokenService tokenService;
+
+  private final RestTemplate restTemplate;
   @Value("${client-id}")
   private String clientId;
 
@@ -38,18 +44,39 @@ public class AuthController {
   }
 
   @GetMapping("/github")
-  public RedirectView redirect(HttpServletResponse response){
-    RedirectView redirectView = new RedirectView();
+  public ResponseEntity<String> getGitHubOAuth(String code, String clientId, String redirectUri) {
     String githubRedirectURL = authService.setGithubRedirectURL();
-    response.setHeader("Access-Control-Allow-Origin", "*");
-    response.setHeader("Access-Control-Allow-Credentials", "true");
-    response.setHeader("Access-Control-Allow-Methods","*");
-    response.setHeader("Access-Control-Max-Age", "3600");
-    response.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Key, Authorization");
-    redirectView.setUrl(githubRedirectURL);
 
-    return redirectView;
+    HttpHeaders headers = new HttpHeaders();
+    headers.set("Accept", "application/json");
+    HttpEntity<String> entity = new HttpEntity<>("parameters", headers);
+
+    ResponseEntity<String> responseEntity = restTemplate.exchange(githubRedirectURL, HttpMethod.GET, entity, String.class);
+
+    HttpHeaders responseHeaders = new HttpHeaders();
+    responseHeaders.set("Access-Control-Allow-Origin", "*");
+    responseHeaders.set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+    responseHeaders.set("Access-Control-Max-Age", "3600");
+    responseHeaders.set("Access-Control-Allow-Headers", "Content-Type, Authorization, Content-Length, X-Requested-With");
+
+    return new ResponseEntity<>(responseEntity.getBody(), responseHeaders, responseEntity.getStatusCode());
   }
+
+//  @GetMapping("/github")
+//  public RedirectView redirect(HttpServletResponse response){
+//    RedirectView redirectView = new RedirectView();
+//    String githubRedirectURL = authService.setGithubRedirectURL();
+//    response.setHeader("Access-Control-Allow-Origin", "*");
+//    response.setHeader("Access-Control-Allow-Credentials", "true");
+//    response.setHeader("Access-Control-Allow-Methods","*");
+//    response.setHeader("Access-Control-Max-Age", "3600");
+//    response.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Key, Authorization");
+//    redirectView.setUrl(githubRedirectURL);
+//
+//    return redirectView;
+//  }
+
+
 
   @GetMapping("/validate")
   public ResponseEntity<?> checkTokenValidate(@RequestHeader("Authorization") String jwt){
