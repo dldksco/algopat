@@ -102,7 +102,7 @@ public class AuthServiceImpl implements AuthService {
   public String setGithubRedirectURL() {
     String githubRedirectBaseURL = "https://github.com/login/oauth/authorize";
     String githubRedirectURL =
-        githubRedirectBaseURL + "?client_id=" + clientId + "&" + "redirect_uri=" + redirectURI;
+        githubRedirectBaseURL + "?client_id=" + clientId;
     return githubRedirectURL;
   }
 
