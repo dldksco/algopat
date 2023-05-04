@@ -28,13 +28,13 @@ public class AuthController {
 
 
   @GetMapping("/code")
-  public RedirectView getCode (@RequestParam("code") String code, HttpServletResponse response){
+  public ResponseEntity<?> getCode (@RequestParam("code") String code, HttpServletResponse response){
     LoginProcessDTO loginProcessDTO =authService.loginProcess(GithubCodeResponseDTO.builder().code(code).build());
     response.addHeader("Authorization",loginProcessDTO.getAccessToken());
     response.addCookie(loginProcessDTO.getCookie());
     RedirectView redirectView = new RedirectView();
-    redirectView.setUrl("https://algopat.kr/login-success");
-    return redirectView;
+
+    return new ResponseEntity<>("fd",HttpStatus.OK);
   }
 
 
