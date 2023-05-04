@@ -78,7 +78,7 @@ export const RankingBoard = () => {
             >
               <img
                 src={`https://static.solved.ac/tier_small/${
-                  content.isSolved ? rank : 0
+                  content.isSolved ? rank + 1 : 0
                 }.svg`}
                 style={{ width: "1rem", height: "auto", marginRight: "10px" }}
                 alt=""

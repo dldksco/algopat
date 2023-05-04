@@ -12,7 +12,7 @@ export const RankingDetail = () => {
     <div className={style.ranking_detail}>
       <div className={style.header}>
         <div className={style.box}>
-          <FontAwesomeIcon icon={faAngleLeft} />
+          <FontAwesomeIcon icon={faAngleLeft} style={{ marginRight: "5px" }} />
           목록
         </div>
         <div className={style.title}>
@@ -72,13 +72,12 @@ export const RankingDetail = () => {
           </div>
           <div className={style.vertical_line} />
           <div className={style.box}>
-            <FontAwesomeIcon icon={faThumbsUp} />
+            <FontAwesomeIcon icon={faThumbsUp} style={{ marginRight: "5px" }} />
             12
           </div>
         </div>
       </div>
       <RankingDetailBoard />
-      <Pagenation first={true} last={true} />
     </div>
   );
 };
