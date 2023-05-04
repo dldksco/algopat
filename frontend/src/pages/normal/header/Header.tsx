@@ -2,13 +2,15 @@ import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { useEffect, useState } from "react";
-import { loginUser } from "@/atoms/user.atom";
+import { loginUser, userInfoState } from "@/atoms/user.atom";
 import logo from "@/assets/img/logo.png";
 import style from "./Header.module.css";
+import { useSetRecoilState } from "recoil";
 
 export const Header = () => {
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
+  const setUserInfo = useSetRecoilState(userInfoState);
 
   const changeOpen = () => {
     setIsOpen((prev) => !prev);
@@ -20,7 +22,7 @@ export const Header = () => {
   };
 
   useEffect(() => {
-    loginUser();
+    loginUser(setUserInfo);
   }, []);
 
   return (

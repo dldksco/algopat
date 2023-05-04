@@ -1,4 +1,4 @@
-import { atom, useRecoilState } from "recoil";
+import { SetterOrUpdater, atom } from "recoil";
 import { Buffer } from "buffer";
 
 export interface UserInfo {
@@ -20,8 +20,7 @@ export const userInfoState = atom<UserInfo>({
   },
 });
 
-export const loginUser = () => {
-  const [userInfo, setUserInfo] = useRecoilState(userInfoState);
+export const loginUser = (setUserInfo: SetterOrUpdater<UserInfo>) => {
   const token = localStorage.getItem("access-token");
   if (token) {
     const base64Payload = token.split(".")[1];
