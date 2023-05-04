@@ -1,0 +1,55 @@
+.ranking_detail {
+  margin-top: 10%;
+  .box {
+    border: 1px solid var(--font-color);
+    padding: 20px;
+  }
+  .header {
+    font-size: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .title {
+      display: flex;
+      align-items: center;
+    }
+  }
+
+  .user_info {
+    display: flex;
+    gap: 15px;
+    padding: 5px;
+    align-items: center;
+  }
+
+  .info {
+    margin-top: 70px;
+    font-size: 1.3rem;
+    flex-wrap: wrap;
+    display: flex;
+    justify-content: space-between;
+
+    .master_info {
+    }
+
+    .info_list {
+      display: flex;
+      gap: 40px;
+      align-items: center;
+      text-align: center;
+
+      .box {
+        padding: 20px;
+      }
+    }
+
+    .vertical_line {
+      border-left: 1px solid var(--font-color);
+      height: 80px; /* 선의 길이를 조정할 수 있습니다. */
+    }
+    .box {
+      padding: 11px;
+    }
+  }
+}
