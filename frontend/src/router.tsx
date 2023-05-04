@@ -11,7 +11,6 @@ import { Profile } from "./pages/mypage/profile/Profile";
 import { Code } from "./pages/code/Code";
 import { Exception } from "./pages/exception/Exception";
 import { Ranking } from "./pages/ranking/Ranking";
-import { RankingMain } from "./pages/ranking/rankingMain/RankingMain";
 import { RankingDetail } from "./pages/ranking/rankingDetail/RankingDetail";
 import { Recent } from "./pages/mypage/recent/Recent";
 import { TextMenu } from "./pages/mypage/recent/textmenu/TextMenu";
@@ -32,10 +31,10 @@ const router: RouteObject[] = [
       {
         path: "/ranking",
         element: <Ranking />,
-        children: [
-          { index: true, element: <RankingMain /> },
-          { path: "detail/:id", element: <RankingDetail /> },
-        ],
+      },
+      {
+        path: "/ranking/:id",
+        element: <RankingDetail />,
       },
       {
         path: "/community",
