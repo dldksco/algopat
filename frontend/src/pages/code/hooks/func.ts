@@ -8,3 +8,11 @@
 
 export const stringCutter = (str: string, num: number) =>
   str.slice(0, num) + (str.length > num ? "..." : "");
+
+/**
+ *
+ * 천의 자리마다 컴마 찍기
+ * @returns
+ */
+export const addCommas = (num: string | number) =>
+  num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");

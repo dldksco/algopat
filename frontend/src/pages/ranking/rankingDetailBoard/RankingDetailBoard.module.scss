@@ -1,0 +1,74 @@
+.header_container {
+  margin-top: 50px;
+  height: 50px;
+  width: 100%;
+  text-align: left;
+  align-items: center;
+  font-style: bold;
+  font-size: 1.2rem;
+  border-bottom: 4px solid var(--font-color);
+  color: var(--font-color);
+  display: flex;
+  justify-content: space-between;
+  padding: 0px 20px 30px 20px;
+
+  .search_group {
+    font-size: 0.9rem;
+    display: flex;
+    gap: 10px;
+  }
+}
+
+.content_container {
+  margin-bottom: 80px;
+  width: 100%;
+  display: grid;
+  text-align: left;
+  align-items: center;
+  font-size: 1rem;
+  color: var(--font-color);
+  padding: 0 3%;
+
+  .row_number {
+    display: flex;
+    align-items: center;
+  }
+
+  .info {
+    margin-top: 10px;
+    flex-wrap: wrap;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    border-bottom: 1px solid var(--font-color);
+    .user_info {
+      display: flex;
+      gap: 15px;
+      padding: 5px;
+      align-items: center;
+    }
+
+    .master_info {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .info_list {
+      display: flex;
+      gap: 40px;
+      align-items: center;
+      text-align: center;
+
+      .box {
+        padding: 20px;
+      }
+    }
+
+    .vertical_line {
+      border-left: 1px solid var(--font-color);
+      height: 80px; /* 선의 길이를 조정할 수 있습니다. */
+    }
+  }
+}

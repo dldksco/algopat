@@ -4,11 +4,14 @@ import "slick-carousel/slick/slick-theme.css";
 import { v4 as uuidv4 } from "uuid";
 import { useEffect, useRef, useState } from "react";
 
-import style from "./RankingCarousel.module.css";
-import "./carousel.css";
 import { SelectBox } from "@/components/selectBox/SelectBox";
 import { backgroundColorFilter } from "../hooks/func";
 import { bj_level } from "@/variable/variable";
+import { useRecoilState } from "recoil";
+import { centerIndexState } from "@/atoms/ranking.atom";
+
+import style from "./RankingCarousel.module.css";
+import "./carousel.css";
 
 const MAX_LEGNTH = 30;
 
@@ -44,7 +47,8 @@ export const RankingCarousel = () => {
   );
   const [levelRankSelect, setlevelRankSelect] = useState(levelRank[0].value);
   const [levelData, setLevelData] = useState(initData);
-  const [centerIndex, setCenterIndex] = useState(0);
+  const [centerIndex, setCenterIndex] = useRecoilState(centerIndexState);
+  // const [centerIndex, setCenterIndex] = useState(0);
   const sliderRef = useRef<Slider>(null);
 
   const onInitCallback = () => {
@@ -63,7 +67,7 @@ export const RankingCarousel = () => {
     });
   };
 
-  const afterChangeCallback = (index: number) => {
+  const changeCallback = (old: number, index: number) => {
     setCenterIndex(index);
 
     //selectbox 초기화
@@ -113,7 +117,8 @@ export const RankingCarousel = () => {
     speed: 350,
     slidesToShow: 5,
     slidesToScroll: 1,
-    afterChange: afterChangeCallback,
+    // afterChange: afterChangeCallback,
+    beforeChange: changeCallback,
     onInit: onInitCallback,
   };
 
@@ -138,13 +143,13 @@ export const RankingCarousel = () => {
     >
       <div className={style.menu}>
         <SelectBox
-          style={{ width: "60%" }}
+          style={{ width: "60%", height: "10%" }}
           options={levelRank}
           setValue={setlevelRankSelect}
           value={levelRankSelect}
         />
         <SelectBox
-          style={{ width: "60%" }}
+          style={{ width: "60%", height: "10%" }}
           options={levelNumber}
           setValue={setlevelNumberSelect}
           value={levelNumberSelect}
