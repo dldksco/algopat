@@ -12,13 +12,21 @@ export interface UserInfo {
 export const userInfoState = atom<UserInfo>({
   key: "userInfoState",
   default: {
-    userSeq: 1,
-    userProfile:
-      "https://post-phinf.pstatic.net/MjAxNzA5MThfMjE4/MDAxNTA1NzE4NDk4MjY4.BNUB-Ful9pV2hcg_5hdJzyPRyXPnk0C6KGjcok__QkAg.9onUKAl7MLep59zVlYS6o3J0lx_16yo_AYonupDADdcg.JPEG/20170915150632943.jpg?type=w1200",
-    userGithubId: "라면부엉",
-    userEmail: "부엉이@부엉부엉",
-    userRank: 17,
+    userSeq: 0,
+    userProfile: "",
+    userGithubId: "",
+    userEmail: "",
+    userRank: 0,
   },
+
+  // default: {
+  //   userSeq: 1,
+  //   userProfile:
+  //     "https://post-phinf.pstatic.net/MjAxNzA5MThfMjE4/MDAxNTA1NzE4NDk4MjY4.BNUB-Ful9pV2hcg_5hdJzyPRyXPnk0C6KGjcok__QkAg.9onUKAl7MLep59zVlYS6o3J0lx_16yo_AYonupDADdcg.JPEG/20170915150632943.jpg?type=w1200",
+  //   userGithubId: "라면부엉",
+  //   userEmail: "부엉이@부엉부엉",
+  //   userRank: 17,
+  // },
 });
 
 export const loginUser = (setUserInfo: SetterOrUpdater<UserInfo>) => {
