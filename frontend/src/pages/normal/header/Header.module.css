@@ -31,6 +31,19 @@
 .header .bars {
   display: none;
 }
+.header .profile_div {
+  position: relative;
+}
+.header .profile_div img {
+  width: 42px;
+  height: 42px;
+  border-radius: 100%;
+  box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
+  margin-left: 10px;
+  display: block;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
 
 @media screen and (max-width: 1200px) {
   .header .menu {
@@ -70,5 +83,8 @@
     margin-top: auto;
     margin-bottom: auto;
     font-size: 1.5rem;
+  }
+  .header .disnone {
+    display: none !important;
   }
 }/*# sourceMappingURL=Header.module.css.map */
