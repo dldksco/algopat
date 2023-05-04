@@ -35,6 +35,20 @@
   .bars {
     display: none;
   }
+
+  .profile_div {
+    position: relative;
+
+    img {
+      width: 42px;
+      height: 42px;
+      border-radius: 100%;
+      box-shadow: 0 4px 4px 0 rgb(0, 0, 0, 25%);
+      margin-left: 10px;
+      display: block;
+      object-fit: cover;
+    }
+  }
 }
 
 @media screen and (max-width: 1200px) {
@@ -81,6 +95,9 @@
       margin-top: auto;
       margin-bottom: auto;
       font-size: 1.5rem;
+    }
+    .disnone {
+      display: none !important;
     }
   }
 }

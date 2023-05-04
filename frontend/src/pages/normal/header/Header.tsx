@@ -6,6 +6,7 @@ import { loginUser, logout, userInfoState } from "@/atoms/user.atom";
 import logo from "@/assets/img/logo.png";
 import style from "./Header.module.css";
 import { useRecoilState } from "recoil";
+import { isMobile } from "@/pages/community/hooks/func";
 
 export const Header = () => {
   const loginUrl =
@@ -13,7 +14,6 @@ export const Header = () => {
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
   const [userInfo, setUserInfo] = useRecoilState(userInfoState);
-  console.log(userInfo);
 
   const changeOpen = () => {
     setIsOpen((prev) => !prev);
@@ -50,18 +50,46 @@ export const Header = () => {
             로그인
           </div>
         ) : (
-          <div
-            onClick={() => {
-              logout(setUserInfo);
-            }}
-          >
-            로그아웃
+          // <div
+          //   onClick={() => {
+          //     logout(setUserInfo);
+          //   }}
+          // >
+          //   로그아웃
+          // </div>
+          <div className={style.profile_div + " " + style.disnone}>
+            <img
+              src={userInfo.userProfile}
+              alt="프로필 이미지"
+              onClick={() => {
+                navigate("/mypage");
+              }}
+            />
+            {/* {userUnreadMsgNum?.data.userUnreadMessage ? (
+            <div className={style.badge}>
+              {userUnreadMsgNum?.data.userUnreadMessage}
+            </div>
+          ) : null} */}
           </div>
         )}
+        {isMobile() ? (
+          <div onClick={() => moveNav("/mypage")}>마이페이지</div>
+        ) : null}
       </div>
       <div className={style.bars}>
         {!isOpen ? (
-          <FontAwesomeIcon icon={faBars} onClick={changeOpen} />
+          <div className={style.profile_div}>
+            <img
+              src={userInfo.userProfile}
+              alt="프로필 이미지"
+              onClick={changeOpen}
+            />
+            {/* {userUnreadMsgNum?.data.userUnreadMessage ? (
+                   <div className={style.badge}>
+                     {userUnreadMsgNum?.data.userUnreadMessage}
+                   </div>
+                 ) : null} */}
+          </div>
         ) : (
           <FontAwesomeIcon icon={faXmark} onClick={changeOpen} />
         )}
