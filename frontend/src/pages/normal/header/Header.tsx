@@ -40,7 +40,11 @@ export const Header = () => {
         {!userInfo.userSeq ? (
           <div
             onClick={() => {
-              window.open(loginUrl);
+              window.open(
+                loginUrl,
+                "로그인 페이지",
+                "height=500, width=500, resizable=false, menubar=false, toolbar=false"
+              );
             }}
           >
             로그인
