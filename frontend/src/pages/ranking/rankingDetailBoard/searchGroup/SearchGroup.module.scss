@@ -1,0 +1,14 @@
+.search_group {
+  font-size: 0.9rem;
+  display: flex;
+  gap: 10px;
+
+  .search_button {
+    margin-left: -8px;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    border: 1px solid var(--font-color);
+    cursor: pointer;
+  }
+}

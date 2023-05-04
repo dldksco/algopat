@@ -5,6 +5,7 @@
 .ranking_detail .box {
   border: 1px solid var(--font-color);
   padding: 20px;
+  cursor: pointer;
 }
 .ranking_detail .header {
   font-size: 1.5rem;
@@ -28,6 +29,7 @@
   flex-wrap: wrap;
   display: flex;
   justify-content: space-between;
+  cursor: default;
 }
 .ranking_detail .info .info_list {
   display: flex;

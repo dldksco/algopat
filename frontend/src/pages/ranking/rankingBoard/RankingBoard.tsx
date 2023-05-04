@@ -17,21 +17,21 @@ export const RankingBoard = () => {
   const grid = "15% 60% 15% 10%";
   const data = [
     {
-      number: "1234",
+      number: "17470",
       title: "배열 돌리기 5",
       master: "김싸피",
       count: "23,111",
       isSolved: false,
     },
     {
-      number: "1234",
+      number: "17470",
       title: "배열 돌리기 5",
       master: "김싸피",
       count: "23,111",
       isSolved: true,
     },
     {
-      number: "1234",
+      number: "17470",
       title: "배열 돌리기 5",
       master: "김싸피",
       count: "23,111",

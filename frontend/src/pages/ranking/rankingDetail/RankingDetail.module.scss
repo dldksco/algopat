@@ -3,6 +3,7 @@
   .box {
     border: 1px solid var(--font-color);
     padding: 20px;
+    cursor: pointer;
   }
   .header {
     font-size: 1.5rem;
@@ -29,9 +30,7 @@
     flex-wrap: wrap;
     display: flex;
     justify-content: space-between;
-
-    .master_info {
-    }
+    cursor: default;
 
     .info_list {
       display: flex;

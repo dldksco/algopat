@@ -1,29 +1,48 @@
 import { addCommas } from "@/pages/code/hooks/func";
-import style from "./RankingDetail.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleLeft, faThumbsUp } from "@fortawesome/free-solid-svg-icons";
 import { RankingDetailBoard } from "../rankingDetailBoard/RankingDetailBoard";
-import { Pagenation } from "@/components/pagenation/Pagenation";
+import { useState, useEffect } from "react";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
+
+import style from "./RankingDetail.module.css";
 
 export const RankingDetail = () => {
   const dummy = {};
 
+  const problemInfo = {
+    name: "배열 돌리기5",
+    level: "14",
+  };
+
+  const navigate = useNavigate();
+  const { id: problemId } = useParams();
+
+  const listClickCallback = () => navigate("/ranking");
+  const problemSolveClickCallback = (problemId: string) =>
+    (window.location.href = `https://www.acmicpc.net/problem/${problemId}`);
+
   return (
     <div className={style.ranking_detail}>
       <div className={style.header}>
-        <div className={style.box}>
+        <div className={style.box} onClick={listClickCallback}>
           <FontAwesomeIcon icon={faAngleLeft} style={{ marginRight: "5px" }} />
           목록
         </div>
         <div className={style.title}>
           <img
-            src={`https://static.solved.ac/tier_small/1.svg`}
+            src={`https://static.solved.ac/tier_small/${problemInfo.level}.svg`}
             style={{ width: "1.3rem", height: "auto", marginRight: "10px" }}
             alt=""
           />
-          <span>9614. 다채로운 구간</span>
+          <span>{`${problemId}. ${problemInfo.name}`}</span>
         </div>
-        <div className={style.box}>문제풀기</div>
+        <div
+          className={style.box}
+          onClick={() => problemSolveClickCallback(problemId ? problemId : "0")}
+        >
+          문제풀기
+        </div>
       </div>
       <div className={style.info + " " + style.box}>
         <div className={style.master_info}>
@@ -46,11 +65,6 @@ export const RankingDetail = () => {
           </div>
         </div>
         <div className={style.info_list}>
-          <div>
-            <p>{addCommas(1270)}</p>
-            <p>제출자</p>
-          </div>
-          <div className={style.vertical_line} />
           <div>
             <p>C++</p>
             <p>언어</p>
