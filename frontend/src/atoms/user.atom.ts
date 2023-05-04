@@ -46,3 +46,27 @@ export const loginUser = (setUserInfo: SetterOrUpdater<UserInfo>) => {
     // });
   }
 };
+
+export const logout = (setUserInfo: SetterOrUpdater<UserInfo>) => {
+  localStorage.removeItem("access-token");
+  document.cookie =
+    "refreshToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+
+  console.log("로그아웃 실행");
+
+  setUserInfo({
+    userSeq: 0,
+    userProfile: "",
+    userGithubId: "",
+    userEmail: "",
+    userRank: 0,
+  });
+
+  // setUserInfo({
+  //   userSeq: result.number,
+  //   userProfile: result.userProfile,
+  //   userGithubId: result.userGithubId,
+  //   userEmail: result.userEmail,
+  //   userRank: result.userRank,
+  // });
+};

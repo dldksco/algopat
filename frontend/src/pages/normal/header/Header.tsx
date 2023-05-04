@@ -2,15 +2,18 @@ import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { useEffect, useState } from "react";
-import { loginUser, userInfoState } from "@/atoms/user.atom";
+import { loginUser, logout, userInfoState } from "@/atoms/user.atom";
 import logo from "@/assets/img/logo.png";
 import style from "./Header.module.css";
-import { useSetRecoilState } from "recoil";
+import { useRecoilState } from "recoil";
 
 export const Header = () => {
+  const loginUrl =
+    "https://github.com/login/oauth/authorize?client_id=62a8bd9fd0300fdc6d37&redirect_uri=https://algopat.kr/login-process";
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
-  const setUserInfo = useSetRecoilState(userInfoState);
+  const [userInfo, setUserInfo] = useRecoilState(userInfoState);
+  console.log(userInfo);
 
   const changeOpen = () => {
     setIsOpen((prev) => !prev);
@@ -34,15 +37,23 @@ export const Header = () => {
         <div onClick={() => moveNav("/code")}>코드분석</div>
         <div onClick={() => moveNav("/ranking")}>랭킹</div>
         <div onClick={() => moveNav("/community")}>커뮤니티</div>
-        <div
-          onClick={() => {
-            window.open(
-              "https://github.com/login/oauth/authorize?client_id=62a8bd9fd0300fdc6d37&redirect_uri=https://algopat.kr/login-process"
-            );
-          }}
-        >
-          로그인
-        </div>
+        {!userInfo.userSeq ? (
+          <div
+            onClick={() => {
+              window.open(loginUrl);
+            }}
+          >
+            로그인
+          </div>
+        ) : (
+          <div
+            onClick={() => {
+              logout(setUserInfo);
+            }}
+          >
+            로그아웃
+          </div>
+        )}
       </div>
       <div className={style.bars}>
         {!isOpen ? (
