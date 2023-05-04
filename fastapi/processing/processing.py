@@ -17,46 +17,49 @@ from database.database import save_problem_origin \
                             , save_gpt_solution \
                             , check_gpt_problem_summary_is_exist \
                             , get_gpt_problem_summary
-from aioredlock import Aioredlock, LockError
-from asyncio import sleep
 from logging import getLogger
 from utils.log_decorator import time_logger
 from utils.shared_env import redis_url
+import redis_lock
+from redis import Redis
+import asyncio
 
 # logger 설정 
 logger = getLogger()
 
 OPEN_BRACE = '{'
 CLOSE_BRACE = '}'
+LOCK_TIMEOUT = 300
 
-LOCK_TIMEOUT = 500000
-
-
+redis_conn = Redis.from_url(redis_url)
+    
 # GPT 응답 생성 함수
 @time_logger("GPT 비즈니스 로직")
-async def processing(data : ProblemData):
-    lock_manager = Aioredlock([redis_url])
-    
+async def processing(data : ProblemData, send_callback):
     chat_llm_0 = ChatOpenAI(temperature=0, openai_api_key=data.openai_api_key, request_timeout=120)
     # chat_llm_1 = ChatOpenAI(temperature=0.1, openai_api_key=data.openai_api_key)
     chat_llm_3 = ChatOpenAI(temperature=0.3, openai_api_key=data.openai_api_key, request_timeout=120)
     # chat_llm_10 = ChatOpenAI(temperature=1, openai_api_key=data.openai_api_key)
     json_chain = await json_formatter(chat_llm_0)
     
+    
     problem_id = data.problemId
-    lock = None
+    lock_name = f"problem_id{problem_id}"
     while True:
-        lock = await lock_manager.lock(f"problem_id:{problem_id}", LOCK_TIMEOUT)
-        if lock.valid:
-            await summary_problem(problem_id, data, chat_llm_0, json_chain)
-            break
-        else:
-            while await lock_manager.is_locked(f"problem_id:{problem_id}"):
-                await sleep(1)
-    if lock and lock.valid:
-        logger.info("언락")
-        await lock_manager.unlock(lock)
-    await lock_manager.destroy()
+        try:
+            lock = redis_lock.Lock(redis_conn, lock_name, expire=LOCK_TIMEOUT, auto_renewal=True)
+            logger.info("동일한 문제 대기중!")
+            if lock.acquire(blocking=False):
+                logger.info("분산락 시작")
+                await summary_problem(problem_id, data, chat_llm_0, json_chain)
+                lock.release()
+                break
+            else:
+                await asyncio.sleep(1)
+        except Exception as e:
+            logger.error(f"예외 발생: {e}")
+            raise
+   
     ### 회원 푼 문제 DB 접근 ### 
     user_submit_problem_seq = await save_user_problem_origin(problem_id)
     user_submit_solution_seq = await save_user_submit_solution_origin(user_submit_problem_seq, problem_id, data)
@@ -84,7 +87,7 @@ async def processing(data : ProblemData):
     ### GPT평가 DB 접근 ### 
     await save_gpt_solution(user_submit_solution_seq, result)
     
-    return result
+    await send_callback("alert", "ok")
 
 async def summary_problem(problem_id : str, data : ProblemData, chat_llm, json_chain):
     is_gpt_problem_summary_exist = await check_gpt_problem_summary_is_exist(problem_id)
