@@ -4,13 +4,14 @@ import "slick-carousel/slick/slick-theme.css";
 import { v4 as uuidv4 } from "uuid";
 import { useEffect, useRef, useState } from "react";
 
-import style from "./RankingCarousel.module.css";
-import "./carousel.css";
 import { SelectBox } from "@/components/selectBox/SelectBox";
 import { backgroundColorFilter } from "../hooks/func";
 import { bj_level } from "@/variable/variable";
 import { useRecoilState } from "recoil";
 import { centerIndexState } from "@/atoms/ranking.atom";
+
+import style from "./RankingCarousel.module.css";
+import "./carousel.css";
 
 const MAX_LEGNTH = 30;
 
@@ -66,8 +67,8 @@ export const RankingCarousel = () => {
     });
   };
 
-  const afterChangeCallback = (index: number) => {
-    setCenterIndex(index + 1);
+  const changeCallback = (old: number, index: number) => {
+    setCenterIndex(index);
 
     //selectbox 초기화
     setlevelRankSelect(Math.floor(index / 5).toString());
@@ -116,7 +117,8 @@ export const RankingCarousel = () => {
     speed: 350,
     slidesToShow: 5,
     slidesToScroll: 1,
-    afterChange: afterChangeCallback,
+    // afterChange: afterChangeCallback,
+    beforeChange: changeCallback,
     onInit: onInitCallback,
   };
 

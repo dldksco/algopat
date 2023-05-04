@@ -3,6 +3,7 @@ import style from "./RankingDetail.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleLeft, faThumbsUp } from "@fortawesome/free-solid-svg-icons";
 import { RankingDetailBoard } from "../rankingDetailBoard/RankingDetailBoard";
+import { Pagenation } from "@/components/pagenation/Pagenation";
 
 export const RankingDetail = () => {
   const dummy = {};
@@ -77,6 +78,7 @@ export const RankingDetail = () => {
         </div>
       </div>
       <RankingDetailBoard />
+      <Pagenation first={true} last={true} />
     </div>
   );
 };
