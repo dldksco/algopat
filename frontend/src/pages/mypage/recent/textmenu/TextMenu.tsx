@@ -1,6 +1,5 @@
 import { Button } from "@/components/button/Button";
 import { v4 as uuidv4 } from "uuid";
-import { TextForm } from "./textform/TextForm";
 import style from "./TextMenu.module.css";
 import { Pagenation } from "@/components/pagenation/Pagenation";
 import { CheckBox } from "../../checkbox/CheckBox";
