@@ -1,4 +1,3 @@
-@charset "UTF-8";
 .box {
   padding: 4%;
   margin: 5% auto;
@@ -39,8 +38,5 @@
   .box {
     width: 100%;
     overflow-x: auto;
-  }
-  .box .setting .renew::before {
-    content: "티어 연동";
   }
 }/*# sourceMappingURL=Profile.module.css.map */

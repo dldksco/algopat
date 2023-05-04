@@ -1,41 +1,41 @@
-.user{
-    margin-left: auto;
-    margin-right: auto;
-    border: 1px solid #6C6C6F;
-    border-radius: 7px;
-    background-color: #6C6C6F;
-    height: 35px;
-    width: 90%;
-    text-align: left;
-    padding-left: 1rem;
-    display: flex;
-    align-items: center;
-    img{
-        max-height: 1rem;
-        width: auto;
-        margin-right: 7px;
-    }
-    span{
-        font-size: 1rem;
-    }
+.user {
+  margin-left: auto;
+  margin-right: auto;
+  border: 1px solid #6c6c6f;
+  border-radius: 7px;
+  background-color: #6c6c6f;
+  height: 35px;
+  width: 95%;
+  text-align: left;
+  padding-left: 1rem;
+  display: flex;
+  align-items: center;
+  img {
+    max-height: 1rem;
+    width: auto;
+    margin-right: 7px;
+  }
+  span {
+    font-size: 1rem;
+  }
 }
-.comment{
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 10px;
-    min-height: 50px;
-    height:auto;
-    width: 90%;
-    text-align: left;
-    padding-left: 20px;
-    position: relative;
-    span{
-        font-size: 1rem;
-    }
-    .recommend{
-        position: absolute;
-        right:10px;
-        bottom: 10px;
-        margin-right: 10px;
-    }
+.comment {
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 10px;
+  min-height: 50px;
+  height: auto;
+  width: 95%;
+  text-align: left;
+  padding-left: 20px;
+  position: relative;
+  span {
+    font-size: 1rem;
+  }
+  .recommend {
+    position: absolute;
+    right: 10px;
+    bottom: 15px;
+    margin-right: 10px;
+  }
 }

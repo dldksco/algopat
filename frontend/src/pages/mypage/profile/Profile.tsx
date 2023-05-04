@@ -60,12 +60,6 @@ export const Profile = () => {
   if(isLoading && authorized.isAuthorized){
     return <LoadingSpinner/>;
   }
-  // axios.interceptors.request.use(config => {
-  //   console.log("어디로",config.url);
-  //   return config;
-  // });
-
-  
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     console.log(event, "키보드 이벤트");
     console.log(event.key, "입력");
@@ -101,18 +95,7 @@ export const Profile = () => {
       );
     }
   };
-  // const buttonClickTier = async()=>{
-  //   console.log("button");
-  //   const response = await axios.get("/api",{
-  //     params:{
-  //       handle: "alice2596"
-  //     }
-  //   }).then((data) => console.log(data)).catch(error=>{
-  //     console.error(error);
-  //   });
-  //   console.log(response, "엄");
-  //   setTier(1);
-  // }
+  
   const dummyData ={
     email: "ssafy@github.com",
     nickname: "김싸피",
@@ -155,14 +138,14 @@ export const Profile = () => {
               {modalOpen && (
               <Modal setModalOpen={setModalOpen}>
                 <div className={style.modal} style={{margin:"10px 20px"}}><h1>Solved AC 티어 연동하기</h1>
-                <p>solved ac id를 입력해주세요!</p>
-                {/* <Input
+                <p>solved ac id를 입력해주세요!!</p>
+                {<Input
                     type="text"
                     placeholder="Enter text here"
                     input={inputValue}
                     setInput={setInputValue}
                     onKeyDown={handleKeyDown}
-                  /> */}
+                  />}
                   </div>
                 </Modal>
                 )}
