@@ -45,20 +45,14 @@ async def consume_problem_summary(topic : str):
 
 # Producer
 # 카프카로 메시지 전송 함수 
-async def send(topic : str, key: str, message: str):
+async def send(topic : str, message):
     producer = AIOKafkaProducer(
-        bootstrap_servers = kafka_servers,
-        value_serializer = lambda m : m.encode("utf-8") if isinstance(m, str) else m
+        bootstrap_servers = KAFKA_BOOTSTRAP_SERVERS,
+        value_serializer = lambda m : m.encode("utf-8") 
     )
     await producer.start()
     logger.info("Send to 토픽 : " + topic)
-
-    # 이미 bytes 타입인지 확인
-    key_bytes = key.encode("utf-8") if isinstance(key, str) else key
-    message_bytes = message.encode("utf-8") if isinstance(message, str) else message
-
-    await producer.send_and_wait(topic, message_bytes, key_bytes)
-    logger.info("알림 메시지 전송 완료")
+    await producer.send_and_wait(topic, message)
     await producer.stop()
 
 
