@@ -1,10 +1,10 @@
 import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faXmark } from "@fortawesome/free-solid-svg-icons";
+import { useEffect, useState } from "react";
+import { loginUser } from "@/atoms/user.atom";
 import logo from "@/assets/img/logo.png";
 import style from "./Header.module.css";
-import { useState } from "react";
-import axios from "axios";
 
 export const Header = () => {
   const navigate = useNavigate();
@@ -19,6 +19,10 @@ export const Header = () => {
     navigate(url);
   };
 
+  useEffect(() => {
+    loginUser();
+  }, []);
+
   return (
     <div className={style.header}>
       <img className={style.logo} onClick={() => navigate("/")} src={logo} />
@@ -30,7 +34,6 @@ export const Header = () => {
         <div onClick={() => moveNav("/community")}>커뮤니티</div>
         <div
           onClick={() => {
-            // moveNav("/mypage");
             window.open(
               "https://github.com/login/oauth/authorize?client_id=62a8bd9fd0300fdc6d37&redirect_uri=https://algopat.kr/login-process"
             );
