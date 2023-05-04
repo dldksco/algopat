@@ -6,6 +6,7 @@ from my_kafka.handler import consume_problem_summary
 import logging
 from config.logger_config import setup_logging # logger_config 모듈 임포트 
 from database.get_session import create_tables
+from asyncio import gather
 
 # logger 기본 설정 호출 
 setup_logging()
@@ -15,26 +16,16 @@ logger = logging.getLogger()
 
 app = FastAPI()
 
-@app.on_event("startup")
-async def create_tables_on_startup():
-    await create_tables()
 
 # health 체크 
 @app.get("/health")
 async def health_check():
     return {"status" : "OK"}
 
-# GPT 응답 생성 로직 
-@app.post("/process")
-async def process_data(data: ProblemData):
-    await create_tables()
-    output = await processing(data)
-    return output
-
 # 카프카 리스너 실행 
 @app.on_event("startup")
 async def startup_event():
-    logger.info("usercode 리스너 시작!!!")
+    logger.info("서버 시작")
+    await create_tables()
     create_task(consume_problem_summary("usercode")) # Topic : usercode
-
 

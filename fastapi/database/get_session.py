@@ -11,7 +11,7 @@ from utils.shared_env import mariadb_config
 config = json.loads(mariadb_config)
 
 DATABASE_URL = f"mariadb+asyncmy://{config['user']}:{config['password']}@{config['host']}:{config['port']}/{config['database']}?charset=utf8mb4"
-engine = create_async_engine(DATABASE_URL, echo=True)
+engine = create_async_engine(DATABASE_URL, echo=False)
 async_session = sessionmaker(engine, expire_on_commit=False, class_=AsyncSession)
 Base = declarative_base()
 

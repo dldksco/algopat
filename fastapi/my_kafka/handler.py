@@ -3,15 +3,18 @@ from processing.processing import processing
 from myclass.problem import ProblemData
 import json
 import logging 
+import asyncio
+
 
 # 카프카 서버 정보!!!
-# kafka_servers = ["localhost:9092", "localhost:9093", "localhost:9094"]  
-kafka_servers = ["host.docker.internal:9092", "host.docker.internal:9093", "host.docker.internal:9094"]
+# kafka_servers = ["localhost:9092", "localhost:9093", "localhost:9094"] 
+KAFKA_BOOTSTRAP_SERVERS = "host.docker.internal:9092,host.docker.internal:9093,host.docker.internal:9094"
+KAFKA_GROUP_ID = "group-algopat"
+# kafka_servers = ["host.docker.internal:9092", "host.docker.internal:9093", "host.docker.internal:9094"]
 # kafka_servers = ["kafka1:9092", "kafka2:9093", "kafka3:9094"]
 
 # logger 설정 
 logger = logging.getLogger()
-
 
 # Consumer 
 # 카프카를 통해 consume한 문제 정보를 통해 GPT 응답 생성 
@@ -20,20 +23,21 @@ async def consume_problem_summary(topic : str):
 
     consumer = AIOKafkaConsumer(
         topic,
-        group_id="group-algopat",
-        bootstrap_servers = kafka_servers,
+        bootstrap_servers = KAFKA_BOOTSTRAP_SERVERS,
+        group_id=KAFKA_GROUP_ID,
         value_deserializer=lambda m: json.loads(m.decode("utf-8")),
-        session_timeout_ms=60000,  # Increase this value if needed
-        heartbeat_interval_ms=20000,  # Increase this value if needed
-        max_poll_interval_ms=500000
+        session_timeout_ms=100000,  # Increase this value if needed
+        request_timeout_ms=200000,
+        # heartbeat_interval_ms=10000,  # Increase this value if needed
+        # max_poll_interval_ms=500000
     )
 
     await consumer.start()
     try:
-        async for msg in consumer:            
+        async for msg in consumer:
+            asyncio.sleep(1)            
             data = ProblemData(**msg.value) # Dict to Class Type (카프카를 통해 consume한 데이터를 Python 클래스 형태로 변환)
-            await processing(data) # 비즈니스 로직 수행 
-            await send("alert", "9999", "ok") # 로직 완료 알림 전송 
+            asyncio.create_task(processing(data, send)) # 비즈니스 로직 수행 
     finally:
         await consumer.stop() # anomaly 상태일 때 종료 
 
