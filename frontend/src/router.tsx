@@ -18,7 +18,6 @@ import { TextMenu } from "./pages/mypage/recent/textmenu/TextMenu";
 import { AlarmMenu } from "./pages/mypage/recent/alarm/AlarmMenu";
 import { RecommendMenu } from "./pages/mypage/recent/recommendmenu/RecommendMenu";
 import { CommentMenu } from "./pages/mypage/recent/commentmenu/CommentMenu";
-import { LoginSuccess } from "./pages/exception/login/LoginSuccess";
 import { LoginProcess } from "./pages/exception/login/LoginProcess";
 
 const router: RouteObject[] = [
@@ -75,7 +74,6 @@ const router: RouteObject[] = [
     path: "*",
     element: <Exception />,
     children: [
-      { path: "login-success", element: <LoginSuccess /> },
       { path: "login-process", element: <LoginProcess /> },
       // { path: "*", element: <Page404 /> },
     ],
