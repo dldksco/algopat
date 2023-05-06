@@ -36,7 +36,7 @@ async def consume_problem_summary(topic : str):
     try:
         async for msg in consumer:
             logger.info("데이터가 넘어옴")
-            asyncio.sleep(1)            
+            await asyncio.sleep(1)            
             data = ProblemData(**msg.value) # Dict to Class Type (카프카를 통해 consume한 데이터를 Python 클래스 형태로 변환)
             asyncio.create_task(processing(data, send)) # 비즈니스 로직 수행 
     finally:
