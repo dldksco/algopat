@@ -4,7 +4,7 @@ from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm import declarative_base
-from database.problem import UserSubmitSolution, GPTSolution, Problem, UserSubmitProblem, GPTProblemSummary
+from database.problem import UserSubmitSolution, GPTSolution, Problem, UserSubmitProblem, GPTProblemSummary, ProblemMeta
 from contextlib import asynccontextmanager
 from utils.shared_env import mariadb_config
 
@@ -25,6 +25,7 @@ async def get_session() -> AsyncSession:
 async def create_tables():
     async with engine.begin() as conn:
         await conn.run_sync(Base.metadata.create_all, tables=[Problem.__table__], checkfirst=True)
+        await conn.run_sync(Base.metadata.create_all, tables=[ProblemMeta.__table__], checkfirst=True)
         await conn.run_sync(Base.metadata.create_all, tables=[UserSubmitProblem.__table__], checkfirst=True)
         await conn.run_sync(Base.metadata.create_all, tables=[GPTProblemSummary.__table__], checkfirst=True)
         await conn.run_sync(Base.metadata.create_all, tables=[UserSubmitSolution.__table__], checkfirst=True)
