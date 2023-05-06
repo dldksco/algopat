@@ -1,22 +1,23 @@
 from pydantic import BaseModel, Field
+from datetime import datetime
 from typing import List, Optional
 from datetime import date
 
 class ProblemData(BaseModel):
     openai_api_key: str
     elementId: str
-    submissionId: str
+    submissionId: int
     username: str
-    problemId: str
+    problemId: int
     result: str
-    memory: str
-    runtime: str
+    memory: int # KB
+    runtime: int # ms
     language: str
-    codeLength: str
+    codeLength: int
     submissionTime: str
     resultCategory: str
     title: str
-    level: str
+    level: int
     code: str
     problem_description: str
     problem_input: str

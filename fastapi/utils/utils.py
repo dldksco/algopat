@@ -53,7 +53,7 @@ async def parse_lang_type(lang_type : str):
     else:
         return 'unknown'
     
-    
+
 async def parse_date_format(origin_date : str):
     origin_date_format = "%Y년 %m월 %d일 %H:%M:%S"
     date_format = "%Y-%m-%d %H:%M:%S"
@@ -62,4 +62,18 @@ async def parse_date_format(origin_date : str):
     timestamp_str = origin_datetime_obj.strftime(date_format)
     return timestamp_str
     
-    
+# 시간 복잡도 (str -> int)
+def parse_problem_time_limit(time_limit: str) -> int:
+    time_limit = time_limit.split(" ")[0]
+    return int(float(time_limit) * 1000)  # 초 단위를 밀리초 단위로 변환
+
+# 공간 복잡도 (str -> int)
+def parse_problem_space_limit(space_limit: str) -> int:
+    if "GB" in space_limit:
+        return int(float(space_limit.replace("GB", "")) * 1024 * 1024)
+    elif "MB" in space_limit:
+        return int(float(space_limit.replace("MB", "")) * 1024)
+    elif "KB" in space_limit:
+        return int(float(space_limit.replace("KB", "")))
+    else:
+        return int(space_limit)

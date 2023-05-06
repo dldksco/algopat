@@ -16,7 +16,8 @@ from database.database import save_problem_origin \
                             , save_user_submit_solution_origin \
                             , save_gpt_solution \
                             , check_gpt_problem_summary_is_exist \
-                            , get_gpt_problem_summary
+                            , get_gpt_problem_summary \
+                            , update_problem_meta
 from logging import getLogger
 from utils.log_decorator import time_logger
 from utils.shared_env import redis_url
@@ -38,11 +39,11 @@ redis_conn = Redis.from_url(redis_url)
 async def processing(data : ProblemData, send_callback):
     chat_llm_0 = ChatOpenAI(temperature=0, openai_api_key=data.openai_api_key, request_timeout=120)
     # chat_llm_1 = ChatOpenAI(temperature=0.1, openai_api_key=data.openai_api_key)
-    chat_llm_3 = ChatOpenAI(temperature=0.3, openai_api_key=data.openai_api_key, request_timeout=120)
+    # chat_llm_3 = ChatOpenAI(temperature=0.3, openai_api_key=data.openai_api_key, request_timeout=120)
     # chat_llm_10 = ChatOpenAI(temperature=1, openai_api_key=data.openai_api_key)
     json_chain = await json_formatter(chat_llm_0)
     
-    
+    user_seq = 9999 # 임시 
     problem_id = data.problemId
     lock_name = f"problem_id{problem_id}"
     while True:
@@ -51,7 +52,7 @@ async def processing(data : ProblemData, send_callback):
             logger.info("동일한 문제 대기중!")
             if lock.acquire(blocking=False):
                 logger.info("분산락 시작")
-                await summary_problem(problem_id, data, chat_llm_0, json_chain)
+                await summary_problem(problem_id, user_seq, data, chat_llm_0, json_chain)
                 lock.release()
                 break
             else:
@@ -59,10 +60,10 @@ async def processing(data : ProblemData, send_callback):
         except Exception as e:
             logger.error(f"예외 발생: {e}")
             raise
-   
+
     ### 회원 푼 문제 DB 접근 ### 
-    user_submit_problem_seq = await save_user_problem_origin(problem_id)
-    user_submit_solution_seq = await save_user_submit_solution_origin(user_submit_problem_seq, problem_id, data)
+    await save_user_problem_origin(problem_id, user_seq)
+    submission_id = await save_user_submit_solution_origin(problem_id, user_seq, data)
     
     # 여기서 DB에서 불러오는 로직이 들어가는거
     gpt_problem_summary = await get_gpt_problem_summary(problem_id)
@@ -85,15 +86,18 @@ async def processing(data : ProblemData, send_callback):
     result.total_score = (result.gpt_solution_time_score + result.gpt_solution_space_score + result.gpt_solution_clean_score) // 3
     
     ### GPT평가 DB 접근 ### 
-    await save_gpt_solution(user_submit_solution_seq, result)
+    await save_gpt_solution(submission_id, user_seq, result)
     
     await send_callback("alert", "ok")
 
-async def summary_problem(problem_id : str, data : ProblemData, chat_llm, json_chain):
+async def summary_problem(problem_id : int, user_seq : int, data : ProblemData, chat_llm, json_chain):
     is_gpt_problem_summary_exist = await check_gpt_problem_summary_is_exist(problem_id)
     if not is_gpt_problem_summary_exist:
-        ### 문제 DB에 문제 저장### 
+        ### 문제 DB에 문제 저장 ### 
         await save_problem_origin(problem_id, data)
+
+        ### 문제 메타데이터 DB에 메타데이터 저장 ### 
+        await update_problem_meta(problem_id, user_seq, data)
         
         # 문제 요약 정보 생성 
         summary_info_result = await summary_info(chat_llm, data)
