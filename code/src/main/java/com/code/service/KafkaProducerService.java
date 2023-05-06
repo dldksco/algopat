@@ -16,8 +16,13 @@ public class KafkaProducerService {
 
   public void send(String topic, Object object) throws JsonProcessingException {
     String jsonString = objectMapper.writeValueAsString(object);
-    System.out.println("데이터 전송!!: " + jsonString);
-    kafkaTemplate.send(topic, jsonString);
+
+    try {
+      kafkaTemplate.send(topic, jsonString);
+    } catch (Exception e) {
+      throw new RuntimeException("카프카 에러 발생");
+    }
+
   }
 
 

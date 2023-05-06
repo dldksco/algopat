@@ -7,7 +7,7 @@ import lombok.ToString;
 
 @Data
 @ToString
-public class ProblemDto {
+public class ProblemRequestDto {
 
   @JsonProperty("openai_api_key")
   private String openaiApiKey;
