@@ -1,6 +1,6 @@
 package com.code.data.dto;
 
-import java.util.List;
+import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -10,9 +10,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserSubmitProblemDto {
-  private long problemId;
-  private String problemTitle;
-  private long problemLevel;
-
+public class UserSubmitSolutionTitleDto {
+  private long submissionId;
+  private LocalDateTime userSubmitSolutionTime;
 }
