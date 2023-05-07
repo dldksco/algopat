@@ -62,8 +62,8 @@ async def processing(data : ProblemData, send_callback):
             raise
 
     ### 회원 푼 문제 DB 접근 ### 
-    await save_user_problem_origin(problem_id, user_seq)
-    submission_id = await save_user_submit_solution_origin(problem_id, user_seq, data)
+    user_submit_problem_data = await save_user_problem_origin(problem_id, user_seq)
+    submission_id = await save_user_submit_solution_origin(problem_id, user_seq, user_submit_problem_data.user_submit_problem_seq, data)
     
     # 여기서 DB에서 불러오는 로직이 들어가는거
     gpt_problem_summary = await get_gpt_problem_summary(problem_id)

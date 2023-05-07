@@ -107,7 +107,8 @@ class UserSubmitProblem(Base):
     __tablename__ = "user_submit_problem"
     __table_args__ = {"schema" : "algopat"}
 
-    problem_id = Column(BigInteger, primary_key=True)
+    user_submit_problem_seq = Column(BigInteger, primary_key = True, autoincrement=True)
+    problem_id = Column(BigInteger)
     user_seq = Column(BigInteger)
     user_submit_problem_created_at = Column(DateTime)
     user_submit_problem_updated_at = Column(DateTime)
@@ -152,6 +153,7 @@ class UserSubmitSolution(Base):
     user_submit_solution_code = Column(Text)
     user_submit_solution_runtime = Column(BigInteger)
     user_submit_solution_memory = Column(BigInteger)
+    user_submit_problem_seq = Column(BigInteger)
     
 
 async def insert_user_submit_solution(data : UserSubmitSolution, user_seq : int, session):
@@ -165,7 +167,8 @@ async def insert_user_submit_solution(data : UserSubmitSolution, user_seq : int,
         user_submit_solution_language = data.user_submit_solution_language,
         user_submit_solution_code = data.user_submit_solution_code,
         user_submit_solution_runtime = data.user_submit_solution_runtime,
-        user_submit_solution_memory = data.user_submit_solution_memory
+        user_submit_solution_memory = data.user_submit_solution_memory,
+        user_submit_problem_seq = data.user_submit_problem_seq
     )
 
     # DB에 Problem 객체 추가

@@ -53,7 +53,7 @@ async def get_gpt_problem_summary(problem_id : int):
     async with get_session() as session:
         return await db_problem.get_gpt_problem_summary(problem_id, session)
 
-async def save_user_submit_solution_origin(problem_id : int, user_seq : int, data : ProblemData):
+async def save_user_submit_solution_origin(problem_id : int, user_seq : int, user_submit_problem_seq : int, data : ProblemData):
     logger.info("회원 제출 코드 DB 접근")
     
     origin_date_format = "%Y년 %m월 %d일 %H:%M:%S"
@@ -75,6 +75,7 @@ async def save_user_submit_solution_origin(problem_id : int, user_seq : int, dat
                 user_submit_solution_code = data.code,
                 user_submit_solution_runtime = data.runtime,
                 user_submit_solution_memory = data.memory,
+                user_submit_problem_seq = user_submit_problem_seq
             )
             logger.info("회원 제출 코드 DB 저장")
             submission_id = await db_problem.insert_user_submit_solution(UserSubmitSolutionData, user_seq, session)
