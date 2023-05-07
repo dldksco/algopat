@@ -1,5 +1,6 @@
 package com.code.controller;
 
+import com.code.data.dto.ProblemRankDetailDto;
 import com.code.data.dto.ProblemRankOverviewDto;
 import com.code.data.dto.ProblemRequestDto;
 import com.code.data.dto.ProblemResponseDto;
@@ -62,7 +63,8 @@ public class CodeController {
       @PathVariable("pageNumber") int pageNumber,
       @PathVariable("problemId") long problemId,
       @RequestParam(value = "userSeq", defaultValue = "9999") long userSeq) {
-    return ResponseEntity.ok(problemService.getUserSubmitSolutionTitleDtoPage(pageNumber, userSeq, problemId));
+    return ResponseEntity.ok(
+        problemService.getUserSubmitSolutionTitleDtoPage(pageNumber, userSeq, problemId));
   }
 
   @GetMapping("/submission/solution/detail/{submissionId}")
@@ -72,5 +74,16 @@ public class CodeController {
     return ResponseEntity.ok(problemService.getUserSubmitSolutionDetailDto(submissionId));
   }
 
+  @GetMapping("/rank/{problemId}/solutions/{pageNumber}")
+  public ResponseEntity<Page<ProblemRankDetailDto[]>> findSolutionsByProblemIdWithDetailsAndFilters(
+      @PathVariable long problemId,
+      @PathVariable int pageNumber,
+      @RequestParam(required = false) String languageFilter,
+      @RequestParam(required = false) String sortCriteria,
+      @RequestParam(required = false, defaultValue = "") String searchText){
 
+    Page<ProblemRankDetailDto[]> result = problemRankService.findSolutionsByProblemIdWithDetailsAndFilters(
+        problemId, languageFilter, sortCriteria, searchText, pageNumber);
+    return ResponseEntity.ok(result);
+  }
 }

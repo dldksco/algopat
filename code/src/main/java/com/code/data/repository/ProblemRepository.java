@@ -17,5 +17,4 @@ public interface ProblemRepository extends JpaRepository<Problem, Long> {
   "WHERE p.problemLevel = :level ")
   Optional<Page<ProblemRankOverviewDto[]>> findProblemsByLevelWithDetails(long level, Pageable pageable);
 
-
 }
