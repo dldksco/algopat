@@ -48,5 +48,10 @@ public class CodeController {
     return ResponseEntity.ok(problemRankService.getProblemRankOverviews(level, pageNumber));
   }
 
+  @GetMapping("/submission")
+  public ResponseEntity<Long> getUserSubmitProblem() {
+
+    return ResponseEntity.ok(problemService.getUserSubmitProblem(1));
+  }
 
 }
