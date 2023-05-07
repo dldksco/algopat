@@ -71,9 +71,9 @@ class ProblemMeta(Base):
     problem_id = Column(BigInteger, primary_key=True, nullable=False)
     problem_title = Column(Text)
     problem_submitted_count = Column(BigInteger)
-    problem_master_user_seq = Column(Text) 
+    problem_master_user_seq = Column(BigInteger) 
 
-async def update_problem_meta(problem_id : int, user_seq : str, data : ProblemData, session):
+async def update_problem_meta(problem_id : int, user_seq : int, data : ProblemData, session):
     # 문제 메타 데이터 조회
     problem_meta = await session.get(ProblemMeta, problem_id)
 
@@ -108,12 +108,12 @@ class UserSubmitProblem(Base):
     __table_args__ = {"schema" : "algopat"}
 
     problem_id = Column(BigInteger, primary_key=True)
-    user_seq = Column(Text)
+    user_seq = Column(BigInteger)
     user_submit_problem_created_at = Column(DateTime)
     user_submit_problem_updated_at = Column(DateTime)
 
 
-async def insert_user_submit_problem(data : UserSubmitProblem, user_seq : str, session):
+async def insert_user_submit_problem(data : UserSubmitProblem, user_seq : int, session):
     user_submit_problem = UserSubmitProblem(
         problem_id = data.problem_id,
         user_seq = user_seq,
@@ -130,7 +130,7 @@ async def insert_user_submit_problem(data : UserSubmitProblem, user_seq : str, s
 
     return user_submit_problem
 
-async def get_user_submit_problem(problem_id : int, user_seq : str,  session):
+async def get_user_submit_problem(problem_id : int, user_seq : int,  session):
     result = await session.execute(select(UserSubmitProblem).filter(UserSubmitProblem.problem_id == problem_id).filter(UserSubmitProblem.user_seq == user_seq))
     await session.close()
     return result.scalar()
@@ -144,7 +144,7 @@ class UserSubmitSolution(Base):
 
     submission_id = Column(BigInteger, primary_key=True)
     problem_id = Column(BigInteger)
-    user_seq = Column(Text)
+    user_seq = Column(BigInteger)
     user_submit_solution_time = Column(DateTime)
     user_submit_solution_result = Column(Text)
     user_submit_solution_result_category = Column(Text)
@@ -154,7 +154,7 @@ class UserSubmitSolution(Base):
     user_submit_solution_memory = Column(BigInteger)
     
 
-async def insert_user_submit_solution(data : UserSubmitSolution, user_seq : str, session):
+async def insert_user_submit_solution(data : UserSubmitSolution, user_seq : int, session):
     user_submit_solution = UserSubmitSolution( 
         submission_id = data.submission_id,
         problem_id = data.problem_id,
@@ -208,8 +208,8 @@ class GPTProblemSummary(Base):
     gpt_space_complexity = Column(Text)
     gpt_space_complexity_reason = Column(Text)
     problem_algorithm_type = Column(Text)
-    problem_time_limit = Column(BigInteger)
-    problem_space_limit = Column(BigInteger)
+    problem_time_limit = Column(Text)
+    problem_space_limit = Column(Text)
 
 
 async def insert_gpt_problem_summary(data, session):
@@ -224,8 +224,8 @@ async def insert_gpt_problem_summary(data, session):
         gpt_space_complexity = data.gpt_space_complexity,
         gpt_space_complexity_reason = data.gpt_space_complexity_reason,
         problem_algorithm_type = data.problem_algorithm_type,
-        problem_time_limit = parse_problem_time_limit(data.problem_time_limit),
-        problem_space_limit = parse_problem_space_limit(data.problem_space_limit)
+        problem_time_limit = data.problem_time_limit,
+        problem_space_limit = data.problem_space_limit
     )
 
     # DB에 Problem 객체 추가
@@ -279,7 +279,7 @@ class GPTSolution(Base):
     gpt_solution_refactoring_suggestion = Column(Text)
     gpt_total_score = Column(BigInteger)
 
-async def insert_gpt_solution(data : GPTSolution, user_seq : str, session):
+async def insert_gpt_solution(data : GPTSolution, user_seq : int, session):
     gpt_solution = GPTSolution(
         submission_id = data.submission_id,
         user_seq = user_seq,
