@@ -1,19 +1,16 @@
 package com.code.data.repository;
 
-import com.code.data.dto.ProblemRankOverviewDto;
+import com.code.data.dto.UserSubmissionSolutionDetailDto;
 import com.code.data.dto.UserSubmitProblemDto;
 import com.code.data.dto.UserSubmitSolutionTitleDto;
 import com.code.data.entity.UserSubmitProblem;
 import java.util.Optional;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 public interface UserSubmitProblemRepository extends JpaRepository<UserSubmitProblem, Long> {
-
-  //Page<UserSubmitProblem> findAll(Pageable pageable);
 
   @Query("SELECT new com.code.data.dto.UserSubmitProblemDto(usp.problemId, p.problemTitle, p.problemLevel) " +
       "FROM UserSubmitProblem usp " +
@@ -27,5 +24,31 @@ public interface UserSubmitProblemRepository extends JpaRepository<UserSubmitPro
       "WHERE uss.userSeq = :userSeq and usp.problemId = :problemId"
   )
   Page<UserSubmitSolutionTitleDto> findUserSubmitSolutionTitleByUserSeq(long userSeq, long problemId, Pageable pageable);
+
+  @Query("SELECT new com.code.data.dto.UserSubmissionSolutionDetailDto(uss.userSubmitSolutionResult, "
+      + "uss.userSubmitSolutionResultCategory, "
+      + "uss.userSubmitSolutionLanguage, "
+      + "uss.userSubmitSolutionCode, "
+      + "uss.userSubmitSolutionRuntime, "
+      + "uss.userSubmitSolutionMemory, "
+      + "gs.gptSolutionTimeComplexity, "
+      + "gs.gptSolutionTimeComplexityReason, "
+      + "gs.gptSolutionTimeScore, "
+      + "gs.gptSolutionTimeComplexityGoodPoint, "
+      + "gs.gptSolutionTimeComplexityBadPoint, "
+      + "gs.gptImprovingTimeComplexitySuggestion, "
+      + "gs.gptSolutionSpaceComplexity, "
+      + "gs.gptSolutionSpaceComplexityReason, "
+      + "gs.gptSolutionSpaceScore, "
+      + "gs.gptSolutionSpaceComplexityGoodPoint, "
+      + "gs.gptSolutionSpaceComplexityBadPoint, "
+      + "gs.gptImprovingSpaceComplexitySuggestion, "
+      + "gs.gptSolutionCleanScore, "
+      + "gs.gptSolutionRefactoringSuggestion, "
+      + "gs.gptTotalScore) " +
+      "FROM UserSubmitSolution uss " +
+      "JOIN GptSolution gs ON uss.submissionId = gs.submissionId " +
+      "WHERE uss.submissionId = :submissionId")
+  Optional<UserSubmissionSolutionDetailDto> findUserSubmitSolutionDetailBySubmissionId(long submissionId);
 }
 

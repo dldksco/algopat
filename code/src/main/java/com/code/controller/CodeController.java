@@ -11,8 +11,6 @@ import com.code.service.ProblemService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -65,6 +63,13 @@ public class CodeController {
       @PathVariable("problemId") long problemId,
       @RequestParam(value = "userSeq", defaultValue = "9999") long userSeq) {
     return ResponseEntity.ok(problemService.getUserSubmitSolutionTitleDtoPage(pageNumber, userSeq, problemId));
+  }
+
+  @GetMapping("/submission/solution/detail/{submissionId}")
+  public ResponseEntity<?> getUserSubmissionSolutionDetailDto(
+      @PathVariable("submissionId") long submissionId,
+      @RequestParam(value = "userSeq", defaultValue = "9999") long userSeq) {
+    return ResponseEntity.ok(problemService.getUserSubmitSolutionDetailDto(submissionId));
   }
 
 
