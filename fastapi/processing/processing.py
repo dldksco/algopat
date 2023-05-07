@@ -62,8 +62,8 @@ async def processing(data : ProblemData, send_callback):
             raise
 
     ### 회원 푼 문제 DB 접근 ### 
-    await save_user_problem_origin(problem_id, user_seq)
-    submission_id = await save_user_submit_solution_origin(problem_id, user_seq, data)
+    user_submit_problem_data = await save_user_problem_origin(problem_id, user_seq)
+    submission_id = await save_user_submit_solution_origin(problem_id, user_seq, user_submit_problem_data.user_submit_problem_seq, data)
     
     # 여기서 DB에서 불러오는 로직이 들어가는거
     gpt_problem_summary = await get_gpt_problem_summary(problem_id)
@@ -96,9 +96,6 @@ async def summary_problem(problem_id : int, user_seq : int, data : ProblemData, 
         ### 문제 DB에 문제 저장 ### 
         await save_problem_origin(problem_id, data)
 
-        ### 문제 메타데이터 DB에 메타데이터 저장 ### 
-        await update_problem_meta(problem_id, user_seq, data)
-        
         # 문제 요약 정보 생성 
         summary_info_result = await summary_info(chat_llm, data)
 
@@ -112,3 +109,6 @@ async def summary_problem(problem_id : int, user_seq : int, data : ProblemData, 
 
         ### GPT_문제 요약 DB 접근 ###
         await save_problem_summary(problem_id, summary_json)
+    
+    ### 문제 메타데이터 DB에 메타데이터 저장 ### 
+    await update_problem_meta(problem_id, user_seq, data)

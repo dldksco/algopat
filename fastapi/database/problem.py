@@ -6,7 +6,10 @@ import json
 from myclass.problem import UserSubmitProblem, UserSubmitSolution
 from datetime import datetime
 from fastapi import HTTPException
+from logging import getLogger
 from utils.utils import parse_problem_space_limit, parse_problem_time_limit
+# logger 설정 
+logger = getLogger()
 
 Base = declarative_base() # ORM 매핑을 위한 기본 클래스 
 
@@ -71,14 +74,14 @@ class ProblemMeta(Base):
     problem_id = Column(BigInteger, primary_key=True, nullable=False)
     problem_title = Column(Text)
     problem_submitted_count = Column(BigInteger)
-    problem_master_user_seq = Column(Text) 
+    problem_master_user_seq = Column(BigInteger) 
 
-async def update_problem_meta(problem_id : int, user_seq : str, data : ProblemData, session):
+async def update_problem_meta(problem_id : int, user_seq : int, data : ProblemData, session):
     # 문제 메타 데이터 조회
     problem_meta = await session.get(ProblemMeta, problem_id)
 
     if problem_meta is not None:
-        print("문제 메타 데이터 있음")
+        logger.info("문제 메타 데이터 있음")
         # 문제 메타 데이터 업데이트 
         problem_meta.problem_submitted_count += 1
         problem_meta.problem_master_user_seq = user_seq # Todo : master user_seq logic
@@ -86,7 +89,7 @@ async def update_problem_meta(problem_id : int, user_seq : str, data : ProblemDa
         await session.refresh(problem_meta)
         await session.close()
     else:
-        print("문제 메타 데이터 없음")
+        logger.info("문제 메타 데이터 없음")
         # 문제 메타 데이터 없음, 새로운 메타 데이터 추가 
         problem_meta = ProblemMeta(
             problem_id = problem_id,
@@ -107,13 +110,14 @@ class UserSubmitProblem(Base):
     __tablename__ = "user_submit_problem"
     __table_args__ = {"schema" : "algopat"}
 
-    problem_id = Column(BigInteger, primary_key=True)
-    user_seq = Column(Text)
+    user_submit_problem_seq = Column(BigInteger, primary_key = True, autoincrement=True)
+    problem_id = Column(BigInteger)
+    user_seq = Column(BigInteger)
     user_submit_problem_created_at = Column(DateTime)
     user_submit_problem_updated_at = Column(DateTime)
 
 
-async def insert_user_submit_problem(data : UserSubmitProblem, user_seq : str, session):
+async def insert_user_submit_problem(data : UserSubmitProblem, user_seq : int, session):
     user_submit_problem = UserSubmitProblem(
         problem_id = data.problem_id,
         user_seq = user_seq,
@@ -130,7 +134,7 @@ async def insert_user_submit_problem(data : UserSubmitProblem, user_seq : str, s
 
     return user_submit_problem
 
-async def get_user_submit_problem(problem_id : int, user_seq : str,  session):
+async def get_user_submit_problem(problem_id : int, user_seq : int,  session):
     result = await session.execute(select(UserSubmitProblem).filter(UserSubmitProblem.problem_id == problem_id).filter(UserSubmitProblem.user_seq == user_seq))
     await session.close()
     return result.scalar()
@@ -144,7 +148,7 @@ class UserSubmitSolution(Base):
 
     submission_id = Column(BigInteger, primary_key=True)
     problem_id = Column(BigInteger)
-    user_seq = Column(Text)
+    user_seq = Column(BigInteger)
     user_submit_solution_time = Column(DateTime)
     user_submit_solution_result = Column(Text)
     user_submit_solution_result_category = Column(Text)
@@ -152,9 +156,10 @@ class UserSubmitSolution(Base):
     user_submit_solution_code = Column(Text)
     user_submit_solution_runtime = Column(BigInteger)
     user_submit_solution_memory = Column(BigInteger)
+    user_submit_problem_seq = Column(BigInteger)
     
 
-async def insert_user_submit_solution(data : UserSubmitSolution, user_seq : str, session):
+async def insert_user_submit_solution(data : UserSubmitSolution, user_seq : int, session):
     user_submit_solution = UserSubmitSolution( 
         submission_id = data.submission_id,
         problem_id = data.problem_id,
@@ -165,7 +170,8 @@ async def insert_user_submit_solution(data : UserSubmitSolution, user_seq : str,
         user_submit_solution_language = data.user_submit_solution_language,
         user_submit_solution_code = data.user_submit_solution_code,
         user_submit_solution_runtime = data.user_submit_solution_runtime,
-        user_submit_solution_memory = data.user_submit_solution_memory
+        user_submit_solution_memory = data.user_submit_solution_memory,
+        user_submit_problem_seq = data.user_submit_problem_seq
     )
 
     # DB에 Problem 객체 추가
@@ -176,6 +182,18 @@ async def insert_user_submit_solution(data : UserSubmitSolution, user_seq : str,
     await session.close()
 
     return user_submit_solution.submission_id
+
+async def check_user_submit_solution_is_exist(submission_id : int, session):
+    result = await session.execute(select(UserSubmitSolution).filter(UserSubmitSolution.submission_id == submission_id))
+    user_submit_solution = result.scalar()
+
+    if user_submit_solution is None:
+        await session.close()
+        return False # 회원제출코드 정보 없음
+    else:
+        await session.close()
+        return True # 회원제출코드 정보 있음
+
 
 
 #=================================================================================
@@ -267,7 +285,7 @@ class GPTSolution(Base):
     gpt_solution_refactoring_suggestion = Column(Text)
     gpt_total_score = Column(BigInteger)
 
-async def insert_gpt_solution(data : GPTSolution, user_seq : str, session):
+async def insert_gpt_solution(data : GPTSolution, user_seq : int, session):
     gpt_solution = GPTSolution(
         submission_id = data.submission_id,
         user_seq = user_seq,
