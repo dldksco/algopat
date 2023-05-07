@@ -57,6 +57,7 @@ class UserSubmitSolution(BaseModel):
     user_submit_solution_code : str 
     user_submit_solution_runtime : str 
     user_submit_solution_memory : str 
+    user_submit_solution_code_length : int
     problem_id : str 
 
 class GPTSolutionData(BaseModel):
