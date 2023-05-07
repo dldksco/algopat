@@ -75,6 +75,7 @@ async def save_user_submit_solution_origin(problem_id : int, user_seq : int, use
                 user_submit_solution_code = data.code,
                 user_submit_solution_runtime = data.runtime,
                 user_submit_solution_memory = data.memory,
+                user_submit_solution_code_length = data.codeLength,
                 user_submit_problem_seq = user_submit_problem_seq
             )
             logger.info("회원 제출 코드 DB 저장")
