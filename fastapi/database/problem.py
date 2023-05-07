@@ -6,7 +6,10 @@ import json
 from myclass.problem import UserSubmitProblem, UserSubmitSolution
 from datetime import datetime
 from fastapi import HTTPException
+from logging import getLogger
 from utils.utils import parse_problem_space_limit, parse_problem_time_limit
+# logger 설정 
+logger = getLogger()
 
 Base = declarative_base() # ORM 매핑을 위한 기본 클래스 
 
@@ -78,7 +81,7 @@ async def update_problem_meta(problem_id : int, user_seq : int, data : ProblemDa
     problem_meta = await session.get(ProblemMeta, problem_id)
 
     if problem_meta is not None:
-        print("문제 메타 데이터 있음")
+        logger.info("문제 메타 데이터 있음")
         # 문제 메타 데이터 업데이트 
         problem_meta.problem_submitted_count += 1
         problem_meta.problem_master_user_seq = user_seq # Todo : master user_seq logic
@@ -86,7 +89,7 @@ async def update_problem_meta(problem_id : int, user_seq : int, data : ProblemDa
         await session.refresh(problem_meta)
         await session.close()
     else:
-        print("문제 메타 데이터 없음")
+        logger.info("문제 메타 데이터 없음")
         # 문제 메타 데이터 없음, 새로운 메타 데이터 추가 
         problem_meta = ProblemMeta(
             problem_id = problem_id,
