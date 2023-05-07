@@ -177,6 +177,18 @@ async def insert_user_submit_solution(data : UserSubmitSolution, user_seq : str,
 
     return user_submit_solution.submission_id
 
+async def check_user_submit_solution_is_exist(submission_id : int, session):
+    result = await session.execute(select(UserSubmitSolution).filter(UserSubmitSolution.submission_id == submission_id))
+    user_submit_solution = result.scalar()
+
+    if user_submit_solution is None:
+        await session.close()
+        return False # 회원제출코드 정보 없음
+    else:
+        await session.close()
+        return True # 회원제출코드 정보 있음
+
+
 
 #=================================================================================
 
