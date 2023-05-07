@@ -16,4 +16,6 @@ public interface ProblemRepository extends JpaRepository<Problem, Long> {
   "JOIN UserNickname unn ON pm.problemMasterUserSeq = unn.userSeq " +
   "WHERE p.problemLevel = :level ")
   Optional<Page<ProblemRankOverviewDto[]>> findProblemsByLevelWithDetails(long level, Pageable pageable);
+
+
 }

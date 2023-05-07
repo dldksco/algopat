@@ -7,7 +7,6 @@ import com.code.service.KafkaProducerService;
 import com.code.service.ProblemRankService;
 import com.code.service.ProblemService;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
