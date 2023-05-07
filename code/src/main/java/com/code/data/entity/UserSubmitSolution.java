@@ -51,6 +51,9 @@ public class UserSubmitSolution {
   @Column(name = "user_submit_solution_memory")
   private long userSubmitSolutionMemory;
 
+  @Column(name = "user_submit_solution_code_length")
+  private long userSubmitSolutionCodeLength;
+
   @Column(name = "user_submit_problem_seq")
   private long userSubmitProblemSeq;
 }
