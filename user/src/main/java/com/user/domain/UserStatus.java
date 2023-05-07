@@ -32,14 +32,9 @@ import org.hibernate.annotations.Type;
 @Builder
 public class UserStatus extends BaseEntityTime{
   @Id
-  @GeneratedValue(generator = "UUID")
-  @GenericGenerator(
-      name = "UUID",
-      strategy = "org.hibernate.id.UUIDGenerator"
-  )
+  @GeneratedValue(generator = "GenerationType.IDENTITY")
   @Column(name = "user_status_seq", updatable = false, nullable = false)
-  @Type(type= "uuid-char")
-  private UUID userStatusSeq;
+  private Long userStatusSeq;
 
   @Column(name="user_status_status")
   @Enumerated(EnumType.STRING)

@@ -31,12 +31,12 @@ public class UserServiceImpl implements UserService {
         Optional<User> user = userRepository.findByUserGithubId(githubUserId);
 
         if(user.isPresent()){
-            UUID userUUID = user.get().getUserSeq();
-            UserStatus userStatus = userStatusRepository.findTopByUserUserSeqOrderByCreatedAtDesc(userUUID).orElseThrow(() -> new BaseException(ErrorCode.SERVICE_SERVLET_ERROR,methodName));
+            Long userSeq = user.get().getUserSeq();
+            UserStatus userStatus = userStatusRepository.findTopByUserUserSeqOrderByCreatedAtDesc(userSeq).orElseThrow(() -> new BaseException(ErrorCode.SERVICE_SERVLET_ERROR,methodName));
             if(!userStatus.getUserStatusStatus().equals(UserStatusType.AVAILABLE))
                 throw new BaseException(ErrorCode.UNVALID_USER,methodName);
-
-            return true;
+            throw new BaseException(ErrorCode.UNVALID_USER,methodName);
+//            return true;
         }
         else{
             User newUser = User.builder().userGithubId(githubUserIdInfoDTO.getUserGithubId()).build();

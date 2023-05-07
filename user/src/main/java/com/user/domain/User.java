@@ -10,6 +10,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Index;
 import javax.persistence.OneToMany;
@@ -32,14 +33,9 @@ import org.hibernate.annotations.Type;
 @AttributeOverride(name="createdAt", column=@Column(name="user_created_at", nullable = false, updatable = false))
 public class User extends BaseEntityTime {
   @Id
-  @GeneratedValue(generator = "UUID")
-  @GenericGenerator(
-      name = "UUID",
-      strategy = "org.hibernate.id.UUIDGenerator"
-  )
+  @GeneratedValue(generator = "GenerationType.IDENTITY")
   @Column(name = "user_seq", updatable = false, nullable = false)
-  @Type(type= "uuid-char")
-  private UUID userSeq;
+  private Long userSeq;
 
   @Column(name="user_github_id", nullable = false)
   private String userGithubId;
