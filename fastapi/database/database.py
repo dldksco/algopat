@@ -4,6 +4,7 @@ from database.problem import UserSubmitProblem, UserSubmitSolution, GPTSolution
 from database.get_session import get_session
 from logging import getLogger
 from utils.utils import parse_date_format
+import my_exception.exception as exception 
 # logger 설정 
 logger = getLogger()
 
@@ -39,6 +40,9 @@ async def save_user_problem_origin(problem_id : int, user_seq : int):
             )
             logger.info("회원 푼 문제 DB 저장")
             userSubmitProblemData = await db_problem.insert_user_submit_problem(userSubmitProblemData, user_seq, session)
+        else:
+            logger.info("회원 푼 문제 존재")
+            # Todo : 최근 제출 일자 업데이트 Logic
         return userSubmitProblemData
 
 async def check_gpt_problem_summary_is_exist(problem_id : int):
@@ -57,22 +61,28 @@ async def save_user_submit_solution_origin(problem_id : int, user_seq : int, dat
 
     
     async with get_session() as session:
-        ### 회원 제출 코드 DB 접근 ### 
-        UserSubmitSolutionData = UserSubmitSolution(
-            submission_id = data.submissionId,
-            problem_id = problem_id,
-            user_seq = user_seq,
-            user_submit_solution_time = await parse_date_format(data.submissionTime), 
-            user_submit_solution_result = data.result,
-            user_submit_solution_result_category = data.resultCategory,
-            user_submit_solution_language = data.language,
-            user_submit_solution_code = data.code,
-            user_submit_solution_runtime = data.runtime,
-            user_submit_solution_memory = data.memory,
-        )
-        logger.info("회원 제출 코드 DB 저장")
-        submission_id = await db_problem.insert_user_submit_solution(UserSubmitSolutionData, user_seq, session)
-        return submission_id
+        # 같은 submission_id로 제출한 적이 있는지 체크 
+        if await db_problem.check_user_submit_solution_is_exist(data.submissionId, session) == False:
+            ### 회원 제출 코드 DB 접근 ### 
+            UserSubmitSolutionData = UserSubmitSolution(
+                submission_id = data.submissionId,
+                problem_id = problem_id,
+                user_seq = user_seq,
+                user_submit_solution_time = await parse_date_format(data.submissionTime), 
+                user_submit_solution_result = data.result,
+                user_submit_solution_result_category = data.resultCategory,
+                user_submit_solution_language = data.language,
+                user_submit_solution_code = data.code,
+                user_submit_solution_runtime = data.runtime,
+                user_submit_solution_memory = data.memory,
+            )
+            logger.info("회원 제출 코드 DB 저장")
+            submission_id = await db_problem.insert_user_submit_solution(UserSubmitSolutionData, user_seq, session)
+            return submission_id
+        else:
+            logger.info("회원 제출 코드 중복")
+            raise exception.DuplicateSubmissionError()
+
 
 
 async def save_gpt_solution(submission_id : int, user_seq : int,  result):
