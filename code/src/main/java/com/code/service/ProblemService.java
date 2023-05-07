@@ -1,15 +1,23 @@
 package com.code.service;
 
 import com.code.data.dto.ProblemResponseDto;
+import com.code.data.dto.UserSubmitProblemDto;
+import com.code.data.dto.UserSubmitSolutionTitleDto;
 import com.code.data.entity.Problem;
 import com.code.data.entity.UserSubmitProblem;
 import com.code.data.repository.ProblemRepository;
 import com.code.data.repository.UserSubmitProblemRepository;
 import com.code.util.builder.ProblemBuilderUtil;
+import com.code.util.builder.UserSubmitProblemBuilderUtil;
 import lombok.RequiredArgsConstructor;
 import org.apache.tomcat.jni.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,6 +32,7 @@ public class ProblemService {
   private final UserSubmitProblemRepository userSubmitProblemRepository;
   // Util 정의
   private final ProblemBuilderUtil problemBuilderUtil;
+  private final UserSubmitProblemBuilderUtil userSubmitProblemBuilderUtil;
 
   public ProblemResponseDto getProblem(long problemId) {
     logger.info("문제 조회");
@@ -31,10 +40,15 @@ public class ProblemService {
     return problemBuilderUtil.problemToProblemResponseDto(problem);
   }
 
-  public long getUserSubmitProblem(long userSubmitProblemSeq) {
-    logger.info("회원푼문제 조회");
-    UserSubmitProblem userSubmitProblem = userSubmitProblemRepository.findById(userSubmitProblemSeq)
-        .orElseThrow(RuntimeException::new);
-    return userSubmitProblem.getProblemId();
+  public Page<UserSubmitProblemDto> getUserSubmitProblemDtoPage(int page, long userSeq) {
+    PageRequest pagable = PageRequest.of(page, 10, Sort.by(Direction.DESC, "userSubmitProblemUpdatedAt"));
+    Page<UserSubmitProblemDto> userSubmitProblemDtoPage = userSubmitProblemRepository.findUserSubmitProblemDtoByUserSeq(userSeq, pagable);
+    return userSubmitProblemDtoPage;
+  }
+
+  public Page<UserSubmitSolutionTitleDto> getUserSubmitSolutionTitleDtoPage(int page, long userSeq, long problemId) {
+    PageRequest pagable = PageRequest.of(page, 10, Sort.by(Direction.DESC, "userSubmitSolutionTime"));
+    Page<UserSubmitSolutionTitleDto> userSubmitSolutionTitleDtoPage = userSubmitProblemRepository.findUserSubmitSolutionTitleByUserSeq(userSeq, problemId, pagable);
+    return userSubmitSolutionTitleDtoPage;
   }
 }

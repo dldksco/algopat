@@ -3,12 +3,16 @@ package com.code.controller;
 import com.code.data.dto.ProblemRankOverviewDto;
 import com.code.data.dto.ProblemRequestDto;
 import com.code.data.dto.ProblemResponseDto;
+import com.code.data.dto.UserSubmitProblemDto;
+import com.code.data.dto.UserSubmitSolutionTitleDto;
 import com.code.service.KafkaProducerService;
 import com.code.service.ProblemRankService;
 import com.code.service.ProblemService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -48,10 +52,20 @@ public class CodeController {
     return ResponseEntity.ok(problemRankService.getProblemRankOverviews(level, pageNumber));
   }
 
-  @GetMapping("/submission")
-  public ResponseEntity<Long> getUserSubmitProblem() {
-
-    return ResponseEntity.ok(problemService.getUserSubmitProblem(1));
+  @GetMapping("/submission/{pageNumber}")
+  public ResponseEntity<Page<UserSubmitProblemDto>> getUserSubmitProblemDto(
+      @PathVariable("pageNumber") int pageNumber,
+      @RequestParam(value = "userSeq", defaultValue = "9999") long userSeq) {
+    return ResponseEntity.ok(problemService.getUserSubmitProblemDtoPage(pageNumber, userSeq));
   }
+
+  @GetMapping("/submission/solution/{problemId}/{pageNumber}")
+  public ResponseEntity<Page<UserSubmitSolutionTitleDto>> getUserSubmitSolutionTitleDto(
+      @PathVariable("pageNumber") int pageNumber,
+      @PathVariable("problemId") long problemId,
+      @RequestParam(value = "userSeq", defaultValue = "9999") long userSeq) {
+    return ResponseEntity.ok(problemService.getUserSubmitSolutionTitleDtoPage(pageNumber, userSeq, problemId));
+  }
+
 
 }
