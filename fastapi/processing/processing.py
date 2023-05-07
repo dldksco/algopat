@@ -96,9 +96,6 @@ async def summary_problem(problem_id : int, user_seq : int, data : ProblemData, 
         ### 문제 DB에 문제 저장 ### 
         await save_problem_origin(problem_id, data)
 
-        ### 문제 메타데이터 DB에 메타데이터 저장 ### 
-        await update_problem_meta(problem_id, user_seq, data)
-        
         # 문제 요약 정보 생성 
         summary_info_result = await summary_info(chat_llm, data)
 
@@ -112,3 +109,6 @@ async def summary_problem(problem_id : int, user_seq : int, data : ProblemData, 
 
         ### GPT_문제 요약 DB 접근 ###
         await save_problem_summary(problem_id, summary_json)
+    
+    ### 문제 메타데이터 DB에 메타데이터 저장 ### 
+    await update_problem_meta(problem_id, user_seq, data)
