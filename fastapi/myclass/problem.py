@@ -37,9 +37,9 @@ class ProblemSummary(BaseModel):
     gpt_time_complexity_reason: Optional[str] = None
     gpt_space_complexity: Optional[str] = None
     gpt_space_complexity_reason: Optional[str] = None
-    problem_space_limit: Optional[str] = None
-    problem_time_limit: Optional[str] = None
     problem_algorithm_type: Optional[str] = None
+    problem_time_limit: Optional[str] = None
+    problem_space_limit: Optional[str] = None
 
 class UserSubmitProblem(BaseModel):
     user_submit_problem_seq : int 

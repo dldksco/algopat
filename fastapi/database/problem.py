@@ -196,8 +196,8 @@ class GPTProblemSummary(Base):
     gpt_space_complexity = Column(Text)
     gpt_space_complexity_reason = Column(Text)
     problem_algorithm_type = Column(Text)
-    problem_time_limit = Column(BigInteger)
-    problem_space_limit = Column(BigInteger)
+    problem_time_limit = Column(Text)
+    problem_space_limit = Column(Text)
 
 
 async def insert_gpt_problem_summary(data, session):
@@ -212,8 +212,8 @@ async def insert_gpt_problem_summary(data, session):
         gpt_space_complexity = data.gpt_space_complexity,
         gpt_space_complexity_reason = data.gpt_space_complexity_reason,
         problem_algorithm_type = data.problem_algorithm_type,
-        problem_time_limit = parse_problem_time_limit(data.problem_time_limit),
-        problem_space_limit = parse_problem_space_limit(data.problem_space_limit)
+        problem_time_limit = data.problem_time_limit,
+        problem_space_limit = data.problem_space_limit
     )
 
     # DB에 Problem 객체 추가
