@@ -81,7 +81,8 @@
 
   .lpage {
     width: 100%;
-    height: calc(100vh - 180px);
+    height: auto;
+    // height: calc(100vh - 180px);
     text-align: center;
 
     .contentbox {
