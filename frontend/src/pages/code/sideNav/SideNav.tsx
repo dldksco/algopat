@@ -4,7 +4,6 @@ import { v4 as uuidv4 } from "uuid";
 import {
   faArrowDownWideShort,
   faCircleXmark,
-  faCommentDots,
   faHouse,
   faUser,
   faTrophy,
@@ -109,7 +108,7 @@ export const SideNav = ({
           <span onClick={() => navigate("/")}>메인페이지</span>
         </div>
         <div className={style.nav_header_tag}>
-          <div onClick={() => navigate("/community")}>
+          <div onClick={() => navigate("/ranking")}>
             <FontAwesomeIcon icon={faTrophy} />
           </div>
           <span onClick={() => navigate("/ranking")}>랭킹</span>

@@ -56,7 +56,7 @@ export const Main = () => {
       <div className={style.cpage}>
         <div className={style.gptcode}>
           <img src={code3} className={style.code_image} alt="" />
-          <div className={style.gptdesc} style={{ width: "50%" }}>
+          <div className={style.gptdesc}>
             <h1>
               <span style={{ color: "#7472CB" }}>리팩토링</span> 제공
             </h1>
@@ -107,6 +107,7 @@ export const Main = () => {
             fontSize: "1.3rem",
             fontWeight: "700",
             padding: "20px 60px",
+            marginBottom: "30px",
           }}
           onClick={() => {}}
         />

@@ -6,7 +6,7 @@ import { loginUser, logout, userInfoState } from "@/atoms/user.atom";
 import logo from "@/assets/img/logo.png";
 import style from "./Header.module.css";
 import { useRecoilState } from "recoil";
-import { isMobile } from "@/pages/community/hooks/func";
+import { isMobile } from "@/pages/main/hooks/func";
 
 export const Header = () => {
   const loginUrl =
