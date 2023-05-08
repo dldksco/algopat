@@ -14,10 +14,10 @@ public class EmitService {
   // logger 정의
   private static final Logger logger = LoggerFactory.getLogger(EmitService.class);
 
-  public void emitMessageToUser(Map<String, Many<String>> userSinks, String userSeq, String message) {
+  public void emitMessageToUser(Map<String, Many<String>> userSinks, String userSeq) {
     Sinks.Many<String> userSink = userSinks.get(userSeq);
     if (userSink != null) {
-      userSink.tryEmitNext(message);
+      userSink.tryEmitNext("ok");
 
       userSinks.remove(userSeq); // 연결 해제
       logger.info("파이프라인 종료");
