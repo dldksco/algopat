@@ -35,9 +35,9 @@ public class AlertController {
 
   // 카프카에게 메시지 전송 (테스트 컨트롤러)
   @GetMapping("/send/kafka")
-  public void sendKafka(String username, String message) {
-    logger.info("alert 토픽에게 {} 식별자로 {} 전송", username, message);
-    kafkaProducerService.sendMessage("alert", username, message);
+  public void sendKafka(String username) {
+    logger.info("alert 토픽에게 {} 전송", username);
+    kafkaProducerService.sendMessage("alert", username);
   }
 
   // 파이프라인 연결 (단순 String)
@@ -57,14 +57,21 @@ public class AlertController {
   }
 
   @KafkaListener(topics = "${kafka.topic}", groupId = "${kafka.group-id}")
-  public void consume(ConsumerRecord<String, String> record) {
-    logger.debug("record key : {}, record value : {}", record.key(), record.value());
-    String userSeq = record.key();
-    String message  = record.value();
-
-    logger.info("{}에게 {}전송", userSeq, message);
-    emitService.emitMessageToUser(userSinks, userSeq, message);
+  public void consume(String message) {
+    logger.info("알림 컨슘 !!!!");
+    logger.info("받은 데이터 {}", message);
+    emitService.emitMessageToUser(userSinks,  message);
   }
+
+//  @KafkaListener(topics = "${kafka.topic}", groupId = "${kafka.group-id}")
+//  public void consume(ConsumerRecord<String, String> record) {
+//    logger.debug("record key : {}, record value : {}", record.key(), record.value());
+//    String userSeq = record.key();
+//    String message  = record.value();
+//
+//    logger.info("{}에게 {}전송", userSeq, message);
+//    emitService.emitMessageToUser(userSinks, userSeq, message);
+//  }
 
   @GetMapping("/health")
   public String healthCheck() {
