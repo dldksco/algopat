@@ -12,7 +12,7 @@ import { centerIndexState } from "@/atoms/ranking.atom";
 
 import style from "./RankingCarousel.module.css";
 import "./carousel.css";
-import { isMobile } from "@/pages/community/hooks/func";
+import { isMobile } from "@/pages/main/hooks/func";
 
 const MAX_LEGNTH = 30;
 
