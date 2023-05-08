@@ -12,7 +12,7 @@ export interface UserInfo {
 export const userInfoState = atom<UserInfo>({
   key: "userInfoState",
   default: {
-    userSeq: 0,
+    userSeq: 1,
     userProfile: "",
     userGithubId: "",
     userEmail: "",
@@ -72,13 +72,5 @@ export const logout = (setUserInfo: SetterOrUpdater<UserInfo>) => {
     userRank: 0,
   });
 
-  window.location.href = "https://www.algophat.com";
-
-  // setUserInfo({
-  //   userSeq: result.number,
-  //   userProfile: result.userProfile,
-  //   userGithubId: result.userGithubId,
-  //   userEmail: result.userEmail,
-  //   userRank: result.userRank,
-  // });
+  window.location.href = "https://www.algopat.kr";
 };
