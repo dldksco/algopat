@@ -33,7 +33,7 @@ public class GatewayConfig {
       String k = request.getURI().toString();
       String path = request.getURI().getPath();
       System.out.println(k+"==============");
-      if (path.startsWith("/auth/") || path.startsWith("/user/che")|| path.startsWith("/alert")) {
+      if (path.startsWith("/auth/") || path.startsWith("/user/che")|| path.startsWith("/sse")) {
         return chain.filter(exchange);
       } else {
 
