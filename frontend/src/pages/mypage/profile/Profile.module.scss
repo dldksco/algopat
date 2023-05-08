@@ -1,47 +1,44 @@
 .box {
-    padding: 4%;
-    margin: 5% auto;
-    border: 1px solid;
-    border-color: var(--font-color);
-    // width: 1400px;
-    width: 80%;
-    height: auto;
-    .profiletitle {
-      font-size: 1.36em;
-      font-weight: 600;
-    }
-    .profileimage {
-      background-size: cover;
-      margin-top: 4%;
-      width: 150px;
-      height: 150px;
-      border-radius: 100%;
-      box-shadow: 3px 3px 3px 3px black;
-    }
-    .profileinfo {
-      display: flex;
-      justify-content: space-between;
-      align-items: end;
-      .gitinfo {
-        p {
-          font-size: 1.3rem;
-        }
-      }
-    }
-    .setting {
-      font-size: 1.1rem;
-      font-weight: 600;
-      .renew{
-        cursor: pointer;
+  padding: 4%;
+  margin: 5% auto;
+  background-color: #1b1d27;
+  // width: 1400px;
+  width: 900px;
+  height: auto;
+  .profiletitle {
+    font-size: 1.36em;
+    font-weight: 600;
+  }
+  .profileimage {
+    background-size: cover;
+    margin-top: 4%;
+    width: 150px;
+    height: 150px;
+    border-radius: 100%;
+    box-shadow: 3px 3px 3px 3px black;
+  }
+  .profileinfo {
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    .gitinfo {
+      p {
+        font-size: 1.3rem;
       }
     }
   }
+  .setting {
+    font-size: 1.1rem;
+    font-weight: 600;
+    .renew {
+      cursor: pointer;
+    }
+  }
+}
 
-  
 @media screen and (max-width: 768px) {
-  .box{
+  .box {
     width: 100%;
     overflow-x: auto;
-    
   }
 }

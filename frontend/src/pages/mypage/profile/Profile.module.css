@@ -1,9 +1,8 @@
 .box {
   padding: 4%;
   margin: 5% auto;
-  border: 1px solid;
-  border-color: var(--font-color);
-  width: 80%;
+  background-color: #1b1d27;
+  width: 900px;
   height: auto;
 }
 .box .profiletitle {
