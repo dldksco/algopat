@@ -1,4 +1,18 @@
 .code_detail {
   width: 100%;
-  padding: 2% 5%;
+  padding: 2% 8%;
+}
+.code_detail .info_box .box_title span {
+  font-size: 1.2rem;
+  margin-left: 3%;
+}
+.code_detail .info_box .box_content {
+  background-color: #2d3956;
+  margin: 20px 0;
+  padding: 2% 2%;
+  width: 95%;
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: 10px;
+  min-height: 500px;
 }/*# sourceMappingURL=CodeDetail.module.css.map */
