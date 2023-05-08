@@ -106,12 +106,6 @@ export const SideNav = ({
           <span onClick={() => navigate("/ranking")}>랭킹</span>
         </div>
         <div className={style.nav_header_tag}>
-          <div onClick={() => navigate("/community")}>
-            <FontAwesomeIcon icon={faCommentDots} />
-          </div>
-          <span onClick={() => navigate("/community")}>커뮤니티</span>
-        </div>
-        <div className={style.nav_header_tag}>
           <div onClick={() => navigate("/mypage")}>
             <FontAwesomeIcon icon={faUser} />
           </div>

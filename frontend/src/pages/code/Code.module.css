@@ -38,8 +38,8 @@
   .code .rightTab .hamberger {
     display: block;
     position: absolute;
-    font-size: 40px;
-    top: 2%;
+    font-size: 1.7rem;
+    top: 1%;
     left: 2%;
     cursor: pointer;
   }

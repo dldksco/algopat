@@ -36,7 +36,6 @@ export const Header = () => {
       >
         <div onClick={() => moveNav("/code")}>코드분석</div>
         <div onClick={() => moveNav("/ranking")}>랭킹</div>
-        <div onClick={() => moveNav("/community")}>커뮤니티</div>
         {!userInfo.userSeq ? (
           <div
             onClick={() => {
@@ -65,31 +64,34 @@ export const Header = () => {
                 navigate("/mypage");
               }}
             />
-            {/* {userUnreadMsgNum?.data.userUnreadMessage ? (
-            <div className={style.badge}>
-              {userUnreadMsgNum?.data.userUnreadMessage}
-            </div>
-          ) : null} */}
           </div>
         )}
-        {isMobile() ? (
-          <div onClick={() => moveNav("/mypage")}>마이페이지</div>
+        {isMobile() && userInfo.userSeq ? (
+          <>
+            <div onClick={() => moveNav("/mypage")}>마이페이지</div>
+            <div
+              onClick={() => {
+                logout(setUserInfo);
+              }}
+            >
+              로그아웃
+            </div>
+          </>
         ) : null}
       </div>
       <div className={style.bars}>
         {!isOpen ? (
-          <div className={style.profile_div}>
-            <img
-              src={userInfo.userProfile}
-              alt="프로필 이미지"
-              onClick={changeOpen}
-            />
-            {/* {userUnreadMsgNum?.data.userUnreadMessage ? (
-                   <div className={style.badge}>
-                     {userUnreadMsgNum?.data.userUnreadMessage}
-                   </div>
-                 ) : null} */}
-          </div>
+          userInfo.userSeq ? (
+            <div className={style.profile_div}>
+              <img
+                src={userInfo.userProfile}
+                alt="프로필 이미지"
+                onClick={changeOpen}
+              />
+            </div>
+          ) : (
+            <FontAwesomeIcon icon={faBars} onClick={changeOpen} />
+          )
         ) : (
           <FontAwesomeIcon icon={faXmark} onClick={changeOpen} />
         )}
