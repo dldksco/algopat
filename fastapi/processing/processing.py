@@ -88,7 +88,7 @@ async def processing(data : ProblemData, send_callback):
     ### GPT평가 DB 접근 ### 
     await save_gpt_solution(submission_id, user_seq, result)
     
-    await send_callback("alert", "ok")
+    await send_callback("alert", str(user_seq)) # Todo : message에 userSeq를 담아서 식별가능한 형태로 데이터를 alert spring server로 전송해줘야 한다. 
 
 async def summary_problem(problem_id : int, user_seq : int, data : ProblemData, chat_llm, json_chain):
     is_gpt_problem_summary_exist = await check_gpt_problem_summary_is_exist(problem_id)
