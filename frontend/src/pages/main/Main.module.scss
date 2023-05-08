@@ -67,7 +67,7 @@
       display: flex;
       justify-content: center;
       .gptdesc {
-        width: 30%;
+        width: 55%;
         text-align: center;
         margin-top: auto;
         margin-bottom: auto;
@@ -92,13 +92,110 @@
 
       .gptbox {
         width: 25%;
+        min-width: 280px;
         margin: 2%;
         padding: 2%;
         border-radius: 5%;
         img {
+          aspect-ratio: 7/6;
           display: block;
+          width: 80%;
           margin-left: auto;
           margin-right: auto;
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .mainpage {
+    h1 {
+      font-size: 2rem;
+      display: inline-block;
+      border-bottom: 1px solid var(--font-color);
+      padding-bottom: 10px;
+    }
+
+    .fpage {
+      width: 100%;
+      height: calc(100vh - 80px);
+
+      // background-color: white;
+
+      .content {
+        float: left;
+        margin-top: 15%;
+        margin-left: 5%;
+        flex-direction: column;
+        justify-content: center;
+        h1 {
+          font-size: 4rem;
+        }
+
+        p {
+          font-size: 1rem;
+          //width: 60%;
+          line-height: 1;
+        }
+
+        .button_hover {
+          position: relative;
+          display: inline-block;
+          cursor: pointer;
+          transition: 0.25s;
+
+          &:nth-child(n):hover {
+            color: gray;
+          }
+
+          .button_arrow {
+            position: absolute;
+            top: 12.5px;
+            left: 75%;
+            transform: rotate(45deg);
+          }
+        }
+      }
+
+      .code_background {
+        height: 90%;
+        margin-left: 30%;
+        width: 70%;
+        background-size: cover;
+      }
+    }
+
+    .cpage {
+      .gptcode {
+        .gptdesc {
+          h1 {
+            font-size: 1.2rem;
+          }
+          p {
+            font-size: 0.65rem;
+          }
+        }
+      }
+      .code_image {
+        width: 40%;
+      }
+    }
+
+    .lpage {
+      // height: calc(100vh - 180px);
+
+      .contentbox {
+        .gptbox {
+          width: 50%;
+          min-width: 0px;
+          font-size: 0.6rem;
+          margin-bottom: 20px;
+
+          h1 {
+            font-size: 1.3rem;
+            margin-bottom: 0px;
+          }
         }
       }
     }
