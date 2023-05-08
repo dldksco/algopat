@@ -12,11 +12,12 @@ import {
 import { faArrowDown91 } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
 import sort_tier_img from "@/assets/img/code/sort_tier.png";
-
 import { Button } from "@/components/button/Button";
 import { Problem } from "./problem/Problem";
-
 import style from "./SideNav.module.css";
+import { $ } from "@/connect/axios";
+import { useQuery } from "@tanstack/react-query";
+import { LoadingSpinner } from "@/components/loadingspinner/LoadingSpinner";
 
 export const SideNav = ({
   setIsSidenavOpen,
@@ -25,6 +26,16 @@ export const SideNav = ({
 }) => {
   //const isOpen = [false, false, false, false, false];
 
+  const fetchData = async () => {
+    const response = await $.get(`code/problem/submission/${1}`);
+    console.log(response.data, "side data 확인");
+    return response.data;
+  };
+  const { isLoading, error, data } = useQuery(["sideUpdate"], fetchData);
+
+  if (isLoading) {
+    return <LoadingSpinner />;
+  }
   const dummy_data = [
     {
       level: "16",
