@@ -21,9 +21,9 @@ if (!isNull(username)) {
 function startLoader() {
   loader = setInterval(async () => {
 
-    if (isProgressRefactoring()) {
-      toastThenStopLoader("아직 리팩토링이 진행중입니다", "리팩토링 진행중")
-    }
+    // if (isProgressRefactoring()) {
+    //   toastThenStopLoader("아직 리팩토링이 진행중입니다", "리팩토링 진행중")
+    // }
 
     // 기능 Off시 작동하지 않도록 함
     const enable = await checkEnable();
@@ -43,27 +43,35 @@ function startLoader() {
 
           console.log("보낼 데이터 ", bojData)
 
-
           // 리팩토링 상태 진행중으로 변경
           chrome.storage.local.set({ commit_state: "progress" }, () => { });
 
-          //fetch 요청
-          // fetch('https://70.12.247.167:8000/process', {
-          //   method: 'POST',
-          //   headers: {
-          //     'Content-Type': 'application/json'
-          //   },
-          //   body: JSON.stringify(bojData)
-          // })
-          // .then(response => response.json())
-          // .then(data => {
-          //   markUploadedCSS();
-          // })
-          // .catch(error => {
-          //   // markUploadFailedCSS();
-          //   toastThenStopLoader("실패했습니다", error);
-          //   console.error(error)
-          // })
+
+          chrome.storage.local.get(['BaekjoonHub_token', 'gpt_key'], (data) => {
+            const token = data.BaekjoonHub_token;
+            const key = data.gpt_key;
+
+            bojData.openai_api_key = key;
+
+            //fetch 요청
+            fetch('https://algopat.kr/api/code/problem', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                'authorization': token,
+              },
+              body: JSON.stringify(bojData)
+            })
+              .then(response => {
+                // response.text()
+                markUploadedCSS();
+              })
+              .catch(error => {
+                // markUploadFailedCSS();
+                toastThenStopLoader("실패했습니다", error);
+                console.error(error)
+              })
+          })
 
           // await beginUpload(bojData);
         }

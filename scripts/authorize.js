@@ -9,10 +9,10 @@ const localAuth = {
    */
   init() {
     this.KEY = 'BaekjoonHub_token';
-    this.ACCESS_TOKEN_URL = 'https://github.com/login/oauth/access_token';
+    this.ACCESS_TOKEN_URL = 'https://algopat.kr/api/auth/code';
     this.AUTHORIZATION_URL = 'https://github.com/login/oauth/authorize';
-    this.CLIENT_ID = 'Iv1.4c944dc9fe9a558d';
-    this.CLIENT_SECRET = '4eeaf035a6afe6d4e6fd7698cc2714d1a2076096';
+    this.CLIENT_ID = '62a8bd9fd0300fdc6d37';
+    // this.CLIENT_SECRET = '4eeaf035a6afe6d4e6fd7698cc2714d1a2076096';
     this.REDIRECT_URL = 'https://github.com/'; // for example, https://github.com
     this.SCOPES = ['repo'];
   },
@@ -25,11 +25,11 @@ const localAuth = {
   parseAccessCode(url) {
     if (url.match(/\?error=(.+)/)) {
       chrome.tabs.getCurrent(function (tab) {
-        chrome.tabs.remove(tab.id, function () {});
+        chrome.tabs.remove(tab.id, function () { });
       });
     } else {
       // eslint-disable-next-line
-      const accessCode = url.match(/\?code=([\w\/\-]+)/);
+      const accessCode = url.match(/\?extension=true&code=([\w\/\-]+)/);
       if (accessCode) {
         this.requestToken(accessCode[1]);
       }
@@ -42,27 +42,58 @@ const localAuth = {
    * @param code The access code returned by provider.
    */
   requestToken(code) {
-    const that = this;
-    const data = new FormData();
-    data.append('client_id', this.CLIENT_ID);
-    data.append('client_secret', this.CLIENT_SECRET);
-    data.append('code', code);
 
-    const xhr = new XMLHttpRequest();
-    xhr.addEventListener('readystatechange', function () {
-      if (xhr.readyState === 4) {
-        if (xhr.status === 200) {
-          that.finish(xhr.responseText.match(/access_token=([^&]*)/)[1]);
-        } else {
-          chrome.runtime.sendMessage({
-            closeWebPage: true,
-            isSuccess: false,
-          });
-        }
-      }
-    });
-    xhr.open('POST', this.ACCESS_TOKEN_URL, true);
-    xhr.send(data);
+    const that = this;
+    // const data = new FormData();
+    // data.append('client_id', this.CLIENT_ID);
+    // data.append('isExtension', true);
+    // // data.append('client_secret', this.CLIENT_SECRET);
+    // data.append('code', code);
+
+    const data = {
+      code,
+      isExtension: "YES",
+    }
+
+
+    fetch('https://algopat.kr/api/auth/code', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    }).then((res) => {
+      const accessToken = res.headers.get("authorization");
+      console.log(accessToken)
+      chrome.runtime.sendMessage({
+        closeWebPage: true,
+        isSuccess: true,
+        token: accessToken,
+        KEY: this.KEY,
+      })
+
+      setTimeout(() => {
+        window.close();
+      }, 500);
+
+    })
+
+    // const xhr = new XMLHttpRequest();
+    // xhr.addEventListener('readystatechange', function () {
+    //   if (xhr.readyState === 4) {
+    //     alert(xhr.status)
+    //     if (xhr.status === 200) {
+    //       that.finish(xhr.responseText.match(/access_token=([^&]*)/)[1]);
+    //     } else {
+    //       chrome.runtime.sendMessage({
+    //         closeWebPage: true,
+    //         isSuccess: false,
+    //       });
+    //     }
+    //   }
+    // });
+    // xhr.open('POST', this.ACCESS_TOKEN_URL, true);
+    // xhr.send(data);
   },
 
   /**
@@ -100,7 +131,7 @@ localAuth.init(); // load params.
 const link = window.location.href;
 
 /* Check for open pipe */
-if (window.location.host === 'github.com') {
+if (window.location.host === 'algopat.kr') {
   chrome.storage.local.get('pipe_baekjoonhub', (data) => {
     if (data && data.pipe_baekjoonhub) {
       localAuth.parseAccessCode(link);
