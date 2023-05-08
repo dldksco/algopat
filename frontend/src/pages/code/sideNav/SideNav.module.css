@@ -70,6 +70,6 @@
     color: gray;
   }
   .sideNav .nav_header {
-    margin-bottom: 50px;
+    padding-bottom: calc(5% + 25px);
   }
 }/*# sourceMappingURL=SideNav.module.css.map */
