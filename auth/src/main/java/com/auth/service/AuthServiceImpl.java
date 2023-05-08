@@ -57,6 +57,7 @@ System.out.println("3");
         TokenGenerateDTO.builder().userGithubId(githubUserResponseDTO.getUserGithubId()).build());
     Cookie cookie = tokenService.createRefreshTokenCookie(refreshToken);
     loginProcessDTO.setCookie(cookie);
+    userService.checkId(githubUserResponseDTO);
 
     return loginProcessDTO;
   }

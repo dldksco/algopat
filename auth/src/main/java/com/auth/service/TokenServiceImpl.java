@@ -29,7 +29,7 @@ public class TokenServiceImpl implements TokenService {
 //  private final RefreshTokenRepository refreshTokenRepository;
   @Value("${secret-key}")
   private String SECRET_KEY;
-  private static final long ACCESS_TOKEN_EXPIRATION_TIME = 10; // 1 day (in milliseconds)
+  private static final long ACCESS_TOKEN_EXPIRATION_TIME = 86400_000; // 1 day (in milliseconds)
   private static final long REFRESH_TOKEN_EXPIRATION_TIME = 86400_000; // 1 day (in milliseconds)
   private final Key getSigningKey() {
     byte[] keyBytes = Decoders.BASE64.decode(SECRET_KEY);
@@ -38,7 +38,7 @@ public class TokenServiceImpl implements TokenService {
   @Override
   public TokenDTO generateAccessToken(TokenGenerateDTO tokenGenerateDTO) {
      String token = Jwts.builder()
-        .claim("user_github_id",tokenGenerateDTO.getUserGithubId())
+        .claim("userGithubId",tokenGenerateDTO.getUserGithubId())
         .setIssuedAt(new Date(System.currentTimeMillis()))
         .setExpiration(new Date(System.currentTimeMillis() + ACCESS_TOKEN_EXPIRATION_TIME))
         .signWith(getSigningKey(), SignatureAlgorithm.HS256)
@@ -48,7 +48,7 @@ public class TokenServiceImpl implements TokenService {
   @Override
   public TokenDTO generateRefreshToken(TokenGenerateDTO tokenGenerateDTO) {
     String token = Jwts.builder()
-        .claim("user_github_id",tokenGenerateDTO.getUserGithubId())
+        .claim("userGithubId",tokenGenerateDTO.getUserGithubId())
         .setIssuedAt(new Date(System.currentTimeMillis()))
         .setExpiration(new Date(System.currentTimeMillis() + REFRESH_TOKEN_EXPIRATION_TIME))
         .signWith(getSigningKey(), SignatureAlgorithm.HS256)
@@ -80,7 +80,7 @@ public class TokenServiceImpl implements TokenService {
           .setSigningKey(getSigningKey())
           .build()
           .parseClaimsJws(jwt);
-      return jws.getBody().get("user_github_id", String.class);
+      return jws.getBody().get("userGithubId", String.class);
     }catch (JwtException e){
       throw new BaseException(ErrorCode.UNVALID_TOKEN,"getGithubIdFromToken");
     }

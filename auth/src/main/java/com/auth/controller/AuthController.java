@@ -32,7 +32,6 @@ public class AuthController {
     LoginProcessDTO loginProcessDTO =authService.loginProcess(GithubCodeResponseDTO.builder().code(code).build());
     response.addHeader("Authorization",loginProcessDTO.getAccessToken());
     response.addCookie(loginProcessDTO.getCookie());
-    RedirectView redirectView = new RedirectView();
 
     return new ResponseEntity<>("fd",HttpStatus.OK);
   }

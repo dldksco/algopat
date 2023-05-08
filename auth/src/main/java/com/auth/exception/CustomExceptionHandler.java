@@ -14,18 +14,10 @@ public class CustomExceptionHandler{
 
   @ExceptionHandler(BaseException.class)
   public ResponseEntity<ErrorResponseDTO> handleCustomException(BaseException baseException) {
-//    sendToLogServer(ex.getMessage(), ex.getMethodName());
     ErrorResponseDTO errorresponseDTO = ErrorResponseDTO.builder()
         .message(baseException.getMessage())
-        .methodName(baseException.getMethodName())
         .build();
     return new ResponseEntity<>(errorresponseDTO, baseException.getHttpStatus());
   }
 
-//  private void sendToLogServer(String errorMessage, String methodName) {
-//    String logServerUrl = "http://localhost:2080";
-//    LogRequest logRequest = new LogRequest(errorMessage, methodName);
-//
-//    restTemplate.postForEntity(logServerUrl, logRequest, Void.class);
-//  }
 }
