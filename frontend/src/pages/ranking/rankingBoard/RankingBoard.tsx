@@ -3,8 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 import { useRecoilValue } from "recoil";
 import { centerIndexState } from "@/atoms/ranking.atom";
-import { isMobile } from "@/pages/community/hooks/func";
 import { Pagenation } from "@/components/pagenation/Pagenation";
+import { isMobile } from "@/pages/main/hooks/func";
 
 /** headRow : 맨 첫번째 row에 무엇을 넣을 것인가? 제목 내용 등등등 / 안 넣으면 생성X
  *  grid : 각각의 내용들에 어느정도의 width를 할당할 것인가? 데이터 예시 ex) "40% 30% 30%"
