@@ -33,9 +33,7 @@ public class GatewayConfig {
       String k = request.getURI().toString();
       String path = request.getURI().getPath();
       System.out.println(k+"==============");
-      if (path.startsWith("/auth/") || path.startsWith("/user/che")) {
-        // 인증 서버로의 요청은 다른 필터를 건너뛰고 직접 전달합니다.
-        System.out.println("어스서버로~");
+      if (path.startsWith("/auth/") || path.startsWith("/user/che")|| path.startsWith("/alert")) {
         return chain.filter(exchange);
       } else {
 
@@ -43,7 +41,6 @@ public class GatewayConfig {
 
         if (accessToken == null) {
           exchange.getResponse().setStatusCode(HttpStatus.FORBIDDEN);
-          System.out.println("널값");
           return exchange.getResponse().setComplete();
 
         }
