@@ -1,4 +1,4 @@
-from sqlalchemy import Column, BigInteger, String, ForeignKey, DateTime, Text, select
+from sqlalchemy import Column, BigInteger, String, ForeignKey, DateTime, Text, select, desc
 from sqlalchemy.ext.declarative import declarative_base
 from pydantic import BaseModel
 from myclass.problem import ProblemData
@@ -84,7 +84,9 @@ async def update_problem_meta(problem_id : int, user_seq : int, data : ProblemDa
         logger.info("문제 메타 데이터 있음")
         # 문제 메타 데이터 업데이트 
         problem_meta.problem_submitted_count += 1
-        problem_meta.problem_master_user_seq = user_seq # Todo : master user_seq logic
+        master_user_seq = await get_highest_total_score_user_seq(session)
+        logger.info("마스터 user_seq : " + master_user_seq)
+        problem_meta.problem_master_user_seq = master_user_seq
         await session.commit()
         await session.refresh(problem_meta)
         await session.close()
@@ -95,7 +97,7 @@ async def update_problem_meta(problem_id : int, user_seq : int, data : ProblemDa
             problem_id = problem_id,
             problem_title = data.title,
             problem_submitted_count = 1,
-            problem_master_user_seq = user_seq # Todo : master user_seq logic 
+            problem_master_user_seq = user_seq 
         )
 
         session.add(problem_meta)
@@ -315,4 +317,17 @@ async def insert_gpt_solution(data : GPTSolution, user_seq : int, session):
     await session.refresh(gpt_solution)
     await session.close()
 
+# ============================================================================================================
+# 랭킹 조회 
+async def get_highest_total_score_user_seq(session):
+    logger.info("랭킹 마스터 유저 조회")
+    result = await session.execute(
+        select(UserSubmitSolution.user_seq, UserSubmitSolution.submission_id)
+        .join(GPTSolution, UserSubmitSolution.submission_id == GPTSolution.submission_id)
+        .order_by(desc(GPTSolution.gpt_total_score), UserSubmitSolution.user_submit_solution_runtime, UserSubmitSolution.user_submit_solution_time)
+    )
 
+    first_row = result.first()
+    await session.close()
+    return first_row.user_seq
+    
