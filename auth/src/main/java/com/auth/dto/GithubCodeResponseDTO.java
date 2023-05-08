@@ -9,5 +9,6 @@ import lombok.Setter;
 @Setter
 public class GithubCodeResponseDTO {
   private String code;
+  private String isExtension;
 
 }
