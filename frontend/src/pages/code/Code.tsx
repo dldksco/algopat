@@ -4,14 +4,9 @@ import { useState } from "react";
 import { SideNav } from "./sideNav/SideNav";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
-import { CodeDetail } from "./codeDetail/CodeDetail";
-import { useRecoilValue } from "recoil";
-import { nowProblemState } from "@/atoms/code.atom";
 
 export const Code = () => {
   const [isSidenavOpen, setIsSidenavOpen] = useState(false);
-  const nowProblem = useRecoilValue(nowProblemState);
-
   const burgerClick = () => setIsSidenavOpen((prev) => !prev);
   return (
     <div className={style.code}>
@@ -23,7 +18,8 @@ export const Code = () => {
         <SideNav setIsSidenavOpen={setIsSidenavOpen} />
       </div>
       <div className={style.rightTab}>
-        <CodeDetail />
+        <div style={{ fontSize: "3rem", color: "gray" }}>ALGOPAT</div>
+        {/* 뭔가 컴포넌트 <DetailPage/> */}
         <div className={style.hamberger} onClick={burgerClick}>
           <FontAwesomeIcon icon={faBars} />
         </div>

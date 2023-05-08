@@ -11,11 +11,14 @@ import {
 import { faArrowDown91 } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
 import sort_tier_img from "@/assets/img/code/sort_tier.png";
-
 import { Button } from "@/components/button/Button";
-import { Problem } from "./problem/Problem";
-
+import { Problem, ProblemProps } from "./problem/Problem";
 import style from "./SideNav.module.css";
+import { $ } from "@/connect/axios";
+import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
+import { LoadingSpinner } from "@/components/loadingspinner/LoadingSpinner";
+import { distanceBetweenPoints } from "chart.js/helpers";
+import { useState } from "react";
 
 export const SideNav = ({
   setIsSidenavOpen,
@@ -23,39 +26,42 @@ export const SideNav = ({
   setIsSidenavOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
   //const isOpen = [false, false, false, false, false];
+  const [page, setPage] = useState<number>(0);
 
-  const dummy_data = [
+  const fetchData = async (page: number) => {
+    const response = await $.get(`/code/problem/submission/${page}`);
+    console.log(response.data.content, "content 확인");
+    return response.data;
+  };
+  const {
+    data,
+    error,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+    isLoading,
+  } = useInfiniteQuery(
+    ["sideBar"],
+    ({ pageParam = 0 }) => fetchData(pageParam),
     {
-      level: "16",
-      problemId: "17472",
-      title: "테트로미노",
-      solved: [
-        {
-          submissionId: "123213",
-        },
-        {
-          submissionId: "333333",
-        },
-      ],
-    },
-    {
-      level: "13",
-      problemId: "17432",
-      title: "테트로미노123fa3",
-      solved: [
-        {
-          submissionId: "44444",
-        },
-        {
-          submissionId: "3335555333",
-        },
-      ],
-    },
-  ];
+      getNextPageParam: (lastPage) => lastPage.nextPage,
+      refetchOnWindowFocus: false,
+      initialData: { pages: [{ content: [], nextPage: 0 }], pageParams: [] },
+    }
+  );
+  // if (isLoading) {
+  //   return <div>asdasd</div>;
+  // // }
+  // console.log(data?.pages, "data 확인 찐");
+  // console.log(data?.pages[page].content, "content 확인 찐");
+  console.log(hasNextPage, "다음페이지 있니");
+  const handleLoadMore = () => {
+    setPage((prevPage) => prevPage + 1);
+    fetchNextPage({ pageParam: page + 1 });
+    console.log(page, "pagenum");
+  };
   const navigate = useNavigate();
-
   const xButtonClick = () => setIsSidenavOpen(false);
-
   return (
     <div className={style.sideNav}>
       <p>코드 분석</p>
@@ -76,20 +82,23 @@ export const SideNav = ({
           <FontAwesomeIcon icon={faArrowDown91} />
         </div>
       </div>
-      {dummy_data.map((el) => (
-        <Problem key={uuidv4()} data={el} />
-      ))}
+      {data?.pages[0].content === undefined
+        ? null
+        : data?.pages[0].content.map((el: Problem) => (
+            <Problem key={uuidv4()} data={el} />
+          ))}
       <hr />
-
-      <Button
-        content="더보기"
-        style={{
-          margin: "20px auto",
-          backgroundColor: "#28292C",
-          display: "block",
-        }}
-        onClick={() => {}}
-      />
+      {!isFetchingNextPage && hasNextPage ? (
+        <Button
+          content="더보기"
+          style={{
+            margin: "20px auto",
+            backgroundColor: "#28292C",
+            display: "block",
+          }}
+          onClick={handleLoadMore}
+        />
+      ) : null}
       <hr />
       <div className={style.nav_header}>
         <div className={style.nav_header_tag}>
