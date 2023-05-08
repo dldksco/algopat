@@ -19,6 +19,7 @@ async def health_check():
     return {"status" : "OK!!!"}
 
 # 카프카 리스너 실행 
+# DB 스키마 생성 
 @app.on_event("startup")
 async def startup_event():
     logger.info("서버 시작")
