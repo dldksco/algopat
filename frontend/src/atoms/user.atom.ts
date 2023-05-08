@@ -12,7 +12,7 @@ export interface UserInfo {
 export const userInfoState = atom<UserInfo>({
   key: "userInfoState",
   default: {
-    userSeq: 1,
+    userSeq: 0,
     userProfile: "",
     userGithubId: "",
     userEmail: "",
