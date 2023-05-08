@@ -10,7 +10,6 @@ import com.code.data.repository.ProblemRepository;
 import com.code.data.repository.UserSubmitProblemRepository;
 import com.code.exception.BaseException;
 import com.code.util.builder.ProblemBuilderUtil;
-import com.code.util.builder.UserSubmitProblemBuilderUtil;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,11 +31,11 @@ public class ProblemService {
   private final UserSubmitProblemRepository userSubmitProblemRepository;
   // Util 정의
   private final ProblemBuilderUtil problemBuilderUtil;
-  private final UserSubmitProblemBuilderUtil userSubmitProblemBuilderUtil;
 
   public ProblemResponseDto getProblem(long problemId) {
     logger.info("문제 조회");
-    Problem problem = problemRepository.findById(problemId).orElseThrow(() -> new BaseException(ErrorCode.RESOURCE_NOT_FOUND, "getProblem"));
+    Problem problem = problemRepository.findById(problemId)
+        .orElseThrow(() -> new BaseException(ErrorCode.RESOURCE_NOT_FOUND, "getProblem"));
     return problemBuilderUtil.problemToProblemResponseDto(problem);
   }
 
@@ -54,7 +53,7 @@ public class ProblemService {
 
   public UserSubmissionSolutionDetailDto getUserSubmitSolutionDetailDto(long submissionId) {
     UserSubmissionSolutionDetailDto userSubmissionSolutionDetailDto = userSubmitProblemRepository.findUserSubmitSolutionDetailBySubmissionId(submissionId)
-        .orElseThrow(RuntimeException::new);
+        .orElseThrow(() -> new BaseException(ErrorCode.RESOURCE_NOT_FOUND, "getUserSubmitSolutionDetailDto"));
     return userSubmissionSolutionDetailDto;
   }
 }
