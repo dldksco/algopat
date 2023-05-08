@@ -2,9 +2,9 @@ import style from "./RankingBoard.module.css";
 import { useNavigate } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 import { useRecoilValue } from "recoil";
-import { userInfoState } from "@/atoms/user.atom";
-import { stringCutter } from "@/pages/code/hooks/func";
 import { centerIndexState } from "@/atoms/ranking.atom";
+import { isMobile } from "@/pages/community/hooks/func";
+import { Pagenation } from "@/components/pagenation/Pagenation";
 
 /** headRow : 맨 첫번째 row에 무엇을 넣을 것인가? 제목 내용 등등등 / 안 넣으면 생성X
  *  grid : 각각의 내용들에 어느정도의 width를 할당할 것인가? 데이터 예시 ex) "40% 30% 30%"
@@ -14,7 +14,7 @@ import { centerIndexState } from "@/atoms/ranking.atom";
 
 export const RankingBoard = () => {
   const headRow = ["#", "제목", "Master", "제출한 사람 수"];
-  const grid = "15% 60% 15% 10%";
+  const grid = isMobile() ? "50% 50%" : "15% 60% 15% 10%";
   const data = [
     {
       number: "17470",
@@ -91,6 +91,7 @@ export const RankingBoard = () => {
           </div>
         );
       })}
+      <Pagenation first={true} last={true} />
     </>
   );
 };

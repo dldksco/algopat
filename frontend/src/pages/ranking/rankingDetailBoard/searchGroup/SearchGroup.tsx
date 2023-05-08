@@ -43,13 +43,15 @@ export const SearchGroup = () => {
         setValue={setSortSelect}
         value={sortSelect}
       />
-      <Input
-        style={{ borderRadius: 0 }}
-        setInput={setSearchInput}
-        input={searchInput}
-      />
-      <div className={style.search_button}>
-        <FontAwesomeIcon icon={faSearch} />
+      <div className={style.search}>
+        <Input
+          style={{ borderRadius: 0 }}
+          setInput={setSearchInput}
+          input={searchInput}
+        />
+        <div className={style.search_button}>
+          <FontAwesomeIcon icon={faSearch} />
+        </div>
       </div>
     </div>
   );
