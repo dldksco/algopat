@@ -12,6 +12,10 @@
   gap: 10px;
   flex-direction: column;
 }
+.ranking_carousel .menu select {
+  width: 60%;
+  height: 10%;
+}
 .ranking_carousel .carousel {
   margin-top: 2%;
   margin-bottom: 1%;
@@ -45,4 +49,57 @@
 .ranking_carousel .carousel .post_buttom {
   display: flex;
   justify-content: space-around;
+}
+
+@media screen and (max-width: 768px) {
+  .ranking_carousel {
+    border: 2px solid var(--font-color);
+    border-radius: 20px;
+    display: flex;
+    padding: 3%;
+    flex-direction: column;
+  }
+  .ranking_carousel .menu {
+    display: flex;
+    flex-direction: row;
+    padding-right: 100px;
+  }
+  .ranking_carousel .menu select {
+    width: 200px;
+    height: 10%;
+  }
+  .ranking_carousel .carousel {
+    margin-top: 2%;
+    margin-bottom: 1%;
+    height: 200px;
+    width: 75%;
+    background-color: black;
+    border-radius: 20px;
+    padding-top: 1%;
+  }
+  .ranking_carousel .carousel img {
+    display: inline-block;
+    width: 80px;
+  }
+  .ranking_carousel .carousel .slider .content {
+    width: 10%;
+    display: flex;
+    text-align: center;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .ranking_carousel .carousel .slider .center_side img {
+    width: 100px;
+  }
+  .ranking_carousel .carousel .slider .center img {
+    width: 120px;
+  }
+  .ranking_carousel .carousel p {
+    margin: 0;
+  }
+  .ranking_carousel .carousel .post_buttom {
+    display: flex;
+    justify-content: space-around;
+  }
 }/*# sourceMappingURL=RankingCarousel.module.css.map */

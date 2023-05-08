@@ -85,9 +85,9 @@ export const RankingDetail = () => {
             <p>리팩토링</p>
           </div>
           <div className={style.vertical_line} />
-          <div className={style.box}>
-            <FontAwesomeIcon icon={faThumbsUp} style={{ marginRight: "5px" }} />
-            12
+          <div>
+            <p>{addCommas(149)}</p>
+            <p>코드길이</p>
           </div>
         </div>
       </div>
