@@ -19,15 +19,8 @@ public class UserServiceImpl implements UserService {
   public void checkId(GithubUserResponseDTO gitHubUserResponseDTO) {
     Map<String, String> requestBody = new HashMap<>();
     requestBody.put("user_github_id", gitHubUserResponseDTO.getUserGithubId());
-//    try{
-//      userServiceFeignClient.userCheck(UserServiceIdRequestDTO.builder().userGithubId(gitHubUserResponseDTO.getUserGithubId()).build());
       userServiceFeignClient.userCheck(UserServiceIdRequestDTO.builder().userGithubId(gitHubUserResponseDTO.getUserGithubId()).build());
-//    }catch (FeignException f){
-//      System.out.println(f.status());
-//      ByteBuffer byteBuffer = f.responseBody().get();
-//      String responseBody = StandardCharsets.UTF_8.decode(byteBuffer).toString();
-//      System.out.println("Response body: " + responseBody);
-//    }
+
 
   }
 

@@ -28,6 +28,7 @@ public class AuthServiceImpl implements AuthService {
 
   private final UserService userService;
   private final TokenService tokenService;
+  private final RestTemplate restTemplate;
   @Value("${client-id}")
   private String clientId;
   @Value("${client-secret}")
@@ -35,28 +36,27 @@ public class AuthServiceImpl implements AuthService {
   @Value("${redirect-uri}")
   private String redirectURI;
 
-  private final RestTemplate restTemplate;
-
   //헤더에 엑세스토큰담는 작업해야함
   @Override
   public LoginProcessDTO loginProcess(GithubCodeResponseDTO githubCodeResponseDTO) {
     LoginProcessDTO loginProcessDTO = new LoginProcessDTO();
+
     GithubAccessTokenResponseDTO githubAccessTokenResponseDTO = requestGithubAccessToken(
         githubCodeResponseDTO);
-    System.out.println("githubcode: "+ githubCodeResponseDTO.getCode());
-    System.out.println("githubAccess: "+githubAccessTokenResponseDTO.getGitHubaAccessToken());
-    System.out.println("1");
-    GithubUserResponseDTO githubUserResponseDTO = requestGithubUserId(githubAccessTokenResponseDTO);
-    System.out.println("githubid:"+ githubUserResponseDTO.getUserGithubId());
-System.out.println("2");
+
+    GithubUserResponseDTO githubUserResponseDTO = requestGithubUserInfo(githubAccessTokenResponseDTO);
+
     TokenDTO accessToken = tokenService.generateAccessToken(
-        TokenGenerateDTO.builder().userGithubId(githubUserResponseDTO.getUserGithubId()).isExtension(githubCodeResponseDTO.getIsExtension()).build());
+        TokenGenerateDTO.builder().userGithubId(githubUserResponseDTO.getUserGithubId())
+            .isExtension(githubCodeResponseDTO.getIsExtension()).build());
     loginProcessDTO.setAccessToken(accessToken.getToken());
-System.out.println("3");
+
     TokenDTO refreshToken = tokenService.generateRefreshToken(
         TokenGenerateDTO.builder().userGithubId(githubUserResponseDTO.getUserGithubId()).build());
+
     Cookie cookie = tokenService.createRefreshTokenCookie(refreshToken);
     loginProcessDTO.setCookie(cookie);
+
     userService.checkId(githubUserResponseDTO);
 
     return loginProcessDTO;
@@ -81,11 +81,11 @@ System.out.println("3");
   }
 
   @Override
-  public GithubUserResponseDTO requestGithubUserId(
+  public GithubUserResponseDTO requestGithubUserInfo(
       GithubAccessTokenResponseDTO githubAccessTokenResponseDTO) {
     String githubaAccessToken = githubAccessTokenResponseDTO.getGitHubaAccessToken();
     String url = "https://api.github.com/user";
-    System.out.println("method"+ githubaAccessToken);
+    System.out.println("method" + githubaAccessToken);
     HttpHeaders headers = new HttpHeaders();
     headers.setAccept(Collections.singletonList(MediaType.valueOf("application/vnd.github+json")));
     headers.set("Authorization", "Bearer " + githubaAccessToken);
@@ -99,7 +99,8 @@ System.out.println("3");
         GithubUserResponseDTO.class
     );
     GithubUserResponseDTO githubUserResponseDTO = response.getBody();
-    System.out.println("id"+githubUserResponseDTO.getUserGithubId());
+    System.out.println("id" + githubUserResponseDTO.getUserGithubId());
+    System.out.println("email" + githubUserResponseDTO.getUserNickname());
     return githubUserResponseDTO;
   }
 

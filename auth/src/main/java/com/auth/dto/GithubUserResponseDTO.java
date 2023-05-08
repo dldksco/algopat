@@ -15,5 +15,11 @@ import lombok.Setter;
 public class GithubUserResponseDTO {
   @JsonProperty("login")
   private String userGithubId;
+  @JsonProperty("avatar_url")
+  private String userImageUrl;
+
+  @JsonProperty("name")
+  private String userNickname;
+
 
 }
