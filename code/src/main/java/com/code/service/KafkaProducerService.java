@@ -1,5 +1,7 @@
 package com.code.service;
 
+import com.code.data.domain.ErrorCode;
+import com.code.exception.BaseException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
@@ -20,7 +22,8 @@ public class KafkaProducerService {
     try {
       kafkaTemplate.send(topic, jsonString);
     } catch (Exception e) {
-      throw new RuntimeException("카프카 에러 발생");
+      String methodName = "KafkaProducer.send";
+      throw new BaseException(ErrorCode.KAFKA_ERROR, methodName);
     }
 
   }
