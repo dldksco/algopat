@@ -33,6 +33,12 @@ public class CodeController {
   private final ProblemService problemService;
   private final ProblemRankService problemRankService;
 
+  /**
+   * 유저 코드 제출 (Spring -> Kafka)
+   * @param problemRequestDto
+   * @return
+   * @throws JsonProcessingException
+   */
   @PostMapping("")
   public ResponseEntity<Void> sendProblemToKafka(@RequestBody ProblemRequestDto problemRequestDto)
       throws JsonProcessingException {
@@ -40,17 +46,34 @@ public class CodeController {
     return ResponseEntity.ok().build();
   }
 
+  /**
+   * 문제 조회
+   * @param problemId
+   * @return
+   */
   @GetMapping("")
   public ResponseEntity<ProblemResponseDto> getProblem(@RequestParam long problemId) {
     return ResponseEntity.ok(problemService.getProblem(problemId));
   }
 
+  /**
+   * 랭킹 조회
+   * @param level
+   * @param pageNumber
+   * @return
+   */
   @GetMapping("/rank/{level}/{pageNumber}")
   public ResponseEntity<Page<ProblemRankOverviewDto[]>> getProblemRankOverviewDto(
       @PathVariable("level") long level, @PathVariable("pageNumber") int pageNumber) {
     return ResponseEntity.ok(problemRankService.getProblemRankOverviews(level, pageNumber));
   }
 
+  /**
+   * 푼 문제 목록 조회
+   * @param pageNumber
+   * @param userSeq
+   * @return
+   */
   @GetMapping("/submission/{pageNumber}")
   public ResponseEntity<Page<UserSubmitProblemDto>> getUserSubmitProblemDto(
       @PathVariable("pageNumber") int pageNumber,
@@ -58,6 +81,13 @@ public class CodeController {
     return ResponseEntity.ok(problemService.getUserSubmitProblemDtoPage(pageNumber, userSeq));
   }
 
+  /**
+   * 푼 문제 -> 제출 목록 조회
+   * @param pageNumber
+   * @param problemId
+   * @param userSeq
+   * @return
+   */
   @GetMapping("/submission/solution/{problemId}/{pageNumber}")
   public ResponseEntity<Page<UserSubmitSolutionTitleDto>> getUserSubmitSolutionTitleDto(
       @PathVariable("pageNumber") int pageNumber,
@@ -67,6 +97,12 @@ public class CodeController {
         problemService.getUserSubmitSolutionTitleDtoPage(pageNumber, userSeq, problemId));
   }
 
+  /**
+   * 제출 문제 상세 조회
+   * @param submissionId
+   * @param userSeq
+   * @return
+   */
   @GetMapping("/submission/solution/detail/{submissionId}")
   public ResponseEntity<?> getUserSubmissionSolutionDetailDto(
       @PathVariable("submissionId") long submissionId,
@@ -74,6 +110,15 @@ public class CodeController {
     return ResponseEntity.ok(problemService.getUserSubmitSolutionDetailDto(submissionId));
   }
 
+  /**
+   * 랭킹 검색어 필터링
+   * @param problemId
+   * @param pageNumber
+   * @param languageFilter
+   * @param sortCriteria
+   * @param searchText
+   * @return
+   */
   @GetMapping("/rank/{problemId}/solutions/{pageNumber}")
   public ResponseEntity<Page<ProblemRankDetailDto[]>> findSolutionsByProblemIdWithDetailsAndFilters(
       @PathVariable long problemId,

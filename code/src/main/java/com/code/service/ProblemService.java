@@ -1,5 +1,6 @@
 package com.code.service;
 
+import com.code.data.domain.ErrorCode;
 import com.code.data.dto.ProblemResponseDto;
 import com.code.data.dto.UserSubmissionSolutionDetailDto;
 import com.code.data.dto.UserSubmitProblemDto;
@@ -7,6 +8,7 @@ import com.code.data.dto.UserSubmitSolutionTitleDto;
 import com.code.data.entity.Problem;
 import com.code.data.repository.ProblemRepository;
 import com.code.data.repository.UserSubmitProblemRepository;
+import com.code.exception.BaseException;
 import com.code.util.builder.ProblemBuilderUtil;
 import com.code.util.builder.UserSubmitProblemBuilderUtil;
 import lombok.RequiredArgsConstructor;
@@ -34,7 +36,7 @@ public class ProblemService {
 
   public ProblemResponseDto getProblem(long problemId) {
     logger.info("문제 조회");
-    Problem problem = problemRepository.findById(problemId).orElseThrow(RuntimeException::new);
+    Problem problem = problemRepository.findById(problemId).orElseThrow(() -> new BaseException(ErrorCode.RESOURCE_NOT_FOUND, "getProblem"));
     return problemBuilderUtil.problemToProblemResponseDto(problem);
   }
 
