@@ -328,6 +328,5 @@ async def get_highest_total_score_user_seq(session):
     )
 
     first_row = result.first()
-    await session.close()
     return first_row.user_seq
     
