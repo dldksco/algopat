@@ -9,26 +9,63 @@
   display: flex;
 }
 .footer .leftbox {
-  width: 20%;
+  min-width: 250px;
   height: 100%;
   display: flex;
   justify-content: center;
-  gap: 3%;
+  gap: 5%;
 }
 .footer .leftbox .circle {
   margin-top: 25%;
   background-color: white;
   height: 60px;
   width: 60px;
+  position: relative;
   border-radius: 100%;
   box-shadow: 3px 3px 3px 3px black;
+}
+.footer .leftbox .circle .ssafy {
+  position: absolute;
+  top: 20px;
+  left: 15px;
+  cursor: pointer;
+}
+.footer .leftbox .circle .algopat {
+  position: absolute;
+  top: 28px;
+  left: 10px;
+  cursor: pointer;
+}
+.footer .leftbox .circle .notion {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  cursor: pointer;
 }
 .footer .rightbox {
   width: 80%;
   height: 100%;
-  padding-top: 4%;
+  padding-top: 50px;
+  padding-left: 20px;
 }
 .footer .rightbox p {
   color: black;
   width: 100%;
+}
+
+@media screen and (max-width: 768px) {
+  .footer {
+    flex-direction: column;
+  }
+  .footer .leftbox {
+    height: 120px;
+  }
+  .footer .leftbox .circle {
+    margin-top: 5%;
+  }
+  .footer .rightbox {
+    height: 120px;
+    padding-top: 0px;
+    font-size: 0.8rem;
+  }
 }/*# sourceMappingURL=Footer.module.css.map */
