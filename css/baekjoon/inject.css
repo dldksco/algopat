@@ -107,7 +107,7 @@
 .toast-notification{
   min-width: 150px;
   height:auto;
-  background-color:white;
+  background-color:black;
   border-radius: 10px !important;
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
   bottom:50px;

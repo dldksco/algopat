@@ -6,6 +6,9 @@ const blockElement = `#popup_container #col div[style*="display: block"]`
 $('#authenticate').on('click', () => {
   if (action) {
     oAuth2.begin();
+    setTimeout(() => {
+      window.close();
+    }, 500);
   }
 });
 
@@ -51,34 +54,49 @@ $('#gear_icon').on('click', () => {
  */
 chrome.storage.local.get('BaekjoonHub_token', (data) => {
   const token = data.BaekjoonHub_token;
+  console.log(token)
   if (token === null || token === undefined) {
     action = true;
     $('#auth_mode').show();
   } else {
     // To validate user, load user object from GitHub.
-    const AUTHENTICATION_URL = 'https://api.github.com/user';
+    // const AUTHENTICATION_URL = 'https://api.github.com/user';
 
-    const xhr = new XMLHttpRequest();
-    xhr.addEventListener('readystatechange', function () {
-      if (xhr.readyState === 4) {
-        if (xhr.status === 200) {
-          $('#commit_mode').show();
-          $('#gear_icon').show();
-
-        } else if (xhr.status === 401) {
-          // bad oAuth
-          // reset token and redirect to authorization process again!
-          chrome.storage.local.set({ BaekjoonHub_token: null }, () => {
-            console.log('BAD oAuth!!! Redirecting back to oAuth process');
-            action = true;
-            $('#auth_mode').show();
-          });
-        }
+    fetch('https://algopat.kr/api/code/problem?problemId=1', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'authorization': token,
       }
-    });
-    xhr.open('GET', AUTHENTICATION_URL, true);
-    xhr.setRequestHeader('Authorization', `token ${token}`);
-    xhr.send();
+    }).then((data) => {
+      console.log(data)
+      $('#commit_mode').show();
+      $('#gear_icon').show();
+    }).catch((e) => {
+      $('#auth_mode').show();
+    })
+
+    // const xhr = new XMLHttpRequest();
+    // xhr.addEventListener('readystatechange', function () {
+    //   if (xhr.readyState === 4) {
+    //     if (xhr.status === 200) {
+    //       $('#commit_mode').show();
+    //       $('#gear_icon').show();
+
+    //     } else if (xhr.status === 401) {
+    //       // bad oAuth
+    //       // reset token and redirect to authorization process again!
+    //       chrome.storage.local.set({ BaekjoonHub_token: null }, () => {
+    //         console.log('BAD oAuth!!! Redirecting back to oAuth process');
+    //         action = true;
+    //         $('#auth_mode').show();
+    //       });
+    //     }
+    //   }
+    // });
+    // xhr.open('GET', AUTHENTICATION_URL, true);
+    // xhr.setRequestHeader('Authorization', `token ${token}`);
+    // xhr.send();
   }
 });
 
