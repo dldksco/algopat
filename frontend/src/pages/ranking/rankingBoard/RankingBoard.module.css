@@ -42,7 +42,19 @@
   .header_container {
     font-size: 1.1em;
   }
+  .header_container :nth-child(3) {
+    display: none;
+  }
+  .header_container :nth-child(4) {
+    display: none;
+  }
   .content_container {
     font-size: 0.9rem;
+  }
+  .content_container :nth-child(3) {
+    display: none;
+  }
+  .content_container :nth-child(4) {
+    display: none;
   }
 }/*# sourceMappingURL=RankingBoard.module.css.map */

@@ -9,28 +9,73 @@
   display: flex;
 
   .leftbox {
-    width: 20%;
+    min-width: 250px;
     height: 100%;
     display: flex;
     justify-content: center;
-    gap: 3%;
+    gap: 5%;
 
     .circle {
       margin-top: 25%;
       background-color: white;
       height: 60px;
       width: 60px;
+      position: relative;
       border-radius: 100%;
+      transition: 0.25s;
       box-shadow: 3px 3px 3px 3px black;
+
+      .ssafy {
+        position: absolute;
+        top: 20px;
+        left: 15px;
+        cursor: pointer;
+      }
+      .algopat {
+        position: absolute;
+        top: 28px;
+        left: 10px;
+        cursor: pointer;
+      }
+      .notion {
+        position: absolute;
+        top: 15px;
+        left: 15px;
+        cursor: pointer;
+      }
+
+      &:nth-child(n):hover {
+        background-color: rgb(194, 194, 194);
+      }
     }
   }
   .rightbox {
     width: 80%;
     height: 100%;
-    padding-top: 4%;
+    padding-top: 50px;
+    padding-left: 20px;
     p {
       color: black;
       width: 100%;
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .footer {
+    flex-direction: column;
+
+    .leftbox {
+      height: 120px;
+      .circle {
+        margin-top: 5%;
+      }
+    }
+
+    .rightbox {
+      height: 120px;
+      padding-top: 0px;
+      font-size: 0.8rem;
     }
   }
 }

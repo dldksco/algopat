@@ -36,6 +36,7 @@
   gap: 40px;
   align-items: center;
   text-align: center;
+  padding-right: 30px;
 }
 .ranking_detail .info .info_list .box {
   padding: 20px;
@@ -46,4 +47,64 @@
 }
 .ranking_detail .info .box {
   padding: 11px;
+}
+
+@media screen and (max-width: 768px) {
+  .ranking_detail {
+    margin-top: 10%;
+  }
+  .ranking_detail .box {
+    border: 1px solid var(--font-color);
+    padding: 20px;
+    cursor: pointer;
+  }
+  .ranking_detail .header {
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    position: relative;
+  }
+  .ranking_detail .header .title {
+    position: absolute;
+    top: 90px;
+    display: flex;
+    align-items: center;
+  }
+  .ranking_detail .user_info {
+    display: flex;
+    gap: 15px;
+    padding: 5px;
+    align-items: center;
+  }
+  .ranking_detail .info {
+    margin-top: 70px;
+    font-size: 0.8rem;
+    flex-wrap: wrap;
+    display: flex;
+    justify-content: space-between;
+    cursor: default;
+    overflow-x: scroll;
+  }
+  .ranking_detail .info .info_list {
+    display: flex;
+    gap: 40px;
+    align-items: center;
+    text-align: center;
+    padding-right: 30px;
+  }
+  .ranking_detail .info .info_list p {
+    width: 100px;
+  }
+  .ranking_detail .info .info_list .box {
+    padding: 20px;
+  }
+  .ranking_detail .info .vertical_line {
+    border-left: 1px solid var(--font-color);
+    height: 80px; /* 선의 길이를 조정할 수 있습니다. */
+  }
+  .ranking_detail .info .box {
+    padding: 11px;
+  }
 }/*# sourceMappingURL=RankingDetail.module.css.map */

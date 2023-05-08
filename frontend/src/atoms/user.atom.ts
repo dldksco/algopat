@@ -72,13 +72,5 @@ export const logout = (setUserInfo: SetterOrUpdater<UserInfo>) => {
     userRank: 0,
   });
 
-  window.location.href = "https://www.algophat.com";
-
-  // setUserInfo({
-  //   userSeq: result.number,
-  //   userProfile: result.userProfile,
-  //   userGithubId: result.userGithubId,
-  //   userEmail: result.userEmail,
-  //   userRank: result.userRank,
-  // });
+  window.location.href = "https://www.algopat.kr";
 };

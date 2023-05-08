@@ -12,6 +12,7 @@ import { centerIndexState } from "@/atoms/ranking.atom";
 
 import style from "./RankingCarousel.module.css";
 import "./carousel.css";
+import { isMobile } from "@/pages/community/hooks/func";
 
 const MAX_LEGNTH = 30;
 
@@ -115,7 +116,7 @@ export const RankingCarousel = () => {
     centerMode: true,
     infinite: true,
     speed: 350,
-    slidesToShow: 5,
+    slidesToShow: isMobile() ? 1 : 5,
     slidesToScroll: 1,
     // afterChange: afterChangeCallback,
     beforeChange: changeCallback,
@@ -143,13 +144,11 @@ export const RankingCarousel = () => {
     >
       <div className={style.menu}>
         <SelectBox
-          style={{ width: "60%", height: "10%" }}
           options={levelRank}
           setValue={setlevelRankSelect}
           value={levelRankSelect}
         />
         <SelectBox
-          style={{ width: "60%", height: "10%" }}
           options={levelNumber}
           setValue={setlevelNumberSelect}
           value={levelNumberSelect}

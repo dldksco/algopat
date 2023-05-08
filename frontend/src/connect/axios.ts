@@ -2,7 +2,7 @@ import axios from "axios";
 
 // axios 객체 생성
 export const $ = axios.create({
-  baseURL: "https://algopat.kr/test",
+  baseURL: "https://algopat.kr/api",
   headers: {
     "Content-Type": "application/json",
   },
