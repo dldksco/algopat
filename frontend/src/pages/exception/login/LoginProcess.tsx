@@ -7,7 +7,7 @@ export const LoginProcess = () => {
   const searchParams = new URLSearchParams(location.search);
   const code = searchParams.get("code");
 
-  $.post(`/auth/code`, { code: code })
+  $.post(`/auth/code`, { code: code, isExtension: "YES" })
     .then((res) => {
       console.log(res);
       const accessToken = res.headers["authorization"];
