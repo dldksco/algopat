@@ -11,6 +11,6 @@ public class FeignClientInterceptor implements RequestInterceptor {
   private String internalToken;
   @Override
   public void apply(RequestTemplate requestTemplate) {
-    requestTemplate.header("Authorization",internalToken);
+//    requestTemplate.header("Authorization",internalToken);
   }
 }
