@@ -5,19 +5,19 @@ import { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { stringCutter } from "../../hooks/func";
 
-interface ProblemProps {
+export interface ProblemProps {
   data: Problem;
 }
 
-interface Problem {
-  level: string;
-  problemId: string;
-  title: string;
+export interface Problem {
+  problemLevel: number;
+  problemId: number;
+  problemTitle: string;
   solved: Solve[];
 }
 
 interface Solve {
-  submissionId: string;
+  submissionId: number;
 }
 
 export const Problem = ({ data }: ProblemProps) => {
@@ -37,10 +37,10 @@ export const Problem = ({ data }: ProblemProps) => {
           className={isOpen ? undefined : "fa-rotate-180"}
         />
         <img
-          src={`https://static.solved.ac/tier_small/${data.level}.svg`}
-          alt={data.level}
+          src={`https://static.solved.ac/tier_small/${data.problemLevel}.svg`}
+          alt={data.problemTitle}
         />
-        {data.problemId}. {stringCutter(data.title, 8)}
+        {data.problemId}. {stringCutter(data.problemTitle, 8)}
       </div>
       {isOpen
         ? data.solved.map((el) => (
