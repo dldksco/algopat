@@ -32,9 +32,9 @@ public class AuthController {
 
   @PostMapping("/code")
   public ResponseEntity<?> getCode (@RequestBody CodeDTO codeDTO, HttpServletResponse response){
-    System.out.println("dddddddddd"+codeDTO.isExtension());
+    System.out.println("dddddddddd"+codeDTO.getIsExtension());
     LoginProcessDTO loginProcessDTO =authService.loginProcess(GithubCodeResponseDTO.builder().code(
-        codeDTO.getCode()).isExtension(codeDTO.isExtension()).build());
+        codeDTO.getCode()).isExtension(codeDTO.getIsExtension()).build());
     response.addHeader("Authorization",loginProcessDTO.getAccessToken());
     response.addCookie(loginProcessDTO.getCookie());
 
