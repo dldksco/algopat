@@ -3,6 +3,8 @@
 let action = false;
 const blockElement = `#popup_container #col div[style*="display: block"]`
 
+
+// 깃허브 로그인 버튼 클릭
 $('#authenticate').on('click', () => {
   if (action) {
     oAuth2.begin();
@@ -12,18 +14,40 @@ $('#authenticate').on('click', () => {
   }
 });
 
-// 임시
-$('#api_key_button').on('click', () => {
-  $("#auth_mode").hide();
+// // 임시
+// $('#api_key_button').on('click', () => {
+//   $("#auth_mode").hide();
 
-  $("#commit_mode").show();
-  $('#gear_icon').show();
+//   $("#commit_mode").show();
+//   $('#gear_icon').show();
 
-})
+// })
 
+// api key 저장 버튼 클릭
 $('#api_key_save').on('click', () => {
   const value = $('#api_key').val()
-  chrome.storage.local.set({ "gpt_key": value }, () => { })
+
+
+  fetch("https://api.openai.com/v1/models",
+    {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${value}`,
+      },
+
+    }).then((res) => {
+      if (res.status === 200) {
+        chrome.storage.local.set({ "gpt_key": value }, () => { })
+        $("#save_message").html("<p style='color: green;'>저장되었습니다</p>")
+      } else {
+        $("#save_message").html("<p style='color: red;'>유효하지 않은 키입니다</p>")
+      }
+    }).catch(() => {
+      $("#save_message").html("<p style='color: red;'>유효하지 않은 키입니다</p>")
+    })
+
+
 })
 
 /*

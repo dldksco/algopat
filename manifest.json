@@ -30,11 +30,13 @@
     "unlimitedStorage",
     "storage",
     "declarativeNetRequest",
-    "declarativeNetRequestWithHostAccess"
+    "declarativeNetRequestWithHostAccess",
+    "notifications"
   ],
   "host_permissions": [
     "https://www.acmicpc.net/",
-    "https://algopat.kr/"
+    "https://algopat.kr/",
+    "https://api.openai.com/"
   ],
   "web_accessible_resources": [
     {

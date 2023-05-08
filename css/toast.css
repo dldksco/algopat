@@ -20,7 +20,7 @@
 
 .toast {
     position:fixed;
-    z-index:1;
+    z-index:100;
     display:flex;
     text-align:left;
     padding: 21px 0;
@@ -28,7 +28,7 @@
     border-radius:4px !important;
     box-sizing: content-box !important;
     max-width: 500px;
-    bottom:50px;
+    top:50px;
     right: 20px;
     padding: 10px;
     /* height: 80px; */
@@ -97,6 +97,14 @@
 
 .toast--green:before{
   background-color:#2BDE3F;
+}
+
+.toast--red .toast__icon{
+  background-color:red;
+}
+
+.toast--red:before{
+  background-color:red;
 }
 
 .toast--blue .toast__icon{

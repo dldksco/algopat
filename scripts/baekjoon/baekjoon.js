@@ -51,25 +51,24 @@ function startLoader() {
             const token = data.BaekjoonHub_token;
             const key = data.gpt_key;
 
-            bojData.openai_api_key = key;
+            fetch("https://api.openai.com/v1/models",
+              {
+                method: 'GET',
+                headers: {
+                  'Content-Type': 'application/json',
+                  'Authorization': `Bearer ${key}`,
+                },
 
-            //fetch 요청
-            fetch('https://algopat.kr/api/code/problem', {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json',
-                'authorization': token,
-              },
-              body: JSON.stringify(bojData)
-            })
-              .then(response => {
-                // response.text()
-                markUploadedCSS();
-              })
-              .catch(error => {
-                // markUploadFailedCSS();
-                toastThenStopLoader("실패했습니다", error);
-                console.error(error)
+              }).then((res) => {
+                if (res.status === 200) {
+                  bojData.openai_api_key = key;
+                  //fetch 요청
+                  postData(token, bojData)
+                } else {
+                  Toast.raiseToast("GPT key를 확인해주세요");
+                }
+              }).catch(() => {
+                Toast.raiseToast("GPT key를 확인해주세요");
               })
           })
 
@@ -100,5 +99,28 @@ async function isProgressRefactoring() {
     });
     resolve(false)
   })
+
+}
+
+function postData(token, data) {
+
+  //fetch 요청
+  fetch('https://algopat.kr/api/code/problem', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'authorization': token,
+    },
+    body: JSON.stringify(data)
+  })
+    .then(response => {
+      // response.text()
+      markUploadedCSS();
+    })
+    .catch(error => {
+      // markUploadFailedCSS();
+      toastThenStopLoader("실패했습니다", error);
+      console.error(error)
+    })
 
 }
