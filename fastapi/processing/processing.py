@@ -38,7 +38,7 @@ redis_conn = Redis.from_url(redis_url)
 # GPT 응답 생성 함수
 @time_logger("GPT 비즈니스 로직")
 async def processing(data : ProblemData, send_callback):
-    if (await filtering_input_data(data, send_callback)):
+    if await filtering_input_data(data, send_callback):
         return
     data.language = await parse_lang_type(data.language)
     chat_llm_0 = ChatOpenAI(temperature=0, openai_api_key=data.openai_api_key, request_timeout=120)
