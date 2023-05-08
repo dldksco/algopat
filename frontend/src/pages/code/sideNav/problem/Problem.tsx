@@ -13,7 +13,7 @@ export interface Problem {
   problemLevel: number;
   problemId: number;
   problemTitle: string;
-  solved: Solve[];
+  solved?: Solve[];
 }
 
 interface Solve {
