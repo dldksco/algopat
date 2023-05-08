@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserController {
   private final UserService userService;
   @PostMapping("/check")
-  public ResponseEntity<Boolean> userCheck(@RequestBody GithubUserIdInfoDTO githubUserIdInfoDTO,@RequestHeader HttpHeaders headers) {
+  public ResponseEntity<Boolean> userCheck(@RequestBody GithubUserIdInfoDTO githubUserIdInfoDTO) {
     return new ResponseEntity<>(userService.userCheck(githubUserIdInfoDTO), HttpStatus.OK);
   }
 }
