@@ -20,7 +20,6 @@ public class UserController {
   private final UserService userService;
   @PostMapping("/check")
   public ResponseEntity<Boolean> userCheck(@RequestBody GithubUserIdInfoDTO githubUserIdInfoDTO,@RequestHeader HttpHeaders headers) {
-    System.out.println(headers+"jhjhjhj");
     return new ResponseEntity<>(userService.userCheck(githubUserIdInfoDTO), HttpStatus.OK);
   }
 }

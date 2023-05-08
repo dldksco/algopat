@@ -9,10 +9,10 @@ public class BaseException extends RuntimeException {
   private ErrorCode errorCode;
 
   private HttpStatus httpStatus;
-  private String methodName;
-  public BaseException(ErrorCode errorCode, String methodName){
+
+  public BaseException(ErrorCode errorCode){
     this.errorCode=errorCode;
-    this.methodName=methodName;
+
     this.httpStatus=errorCode.getStatus();
   }
 

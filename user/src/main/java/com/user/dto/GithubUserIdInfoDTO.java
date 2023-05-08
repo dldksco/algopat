@@ -13,6 +13,11 @@ import lombok.Setter;
 @AllArgsConstructor
 @Builder
 public class GithubUserIdInfoDTO {
-  @JsonProperty("user_github_id")
+
   private String userGithubId;
+
+  private String userNickname;
+
+  private String userImageUrl;
+
 }

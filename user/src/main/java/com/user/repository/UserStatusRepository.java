@@ -10,5 +10,5 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 public interface UserStatusRepository extends JpaRepository<UserStatus, Long> {
-Optional<UserStatus> findTopByUserUserSeqOrderByCreatedAtDesc(Long userSeq);
+Optional<UserStatus> findTopByUserUserSeqOrderByUserStatusCreatedAtDesc(Long userSeq);
 }

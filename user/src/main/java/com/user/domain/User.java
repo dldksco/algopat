@@ -14,6 +14,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Index;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -30,8 +32,7 @@ import org.hibernate.annotations.Type;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@AttributeOverride(name="createdAt", column=@Column(name="user_created_at", nullable = false, updatable = false))
-public class User extends BaseEntityTime {
+public class User {
   @Id
   @GeneratedValue(generator = "GenerationType.IDENTITY")
   @Column(name = "user_seq", updatable = false, nullable = false)
@@ -40,7 +41,22 @@ public class User extends BaseEntityTime {
   @Column(name="user_github_id", nullable = false)
   private String userGithubId;
 
+  @Column(name = "user_created_at")
+  private LocalDateTime userCreatedAt;
+
   @OneToMany(mappedBy = "user", cascade = CascadeType.PERSIST,fetch = FetchType.LAZY)
   @Builder.Default
   private List<UserStatus> userStatuses = new ArrayList<>();
+
+  @OneToOne(mappedBy = "user", cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+  private UserNickname userNickname;
+
+  @OneToOne(mappedBy = "user", cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+  private UserImage userImage;
+
+
+  @PrePersist
+  protected void onCreate() {
+    userCreatedAt = LocalDateTime.now();
+  }
 }
