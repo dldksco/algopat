@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import ssafy from "@/assets/img/footer/ssafy.png";
-import algopat from "@/assets/img/footer/ALGOPAT.png";
+import algopat from "@/assets/img/footer/algopat.png";
 import notion from "@/assets/img/footer/notion.png";
 import style from "./Footer.module.css";
 
