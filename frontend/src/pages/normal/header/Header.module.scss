@@ -8,6 +8,12 @@
   margin-right: auto;
   margin-left: auto;
 
+  .for_hover {
+    &:hover {
+      color: gray;
+    }
+  }
+
   .logo {
     margin-top: auto;
     margin-bottom: auto;
@@ -25,10 +31,6 @@
     :nth-child(n) {
       cursor: pointer;
       transition: 0.25s;
-
-      &:hover {
-        color: gray;
-      }
     }
   }
 
@@ -38,6 +40,23 @@
 
   .profile_div {
     position: relative;
+
+    &:hover .down_slide {
+      height: 95px;
+      border-bottom: 1px solid var(--font-color);
+    }
+
+    .down_slide {
+      overflow: hidden;
+      position: absolute;
+      background-color: var(--background-color);
+      width: 120px;
+      text-align: center;
+      right: -40px;
+      top: 42px;
+      height: 0;
+      z-index: 1;
+    }
 
     img {
       width: 42px;
