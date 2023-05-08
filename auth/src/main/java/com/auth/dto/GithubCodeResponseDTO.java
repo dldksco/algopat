@@ -10,5 +10,4 @@ import lombok.Setter;
 public class GithubCodeResponseDTO {
   private String code;
 
-  private boolean isExtension;
 }

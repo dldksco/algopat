@@ -11,5 +11,5 @@ import lombok.NoArgsConstructor;
 @Builder
 public class CodeDTO {
   private String code;
-  private boolean isExtension;
+  private String isExtension;
 }

@@ -13,6 +13,6 @@ import lombok.Setter;
 @NoArgsConstructor
 public class TokenGenerateDTO {
   private String userGithubId;
-  private boolean isExtension;
+  private String isExtension;
 
 }

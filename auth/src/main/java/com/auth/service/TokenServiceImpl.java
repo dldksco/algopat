@@ -39,9 +39,9 @@ public class TokenServiceImpl implements TokenService {
   }
   @Override
   public TokenDTO generateAccessToken(TokenGenerateDTO tokenGenerateDTO) {
-    boolean isExtension= tokenGenerateDTO.isExtension();
+    String isExtension= tokenGenerateDTO.getIsExtension();
     long tokenExpiredTime=0;
-    if(isExtension){
+    if(isExtension.equals("YES")){
       tokenExpiredTime=EXTENSION_TOKEN_EXPIRATION_TIME;
       System.out.println("익스텐션");
     }
