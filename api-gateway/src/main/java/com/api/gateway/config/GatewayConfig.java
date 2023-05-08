@@ -31,7 +31,7 @@ public class GatewayConfig {
     return (exchange, chain) -> {
       ServerHttpRequest request = exchange.getRequest();
       String path = request.getURI().getPath();
-
+      System.out.println(path+"dasdasdasdasdasdasdas");
       if (path.startsWith("/auth/")) {
         // 인증 서버로의 요청은 다른 필터를 건너뛰고 직접 전달합니다.
         System.out.println("어스서버로~");
