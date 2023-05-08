@@ -35,8 +35,8 @@ public class UserServiceImpl implements UserService {
             UserStatus userStatus = userStatusRepository.findTopByUserUserSeqOrderByCreatedAtDesc(userSeq).orElseThrow(() -> new BaseException(ErrorCode.SERVICE_SERVLET_ERROR,methodName));
             if(!userStatus.getUserStatusStatus().equals(UserStatusType.AVAILABLE))
                 throw new BaseException(ErrorCode.UNVALID_USER,methodName);
-            throw new BaseException(ErrorCode.UNVALID_USER,methodName);
-//            return true;
+//            throw new BaseException(ErrorCode.UNVALID_USER,methodName);
+            return true;
         }
         else{
             User newUser = User.builder().userGithubId(githubUserIdInfoDTO.getUserGithubId()).build();
@@ -44,8 +44,8 @@ public class UserServiceImpl implements UserService {
                 UserStatusType.AVAILABLE).build();
             newUser.getUserStatuses().add(userStatus);
             userRepository.save(newUser);
-            throw new BaseException(ErrorCode.UNVALID_USER,methodName);
-//            return false;
+//            throw new BaseException(ErrorCode.UNVALID_USER,methodName);
+            return false;
         }
     }
 }
