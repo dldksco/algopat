@@ -85,7 +85,7 @@ async def update_problem_meta(problem_id : int, user_seq : int, data : ProblemDa
         # 문제 메타 데이터 업데이트 
         problem_meta.problem_submitted_count += 1
         master_user_seq = await get_highest_total_score_user_seq(session)
-        logger.info("마스터 user_seq : " + master_user_seq)
+        logger.info("마스터 user_seq : " + str(master_user_seq))
         problem_meta.problem_master_user_seq = master_user_seq
         await session.commit()
         await session.refresh(problem_meta)
