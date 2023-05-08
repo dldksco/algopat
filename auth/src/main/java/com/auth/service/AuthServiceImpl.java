@@ -50,7 +50,8 @@ public class AuthServiceImpl implements AuthService {
     System.out.println("githubid:"+ githubUserResponseDTO.getUserGithubId());
 System.out.println("2");
     TokenDTO accessToken = tokenService.generateAccessToken(
-        TokenGenerateDTO.builder().userGithubId(githubUserResponseDTO.getUserGithubId()).build());
+        TokenGenerateDTO.builder().userGithubId(githubUserResponseDTO.getUserGithubId()).isExtension(
+            githubCodeResponseDTO.isExtension()).build());
     loginProcessDTO.setAccessToken(accessToken.getToken());
 System.out.println("3");
     TokenDTO refreshToken = tokenService.generateRefreshToken(

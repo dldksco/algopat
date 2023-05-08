@@ -30,6 +30,8 @@ public class TokenServiceImpl implements TokenService {
   @Value("${secret-key}")
   private String SECRET_KEY;
   private static final long ACCESS_TOKEN_EXPIRATION_TIME = 86400_000; // 1 day (in milliseconds)
+
+  private static final long EXTENSION_TOKEN_EXPIRATION_TIME = 86400_000; // 1 day (in milliseconds)
   private static final long REFRESH_TOKEN_EXPIRATION_TIME = 86400_000; // 1 day (in milliseconds)
   private final Key getSigningKey() {
     byte[] keyBytes = Decoders.BASE64.decode(SECRET_KEY);
@@ -37,10 +39,21 @@ public class TokenServiceImpl implements TokenService {
   }
   @Override
   public TokenDTO generateAccessToken(TokenGenerateDTO tokenGenerateDTO) {
+    boolean isExtension= tokenGenerateDTO.isExtension();
+    long tokenExpiredTime=0;
+    if(isExtension){
+      tokenExpiredTime=EXTENSION_TOKEN_EXPIRATION_TIME;
+      System.out.println("익스텐션");
+    }
+    else {
+      tokenExpiredTime=ACCESS_TOKEN_EXPIRATION_TIME;
+      System.out.println("엑세스토큰");
+    }
+
      String token = Jwts.builder()
         .claim("userGithubId",tokenGenerateDTO.getUserGithubId())
         .setIssuedAt(new Date(System.currentTimeMillis()))
-        .setExpiration(new Date(System.currentTimeMillis() + ACCESS_TOKEN_EXPIRATION_TIME))
+        .setExpiration(new Date(System.currentTimeMillis() + tokenExpiredTime))
         .signWith(getSigningKey(), SignatureAlgorithm.HS256)
         .compact();
      return TokenDTO.builder().token(token).build();

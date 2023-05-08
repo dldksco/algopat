@@ -1,5 +1,6 @@
 package com.auth.controller;
 
+import com.auth.dto.CodeDTO;
 import com.auth.dto.GithubCodeResponseDTO;
 import com.auth.dto.LoginProcessDTO;
 import com.auth.dto.TokenDTO;
@@ -12,6 +13,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -27,9 +30,10 @@ public class AuthController {
   private String clientId;
 
 
-  @GetMapping("/code")
-  public ResponseEntity<?> getCode (@RequestParam("code") String code, HttpServletResponse response){
-    LoginProcessDTO loginProcessDTO =authService.loginProcess(GithubCodeResponseDTO.builder().code(code).build());
+  @PostMapping("/code")
+  public ResponseEntity<?> getCode (@RequestBody CodeDTO codeDTO, HttpServletResponse response){
+    LoginProcessDTO loginProcessDTO =authService.loginProcess(GithubCodeResponseDTO.builder().code(
+        codeDTO.getCode()).isExtension(codeDTO.isExtension()).build());
     response.addHeader("Authorization",loginProcessDTO.getAccessToken());
     response.addCookie(loginProcessDTO.getCookie());
 
