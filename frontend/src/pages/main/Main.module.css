@@ -67,7 +67,7 @@
 }
 .mainpage .lpage {
   width: 100%;
-  height: calc(100vh - 180px);
+  height: auto;
   text-align: center;
 }
 .mainpage .lpage .contentbox {
