@@ -42,7 +42,7 @@
     position: relative;
 
     &:hover .down_slide {
-      height: 95px;
+      height: 125px;
       border-bottom: 1px solid var(--font-color);
     }
 
@@ -50,7 +50,7 @@
       overflow: hidden;
       position: absolute;
       background-color: var(--background-color);
-      width: 120px;
+      width: 140px;
       text-align: center;
       right: -40px;
       top: 42px;
@@ -76,6 +76,15 @@
       width: 36%;
       min-width: 260px;
       font-size: 1.1rem;
+    }
+    .profile_div {
+      &:hover .down_slide {
+        height: 95px;
+      }
+
+      .down_slide {
+        width: 120px;
+      }
     }
   }
 }
