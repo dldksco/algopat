@@ -16,8 +16,6 @@ public class GithubUserIdInfoDTO {
 
   private String userGithubId;
 
-  private String userNickname;
-
   private String userImageUrl;
 
 }

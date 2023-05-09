@@ -45,16 +45,11 @@ public class UserServiceImpl implements UserService {
                 throw new BaseException(ErrorCode.UNVALID_USER);
 
             UserImage  userImage = userImageRespository.findByUserUserSeq(userSeq).orElseThrow(() -> new BaseException(ErrorCode.SERVICE_SERVLET_ERROR));
-            UserNickname userNickname = userNicknameRespository.findByUserUserSeq(userSeq).orElseThrow(() -> new BaseException(ErrorCode.SERVICE_SERVLET_ERROR));
             System.out.println("userImage:"+ userImage.getUserImageUrl()+" githubuserimageurl: "+githubUserImageUrl);
-            System.out.println("usernickname:"+ userNickname.getUserNickname()+" githubnickname: "+ githubUserNickname);
+            System.out.println("user id: "+ githubUserId);
             if(!userImage.getUserImageUrl().equals(githubUserImageUrl)){
                 userImage.setUserImageUrl(githubUserImageUrl);
                 userImageRespository.save(userImage);
-            }
-            if(!userNickname.equals(githubUserNickname)){
-                userNickname.setUserNickname(githubUserNickname);
-                userNicknameRespository.save(userNickname);
             }
 
             return true;
@@ -65,11 +60,9 @@ public class UserServiceImpl implements UserService {
             UserStatus userStatus = UserStatus.builder().user(newUser).userStatusStatus(
                 UserStatusType.AVAILABLE).build();
 
-            UserNickname userNickname = UserNickname.builder().userNickname(githubUserNickname).user(newUser).build();
             UserImage userImage = UserImage.builder().userImageUrl(githubUserImageUrl).user(newUser).build();
 
             newUser.getUserStatuses().add(userStatus);
-            newUser.setUserNickname(userNickname);
             newUser.setUserImage(userImage);
             userRepository.save(newUser);
 
