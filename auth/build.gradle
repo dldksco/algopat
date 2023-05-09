@@ -44,6 +44,8 @@ dependencies {
 	//eureka
 	implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
 
+	//zipkin
+	implementation 'org.springframework.cloud:spring-cloud-sleuth-zipkin'
 
 
 }
