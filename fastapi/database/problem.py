@@ -120,7 +120,7 @@ class UserSubmitProblem(Base):
 
 
 async def insert_user_submit_problem(data : UserSubmitProblem, user_seq : int, submissionTime : datetime, session):
-    submission_time = parse_date_format(submissionTime)
+    submission_time = await parse_date_format(submissionTime)
     
     user_submit_problem = UserSubmitProblem(
         problem_id = data.problem_id,
@@ -144,7 +144,7 @@ async def get_user_submit_problem(problem_id : int, user_seq : int,  session):
     return result.scalar()
 
 async def update_user_submit_problem(data : UserSubmitProblem, submissionTime : datetime, session):
-    submission_time = parse_date_format(submissionTime)
+    submission_time = await parse_date_format(submissionTime)
     
     user_submit_problem = UserSubmitProblem(
         problem_id = data.problem_id,
