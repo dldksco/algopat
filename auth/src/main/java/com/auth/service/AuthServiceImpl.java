@@ -6,6 +6,7 @@ import com.auth.dto.GithubUserResponseDTO;
 import com.auth.dto.LoginProcessDTO;
 import com.auth.dto.TokenDTO;
 import com.auth.dto.TokenGenerateDTO;
+import com.auth.dto.UserServiceIdResponseDTO;
 import java.util.Collections;
 import javax.servlet.http.Cookie;
 import lombok.RequiredArgsConstructor;
@@ -44,11 +45,17 @@ public class AuthServiceImpl implements AuthService {
     GithubAccessTokenResponseDTO githubAccessTokenResponseDTO = requestGithubAccessToken(
         githubCodeResponseDTO);
 
-    GithubUserResponseDTO githubUserResponseDTO = requestGithubUserInfo(githubAccessTokenResponseDTO);
+    GithubUserResponseDTO githubUserResponseDTO = requestGithubUserInfo(
+        githubAccessTokenResponseDTO);
+
+    UserServiceIdResponseDTO userServiceIdResponseDTO = userService.checkId(githubUserResponseDTO);
 
     TokenDTO accessToken = tokenService.generateAccessToken(
-        TokenGenerateDTO.builder().userGithubId(githubUserResponseDTO.getUserGithubId())
-            .isExtension(githubCodeResponseDTO.getIsExtension()).build());
+        TokenGenerateDTO.builder()
+            .userGithubId(githubUserResponseDTO.getUserGithubId())
+            .isExtension(githubCodeResponseDTO.getIsExtension())
+            .userSeq(userServiceIdResponseDTO.getUserSeq())
+            .build());
     loginProcessDTO.setAccessToken(accessToken.getToken());
 
     TokenDTO refreshToken = tokenService.generateRefreshToken(
@@ -56,8 +63,6 @@ public class AuthServiceImpl implements AuthService {
 
     Cookie cookie = tokenService.createRefreshTokenCookie(refreshToken);
     loginProcessDTO.setCookie(cookie);
-
-    userService.checkId(githubUserResponseDTO);
 
     return loginProcessDTO;
   }
@@ -77,7 +82,7 @@ public class AuthServiceImpl implements AuthService {
     HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(body, headers);
     GithubAccessTokenResponseDTO githubAccessTokenResponse = restTemplate.postForObject(url,
         request, GithubAccessTokenResponseDTO.class);
-    System.out.println("githubaccess :"+ githubAccessTokenResponse.getGitHubaAccessToken());
+    System.out.println("githubaccess :" + githubAccessTokenResponse.getGitHubaAccessToken());
     return githubAccessTokenResponse;
   }
 
@@ -101,7 +106,7 @@ public class AuthServiceImpl implements AuthService {
     );
     GithubUserResponseDTO githubUserResponseDTO = response.getBody();
     System.out.println("id" + githubUserResponseDTO.getUserGithubId());
-    System.out.println("url "+ githubUserResponseDTO.getUserImageUrl());
+    System.out.println("url " + githubUserResponseDTO.getUserImageUrl());
     return githubUserResponseDTO;
   }
 

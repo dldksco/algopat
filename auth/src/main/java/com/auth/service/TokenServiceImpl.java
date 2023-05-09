@@ -52,6 +52,7 @@ public class TokenServiceImpl implements TokenService {
 
      String token = Jwts.builder()
         .claim("userGithubId",tokenGenerateDTO.getUserGithubId())
+         .claim("userSeq",tokenGenerateDTO.getUserSeq())
         .setIssuedAt(new Date(System.currentTimeMillis()))
         .setExpiration(new Date(System.currentTimeMillis() + tokenExpiredTime))
         .signWith(getSigningKey(), SignatureAlgorithm.HS256)
