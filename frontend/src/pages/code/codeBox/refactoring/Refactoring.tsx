@@ -1,12 +1,14 @@
 import { useRef } from "react";
 import { Editor } from "@monaco-editor/react";
+import { ComplexityData, RefactoringData } from "../../hooks/query";
 import style from "./Refactoring.module.css";
 
 interface RefactoringProps {
   isModalOpen: boolean;
+  data: RefactoringData | ComplexityData;
 }
 
-export const Refactoring = ({ isModalOpen }: RefactoringProps) => {
+export const Refactoring = ({ isModalOpen, data }: RefactoringProps) => {
   const dumy2 =
     "//여기에 코드 더미데이터 들어감\n// 되 냐?\nconst sad = 23123123123;";
   const editorRef = useRef<any>(null);
@@ -28,8 +30,8 @@ export const Refactoring = ({ isModalOpen }: RefactoringProps) => {
         <Editor
           width="98%"
           height="300px"
-          defaultLanguage="javascript"
-          defaultValue={dumy2}
+          // defaultLanguage={data?.language}
+          // defaultValue={data?.submitCode}
           onMount={handleEditorDidMount}
           theme="vs-dark"
           options={{

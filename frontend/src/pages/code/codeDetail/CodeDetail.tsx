@@ -6,7 +6,13 @@ import style from "./CodeDetail.module.css";
 
 export const CodeDetail = () => {
   const nowProblem = useRecoilValue(nowProblemSubmissionIdState);
-  const { data, isLoading } = getSolution(nowProblem);
+  const {
+    refactoringData,
+    timeComplexityData,
+    spaceComplexityData,
+    totalInfo,
+    isLoading,
+  } = getSolution(nowProblem.submissionId);
 
   return (
     <div className={style.code_detail}>
@@ -14,9 +20,9 @@ export const CodeDetail = () => {
         <div className={style.algopat}>ALGOPAT</div>
       ) : (
         <>
-          <CodeBox type={"REFACTORING"} />
-          <CodeBox type={"TIME COMPLEXITY"} />
-          <CodeBox type={"SPACE COMPLEXITY"} />
+          <CodeBox type={"REFACTORING"} data={refactoringData} />
+          {/* <CodeBox type={"TIME COMPLEXITY"} data={timeComplexityData} />
+          <CodeBox type={"SPACE COMPLEXITY"} data={spaceComplexityData} /> */}
         </>
       )}
     </div>

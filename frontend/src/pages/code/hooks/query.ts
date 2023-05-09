@@ -25,8 +25,24 @@ interface Solution {
   gptTotalScore: number;
 }
 
+export interface RefactoringData {
+  language: string | undefined;
+  submitCode: string | undefined;
+  cleanScore: number | undefined;
+  refactoringSuggestion: string | undefined;
+}
+
+export interface ComplexityData {
+  timeComplexity: string | undefined;
+  timeComplexityReason: string | undefined;
+  timeScore: number | undefined;
+  timeComplexityGoodPoint: string | undefined;
+  timeComplexityBadPoint: string | undefined;
+  timeComplexitySuggestion: string | undefined;
+}
+
 export const getSolution = (solutionSeq: number) => {
-  const fetchSolution = async (): Promise<any> => {
+  const fetchSolution = async (): Promise<Solution> => {
     const { data } = await $.get(
       `/code/problem/submission/solution/detail/${solutionSeq}`
     );
@@ -35,12 +51,46 @@ export const getSolution = (solutionSeq: number) => {
 
   const { data, isLoading, isError, refetch } = useQuery(
     ["GptSolution", solutionSeq],
-    fetchSolution
+    fetchSolution,
+    { enabled: !!solutionSeq }
   );
 
-  const refactoringData = {};
-  const timeComplexityData = "";
-  const spaceComplexityData = "";
+  const refactoringData = {
+    language: data?.userSubmitSolutionLanguage,
+    submitCode: data?.userSubmitSolutionCode,
+    cleanScore: data?.gptSolutionCleanScore,
+    refactoringSuggestion: data?.gptSolutionRefactoringSuggestion,
+  };
+  const timeComplexityData = {
+    Complexity: data?.gptSolutionTimeComplexity,
+    ComplexityReason: data?.gptSolutionTimeComplexityReason,
+    Score: data?.gptSolutionTimeScore,
+    ComplexityGoodPoint: data?.gptSolutionTimeComplexityGoodPoint,
+    ComplexityBadPoint: data?.gptSolutionTimeComplexityBadPoint,
+    ComplexitySuggestion: data?.gptImprovingTimeComplexitySuggestion,
+  };
+  const spaceComplexityData = {
+    Complexity: data?.gptSolutionSpaceComplexity,
+    ComplexityReason: data?.gptSolutionSpaceComplexityReason,
+    Score: data?.gptSolutionSpaceScore,
+    ComplexityGoodPoint: data?.gptSolutionSpaceComplexityGoodPoint,
+    ComplexityBadPoint: data?.gptSolutionSpaceComplexityBadPoint,
+    ComplexitySuggestion: data?.gptImprovingSpaceComplexitySuggestion,
+  };
 
-  return { data, isLoading, isError, refetch };
+  const totalInfo = {
+    gptTotalScore: data?.gptTotalScore,
+    solutionRuntime: data?.userSubmitSolutionRuntime,
+    solutionMemory: data?.userSubmitSolutionMemory,
+  };
+
+  return {
+    refactoringData,
+    timeComplexityData,
+    spaceComplexityData,
+    totalInfo,
+    isLoading,
+    isError,
+    refetch,
+  };
 };

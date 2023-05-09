@@ -5,12 +5,14 @@ import { Refactoring } from "./refactoring/Refactoring";
 import { Complexity } from "./complexity/Complexity";
 import React from "react";
 import style from "./CodeBox.module.css";
+import { ComplexityData, RefactoringData } from "../hooks/query";
 
 interface CodeBoxProps {
   type: string;
+  data: RefactoringData | ComplexityData;
 }
 
-const CodeBox = React.memo(({ type }: CodeBoxProps) => {
+const CodeBox = React.memo(({ type, data }: CodeBoxProps) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const modalOpen = () => {
@@ -35,13 +37,13 @@ const CodeBox = React.memo(({ type }: CodeBoxProps) => {
         <hr />
       </div>
       {type === "REFACTORING" ? (
-        <Refactoring isModalOpen={isModalOpen} />
+        <Refactoring isModalOpen={isModalOpen} data={data} />
       ) : null}
       {type === "TIME COMPLEXITY" ? (
-        <Complexity isModalOpen={isModalOpen} />
+        <Complexity isModalOpen={isModalOpen} data={data} />
       ) : null}
       {type === "SPACE COMPLEXITY" ? (
-        <Complexity isModalOpen={isModalOpen} />
+        <Complexity isModalOpen={isModalOpen} data={data} />
       ) : null}
     </div>
   );
