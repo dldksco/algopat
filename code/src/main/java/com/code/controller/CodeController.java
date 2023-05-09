@@ -46,6 +46,7 @@ public class CodeController {
   @PostMapping("")
   public ResponseEntity<Void> sendProblemToKafka(@RequestBody @Valid ProblemRequestDto problemRequestDto)
       throws JsonProcessingException {
+    problemService.checkExistUserSubmitSolution(Long.parseLong(problemRequestDto.getSubmissionId())); // 이미 제출한 코드가 있는지 체크 (있다면 409)
     kafkaProducerService.send(USER_CODE_TOPIC, problemRequestDto);
     return ResponseEntity.ok().build();
   }

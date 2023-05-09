@@ -6,10 +6,13 @@ import com.code.data.dto.UserSubmissionSolutionDetailDto;
 import com.code.data.dto.UserSubmitProblemDto;
 import com.code.data.dto.UserSubmitSolutionTitleDto;
 import com.code.data.entity.Problem;
+import com.code.data.entity.UserSubmitSolution;
 import com.code.data.repository.ProblemRepository;
 import com.code.data.repository.UserSubmitProblemRepository;
+import com.code.data.repository.UserSubmitSolutionRepository;
 import com.code.exception.BaseException;
 import com.code.util.builder.ProblemBuilderUtil;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,6 +32,7 @@ public class ProblemService {
   // Repository 정의
   private final ProblemRepository problemRepository;
   private final UserSubmitProblemRepository userSubmitProblemRepository;
+  private final UserSubmitSolutionRepository userSubmitSolutionRepository;
   // Util 정의
   private final ProblemBuilderUtil problemBuilderUtil;
 
@@ -56,4 +60,12 @@ public class ProblemService {
         .orElseThrow(() -> new BaseException(ErrorCode.RESOURCE_NOT_FOUND, "getUserSubmitSolutionDetailDto"));
     return userSubmissionSolutionDetailDto;
   }
+
+  public void checkExistUserSubmitSolution(long submissionId) {
+    Optional<UserSubmitSolution> optionalUserSubmitSolution = userSubmitSolutionRepository.findById(submissionId);
+    if (optionalUserSubmitSolution.isPresent()) {
+      throw new BaseException(ErrorCode.EXIST_RESOURCE_ERROR, "isExistUserSubmitSolution");
+    }
+  }
+
 }
