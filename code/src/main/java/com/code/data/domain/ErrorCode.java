@@ -22,6 +22,7 @@ public enum ErrorCode {
 
   UNVALID_PARAMETER(HttpStatus.NOT_FOUND,"요청 파라미터를 확인해주세요."),
   RESOURCE_NOT_FOUND(HttpStatus.NOT_FOUND, "리소스가 존재하지 않습니다."),
+  EXIST_RESOURCE_ERROR(HttpStatus.CONFLICT, "리소스가 이미 존재합니다."),
 
 
   //500
