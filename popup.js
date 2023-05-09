@@ -3,7 +3,6 @@
 let action = false;
 const blockElement = `#popup_container #col div[style*="display: block"]`
 
-
 // 깃허브 로그인 버튼 클릭
 $('#authenticate').on('click', () => {
   if (action) {
@@ -76,9 +75,9 @@ $('#gear_icon').on('click', () => {
 /*
   깃허브 auth 로그인
  */
-chrome.storage.local.get('BaekjoonHub_token', (data) => {
+chrome.storage.local.get(['BaekjoonHub_token', 'commit_state'], (data) => {
   const token = data.BaekjoonHub_token;
-  console.log(token)
+  const commit_state = data.commit_state;
   if (token === null || token === undefined) {
     action = true;
     $('#auth_mode').show();
@@ -86,41 +85,35 @@ chrome.storage.local.get('BaekjoonHub_token', (data) => {
     // To validate user, load user object from GitHub.
     // const AUTHENTICATION_URL = 'https://api.github.com/user';
 
-    fetch('https://algopat.kr/api/code/problem?problemId=1', {
+    fetch('https://algopat.kr/api/auth/token/parse', {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
         'authorization': token,
       }
-    }).then((data) => {
-      console.log(data)
-      $('#commit_mode').show();
-      $('#gear_icon').show();
-    }).catch((e) => {
-      $('#auth_mode').show();
+    }).then((res) => {
+
+      if (res.status == 401) {
+        throw new Error("로그인 정보가 유효하지 않습니다.")
+      } else {
+        return res.json()
+      }
     })
+      .then((data) => {
+        console.log(data)
 
-    // const xhr = new XMLHttpRequest();
-    // xhr.addEventListener('readystatechange', function () {
-    //   if (xhr.readyState === 4) {
-    //     if (xhr.status === 200) {
-    //       $('#commit_mode').show();
-    //       $('#gear_icon').show();
+        $('#commit_mode').show();
+        $('#gear_icon').show();
 
-    //     } else if (xhr.status === 401) {
-    //       // bad oAuth
-    //       // reset token and redirect to authorization process again!
-    //       chrome.storage.local.set({ BaekjoonHub_token: null }, () => {
-    //         console.log('BAD oAuth!!! Redirecting back to oAuth process');
-    //         action = true;
-    //         $('#auth_mode').show();
-    //       });
-    //     }
-    //   }
-    // });
-    // xhr.open('GET', AUTHENTICATION_URL, true);
-    // xhr.setRequestHeader('Authorization', `token ${token}`);
-    // xhr.send();
+        chrome.storage.local.set({ userGithubId: data.userGithubId }, () => { });
+        chrome.storage.local.set({ userSeq: data.userSeq }, () => { });
+
+        commitMode(commit_state, token);
+
+      }).catch((e) => {
+        console.error(e)
+        $('#auth_mode').show();
+      })
   }
 });
 
@@ -141,18 +134,49 @@ chrome.storage.local.get('bjhEnable', (data4) => {
 /*
   코드 리팩토링 상태
  */
-chrome.storage.local.get('commit_state', (data) => {
+function commitMode(commit_state, token) {
+  console.log("commit_state : ", commit_state)
+  if (commit_state && commit_state.submissionId && !commit_state.state) { // 코드 분석 진행중
 
-  if (!data.commit_state || data.commit_state == "none") {
-    $('#commit_state_text').html('<p>진행중인 코드 분석이 없습니다</p>');
-  } else if (data.commit_state == "progress") {
-    $('#commit_state_text').html('<p>코드 분석이 진행중입니다</p><div class="spinner"></div>');
-  } else if (data.commit_state == "completed") {
+    fetch(`https://algopat.kr/api/code/problem/submission/solution/exist/${commit_state.submissionId}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'authorization': token,
+      }
+    }).then((res) => res.json())
+      .then(data => {
+        console.log("완료했니", data.data)
+        if (data.data) { // 분석 완료
+          $('#commit_state_text').html('<p>코드 분석이 완료되었습니다</p><div class="completed_icon">✓</div>');
+          chrome.storage.local.set({ commit_state: { ...commit_state, state: true } }, () => { });
+        } else { // 분석 진행중
+          $('#commit_state_text').html('<p>코드 분석이 진행중입니다</p><div class="spinner"></div>');
+        }
+      }).catch((e) => {
+        $('#commit_state_text').html('<p>진행중인 코드 분석이 없습니다</p>');
+      })
+
+  } else if (commit_state && commit_state.submissionId && commit_state.state) {
     $('#commit_state_text').html('<p>코드 분석이 완료되었습니다</p><div class="completed_icon">✓</div>');
-    $('#commit_state_text').after('<a id="result_link" target="_blank" href="https://github.com/">분석 결과 보기</a>');
-
+    chrome.storage.local.set({ commit_state: { ...commit_state, state: true } }, () => { });
+  } else {
+    $('#commit_state_text').html('<p>진행중인 코드 분석이 없습니다</p>');
   }
-});
+}
+
+// chrome.storage.local.get('commit_state', ({ commit_state }) => {
+
+//   // if (!data.commit_state || data.commit_state == "idle") {
+//   //   $('#commit_state_text').html('<p>진행중인 코드 분석이 없습니다</p>');
+//   // } else if (data.commit_state == "progress") {
+//   //   $('#commit_state_text').html('<p>코드 분석이 진행중입니다</p><div class="spinner"></div>');
+//   // } else if (data.commit_state == "completed") {
+//   //   $('#commit_state_text').html('<p>코드 분석이 완료되었습니다</p><div class="completed_icon">✓</div>');
+//   //   $('#commit_state_text').after('<a id="result_link" target="_blank" href="https://github.com/">분석 결과 보기</a>');
+//   //   chrome.storage.local.set({ commit_state: "idle" }, () => { });
+//   // }
+// });
 
 
 /*
