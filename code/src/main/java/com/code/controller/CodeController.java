@@ -12,7 +12,6 @@ import com.code.service.ProblemRankService;
 import com.code.service.ProblemService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import javax.validation.Valid;
-import javax.validation.constraints.NotBlank;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -89,11 +88,9 @@ public class CodeController {
   @GetMapping("/submission/{pageNumber}")
   public ResponseEntity<Page<UserSubmitProblemDto>> getUserSubmitProblemDto(
       @PathVariable("pageNumber") int pageNumber,
-      @RequestHeader("userSeq") long userSeq
+      @RequestHeader(value = "userSeq", defaultValue = "-1") long userSeq
       ) {
     logger.info("헤더에서 userSeq 꺼냄 : {}", userSeq);
-
-    userSeq = 9999;
     return ResponseEntity.ok(problemService.getUserSubmitProblemDtoPage(pageNumber, userSeq));
   }
 
@@ -108,7 +105,8 @@ public class CodeController {
   public ResponseEntity<Page<UserSubmitSolutionTitleDto>> getUserSubmitSolutionTitleDto(
       @PathVariable("pageNumber") int pageNumber,
       @PathVariable("problemId") long problemId,
-      @RequestParam(value = "userSeq", defaultValue = "9999") long userSeq) {
+      @RequestHeader("userSeq") long userSeq) {
+    logger.info("헤더에서 userSeq 꺼냄 : {}", userSeq);
     return ResponseEntity.ok(
         problemService.getUserSubmitSolutionTitleDtoPage(pageNumber, userSeq, problemId));
   }
@@ -116,18 +114,18 @@ public class CodeController {
   /**
    * 제출 문제 상세 조회
    * @param submissionId
-   * @param userSeq
    * @return
    */
   @GetMapping("/submission/solution/detail/{submissionId}")
   public ResponseEntity<?> getUserSubmissionSolutionDetailDto(
-      @PathVariable("submissionId") long submissionId,
-      @RequestParam(value = "userSeq", defaultValue = "9999") long userSeq) {
+      @PathVariable("submissionId") long submissionId) {
     return ResponseEntity.ok(problemService.getUserSubmitSolutionDetailDto(submissionId));
   }
 
   /**
    * GPT 응답 존재 여부
+   * false : GPT 응답 생성중
+   * true  : GPT 응답 생성 완료
    * @param submissionId
    * @return
    */
