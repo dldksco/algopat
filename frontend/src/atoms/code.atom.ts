@@ -1,11 +1,16 @@
 import { atom } from "recoil";
 
-export const problemOpenState = atom<boolean[]>({
+export const problemOpenState = atom({
   key: "problemOpenState",
-  default: [],
+  default: {},
 });
 
-export const nowProblemSubmissionIdState = atom<number>({
+export const nowProblemSubmissionIdState = atom({
   key: "nowProblemSubmissionIdState",
-  default: 0,
+  default: {
+    problemTitle: "",
+    problemId: -1,
+    problemLevel: -1,
+    submissionId: -1,
+  },
 });

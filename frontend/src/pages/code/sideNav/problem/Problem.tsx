@@ -1,7 +1,8 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faChevronUp, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faChevronUp } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
 import { stringCutter } from "../../hooks/func";
+import { problemOpenState } from "@/atoms/code.atom";
 
 import style from "./Problem.module.css";
 import { ProblemDetail } from "./problemDetail/ProblemDetail";
@@ -18,7 +19,6 @@ export interface Problem {
 
 export const Problem = ({ detail }: ProblemProps) => {
   const [isOpen, setIsOpen] = useState(false);
-
   // 이벤트는 코드 내에
   const problemClick = () => {
     setIsOpen((prev) => !prev);
@@ -38,7 +38,7 @@ export const Problem = ({ detail }: ProblemProps) => {
         />
         {detail.problemId}. {stringCutter(detail.problemTitle, 8)}
       </div>
-      {isOpen ? <ProblemDetail problemId={detail.problemId} /> : null}
+      {isOpen ? <ProblemDetail problemDetail={detail} /> : null}
     </>
   );
 };
