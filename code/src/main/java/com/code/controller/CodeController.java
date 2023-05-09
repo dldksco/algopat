@@ -56,7 +56,7 @@ public class CodeController {
    * @return
    */
   @GetMapping("")
-  public ResponseEntity<ProblemResponseDto> getProblem(@RequestParam @NotBlank Long problemId) {
+  public ResponseEntity<ProblemResponseDto> getProblem(@RequestParam long problemId) {
     return ResponseEntity.ok(problemService.getProblem(problemId));
   }
 
