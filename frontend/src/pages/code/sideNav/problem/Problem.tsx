@@ -1,26 +1,25 @@
-import style from "./Problem.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronUp, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { stringCutter } from "../../hooks/func";
+import { $ } from "@/connect/axios";
+
+import style from "./Problem.module.css";
+import { useQuery } from "@tanstack/react-query";
+import { ProblemDetail } from "./problemDetail/ProblemDetail";
 
 export interface ProblemProps {
-  data: Problem;
+  detail: Problem;
 }
 
 export interface Problem {
   problemLevel: number;
   problemId: number;
   problemTitle: string;
-  solved?: Solve[];
 }
 
-interface Solve {
-  submissionId: number;
-}
-
-export const Problem = ({ data }: ProblemProps) => {
+export const Problem = ({ detail }: ProblemProps) => {
   const [isOpen, setIsOpen] = useState(false);
 
   // 이벤트는 코드 내에
@@ -37,25 +36,12 @@ export const Problem = ({ data }: ProblemProps) => {
           className={isOpen ? undefined : "fa-rotate-180"}
         />
         <img
-          src={`https://static.solved.ac/tier_small/${data.problemLevel}.svg`}
-          alt={data.problemTitle}
+          src={`https://static.solved.ac/tier_small/${detail.problemLevel}.svg`}
+          alt={detail.problemTitle}
         />
-        {data.problemId}. {stringCutter(data.problemTitle, 8)}
+        {detail.problemId}. {stringCutter(detail.problemTitle, 8)}
       </div>
-      {/* {isOpen
-        ? data.solved.map((el) => (
-            <div key={uuidv4()}>
-              <hr color="gray" />
-              <div className={style.solved}>
-                풀이-{el.submissionId}
-                <div className={style.trash_icon}>
-                  <FontAwesomeIcon icon={faTrash} />
-                </div>
-                <div style={{ clear: "both" }}></div>
-              </div>
-            </div>
-          ))
-        : null} */}
+      {isOpen ? <ProblemDetail problemId={detail.problemId} /> : null}
     </>
   );
 };

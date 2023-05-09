@@ -13,12 +13,13 @@ import { useNavigate } from "react-router-dom";
 import sort_tier_img from "@/assets/img/code/sort_tier.png";
 import { Button } from "@/components/button/Button";
 import { Problem, ProblemProps } from "./problem/Problem";
-import style from "./SideNav.module.css";
 import { $ } from "@/connect/axios";
 import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 import { LoadingSpinner } from "@/components/loadingspinner/LoadingSpinner";
 import { useMemo, useState } from "react";
 import { displayValue } from "node_modules/@tanstack/react-query-devtools/build/lib/utils";
+
+import style from "./SideNav.module.css";
 
 export const SideNav = ({
   setIsSidenavOpen,
@@ -34,31 +35,22 @@ export const SideNav = ({
     console.log(response.data.content, "content 확인");
     return response.data;
   };
-  const {
-    data,
-    error,
-    fetchNextPage,
-    isFetchingNextPage,
-    isLoading,
-  } = useInfiniteQuery(
-    ["sideBar"],
-    ({ pageParam = 0 }) => fetchData(pageParam),
-    {
+  const { data, error, fetchNextPage, isFetchingNextPage, isLoading } =
+    useInfiniteQuery(["sideBar"], ({ pageParam = 0 }) => fetchData(pageParam), {
       getNextPageParam: (lastPage) => lastPage.nextPage,
-    }
-  );
+    });
 
-  const mergedData = useMemo(() =>{
-    if(!data) return [];
-    console.log(data.pages, 'data.pages 확인');
-    const mergedPages = data.pages.reduce((prevPages, nextPage) =>{
+  const mergedData = useMemo(() => {
+    if (!data) return [];
+    console.log(data.pages, "data.pages 확인");
+    const mergedPages = data.pages.reduce((prevPages, nextPage) => {
       const mergedPage = prevPages.concat(nextPage.content);
       return mergedPage;
-    },[]);
+    }, []);
     return mergedPages;
   }, [data]);
-  
-  const hasMorePages = page < data?.pages[0].totalPages-1;
+
+  const hasMorePages = page < data?.pages[0].totalPages - 1;
   console.log(page);
   console.log(data?.pages[0].totalPages, "totalpage");
   console.log(mergedData, "merge?");
@@ -97,12 +89,12 @@ export const SideNav = ({
         </div>
       </div>
       <div className={style.problem_list}>
-      {mergedData === undefined
-        ? null
-        : mergedData.map((el: Problem) => (
-            <Problem key={uuidv4()} data={el} />
-          ))}
-      <hr />
+        {mergedData === undefined
+          ? null
+          : mergedData.map((el: Problem) => (
+              <Problem key={uuidv4()} detail={el} />
+            ))}
+        <hr />
       </div>
       {!isFetchingNextPage && hasMorePages ? (
         <Button

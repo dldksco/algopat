@@ -1,33 +1,11 @@
-.problem_list{
-    height: 2rem;
-    display: flex;
-    gap: 10px;
-    align-items: center;
-    margin-left: 5%;
-    cursor: pointer;
-    img{
-        height: 60%;
-    }
-}
-
-.solved {
-    padding-left: 18%;
-    padding-right: 8%;
-    height: 2rem;
-    padding-top: 2%;
-    color: gray;
-
-    &:hover .trash_icon{
-        visibility: visible;
-    }
-
-    .trash_icon {
-        float: right; 
-        visibility: hidden;
-        cursor: pointer;
-
-        // &:hover {
-        //     visibility: visible;
-        // }
-    }
+.problem_list {
+  height: 2rem;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin-left: 5%;
+  cursor: pointer;
+  img {
+    height: 60%;
+  }
 }
