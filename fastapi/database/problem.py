@@ -142,16 +142,20 @@ async def get_user_submit_problem(problem_id : int, user_seq : int,  session):
     return result.scalar()
 
 async def update_user_submit_problem(data : UserSubmitProblem, submissionTime : datetime, session):
-    UserSubmitProblem.user_submit_problem_updated_at = submissionTime
-
+    user_submit_problem = UserSubmitProblem(
+        problem_id = data.problem_id,
+        user_seq = data.user_seq,
+        user_submit_problem_created_at = data.user_submit_problem_created_at,
+        user_submit_problem_updated_at = submissionTime
+    )
     # DB에 Problem 객체 추가
     async with session.begin():
-        session.add(UserSubmitProblem)
+        session.add(user_submit_problem)
     await session.commit()
-    await session.refresh(UserSubmitProblem)
+    await session.refresh(user_submit_problem)
     await session.close()
 
-    return UserSubmitProblem
+    return user_submit_problem
 
 #===============================================================================
 
