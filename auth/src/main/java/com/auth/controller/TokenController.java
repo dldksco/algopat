@@ -1,8 +1,11 @@
 package com.auth.controller;
 
+import com.auth.domain.ErrorCode;
 import com.auth.domain.TokenStatus;
 import com.auth.dto.TokenDTO;
 import com.auth.dto.TokenGenerateDTO;
+import com.auth.dto.TokenInfo;
+import com.auth.exception.BaseException;
 import com.auth.service.TokenService;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -12,6 +15,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -20,6 +24,23 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class TokenController {
   private final TokenService tokenService;
+
+
+  @GetMapping("/parse")
+  public ResponseEntity<TokenInfo> parseToken(@RequestHeader HttpHeaders headers){
+    try{
+      String token = headers.getFirst("Authorization");
+      TokenInfo tokenInfo=tokenService.parseToken(token);
+      return new ResponseEntity<>(tokenInfo,HttpStatus.OK);
+    }catch(Exception e){
+      throw new BaseException(ErrorCode.REQUEST_ERROR);
+    }
+
+
+  }
+
+
+
   @GetMapping("/accesstoken")
   public ResponseEntity<?> checkRefreshTokenIssueAccessToken(HttpServletRequest request) {
     Cookie[] cookies = request.getCookies();

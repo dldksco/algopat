@@ -5,6 +5,7 @@ import com.auth.domain.RefreshToken;
 import com.auth.dto.TokenDTO;
 import com.auth.dto.TokenGenerateDTO;
 import com.auth.domain.TokenStatus;
+import com.auth.dto.TokenInfo;
 import com.auth.exception.BaseException;
 //import com.auth.repository.RefreshTokenRepository;
 import io.jsonwebtoken.Claims;
@@ -52,7 +53,7 @@ public class TokenServiceImpl implements TokenService {
 
      String token = Jwts.builder()
         .claim("userGithubId",tokenGenerateDTO.getUserGithubId())
-         .claim("user_seq",tokenGenerateDTO.getUserSeq())
+         .claim("userSeq",tokenGenerateDTO.getUserSeq())
         .setIssuedAt(new Date(System.currentTimeMillis()))
         .setExpiration(new Date(System.currentTimeMillis() + tokenExpiredTime))
         .signWith(getSigningKey(), SignatureAlgorithm.HS256)
@@ -96,7 +97,7 @@ public class TokenServiceImpl implements TokenService {
           .parseClaimsJws(jwt);
       return jws.getBody().get("userGithubId", String.class);
     }catch (JwtException e){
-      throw new BaseException(ErrorCode.UNVALID_TOKEN,"getGithubIdFromToken");
+      throw new BaseException(ErrorCode.UNVALID_TOKEN);
     }
 
   }
@@ -105,6 +106,20 @@ public class TokenServiceImpl implements TokenService {
 
     return null;
   }
+
+  @Override
+  public TokenInfo parseToken(String token) {
+    Jws<Claims> claimsJws = Jwts.parserBuilder()
+        .setSigningKey(getSigningKey())
+        .build()
+        .parseClaimsJws(token);
+
+    return TokenInfo.builder()
+        .userGithubId(claimsJws.getBody().get("userGithubId", String.class))
+        .userSeq(claimsJws.getBody().get("userSeq",Long.class))
+        .build();
+  }
+
   @Override
   public Cookie createRefreshTokenCookie(TokenDTO tokenDTO) {
     Cookie refreshTokenCookie = new Cookie("refreshToken", tokenDTO.getToken());
