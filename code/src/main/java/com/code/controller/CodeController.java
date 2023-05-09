@@ -116,6 +116,18 @@ public class CodeController {
   }
 
   /**
+   * GPT 응답 존재 여부 
+   * @param submissionId
+   * @return
+   */
+  @GetMapping("/submission/solution/exist/{submissionId}")
+  public ResponseEntity<?> isExistGptSolution(
+      @PathVariable("submissionId") long submissionId
+  ) {
+    return ResponseEntity.ok(problemService.isExistGptSolution(submissionId));
+  }
+
+  /**
    * 랭킹 검색어 필터링
    * @param problemId
    * @param pageNumber

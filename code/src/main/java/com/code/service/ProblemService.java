@@ -5,8 +5,10 @@ import com.code.data.dto.ProblemResponseDto;
 import com.code.data.dto.UserSubmissionSolutionDetailDto;
 import com.code.data.dto.UserSubmitProblemDto;
 import com.code.data.dto.UserSubmitSolutionTitleDto;
+import com.code.data.entity.GptSolution;
 import com.code.data.entity.Problem;
 import com.code.data.entity.UserSubmitSolution;
+import com.code.data.repository.GptSolutionRepository;
 import com.code.data.repository.ProblemRepository;
 import com.code.data.repository.UserSubmitProblemRepository;
 import com.code.data.repository.UserSubmitSolutionRepository;
@@ -33,6 +35,7 @@ public class ProblemService {
   private final ProblemRepository problemRepository;
   private final UserSubmitProblemRepository userSubmitProblemRepository;
   private final UserSubmitSolutionRepository userSubmitSolutionRepository;
+  private final GptSolutionRepository gptSolutionRepository;
   // Util 정의
   private final ProblemBuilderUtil problemBuilderUtil;
 
@@ -61,11 +64,23 @@ public class ProblemService {
     return userSubmissionSolutionDetailDto;
   }
 
+  /**
+   * 중복 제출 검사
+   * @param submissionId
+   */
   public void checkExistUserSubmitSolution(long submissionId) {
     Optional<UserSubmitSolution> optionalUserSubmitSolution = userSubmitSolutionRepository.findById(submissionId);
     if (optionalUserSubmitSolution.isPresent()) {
       throw new BaseException(ErrorCode.EXIST_RESOURCE_ERROR, "isExistUserSubmitSolution");
     }
   }
+
+  // Todo : GPT Solution PK를 submssionId로 변경 또는 인덱스 걸기
+  public boolean isExistGptSolution(long submissionId) {
+    Optional<GptSolution> optionalGptSolution = gptSolutionRepository.findBySubmissionId(submissionId);
+    return optionalGptSolution.isPresent();
+  }
+
+
 
 }
