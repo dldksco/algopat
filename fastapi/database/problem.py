@@ -129,7 +129,6 @@ async def insert_user_submit_problem(data : UserSubmitProblem, user_seq : int, s
         user_submit_problem_updated_at = submission_time
     )
 
-    # DB에 Problem 객체 추가
     async with session.begin():
         session.add(user_submit_problem)
     await session.commit()
@@ -144,22 +143,18 @@ async def get_user_submit_problem(problem_id : int, user_seq : int,  session):
     return result.scalar()
 
 async def update_user_submit_problem(data : UserSubmitProblem, submissionTime : datetime, session):
+    logger.info("제출 날짜 업데이트")
     submission_time = await parse_date_format(submissionTime)
     
-    user_submit_problem = UserSubmitProblem(
-        problem_id = data.problem_id,
-        user_seq = data.user_seq,
-        user_submit_problem_created_at = data.user_submit_problem_created_at,
-        user_submit_problem_updated_at = submission_time
-    )
-    # DB에 Problem 객체 추가
+    data.user_submit_problem_updated_at = submission_time
+
     async with session.begin():
-        session.add(user_submit_problem)
+        session.add(data)
     await session.commit()
-    await session.refresh(user_submit_problem)
+    await session.refresh(data)
     await session.close()
 
-    return user_submit_problem
+    return data
 
 #===============================================================================
 
@@ -198,7 +193,6 @@ async def insert_user_submit_solution(data : UserSubmitSolution, user_seq : int,
         user_submit_problem_seq = data.user_submit_problem_seq
     )
 
-    # DB에 Problem 객체 추가
     async with session.begin():
         session.add(user_submit_solution)
     await session.commit()
@@ -258,7 +252,6 @@ async def insert_gpt_problem_summary(data, session):
         problem_space_limit = data.problem_space_limit
     )
 
-    # DB에 Problem 객체 추가
     async with session.begin():
         session.add(gpt_problem_summary)
     await session.commit()
@@ -330,7 +323,6 @@ async def insert_gpt_solution(data : GPTSolution, user_seq : int, session):
         gpt_total_score = data.gpt_total_score
     )
 
-    # DB에 Problem 객체 추가
     async with session.begin():
         session.add(gpt_solution)
     await session.commit()
