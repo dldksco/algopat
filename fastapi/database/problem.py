@@ -7,7 +7,7 @@ from myclass.problem import UserSubmitProblem, UserSubmitSolution
 from datetime import datetime
 from fastapi import HTTPException
 from logging import getLogger
-from utils.utils import parse_problem_space_limit, parse_problem_time_limit
+from utils.utils import parse_problem_space_limit, parse_problem_time_limit, parse_date_format
 # logger 설정 
 logger = getLogger()
 
@@ -120,11 +120,13 @@ class UserSubmitProblem(Base):
 
 
 async def insert_user_submit_problem(data : UserSubmitProblem, user_seq : int, submissionTime : datetime, session):
+    submission_time = parse_date_format(submissionTime)
+    
     user_submit_problem = UserSubmitProblem(
         problem_id = data.problem_id,
         user_seq = user_seq,
-        user_submit_problem_created_at = submissionTime,
-        user_submit_problem_updated_at = submissionTime
+        user_submit_problem_created_at = submission_time,
+        user_submit_problem_updated_at = submission_time
     )
 
     # DB에 Problem 객체 추가
@@ -142,11 +144,13 @@ async def get_user_submit_problem(problem_id : int, user_seq : int,  session):
     return result.scalar()
 
 async def update_user_submit_problem(data : UserSubmitProblem, submissionTime : datetime, session):
+    submission_time = parse_date_format(submissionTime)
+    
     user_submit_problem = UserSubmitProblem(
         problem_id = data.problem_id,
         user_seq = data.user_seq,
         user_submit_problem_created_at = data.user_submit_problem_created_at,
-        user_submit_problem_updated_at = submissionTime
+        user_submit_problem_updated_at = submission_time
     )
     # DB에 Problem 객체 추가
     async with session.begin():
