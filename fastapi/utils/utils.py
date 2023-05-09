@@ -41,15 +41,15 @@ async def parse_lang_type(lang_type : str):
     
     lower_case_lang_type = lang_type.lower()
     if 'c++' in lower_case_lang_type:
-        return 'C++'
+        return 'cpp'
     elif 'javascript' in lower_case_lang_type or 'js' in lower_case_lang_type:
-        return 'JavaScript'
+        return 'javascript'
     elif 'java' in lower_case_lang_type:
-        return 'Java'
+        return 'java'
     elif 'py' in lower_case_lang_type:
-        return 'Python'
+        return 'python'
     elif 'c11' in lower_case_lang_type or 'c99' in lower_case_lang_type or 'c90' in lower_case_lang_type:
-        return 'C'
+        return 'c'
     else:
         return 'unknown'
     
