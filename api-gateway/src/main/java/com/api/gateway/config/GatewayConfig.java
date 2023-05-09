@@ -53,14 +53,19 @@ public class GatewayConfig {
               .build()
               .parseClaimsJws(accessToken);
           System.out.println("검사완료");
-          Long userSeq = claimsJws.getBody().get("user_seq",Long.class);
-          // 헤더 추가
-          ServerHttpRequest modifiedRequest = request.mutate()
-              .header("user_seq",userSeq.toString())
-              .build();
-          System.out.println("헤더검사 : "+ userSeq.toString());
-          // 교환 기능에 변경된 요청 전달
-          ServerWebExchange modifiedExchange = exchange.mutate().request(modifiedRequest).build();
+          try{
+            Long userSeq = claimsJws.getBody().get("user_seq",Long.class);
+            // 헤더 추가
+            ServerHttpRequest modifiedRequest = request.mutate()
+                .header("user_seq",userSeq.toString())
+                .build();
+            System.out.println("헤더검사 : "+ userSeq.toString());
+            // 교환 기능에 변경된 요청 전달
+            ServerWebExchange modifiedExchange = exchange.mutate().request(modifiedRequest).build();
+          }catch (Exception e){
+            throw new ExpiredJwtException(claimsJws.getHeader(), claimsJws.getBody(), "user seq가 존재하지 않습니다");
+          }
+
           return chain.filter(exchange);
         } catch (ExpiredJwtException e) {
           exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
