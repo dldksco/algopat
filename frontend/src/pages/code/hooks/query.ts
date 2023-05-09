@@ -33,12 +33,12 @@ export interface RefactoringData {
 }
 
 export interface ComplexityData {
-  timeComplexity: string | undefined;
-  timeComplexityReason: string | undefined;
-  timeScore: number | undefined;
-  timeComplexityGoodPoint: string | undefined;
-  timeComplexityBadPoint: string | undefined;
-  timeComplexitySuggestion: string | undefined;
+  Complexity: string | undefined;
+  ComplexityReason: string | undefined;
+  Score: number | undefined;
+  ComplexityGoodPoint: string | undefined;
+  ComplexityBadPoint: string | undefined;
+  ComplexitySuggestion: string | undefined;
 }
 
 export const getSolution = (solutionSeq: number) => {

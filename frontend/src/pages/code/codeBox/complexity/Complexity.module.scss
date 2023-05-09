@@ -16,3 +16,11 @@
   height: 0px;
   padding: 0;
 }
+
+@media screen and (max-width: 768px) {
+  .box_content {
+    p {
+      padding: 12px;
+    }
+  }
+}

@@ -9,10 +9,53 @@
   margin-right: auto;
   border-radius: 10px;
   overflow: hidden;
+
+  .info_box {
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+    margin-bottom: 20px;
+    margin-top: 15px;
+
+    hr {
+      margin: 10px 0px;
+    }
+
+    .problem_list {
+      height: 20px;
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      margin-left: 2px;
+
+      img {
+        height: 100%;
+      }
+    }
+
+    .clicklink {
+      cursor: pointer;
+      transition: 0.2s;
+      &:hover {
+        color: gray;
+      }
+    }
+  }
 }
 
 .not_open {
   min-height: 0;
   height: 0px;
   padding: 0;
+}
+
+@media screen and (max-width: 768px) {
+  .box_content {
+    p {
+      padding: 12px;
+    }
+    .info_box {
+      font-size: 0.7rem;
+    }
+  }
 }
