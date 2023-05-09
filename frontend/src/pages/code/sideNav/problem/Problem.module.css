@@ -8,20 +8,4 @@
 }
 .problem_list img {
   height: 60%;
-}
-
-.solved {
-  padding-left: 18%;
-  padding-right: 8%;
-  height: 2rem;
-  padding-top: 2%;
-  color: gray;
-}
-.solved:hover .trash_icon {
-  visibility: visible;
-}
-.solved .trash_icon {
-  float: right;
-  visibility: hidden;
-  cursor: pointer;
 }/*# sourceMappingURL=Problem.module.css.map */
