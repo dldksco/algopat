@@ -77,6 +77,7 @@ public class AuthServiceImpl implements AuthService {
     HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(body, headers);
     GithubAccessTokenResponseDTO githubAccessTokenResponse = restTemplate.postForObject(url,
         request, GithubAccessTokenResponseDTO.class);
+    System.out.println("githubaccess :"+ githubAccessTokenResponse.getGitHubaAccessToken());
     return githubAccessTokenResponse;
   }
 
