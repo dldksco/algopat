@@ -1,10 +1,12 @@
+import { ComplexityData, RefactoringData } from "../../hooks/query";
 import style from "./Complexity.module.css";
 
 interface ComplexityProps {
   isModalOpen: boolean;
+  data: RefactoringData | ComplexityData;
 }
 
-export const Complexity = ({ isModalOpen }: ComplexityProps) => {
+export const Complexity = ({ isModalOpen, data }: ComplexityProps) => {
   return (
     <div
       className={

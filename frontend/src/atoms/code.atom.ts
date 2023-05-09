@@ -7,5 +7,5 @@ export const problemOpenState = atom<boolean[]>({
 
 export const nowProblemSubmissionIdState = atom<number>({
   key: "nowProblemSubmissionIdState",
-  default: 57895197,
+  default: 0,
 });
