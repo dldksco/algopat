@@ -1,8 +1,9 @@
 package com.user.service;
 
 import com.user.dto.GithubUserIdInfoDTO;
+import com.user.dto.UserCheckResponseDTO;
 
 public interface UserService {
-  public boolean userCheck(GithubUserIdInfoDTO githubUserIdInfoDTO);
+  public UserCheckResponseDTO userCheck(GithubUserIdInfoDTO githubUserIdInfoDTO);
 
 }

@@ -1,6 +1,7 @@
 package com.user.controller;
 
 import com.user.dto.GithubUserIdInfoDTO;
+import com.user.dto.UserCheckResponseDTO;
 import com.user.repository.UserRepository;
 import com.user.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -19,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserController {
   private final UserService userService;
   @PostMapping("/check")
-  public ResponseEntity<Boolean> userCheck(@RequestBody GithubUserIdInfoDTO githubUserIdInfoDTO) {
+  public ResponseEntity<UserCheckResponseDTO> userCheck(@RequestBody GithubUserIdInfoDTO githubUserIdInfoDTO) {
     return new ResponseEntity<>(userService.userCheck(githubUserIdInfoDTO), HttpStatus.OK);
   }
 

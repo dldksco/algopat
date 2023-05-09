@@ -7,6 +7,7 @@ import com.user.domain.UserNickname;
 import com.user.domain.UserStatus;
 import com.user.domain.UserStatusType;
 import com.user.dto.GithubUserIdInfoDTO;
+import com.user.dto.UserCheckResponseDTO;
 import com.user.exception.BaseException;
 import com.user.repository.UserImageRespository;
 import com.user.repository.UserNicknameRespository;
@@ -32,7 +33,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public boolean userCheck(GithubUserIdInfoDTO githubUserIdInfoDTO){
+    public UserCheckResponseDTO userCheck(GithubUserIdInfoDTO githubUserIdInfoDTO){
         String githubUserId = githubUserIdInfoDTO.getUserGithubId();
         String githubUserImageUrl = githubUserIdInfoDTO.getUserImageUrl();
         Optional<User> user = userRepository.findByUserGithubId(githubUserId);
@@ -51,7 +52,9 @@ public class UserServiceImpl implements UserService {
                 userImageRespository.save(userImage);
             }
 
-            return true;
+
+
+            return UserCheckResponseDTO.builder().userSeq(userSeq).build();
         }
         else{
             User newUser = User.builder().userGithubId(githubUserIdInfoDTO.getUserGithubId()).build();
@@ -65,7 +68,11 @@ public class UserServiceImpl implements UserService {
             newUser.setUserImage(userImage);
             userRepository.save(newUser);
 
-            return false;
+            System.out.println("test");
+
+            Long newUserSeq = newUser.getUserSeq();
+
+            return UserCheckResponseDTO.builder().userSeq(newUserSeq).build();
         }
     }
 }
