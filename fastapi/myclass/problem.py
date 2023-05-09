@@ -26,6 +26,7 @@ class ProblemData(BaseModel):
     problem_limit: List[str]
     problem_info_space_limit: str
     problem_info_time_limit: str
+    userSeq : int
     
 class ProblemSummary(BaseModel):
     problem_id: Optional[int] = None
