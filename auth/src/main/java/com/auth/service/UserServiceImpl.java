@@ -17,11 +17,9 @@ public class UserServiceImpl implements UserService {
   private final UserServiceFeignClient userServiceFeignClient;
   @Override
   public void checkId(GithubUserResponseDTO gitHubUserResponseDTO) {
-    Map<String, String> requestBody = new HashMap<>();
-    requestBody.put("user_github_id", gitHubUserResponseDTO.getUserGithubId());
-      userServiceFeignClient.userCheck(UserServiceIdRequestDTO.builder().userGithubId(gitHubUserResponseDTO.getUserGithubId()).build());
 
-
+      userServiceFeignClient.userCheck(UserServiceIdRequestDTO.builder().userGithubId(gitHubUserResponseDTO.getUserGithubId()).userImageUrl(
+          gitHubUserResponseDTO.getUserImageUrl()).build());
   }
 
 }

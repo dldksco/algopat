@@ -18,8 +18,5 @@ public class GithubUserResponseDTO {
   @JsonProperty("avatar_url")
   private String userImageUrl;
 
-  @JsonProperty("name")
-  private String userNickname;
-
 
 }

@@ -101,7 +101,7 @@ public class AuthServiceImpl implements AuthService {
     );
     GithubUserResponseDTO githubUserResponseDTO = response.getBody();
     System.out.println("id" + githubUserResponseDTO.getUserGithubId());
-    System.out.println("email" + githubUserResponseDTO.getUserNickname());
+    System.out.println("url "+ githubUserResponseDTO.getUserImageUrl());
     return githubUserResponseDTO;
   }
 
