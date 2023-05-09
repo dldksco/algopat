@@ -14,6 +14,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.server.reactive.ServerHttpRequest;
+import org.springframework.web.server.ServerWebExchange;
 
 @Configuration
 public class GatewayConfig {
@@ -51,7 +52,15 @@ public class GatewayConfig {
               .setSigningKey(getSigningKey())
               .build()
               .parseClaimsJws(accessToken);
-          // 토큰이 유효한 경우 요청을 계속 진행합니다.
+
+          String userSeq = claimsJws.getBody().get("userSeq",String.class);
+          // 헤더 추가
+          ServerHttpRequest modifiedRequest = request.mutate()
+              .header("userSeq",userSeq )
+              .build();
+
+          // 교환 기능에 변경된 요청 전달
+          ServerWebExchange modifiedExchange = exchange.mutate().request(modifiedRequest).build();
           return chain.filter(exchange);
         } catch (ExpiredJwtException e) {
           exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
