@@ -11,15 +11,14 @@ export const Profile = () => {
   const userInfo = useRecoilValue(userInfoState);
   //tier use-query
   const fetchTier = async () => {
-    const response = await axios
-      .get("/api", {
-        params: {
-          handle: "alice2596",
-        },
-      });
-      const data =await response.data;
-      console.log("data확인", data);
-      return data;
+    const response = await axios.get("/api", {
+      params: {
+        handle: "alice2596",
+      },
+    });
+    const data = await response.data;
+    console.log("data확인", data);
+    return data;
   };
 
   const { isLoading, error, data } = useQuery(["tierupdate"], fetchTier);
@@ -56,18 +55,19 @@ export const Profile = () => {
         <div className={style.profileinfo}>
           <div className={style.gitinfo}>
             <p className={style.nickname}>
-            {data.tier > 0 ? 
-                 <img
-                 src={`https://static.solved.ac/tier_small/${data.tier}.svg`}
-                 style={{ marginRight: "6px", width: "12px", height: "auto" }}
-                 alt="solved AC 연동"
-               /> : null }
+              {data.tier > 0 ? (
+                <img
+                  src={`https://static.solved.ac/tier_small/${data.tier}.svg`}
+                  style={{ marginRight: "6px", width: "12px", height: "auto" }}
+                  alt="solved AC 연동"
+                />
+              ) : null}
               {dummyData.nickname}
             </p>
             <p className={style.email}>{dummyData.email}</p>
           </div>
         </div>
-        <Grid grassColor={dummyData.grass} startColumn={1} />
+        <Grid />
       </div>
     </>
   );

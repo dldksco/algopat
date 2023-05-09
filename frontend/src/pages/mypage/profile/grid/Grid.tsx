@@ -1,11 +1,11 @@
-import style from './Grid.module.css';
+import style from "./Grid.module.css";
 
 type GrassColorData = {
   date: string;
   color: number;
 };
 
-interface Data {
+export interface Data {
   startRow: number;
   grassColor: GrassColorData[];
 }
@@ -13,9 +13,9 @@ interface Data {
 const data: Data = {
   startRow: 3,
   grassColor: [
-    { date: '2022-02-13', color: 2 },
-    { date: '2022-02-14', color: 1 },
-    { date: '2022-02-15', color: 6 },
+    { date: "2022-02-13", color: 2 },
+    { date: "2022-02-14", color: 1 },
+    { date: "2022-02-15", color: 6 },
     // ...
   ],
 };
@@ -27,8 +27,12 @@ export function Grid() {
   // Fill in the grid with the grassColor data
   data.grassColor.forEach(({ date, color }) => {
     const currentDate = new Date(date);
-    const week = Math.floor((currentDate.getTime() - new Date(currentDate.getFullYear(), 0, 1).getTime()) / (7 * 24 * 60 * 60 * 1000));
-    const day = (currentDate.getDay() + 6) % 7; // Monday is 0, Sunday is 6 
+    const week = Math.floor(
+      (currentDate.getTime() -
+        new Date(currentDate.getFullYear(), 0, 1).getTime()) /
+        (7 * 24 * 60 * 60 * 1000)
+    );
+    const day = (currentDate.getDay() + 6) % 7; // Monday is 0, Sunday is 6
     grid[day][week] = color;
   });
 
@@ -38,7 +42,7 @@ export function Grid() {
         {grid.map((row, rowIndex) =>
           row.map((cell, cellIndex) => (
             <div key={`${rowIndex}-${cellIndex}`} className={style.grid_cell} />
-          )),
+          ))
         )}
       </div>
     </div>
