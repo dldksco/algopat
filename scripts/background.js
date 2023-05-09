@@ -1,4 +1,5 @@
 function handleMessage(request) {
+  console.log("receive")
   if (request && request.closeWebPage === true && request.isSuccess === true) {
     /* Set username */
     // chrome.storage.local.set(
@@ -35,3 +36,30 @@ function handleMessage(request) {
 }
 
 chrome.runtime.onMessage.addListener(handleMessage);
+
+chrome.storage.local.get('userSeq', (data) => {
+
+  const userSeq = data.userSeq;
+
+  if (!userSeq) return;
+
+  let eventSource = new EventSource(`https://algopat.kr/api/alert/sse/${userSeq}`);
+
+  eventSource.onmessage = function (event) {
+    console.log('받았음')
+    console.log(event)
+    chrome.notifications.create('my-notification', {
+      type: 'basic',
+      iconUrl: `chrome-extension://${chrome.runtime.id}/assets/thumb.png`,
+      title: '분석완료',
+      message: '코드리펙토링이 완료되었습니다'
+    });
+  };
+
+  eventSource.onerror = function (event) {
+    console.log("SSE Error : ", event)
+  }
+
+});
+
+

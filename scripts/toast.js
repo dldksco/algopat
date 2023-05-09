@@ -12,7 +12,7 @@ class Toast {
         this.time = time;
         this.element = null;
         const element = document.createElement('div');
-        element.className = "toast toast--yellow";
+        element.className = "toast toast--red";
         this.element = element;
 
         element.innerHTML +=
