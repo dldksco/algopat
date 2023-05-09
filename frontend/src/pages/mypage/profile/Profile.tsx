@@ -11,7 +11,7 @@ export const Profile = () => {
   const userInfo = useRecoilValue(userInfoState);
   //tier use-query
   const fetchTier = async () => {
-    const response = await axios.get("https://solved.ac/api/v3/user/show", {
+    const response = await axios.get("/solved", {
       params: {
         handle: "alice2596",
       },
