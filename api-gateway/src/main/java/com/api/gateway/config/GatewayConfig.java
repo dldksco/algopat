@@ -8,6 +8,9 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import java.security.Key;
+import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.context.annotation.Bean;
@@ -17,8 +20,9 @@ import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.web.server.ServerWebExchange;
 
 @Configuration
+@Slf4j
 public class GatewayConfig {
-
+  private static final Logger logger = LoggerFactory.getLogger(GatewayConfig.class);
   @Value("${secret-key}")
   private String SECRET_KEY;
 
@@ -34,6 +38,7 @@ public class GatewayConfig {
       String k = request.getURI().toString();
       String path = request.getURI().getPath();
       System.out.println(k+"==============");
+      logger.info("들어왔어요!!!!!!!!!!!!!!!!!!!!!!!!");
       if (path.startsWith("/auth/") || path.startsWith("/user/che")|| path.startsWith("/sse")) {
         return chain.filter(exchange);
       } else {
