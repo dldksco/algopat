@@ -1,9 +1,10 @@
-import style from "./Code.module.css";
 // import PolynomialChart from "./graph/PolynomialChart";
 import { useState } from "react";
 import { SideNav } from "./sideNav/SideNav";
+import { CodeDetail } from "./codeDetail/CodeDetail";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
+import style from "./Code.module.css";
 
 export const Code = () => {
   const [isSidenavOpen, setIsSidenavOpen] = useState(false);
@@ -18,8 +19,7 @@ export const Code = () => {
         <SideNav setIsSidenavOpen={setIsSidenavOpen} />
       </div>
       <div className={style.rightTab}>
-        <div style={{ fontSize: "3rem", color: "gray" }}>ALGOPAT</div>
-        {/* 뭔가 컴포넌트 <DetailPage/> */}
+        <CodeDetail />
         <div className={style.hamberger} onClick={burgerClick}>
           <FontAwesomeIcon icon={faBars} />
         </div>

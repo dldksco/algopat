@@ -1,0 +1,16 @@
+.box_title .code_arrow {
+  font-size: 1.2rem;
+  margin-right: 3%;
+  transition: 0.2s;
+  cursor: pointer;
+}
+.box_title .code_arrow:hover {
+  color: gray;
+}
+.box_title .code_spin {
+  transform: rotate(180deg);
+}
+.box_title span {
+  font-size: 1.2rem;
+  margin-left: 3%;
+}/*# sourceMappingURL=CodeBox.module.css.map */
