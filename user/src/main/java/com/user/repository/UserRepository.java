@@ -10,4 +10,6 @@ import org.springframework.data.repository.query.Param;
 
 public interface UserRepository extends JpaRepository<User, Long> {
   Optional<User> findByUserGithubId(String userGithubId);
+
+  Optional<User> findByUserSeq(Long userSeq);
 }

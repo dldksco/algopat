@@ -44,12 +44,12 @@ public class User {
   @Column(name = "user_created_at")
   private LocalDateTime userCreatedAt;
 
+  @Column(name="user_backjoon_id")
+  @Builder.Default
+  private String userBackjoonId="NO_SUBMITTED";
   @OneToMany(mappedBy = "user", cascade = CascadeType.PERSIST,fetch = FetchType.LAZY)
   @Builder.Default
   private List<UserStatus> userStatuses = new ArrayList<>();
-
-  @OneToOne(mappedBy = "user", cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
-  private UserNickname userNickname;
 
   @OneToOne(mappedBy = "user", cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
   private UserImage userImage;

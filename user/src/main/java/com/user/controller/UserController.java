@@ -2,6 +2,7 @@ package com.user.controller;
 
 import com.user.dto.GithubUserIdInfoDTO;
 import com.user.dto.UserCheckResponseDTO;
+import com.user.dto.UserInfo;
 import com.user.repository.UserRepository;
 import com.user.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -24,9 +25,11 @@ public class UserController {
     return new ResponseEntity<>(userService.userCheck(githubUserIdInfoDTO), HttpStatus.OK);
   }
 
-  @GetMapping("/test")
-  public ResponseEntity<String> test(@RequestHeader HttpHeaders header) {
-    return new ResponseEntity<>(header.toString(), HttpStatus.OK);
+
+  @GetMapping("/profile")
+  public ResponseEntity<UserInfo> userProfile() {
+    UserInfo userInfo = userService.userProfile(1L);
+    return new ResponseEntity<>(userInfo, HttpStatus.OK);
   }
 
 }
