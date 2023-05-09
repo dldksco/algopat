@@ -34,7 +34,10 @@
     font-weight: 600;
     display: inline-block;
   }
-
+  .problem_list{
+    height: 600px;
+    overflow-y: auto;
+  }
   .nav_header {
     text-align: left;
     padding-top: 5%;

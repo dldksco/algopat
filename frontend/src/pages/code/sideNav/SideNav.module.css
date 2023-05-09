@@ -30,6 +30,10 @@
   font-weight: 600;
   display: inline-block;
 }
+.sideNav .problem_list {
+  height: 600px;
+  overflow-y: auto;
+}
 .sideNav .nav_header {
   text-align: left;
   padding-top: 5%;

@@ -1,27 +1,34 @@
-.container {
-  width: 100%;
-  background-color: #444654;
-  height: 200px;
-  position: relative;
-}
-.container .table {
-  position: absolute;
-  top: 20%;
-  left: 5%;
-  border-collapse: separate;
-  width: 700px;
+.grid {
+  font-family: sans-serif;
+  text-align: center;
+  margin: 20px;
+  background-color: white;
   overflow-x: auto;
 }
-.container .cell {
-  width: 15px;
-  height: 15px;
+.grid .grid_container {
+  display: grid;
+  grid-template-columns: repeat(53, 20px);
+  grid-template-rows: repeat(7, 20px);
+  grid-gap: 2px;
+  padding: 50px;
+}
+.grid .grid_container .grid_cell {
+  width: 20px;
+  height: 20px;
+  background-color: #e67e22;
   border: 1px solid black;
   border-radius: 2px;
-  box-sizing: border-box;
+  cursor: pointer;
 }
-
-@media screen and (max-width: 768px) {
-  .container {
-    overflow-x: auto;
-  }
-} /*# sourceMappingURL=Grid.module.css.map */
+.grid .color-null {
+  background-color: transparent;
+}
+.grid .color-1 {
+  background-color: #f1c40f;
+}
+.grid .color-2 {
+  background-color: #e67e22;
+}
+.grid .color-6 {
+  background-color: #3498db;
+}/*# sourceMappingURL=Grid.module.css.map */

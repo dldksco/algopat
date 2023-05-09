@@ -17,8 +17,8 @@ import style from "./SideNav.module.css";
 import { $ } from "@/connect/axios";
 import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 import { LoadingSpinner } from "@/components/loadingspinner/LoadingSpinner";
-import { distanceBetweenPoints } from "chart.js/helpers";
-import { useState } from "react";
+import { useMemo, useState } from "react";
+import { displayValue } from "node_modules/@tanstack/react-query-devtools/build/lib/utils";
 
 export const SideNav = ({
   setIsSidenavOpen,
@@ -30,6 +30,7 @@ export const SideNav = ({
 
   const fetchData = async (page: number) => {
     const response = await $.get(`/code/problem/submission/${page}`);
+    console.log(response.data, "data 확인");
     console.log(response.data.content, "content 확인");
     return response.data;
   };
@@ -37,7 +38,6 @@ export const SideNav = ({
     data,
     error,
     fetchNextPage,
-    hasNextPage,
     isFetchingNextPage,
     isLoading,
   } = useInfiniteQuery(
@@ -45,16 +45,30 @@ export const SideNav = ({
     ({ pageParam = 0 }) => fetchData(pageParam),
     {
       getNextPageParam: (lastPage) => lastPage.nextPage,
-      refetchOnWindowFocus: false,
-      initialData: { pages: [{ content: [], nextPage: 0 }], pageParams: [] },
     }
   );
+
+  const mergedData = useMemo(() =>{
+    if(!data) return [];
+    console.log(data.pages, 'data.pages 확인');
+    const mergedPages = data.pages.reduce((prevPages, nextPage) =>{
+      const mergedPage = prevPages.concat(nextPage.content);
+      return mergedPage;
+    },[]);
+    return mergedPages;
+  }, [data]);
+  
+  const hasMorePages = page < data?.pages[0].totalPages-1;
+  console.log(page);
+  console.log(data?.pages[0].totalPages, "totalpage");
+  console.log(mergedData, "merge?");
+  console.log(hasMorePages, "확인");
+  console.log(data?.pages[0].totalPages, "page는 어딧지");
   // if (isLoading) {
   //   return <div>asdasd</div>;
   // // }
   // console.log(data?.pages, "data 확인 찐");
   // console.log(data?.pages[page].content, "content 확인 찐");
-  console.log(hasNextPage, "다음페이지 있니");
   const handleLoadMore = () => {
     setPage((prevPage) => prevPage + 1);
     fetchNextPage({ pageParam: page + 1 });
@@ -82,13 +96,15 @@ export const SideNav = ({
           <FontAwesomeIcon icon={faArrowDown91} />
         </div>
       </div>
-      {data?.pages[0].content === undefined
+      <div className={style.problem_list}>
+      {mergedData === undefined
         ? null
-        : data?.pages[0].content.map((el: Problem) => (
+        : mergedData.map((el: Problem) => (
             <Problem key={uuidv4()} data={el} />
           ))}
       <hr />
-      {!isFetchingNextPage && hasNextPage ? (
+      </div>
+      {!isFetchingNextPage && hasMorePages ? (
         <Button
           content="더보기"
           style={{
