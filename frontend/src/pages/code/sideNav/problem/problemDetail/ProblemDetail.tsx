@@ -5,6 +5,8 @@ import { LoadingSpinner } from "@/components/loadingspinner/LoadingSpinner";
 
 import style from "./ProblemDetail.module.css";
 import { stringCutter } from "@/pages/code/hooks/func";
+import { useRecoilState } from "recoil";
+import { nowProblemSubmissionIdState } from "@/atoms/code.atom";
 
 export interface SolveProps {
   detail?: Solve[];
@@ -17,13 +19,17 @@ export interface Solve {
 }
 
 export const ProblemDetail = (props: SolveProps) => {
+  const [nowSubmission, setNowSubmission] = useRecoilState(
+    nowProblemSubmissionIdState
+  );
+
   const fetchSubmission = async () => {
     console.log("제출번호 조회 문제 번호", props.problemId);
     const response = await $.get(
       `/code/problem/submission/solution/${props.problemId}/0`
     );
-    console.log("subission response 확인", response);
-    console.log("submission data 확인", response.data);
+    // console.log("subission response 확인", response);
+    // console.log("submission data 확인", response.data);
     return response.data.content;
   };
 
@@ -32,11 +38,12 @@ export const ProblemDetail = (props: SolveProps) => {
     fetchSubmission
   );
 
-  const handleSubmission = () => {
-    const a = 1;
+  const handleSubmission = (submissionId: number) => {
+    setNowSubmission(submissionId);
+    //console.log("weq", submissionId);
   };
 
-  console.log(data, "submission query 결과");
+  //console.log(data, "submission query 결과");
   if (isLoading) {
     return <LoadingSpinner />;
   }
@@ -48,7 +55,7 @@ export const ProblemDetail = (props: SolveProps) => {
             <div
               key={uuidv4()}
               className={style.submission_list}
-              onClick={() => {}}
+              onClick={() => handleSubmission(el.submissionId)}
             >
               - {new Date(el.userSubmitSolutionTime).toDateString()}
             </div>

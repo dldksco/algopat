@@ -1,12 +1,9 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronUp, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
-import { v4 as uuidv4 } from "uuid";
 import { stringCutter } from "../../hooks/func";
-import { $ } from "@/connect/axios";
 
 import style from "./Problem.module.css";
-import { useQuery } from "@tanstack/react-query";
 import { ProblemDetail } from "./problemDetail/ProblemDetail";
 
 export interface ProblemProps {
