@@ -6,6 +6,7 @@ import com.code.data.dto.ProblemRequestDto;
 import com.code.data.dto.ProblemResponseDto;
 import com.code.data.dto.UserSubmitProblemDto;
 import com.code.data.dto.UserSubmitSolutionTitleDto;
+import com.code.data.repository.RankRepository;
 import com.code.service.KafkaProducerService;
 import com.code.service.ProblemRankService;
 import com.code.service.ProblemService;
@@ -32,6 +33,7 @@ public class CodeController {
   private final KafkaProducerService kafkaProducerService;
   private final ProblemService problemService;
   private final ProblemRankService problemRankService;
+  private final RankRepository rankRepository;
 
   /**
    * 유저 코드 제출 (Spring -> Kafka)
@@ -130,5 +132,17 @@ public class CodeController {
     Page<ProblemRankDetailDto[]> result = problemRankService.findSolutionsByProblemIdWithDetailsAndFilters(
         problemId, languageFilter, sortCriteria, searchText, pageNumber);
     return ResponseEntity.ok(result);
+  }
+
+  @GetMapping("/rank/{problemId}/count")
+  public ResponseEntity<Long> countSolutionsByProblemId(@PathVariable long problemId) {
+    long result = problemRankService.countSolutionByProblemId(problemId);
+    return ResponseEntity.ok(result);
+  }
+
+  @GetMapping("/rank/{problemId}/solutions/top")
+  public ResponseEntity<ProblemRankDetailDto> findMasterUserSolutionByProblemIdWithDetail(@PathVariable long problemId) {
+    ProblemRankDetailDto masterUserProblemRankDetailDto = problemRankService.findMasterUserSolutionByProblemIdWithDetail(problemId);
+    return ResponseEntity.ok(masterUserProblemRankDetailDto);
   }
 }

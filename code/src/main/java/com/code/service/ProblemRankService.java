@@ -4,6 +4,7 @@ import com.code.data.dto.ProblemRankDetailDto;
 import com.code.data.dto.ProblemRankOverviewDto;
 import com.code.data.repository.ProblemRepository;
 import com.code.data.repository.RankRepository;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,6 +41,18 @@ public class ProblemRankService {
     return rankRepository.findSolutionsByProblemIdWithDetailsAndFilters(problemId, languageFilter,
             sortCriteria, searchText, PageRequest.of(pageNumber, 10))
         .orElseThrow(() -> new RuntimeException("Problem not found"));
+  }
+
+  public Long countSolutionByProblemId(long problemId) {
+    return rankRepository.countSolutionsByProblemId(problemId);
+  }
+
+  public ProblemRankDetailDto findMasterUserSolutionByProblemIdWithDetail(long problemId) {
+    List<ProblemRankDetailDto> problemRankDetailDtoList = rankRepository.findTopSolutionByProblemId(
+            problemId, PageRequest.of(0, 1))
+        .orElseThrow(() -> new RuntimeException("Problem not found"));
+
+    return problemRankDetailDtoList.get(0);
   }
 
 }
