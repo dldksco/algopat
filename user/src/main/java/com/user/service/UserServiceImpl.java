@@ -5,6 +5,7 @@ import com.user.domain.User;
 import com.user.domain.UserImage;
 import com.user.domain.UserStatus;
 import com.user.domain.UserStatusType;
+import com.user.dto.BackjoonUserDTO;
 import com.user.dto.GithubUserIdInfoDTO;
 import com.user.dto.UserCheckResponseDTO;
 import com.user.dto.UserInfo;
@@ -29,7 +30,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public UserCheckResponseDTO userCheck(GithubUserIdInfoDTO githubUserIdInfoDTO){
+    public UserCheckResponseDTO checkAndJoinGithubUser(GithubUserIdInfoDTO githubUserIdInfoDTO){
         String githubUserId = githubUserIdInfoDTO.getUserGithubId();
         String githubUserImageUrl = githubUserIdInfoDTO.getUserImageUrl();
         Optional<User> user = userRepository.findByUserGithubId(githubUserId);
@@ -53,24 +54,41 @@ public class UserServiceImpl implements UserService {
             return UserCheckResponseDTO.builder().userSeq(userSeq).build();
         }
         else{
-            User newUser = User.builder().userGithubId(githubUserIdInfoDTO.getUserGithubId()).build();
 
-            UserStatus userStatus = UserStatus.builder().user(newUser).userStatusStatus(
-                UserStatusType.AVAILABLE).build();
-
-            UserImage userImage = UserImage.builder().userImageUrl(githubUserImageUrl).user(newUser).build();
-
-            newUser.getUserStatuses().add(userStatus);
-            newUser.setUserImage(userImage);
-            userRepository.save(newUser);
-
-            System.out.println("test");
-
-            Long newUserSeq = newUser.getUserSeq();
-
+            long newUserSeq =JoinGithubUser(githubUserIdInfoDTO);
             return UserCheckResponseDTO.builder().userSeq(newUserSeq).build();
         }
     }
+
+    @Override
+    public long JoinGithubUser(GithubUserIdInfoDTO githubUserIdInfoDTO) {
+        User newUser = User.builder().userGithubId(githubUserIdInfoDTO.getUserGithubId()).build();
+
+        UserStatus userStatus = UserStatus.builder().user(newUser).userStatusStatus(
+            UserStatusType.AVAILABLE).build();
+
+        UserImage userImage = UserImage.builder().userImageUrl(githubUserIdInfoDTO.getUserImageUrl()).user(newUser).build();
+
+        newUser.getUserStatuses().add(userStatus);
+        newUser.setUserImage(userImage);
+        userRepository.save(newUser);
+
+        System.out.println("test");
+
+        return newUser.getUserSeq();
+    }
+
+    @Override
+    public void checkAndJoinBackjoonUser(BackjoonUserDTO backjoonUserDTO) {
+        User user = userRepository.findByUserSeq(backjoonUserDTO.getUserSeq()).orElseThrow(() -> new BaseException(ErrorCode.DATABASE_GET_ERROR));
+        if(user.getUserBackjoonId().equals("NO_SUBMITTED")){
+            user.setUserBackjoonId(backjoonUserDTO.getUserBackjoonId());
+        }
+        userRepository.save(user);
+
+    }
+
+
 
     @Override
     public UserInfo userProfile(Long userSeq) {
