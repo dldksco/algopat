@@ -53,10 +53,10 @@ public class GatewayConfig {
               .build()
               .parseClaimsJws(accessToken);
           System.out.println("검사완료");
-          Long userSeq = claimsJws.getBody().get("userSeq",Long.class);
+          Long userSeq = claimsJws.getBody().get("user_seq",Long.class);
           // 헤더 추가
           ServerHttpRequest modifiedRequest = request.mutate()
-              .header("userSeq",userSeq.toString())
+              .header("user_seq",userSeq.toString())
               .build();
           System.out.println("헤더검사 : "+ userSeq.toString());
           // 교환 기능에 변경된 요청 전달
