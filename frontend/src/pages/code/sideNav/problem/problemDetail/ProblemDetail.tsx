@@ -2,11 +2,11 @@ import { v4 as uuidv4 } from "uuid";
 import { $ } from "@/connect/axios";
 import { useQuery } from "@tanstack/react-query";
 import { LoadingSpinner } from "@/components/loadingspinner/LoadingSpinner";
-
-import style from "./ProblemDetail.module.css";
 import { useRecoilState } from "recoil";
 import { nowProblemSubmissionIdState } from "@/atoms/code.atom";
 import { Problem } from "../Problem";
+
+import style from "./ProblemDetail.module.css";
 
 export interface SolveProps {
   detail?: Solve[];
