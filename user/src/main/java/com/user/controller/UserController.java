@@ -22,4 +22,10 @@ public class UserController {
   public ResponseEntity<Boolean> userCheck(@RequestBody GithubUserIdInfoDTO githubUserIdInfoDTO) {
     return new ResponseEntity<>(userService.userCheck(githubUserIdInfoDTO), HttpStatus.OK);
   }
+
+  @GetMapping("/test")
+  public ResponseEntity<String> test(@RequestHeader HttpHeaders header) {
+    return new ResponseEntity<>(header.toString(), HttpStatus.OK);
+  }
+
 }

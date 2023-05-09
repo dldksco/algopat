@@ -65,7 +65,6 @@ public class UserServiceImpl implements UserService {
             newUser.setUserImage(userImage);
             userRepository.save(newUser);
 
-//            throw new BaseException(ErrorCode.UNVALID_USER,methodName);
             return false;
         }
     }
