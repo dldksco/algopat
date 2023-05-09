@@ -6,21 +6,18 @@ type GrassColorData = {
 };
 
 export interface Data {
-  startDate: string;
   grassColor: GrassColorData[];
 }
 
 const data: Data = {
-  startDate: "2023-02-13",
   grassColor: [
     { date: "2023-02-13", color: 2 },
     { date: "2023-02-14", color: 1 },
     { date: "2023-02-15", color: 6 },
-    // ...
   ],
 };
 
-const date11 = new Date(data.startDate);
+const date11 = new Date(data.grassColor[0].date);
 console.log(date11.toLocaleDateString, "날짜알려줘");
 console.log(date11.getDay(), "날짜알려줘");
 export function Grid() {
@@ -30,6 +27,7 @@ export function Grid() {
   // Fill in the grid with the grassColor data
   data.grassColor.forEach(({ date, color }) => {
     const currentDate = new Date(date);
+
     const week = Math.floor(
       (currentDate.getTime() -
         new Date(currentDate.getFullYear(), 0, 1).getTime()) /
