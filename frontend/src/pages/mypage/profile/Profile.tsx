@@ -17,7 +17,8 @@ export const Profile = () => {
       },
     });
     const data = await response.data;
-    // console.log("data확인", data);
+    console.log(response, "response 확인");
+    console.log("data확인", data);
     return data;
   };
 
