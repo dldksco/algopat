@@ -116,7 +116,7 @@ public class CodeController {
   }
 
   /**
-   * GPT 응답 존재 여부 
+   * GPT 응답 존재 여부
    * @param submissionId
    * @return
    */
