@@ -1,5 +1,6 @@
 package com.code.controller;
 
+import com.code.data.dto.CommonBooleanDto;
 import com.code.data.dto.ProblemRankDetailDto;
 import com.code.data.dto.ProblemRankOverviewDto;
 import com.code.data.dto.ProblemRequestDto;
@@ -131,7 +132,7 @@ public class CodeController {
    * @return
    */
   @GetMapping("/submission/solution/exist/{submissionId}")
-  public ResponseEntity<?> isExistGptSolution(
+  public ResponseEntity<CommonBooleanDto> isExistGptSolution(
       @PathVariable("submissionId") long submissionId
   ) {
     return ResponseEntity.ok(problemService.isExistGptSolution(submissionId));

@@ -1,6 +1,7 @@
 package com.code.service;
 
 import com.code.data.domain.ErrorCode;
+import com.code.data.dto.CommonBooleanDto;
 import com.code.data.dto.ProblemResponseDto;
 import com.code.data.dto.UserSubmissionSolutionDetailDto;
 import com.code.data.dto.UserSubmitProblemDto;
@@ -76,11 +77,12 @@ public class ProblemService {
   }
 
   // Todo : GPT Solution PK를 submssionId로 변경 또는 인덱스 걸기
-  public boolean isExistGptSolution(long submissionId) {
+  public CommonBooleanDto isExistGptSolution(long submissionId) {
     Optional<GptSolution> optionalGptSolution = gptSolutionRepository.findBySubmissionId(submissionId);
-    return optionalGptSolution.isPresent();
+    return CommonBooleanDto.builder()
+        .data(optionalGptSolution.isPresent())
+        .build();
   }
-
 
 
 }
