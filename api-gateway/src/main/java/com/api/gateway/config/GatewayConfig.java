@@ -52,13 +52,13 @@ public class GatewayConfig {
               .setSigningKey(getSigningKey())
               .build()
               .parseClaimsJws(accessToken);
-
-          String userSeq = claimsJws.getBody().get("userSeq",String.class);
+          System.out.println("검사완료");
+          Long userSeq = claimsJws.getBody().get("userSeq",Long.class);
           // 헤더 추가
           ServerHttpRequest modifiedRequest = request.mutate()
-              .header("userSeq",userSeq )
+              .header("userSeq",userSeq.toString())
               .build();
-
+          System.out.println("헤더검사 : "+ userSeq.toString());
           // 교환 기능에 변경된 요청 전달
           ServerWebExchange modifiedExchange = exchange.mutate().request(modifiedRequest).build();
           return chain.filter(exchange);
