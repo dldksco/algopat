@@ -47,8 +47,7 @@ async def processing(data : ProblemData, send_callback):
     # chat_llm_10 = ChatOpenAI(temperature=1, openai_api_key=data.openai_api_key)
     json_chain = await json_formatter(chat_llm_0)
     
-    #user_seq = 9999 # 임시 
-    user_seq = data.userSeq # 변경됨 
+    user_seq = data.userSeq 
     problem_id = data.problemId
     lock_name = f"problem_id{problem_id}"
     while True:
@@ -67,7 +66,7 @@ async def processing(data : ProblemData, send_callback):
             raise
 
     ### 회원 푼 문제 DB 접근 ### 
-    user_submit_problem_data = await save_user_problem_origin(problem_id, user_seq)
+    user_submit_problem_data = await save_user_problem_origin(problem_id, user_seq, data.submissionTime)
     submission_id = await save_user_submit_solution_origin(problem_id, user_seq, user_submit_problem_data.user_submit_problem_seq, data)
     
     # 여기서 DB에서 불러오는 로직이 들어가는거

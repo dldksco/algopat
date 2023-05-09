@@ -5,6 +5,7 @@ from database.get_session import get_session
 from logging import getLogger
 from utils.utils import parse_date_format
 import my_exception.exception as exception 
+from datetime import datetime
 # logger 설정 
 logger = getLogger()
 
@@ -29,20 +30,22 @@ async def save_problem_summary(problem_id : int, summary_json):
             print(type(summary_json))
             await db_problem.insert_gpt_problem_summary(summary_json, session)
 
-async def save_user_problem_origin(problem_id : int, user_seq : int):
+async def save_user_problem_origin(problem_id : int, user_seq : int, sumbissionTime : datetime):
     logger.info("회원 푼 문제 불러오기")
     async with get_session() as session:
         userSubmitProblemData = await db_problem.get_user_submit_problem(problem_id, user_seq, session)   
         if userSubmitProblemData is None:    
             userSubmitProblemData = UserSubmitProblem(
                 problem_id = problem_id,
-                user_seq = user_seq # Todo : user_seq를 넘겨 받을 예정 
+                user_seq = user_seq 
             )
             logger.info("회원 푼 문제 DB 저장")
-            userSubmitProblemData = await db_problem.insert_user_submit_problem(userSubmitProblemData, user_seq, session)
+            userSubmitProblemData = await db_problem.insert_user_submit_problem(userSubmitProblemData, user_seq, sumbissionTime, session)
         else:
             logger.info("회원 푼 문제 존재")
-            # Todo : 최근 제출 일자 업데이트 Logic
+            # 최근 제출 일자 업데이트 Logic
+            userSubmitProblemData = await db_problem.update_user_submit_problem(userSubmitProblemData, sumbissionTime, session)
+
         return userSubmitProblemData
 
 async def check_gpt_problem_summary_is_exist(problem_id : int):

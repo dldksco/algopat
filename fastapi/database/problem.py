@@ -119,12 +119,12 @@ class UserSubmitProblem(Base):
     user_submit_problem_updated_at = Column(DateTime)
 
 
-async def insert_user_submit_problem(data : UserSubmitProblem, user_seq : int, session):
+async def insert_user_submit_problem(data : UserSubmitProblem, user_seq : int, submissionTime : datetime, session):
     user_submit_problem = UserSubmitProblem(
         problem_id = data.problem_id,
         user_seq = user_seq,
-        user_submit_problem_created_at = datetime.now(),
-        user_submit_problem_updated_at = datetime.now() # Todo : data.submissionTime 저장 logic 
+        user_submit_problem_created_at = submissionTime,
+        user_submit_problem_updated_at = submissionTime
     )
 
     # DB에 Problem 객체 추가
@@ -140,6 +140,18 @@ async def get_user_submit_problem(problem_id : int, user_seq : int,  session):
     result = await session.execute(select(UserSubmitProblem).filter(UserSubmitProblem.problem_id == problem_id).filter(UserSubmitProblem.user_seq == user_seq))
     await session.close()
     return result.scalar()
+
+async def update_user_submit_problem(data : UserSubmitProblem, submissionTime : datetime, session):
+    UserSubmitProblem.user_submit_problem_updated_at = submissionTime
+
+    # DB에 Problem 객체 추가
+    async with session.begin():
+        session.add(UserSubmitProblem)
+    await session.commit()
+    await session.refresh(UserSubmitProblem)
+    await session.close()
+
+    return UserSubmitProblem
 
 #===============================================================================
 
