@@ -38,7 +38,7 @@ export const getSolution = (solutionSeq: number) => {
     fetchSolution
   );
 
-  const refactoringData = { language: data.userSubmitSolutionLanguage };
+  const refactoringData = {};
   const timeComplexityData = "";
   const spaceComplexityData = "";
 
