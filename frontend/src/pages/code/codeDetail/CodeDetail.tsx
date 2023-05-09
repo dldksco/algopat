@@ -12,7 +12,7 @@ export const CodeDetail = () => {
     spaceComplexityData,
     totalInfo,
     isLoading,
-  } = getSolution(nowProblem);
+  } = getSolution(nowProblem.submissionId);
 
   return (
     <div className={style.code_detail}>
