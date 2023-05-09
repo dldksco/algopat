@@ -97,8 +97,6 @@ public class ProblemRequestDto {
   @JsonProperty("problem_info_time_limit")
   private String problemInfoTimeLimit;
 
-  @NotNull
-  @JsonProperty("userSeq")
-  private String userSeq;
+  private long userSeq;
 
 }
