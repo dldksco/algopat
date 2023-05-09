@@ -42,7 +42,7 @@ export const Problem = ({ data }: ProblemProps) => {
         />
         {data.problemId}. {stringCutter(data.problemTitle, 8)}
       </div>
-      {isOpen
+      {/* {isOpen
         ? data.solved.map((el) => (
             <div key={uuidv4()}>
               <hr color="gray" />
@@ -55,7 +55,7 @@ export const Problem = ({ data }: ProblemProps) => {
               </div>
             </div>
           ))
-        : null}
+        : null} */}
     </>
   );
 };
