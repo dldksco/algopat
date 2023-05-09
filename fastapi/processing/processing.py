@@ -47,7 +47,8 @@ async def processing(data : ProblemData, send_callback):
     # chat_llm_10 = ChatOpenAI(temperature=1, openai_api_key=data.openai_api_key)
     json_chain = await json_formatter(chat_llm_0)
     
-    user_seq = 9999 # 임시 
+    #user_seq = 9999 # 임시 
+    user_seq = data.userSeq # 변경됨 
     problem_id = data.problemId
     lock_name = f"problem_id{problem_id}"
     while True:
