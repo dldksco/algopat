@@ -5,11 +5,13 @@ import com.code.data.dto.ProblemRankDetailDto;
 import com.code.data.dto.ProblemRankOverviewDto;
 import com.code.data.dto.ProblemRequestDto;
 import com.code.data.dto.ProblemResponseDto;
+import com.code.data.dto.UserServiceBackjoonRequestDto;
 import com.code.data.dto.UserSubmitProblemDto;
 import com.code.data.dto.UserSubmitSolutionTitleDto;
 import com.code.service.KafkaProducerService;
 import com.code.service.ProblemRankService;
 import com.code.service.ProblemService;
+import com.code.service.UserService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -42,6 +44,7 @@ public class CodeController {
   private final KafkaProducerService kafkaProducerService;
   private final ProblemService problemService;
   private final ProblemRankService problemRankService;
+  private final UserService userService;
 
   /**
    * 유저 코드 제출 (Spring -> Kafka)
@@ -56,6 +59,12 @@ public class CodeController {
     problemService.checkExistUserSubmitSolution(Long.parseLong(problemRequestDto.getSubmissionId())); // 이미 제출한 코드가 있는지 체크 (있다면 409)
     problemRequestDto.setUserSeq(userSeq);
     kafkaProducerService.send(USER_CODE_TOPIC, problemRequestDto);
+
+    userService.checkBackjoonId(
+        UserServiceBackjoonRequestDto.builder()
+            .userSeq(userSeq)
+            .userName(problemRequestDto.getUsername())
+            .build());
     return ResponseEntity.ok().build();
   }
 
