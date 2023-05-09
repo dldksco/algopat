@@ -8,9 +8,9 @@ export const problemOpenState = atom({
 export const nowProblemSubmissionIdState = atom({
   key: "nowProblemSubmissionIdState",
   default: {
-    problemTitle: "",
-    problemId: -1,
-    problemLevel: -1,
-    submissionId: -1,
+    problemTitle: "동해물과백두산이마르고닳",
+    problemId: 16236,
+    problemLevel: 21,
+    submissionId: 48210181,
   },
 });

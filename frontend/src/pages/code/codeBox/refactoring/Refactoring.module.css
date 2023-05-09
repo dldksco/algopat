@@ -10,9 +10,45 @@
   border-radius: 10px;
   overflow: hidden;
 }
+.box_content .info_box {
+  width: 100%;
+  display: flex;
+  justify-content: space-evenly;
+  margin-bottom: 20px;
+  margin-top: 15px;
+}
+.box_content .info_box hr {
+  margin: 10px 0px;
+}
+.box_content .info_box .problem_list {
+  height: 20px;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin-left: 2px;
+}
+.box_content .info_box .problem_list img {
+  height: 100%;
+}
+.box_content .info_box .clicklink {
+  cursor: pointer;
+  transition: 0.2s;
+}
+.box_content .info_box .clicklink:hover {
+  color: gray;
+}
 
 .not_open {
   min-height: 0;
   height: 0px;
   padding: 0;
+}
+
+@media screen and (max-width: 768px) {
+  .box_content p {
+    padding: 12px;
+  }
+  .box_content .info_box {
+    font-size: 0.7rem;
+  }
 }/*# sourceMappingURL=Refactoring.module.css.map */
