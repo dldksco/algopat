@@ -11,19 +11,19 @@ export const Profile = () => {
   const userInfo = useRecoilValue(userInfoState);
   //tier use-query
   const fetchTier = async () => {
-    const response = await axios.get("/api", {
+    const response = await axios.get("/solved", {
       params: {
         handle: "alice2596",
       },
     });
     const data = await response.data;
-    console.log("data확인", data);
+    // console.log("data확인", data);
     return data;
   };
 
   const { isLoading, error, data } = useQuery(["tierupdate"], fetchTier);
-  console.log(data, "query 결과");
-  console.log(data, "query solvedid");
+  // console.log(data, "query 결과");
+  // console.log(data, "query solvedid");
   if (isLoading) {
     return <LoadingSpinner />;
   }

@@ -1,11 +1,11 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronUp } from "@fortawesome/free-solid-svg-icons";
-import { useState } from "react";
 import { stringCutter } from "../../hooks/func";
 import { problemOpenState } from "@/atoms/code.atom";
 
 import style from "./Problem.module.css";
 import { ProblemDetail } from "./problemDetail/ProblemDetail";
+import { useRecoilState } from "recoil";
 
 export interface ProblemProps {
   detail: Problem;
@@ -18,10 +18,10 @@ export interface Problem {
 }
 
 export const Problem = ({ detail }: ProblemProps) => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isProblemOpen, setIsProblemOpen] = useRecoilState(problemOpenState);
   // 이벤트는 코드 내에
   const problemClick = () => {
-    setIsOpen((prev) => !prev);
+    setIsProblemOpen((prev) => !prev);
   };
 
   return (
@@ -30,7 +30,7 @@ export const Problem = ({ detail }: ProblemProps) => {
       <div className={style.problem_list} onClick={problemClick}>
         <FontAwesomeIcon
           icon={faChevronUp}
-          className={isOpen ? undefined : "fa-rotate-180"}
+          className={isProblemOpen ? undefined : "fa-rotate-180"}
         />
         <img
           src={`https://static.solved.ac/tier_small/${detail.problemLevel}.svg`}
@@ -38,7 +38,7 @@ export const Problem = ({ detail }: ProblemProps) => {
         />
         {detail.problemId}. {stringCutter(detail.problemTitle, 8)}
       </div>
-      {isOpen ? <ProblemDetail problemDetail={detail} /> : null}
+      {isProblemOpen ? <ProblemDetail problemDetail={detail} /> : null}
     </>
   );
 };

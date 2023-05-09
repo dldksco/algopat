@@ -6,18 +6,12 @@ import eslint from "vite-plugin-eslint";
 export default defineConfig({
   server: {
     proxy: {
-      "/api": {
+      "/solved": {
         target: "https://solved.ac",
         changeOrigin: true,
         secure: false,
-        rewrite: (path) => path.replace(/^\/api/, "/api/v3/user/show"),
+        rewrite: (path) => path.replace(/^\/solved/, "/api/v3/user/show"),
       },
-      // "/api":{
-      //   target: 'http://127.0.0.1:5000',
-      //   changeOrigin: true,
-      //   secure: false,
-      //   rewrite: (path) => path.replace(/^\/api/, '/api/v1/dinosaurs')
-      // }
     },
   },
   plugins: [react(), eslint()],
