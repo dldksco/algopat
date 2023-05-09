@@ -35,7 +35,6 @@ public class UserServiceImpl implements UserService {
     public boolean userCheck(GithubUserIdInfoDTO githubUserIdInfoDTO){
         String githubUserId = githubUserIdInfoDTO.getUserGithubId();
         String githubUserImageUrl = githubUserIdInfoDTO.getUserImageUrl();
-        String githubUserNickname = githubUserIdInfoDTO.getUserNickname();
         Optional<User> user = userRepository.findByUserGithubId(githubUserId);
 
         if(user.isPresent()){
