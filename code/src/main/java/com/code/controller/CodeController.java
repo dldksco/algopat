@@ -6,14 +6,16 @@ import com.code.data.dto.ProblemRequestDto;
 import com.code.data.dto.ProblemResponseDto;
 import com.code.data.dto.UserSubmitProblemDto;
 import com.code.data.dto.UserSubmitSolutionTitleDto;
-import com.code.data.repository.RankRepository;
 import com.code.service.KafkaProducerService;
 import com.code.service.ProblemRankService;
 import com.code.service.ProblemService;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,6 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
+@Validated
 @RequestMapping("/problem")
 public class CodeController {
 
@@ -33,7 +36,6 @@ public class CodeController {
   private final KafkaProducerService kafkaProducerService;
   private final ProblemService problemService;
   private final ProblemRankService problemRankService;
-  private final RankRepository rankRepository;
 
   /**
    * 유저 코드 제출 (Spring -> Kafka)
@@ -42,7 +44,7 @@ public class CodeController {
    * @throws JsonProcessingException
    */
   @PostMapping("")
-  public ResponseEntity<Void> sendProblemToKafka(@RequestBody ProblemRequestDto problemRequestDto)
+  public ResponseEntity<Void> sendProblemToKafka(@RequestBody @Valid ProblemRequestDto problemRequestDto)
       throws JsonProcessingException {
     kafkaProducerService.send(USER_CODE_TOPIC, problemRequestDto);
     return ResponseEntity.ok().build();
@@ -54,7 +56,7 @@ public class CodeController {
    * @return
    */
   @GetMapping("")
-  public ResponseEntity<ProblemResponseDto> getProblem(@RequestParam long problemId) {
+  public ResponseEntity<ProblemResponseDto> getProblem(@RequestParam @NotBlank long problemId) {
     return ResponseEntity.ok(problemService.getProblem(problemId));
   }
 
