@@ -21,6 +21,7 @@ from database.database import save_problem_origin \
 from logging import getLogger
 from utils.log_decorator import time_logger
 from utils.shared_env import redis_url
+from utils.utils import parse_lang_type
 import redis_lock
 from redis import Redis
 import asyncio
@@ -37,6 +38,9 @@ redis_conn = Redis.from_url(redis_url)
 # GPT 응답 생성 함수
 @time_logger("GPT 비즈니스 로직")
 async def processing(data : ProblemData, send_callback):
+    if await filtering_input_data(data, send_callback):
+        return
+    data.language = await parse_lang_type(data.language)
     chat_llm_0 = ChatOpenAI(temperature=0, openai_api_key=data.openai_api_key, request_timeout=120)
     # chat_llm_1 = ChatOpenAI(temperature=0.1, openai_api_key=data.openai_api_key)
     # chat_llm_3 = ChatOpenAI(temperature=0.3, openai_api_key=data.openai_api_key, request_timeout=120)
@@ -112,3 +116,13 @@ async def summary_problem(problem_id : int, user_seq : int, data : ProblemData, 
     
     ### 문제 메타데이터 DB에 메타데이터 저장 ### 
     await update_problem_meta(problem_id, user_seq, data)
+    
+    
+async def filtering_input_data(data : ProblemData, send_callback):
+    code_language = await parse_lang_type(data.language)
+    if code_language == "unknown":
+        await send_callback("alert", "미지원 언어입니다")
+        return True
+    if data.resultCategory != "ac":
+        await send_callback("alert", "틀린 코드는 평가할 수 없습니다")
+        return True
