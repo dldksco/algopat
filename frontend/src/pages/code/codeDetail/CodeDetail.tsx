@@ -21,8 +21,8 @@ export const CodeDetail = () => {
       ) : (
         <>
           <CodeBox type={"REFACTORING"} data={refactoringData} />
-          <CodeBox type={"TIME COMPLEXITY"} data={timeComplexityData} />
-          <CodeBox type={"SPACE COMPLEXITY"} data={spaceComplexityData} />
+          {/* <CodeBox type={"TIME COMPLEXITY"} data={timeComplexityData} />
+          <CodeBox type={"SPACE COMPLEXITY"} data={spaceComplexityData} /> */}
         </>
       )}
     </div>

@@ -30,8 +30,8 @@ export const Refactoring = ({ isModalOpen, data }: RefactoringProps) => {
         <Editor
           width="98%"
           height="300px"
-          defaultLanguage={data?.language}
-          defaultValue={data?.submitCode}
+          // defaultLanguage={data?.language}
+          // defaultValue={data?.submitCode}
           onMount={handleEditorDidMount}
           theme="vs-dark"
           options={{
