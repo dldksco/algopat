@@ -1,5 +1,6 @@
 package com.alert.controller;
 
+import com.alert.dto.MessageDto;
 import com.alert.service.EmitService;
 import com.alert.service.KafkaProducerService;
 import java.util.Map;
@@ -11,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.kafka.annotation.KafkaListener;
+import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
@@ -56,11 +58,19 @@ public class AlertController {
     return Mono.just(ResponseEntity.ok().contentType(MediaType.TEXT_EVENT_STREAM).body(userSink.asFlux()));
   }
 
+//  @KafkaListener(topics = "${kafka.topic}", groupId = "${kafka.group-id}")
+//  public void consume(String message) {
+//    logger.info("알림 컨슘 !!!!");
+//    logger.info("받은 데이터 {}", message);
+//    emitService.emitMessageToUser(userSinks,  message);
+//  }
+
   @KafkaListener(topics = "${kafka.topic}", groupId = "${kafka.group-id}")
-  public void consume(String message) {
+  public void consume(@Payload MessageDto messageDto) {
     logger.info("알림 컨슘 !!!!");
-    logger.info("받은 데이터 {}", message);
-    emitService.emitMessageToUser(userSinks,  message);
+    logger.info("받은 데이터 {}", messageDto);
+    logger.info("유저 식별번호 {}", messageDto.getUserSeq());
+    emitService.emitMessageToUser(userSinks, messageDto.getUserSeq().getUserSeq());
   }
 
 //  @KafkaListener(topics = "${kafka.topic}", groupId = "${kafka.group-id}")
