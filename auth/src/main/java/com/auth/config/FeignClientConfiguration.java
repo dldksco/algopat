@@ -11,12 +11,12 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @RequiredArgsConstructor
 public class FeignClientConfiguration {
-  private final FeignClientInterceptor feignClientInterceptor;
+//  private final FeignClientInterceptor feignClientInterceptor;
 
-  @Bean
-  public RequestInterceptor requestInterceptor() {
-    return feignClientInterceptor;
-  }
+//  @Bean
+//  public RequestInterceptor requestInterceptor() {
+//    return feignClientInterceptor;
+//  }
 
   @Bean
   public ErrorDecoder errorDecoder() {

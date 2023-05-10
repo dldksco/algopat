@@ -10,6 +10,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 @FeignClient(name = "GATEWAY",configuration = FeignClientConfiguration.class)
 public interface UserServiceFeignClient {
-  @PostMapping("/user/check")
+  @PostMapping("/user/check/github-id")
   ResponseEntity<UserServiceIdResponseDTO> userCheck(@RequestBody UserServiceIdRequestDTO userServiceIdRequestDTO);
 }
