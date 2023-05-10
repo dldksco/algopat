@@ -9,7 +9,8 @@ import lombok.Data;
 @AllArgsConstructor
 public class ProblemRankDetailDto {
   private long gptSolutionSeq;
-  private String userNickname;
+//  private String userNickname;
+  private String userGithubId;
   private String userSubmitSolutionLanguage;
   private long userSubmitSolutionRuntime;
   private long userSubmitSolutionMemory;

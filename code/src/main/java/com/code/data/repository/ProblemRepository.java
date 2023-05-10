@@ -10,10 +10,10 @@ import org.springframework.data.jpa.repository.Query;
 
 public interface ProblemRepository extends JpaRepository<Problem, Long> {
 
-  @Query("SELECT new com.code.data.dto.ProblemRankOverviewDto(p.problemId, p.problemTitle, p.problemLevel, pm.problemSubmittedCount, unn.userNickname) " +
+  @Query("SELECT new com.code.data.dto.ProblemRankOverviewDto(p.problemId, p.problemTitle, p.problemLevel, pm.problemSubmittedCount, u.userGithubId) " +
   "FROM Problem p " +
   "JOIN ProblemMeta pm ON p.problemId = pm.problemId " +
-  "JOIN UserNickname unn ON pm.problemMasterUserSeq = unn.userSeq " +
+  "JOIN User u ON pm.problemMasterUserSeq = u.userSeq " +
   "WHERE p.problemLevel = :level ")
   Optional<Page<ProblemRankOverviewDto[]>> findProblemsByLevelWithDetails(long level, Pageable pageable);
 
