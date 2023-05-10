@@ -2,6 +2,7 @@ package com.code.controller;
 
 import com.code.data.dto.ProblemRankDetailDto;
 import com.code.data.dto.ProblemRankOverviewDto;
+import com.code.data.dto.RankPageDto;
 import com.code.service.ProblemRankService;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -71,4 +72,9 @@ public class RankController {
     return ResponseEntity.ok(masterUserProblemRankDetailDto);
   }
 
+  @GetMapping("/pageinfo/{problemId}")
+  public ResponseEntity<RankPageDto> findRankPageInfoByProblemId(@PathVariable long problemId) {
+    RankPageDto rankPageDto = problemRankService.findRankPageInfoByProblemId(problemId);
+    return ResponseEntity.ok(rankPageDto);
+  }
 }

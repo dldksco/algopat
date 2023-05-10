@@ -1,6 +1,8 @@
 package com.code.data.repository;
 
 import com.code.data.dto.ProblemRankDetailDto;
+import com.code.data.dto.ProblemSimpInfoDto;
+import com.code.data.entity.Problem;
 import com.code.data.entity.UserSubmitSolution;
 import java.util.List;
 import java.util.Optional;
@@ -10,7 +12,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-public interface RankRepository extends JpaRepository<UserSubmitSolution, Long> {
+public interface RankRepository {
 
 //  @Query("SELECT new com.code.data.dto.ProblemRankDetailDto("
 //      + "gs.gptSolutionSeq, "
@@ -79,5 +81,9 @@ public interface RankRepository extends JpaRepository<UserSubmitSolution, Long> 
       + "uss.userSubmitSolutionTime ASC")
   Optional<List<ProblemRankDetailDto>> findTopSolutionByProblemId(long problemId, Pageable pageable);
 
-
+  @Query("SELECT new com.code.data.dto.ProblemSimpInfoDto("
+      + "p.problemLevel,"
+      + "p.problemTitle) "
+      + "FROM Problem p ")
+  Optional<ProblemSimpInfoDto> findProblemSimpInfoByProblemId(long problemId);
 }
