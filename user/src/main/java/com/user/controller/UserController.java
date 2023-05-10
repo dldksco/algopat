@@ -23,6 +23,7 @@ public class UserController {
   private final UserService userService;
   @PostMapping("/check/github-id")
   public ResponseEntity<UserCheckResponseDTO> checkAndJoinGithubUser(@RequestBody GithubUserIdInfoDTO githubUserIdInfoDTO) {
+    System.out.println("ㅁㅁㅁㅁ");
     return new ResponseEntity<>(userService.checkAndJoinGithubUser(githubUserIdInfoDTO), HttpStatus.OK);
   }
 
