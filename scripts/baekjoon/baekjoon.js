@@ -173,6 +173,8 @@ function commitMode(commit_state, token) {
           reject()
         })
 
+    } else {
+      resolve(true)
     }
   })
 
