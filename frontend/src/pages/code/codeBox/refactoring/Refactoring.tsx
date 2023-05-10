@@ -39,7 +39,7 @@ export const Refactoring = ({ isModalOpen, data }: RefactoringProps) => {
       }
     >
       <div className={style.info_box}>
-        <div style={{ width: "120px", textAlign: "center" }}>
+        <div style={{ width: "30%", maxWidth: "120px", textAlign: "center" }}>
           <CircularProgressbar
             value={refactorData?.cleanScore || 0}
             text={`${refactorData?.cleanScore || 0}%`}

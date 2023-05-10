@@ -43,6 +43,54 @@
 @media screen and (max-width: 768px) {
   .code_detail {
     width: 100%;
-    padding: 13% 8% 2%;
+    padding: 13% 4% 2%;
+  }
+  .code_detail .algopat {
+    font-size: 2.4rem;
+    color: gray;
+    text-align: center;
+  }
+  .code_detail .circles {
+    display: flex;
+    justify-content: space-evenly;
+  }
+  .code_detail .circles h3 {
+    font-size: 0.6rem;
+  }
+  .code_detail .info_box {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+    margin-top: 40px;
+    min-height: 180px;
+  }
+  .code_detail .info_box h2 {
+    font-size: 1.5rem;
+  }
+  .code_detail .info_box .right_box {
+    width: 100%;
+    border-radius: 10px;
+    padding: 0px 10px;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .code_detail .info_box .right_box .circle {
+    position: relative;
+    top: 1px;
+    height: 0.4rem;
+    width: 0.4rem;
+    display: inline-block;
+    border-radius: 100%;
+    margin-right: 5px;
+  }
+  .code_detail .info_box .right_box span {
+    font-size: 0.5rem;
+  }
+  .code_detail .info_box .right_box h3 {
+    margin: 10px 2px;
+    font-size: 1rem;
   }
 }/*# sourceMappingURL=CodeDetail.module.css.map */

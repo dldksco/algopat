@@ -4,7 +4,7 @@
   }
 }
 .spinnerpage {
-  height: 500px;
+  height: 400px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -14,7 +14,7 @@
   width: 2rem;
   height: 2rem;
   vertical-align: -0.125em;
-  color: #ECECEC;
+  color: #ececec;
   border: 0.25em solid currentcolor;
   border-right-color: transparent;
   border-radius: 50%;
@@ -29,4 +29,4 @@
   clip: rect(0, 0, 0, 0);
   white-space: nowrap;
   border: 0;
-}/*# sourceMappingURL=loadingspinner.module.css.map */
+}/*# sourceMappingURL=LoadingSpinner.module.css.map */
