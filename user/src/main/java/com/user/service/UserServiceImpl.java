@@ -81,6 +81,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public void checkAndJoinBackjoonUser(BackjoonUserDTO backjoonUserDTO) {
         User user = userRepository.findByUserSeq(backjoonUserDTO.getUserSeq()).orElseThrow(() -> new BaseException(ErrorCode.DATABASE_GET_ERROR));
+        System.out.println("드러옴!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"+ user.getUserBackjoonId());
         if(user.getUserBackjoonId().equals("NO_SUBMITTED")){
             user.setUserBackjoonId(backjoonUserDTO.getUserBackjoonId());
         }

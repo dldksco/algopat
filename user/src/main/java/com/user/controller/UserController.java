@@ -28,6 +28,7 @@ public class UserController {
 
   @PostMapping("/check/backjoon-id")
   public ResponseEntity<Void> checkAndJoinBackjoonUser(@RequestBody BackjoonUserDTO backjoonUserDTO) {
+    System.out.println("드러옴!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
     userService.checkAndJoinBackjoonUser(backjoonUserDTO);
     return ResponseEntity.ok().build();
   }
