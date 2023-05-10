@@ -34,13 +34,15 @@ public class UserServiceImpl implements UserService {
         String githubUserId = githubUserIdInfoDTO.getUserGithubId();
         String githubUserImageUrl = githubUserIdInfoDTO.getUserImageUrl();
         Optional<User> user = userRepository.findByUserGithubId(githubUserId);
-
+        System.out.println("들어왔나");
         if(user.isPresent()){
+            System.out.println("들어왔나1");
             Long userSeq = user.get().getUserSeq();
             UserStatus userStatus = userStatusRepository.findTopByUserUserSeqOrderByUserStatusCreatedAtDesc(userSeq).orElseThrow(() -> new BaseException(ErrorCode.SERVICE_SERVLET_ERROR));
+            System.out.println("들어왔나2");
             if(!userStatus.getUserStatusStatus().equals(UserStatusType.AVAILABLE))
                 throw new BaseException(ErrorCode.UNVALID_USER);
-
+            System.out.println("들어왔나3");
             UserImage  userImage = userImageRespository.findByUserUserSeqWithFetchJoin(userSeq).orElseThrow(() -> new BaseException(ErrorCode.SERVICE_SERVLET_ERROR));
             System.out.println("userImage:"+ userImage.getUserImageUrl()+" githubuserimageurl: "+githubUserImageUrl);
             System.out.println("user id: "+ githubUserId);
@@ -54,7 +56,7 @@ public class UserServiceImpl implements UserService {
             return UserCheckResponseDTO.builder().userSeq(userSeq).build();
         }
         else{
-
+            System.out.println("들어왔나4");
             long newUserSeq =JoinGithubUser(githubUserIdInfoDTO);
             return UserCheckResponseDTO.builder().userSeq(newUserSeq).build();
         }
