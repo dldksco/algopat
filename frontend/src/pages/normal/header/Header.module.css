@@ -11,6 +11,12 @@
 .header .for_hover:hover {
   color: gray;
 }
+.header .for_hover2 {
+  display: none;
+}
+.header .for_hover2:hover {
+  color: gray;
+}
 .header .logo {
   margin-top: auto;
   margin-bottom: auto;
@@ -76,6 +82,9 @@
 @media screen and (max-width: 768px) {
   .header {
     position: relative;
+  }
+  .header .for_hover2 {
+    display: block;
   }
   .header .menu {
     position: absolute;

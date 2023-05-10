@@ -9,7 +9,8 @@
   cursor: pointer;
 
   &:hover {
-    color: gray;
+    color: gray !important;
     border: 1.5px solid rgb(196, 196, 196);
+    opacity: 0.9;
   }
 }

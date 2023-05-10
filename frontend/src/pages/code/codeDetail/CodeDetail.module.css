@@ -40,6 +40,24 @@
   margin: 10px 2px;
 }
 
+@media screen and (max-width: 1050px) {
+  .code_detail .circles h3 {
+    font-size: 0.7rem;
+  }
+  .code_detail .info_box h2 {
+    font-size: 1.2rem;
+  }
+  .code_detail .info_box .right_box .circle {
+    height: 0.6rem;
+    width: 0.6rem;
+  }
+  .code_detail .info_box .right_box span {
+    font-size: 0.8rem;
+  }
+  .code_detail .info_box .right_box h3 {
+    font-size: 0.9rem;
+  }
+}
 @media screen and (max-width: 768px) {
   .code_detail {
     width: 100%;

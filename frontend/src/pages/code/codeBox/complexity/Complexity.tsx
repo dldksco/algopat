@@ -1,6 +1,11 @@
 import { ComplexityData, RefactoringData } from "../../hooks/query";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
-import { backgroundColor, estimate, pathColor } from "../../hooks/func";
+import {
+  addCommas,
+  backgroundColor,
+  estimate,
+  pathColor,
+} from "../../hooks/func";
 import "react-circular-progressbar/dist/styles.css";
 import style from "./Complexity.module.css";
 import { filteredNewLine } from "../refactoring/Refactoring";
@@ -60,8 +65,8 @@ export const Complexity = ({ isModalOpen, data, title }: ComplexityProps) => {
           </div>
           <h3 style={{ color: `${pathColor(complexityData?.score || 0)}` }}>
             {complexityData.solutionMemory
-              ? complexityData.solutionMemory + " KB"
-              : complexityData.solutionRuntime + " ms"}
+              ? addCommas(complexityData.solutionMemory) + " KB"
+              : addCommas(complexityData.solutionRuntime || 0) + " ms"}
           </h3>
         </div>
       </div>
