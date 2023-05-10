@@ -1,6 +1,6 @@
 .box_content {
   background-color: #2d3956;
-  margin: 20px 0;
+  margin: 20px 0 40px;
   padding: 2% 2%;
   transition: 0.25s;
   width: 96%;
@@ -52,8 +52,30 @@
     p {
       padding: 12px;
     }
+
     .info_box {
       font-size: 0.7rem;
+
+      .right_box {
+        width: 60%;
+        background-color: #28292c;
+        border-radius: 10px;
+        padding: 0px 10px;
+
+        .circle {
+          position: relative;
+          top: 1px;
+          height: 0.8rem;
+          width: 0.8rem;
+          display: inline-block;
+          border-radius: 100%;
+          margin-right: 5px;
+        }
+
+        h3 {
+          margin: 10px 2px;
+        }
+      }
     }
   }
 }

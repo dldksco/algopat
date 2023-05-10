@@ -5,6 +5,7 @@ import { getSolution } from "../hooks/query";
 import style from "./CodeDetail.module.css";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import { backgroundColor, pathColor } from "../hooks/func";
+import { LoadingSpinner } from "@/components/loadingspinner/LoadingSpinner";
 
 export const CodeDetail = () => {
   const nowProblem = useRecoilValue(nowProblemSubmissionIdState);
@@ -13,13 +14,17 @@ export const CodeDetail = () => {
     timeComplexityData,
     spaceComplexityData,
     totalInfo,
-    isLoading,
   } = getSolution(nowProblem.submissionId);
 
   return (
     <div className={style.code_detail}>
       {!nowProblem.submissionId ? (
         <div className={style.algopat}>ALGOPAT</div>
+      ) : !nowProblem.nowProcess ? (
+        <div className={style.algopat} style={{ marginTop: "0px" }}>
+          <LoadingSpinner />
+          현재 GPT 응답을 처리중입니다.
+        </div>
       ) : (
         <>
           <div className={style.circles}>
@@ -188,6 +193,7 @@ export const CodeDetail = () => {
                 </h3>
               </div>
               <div style={{ width: "30%" }}>
+                <hr />
                 <div style={{ marginTop: "10px" }}>
                   <div
                     className={style.circle}
@@ -206,6 +212,7 @@ export const CodeDetail = () => {
                 </h3>
               </div>
               <div style={{ width: "30%" }}>
+                <hr />
                 <div style={{ marginTop: "10px" }}>
                   <div
                     className={style.circle}
@@ -224,6 +231,7 @@ export const CodeDetail = () => {
                 </h3>
               </div>
               <div style={{ width: "30%" }}>
+                <hr />
                 <div style={{ marginTop: "10px" }}>
                   <div
                     className={style.circle}
