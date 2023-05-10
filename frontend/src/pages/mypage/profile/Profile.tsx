@@ -11,11 +11,14 @@ export const Profile = () => {
   const userInfo = useRecoilValue(userInfoState);
   //tier use-query
   const fetchTier = async () => {
-    const response = await axios.get("/solved", {
-      params: {
-        handle: "alice2596",
-      },
-    });
+    const response = await axios.get(
+      "https://solvedac-ixdn5ymk3a-du.a.run.app/userShow",
+      {
+        params: {
+          handle: "alice2596",
+        },
+      }
+    );
     const data = await response.data;
     console.log(response, "response 확인");
     console.log("data확인", data);
