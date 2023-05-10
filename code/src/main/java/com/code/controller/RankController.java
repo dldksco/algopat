@@ -31,9 +31,9 @@ public class RankController {
    * @param pageNumber
    * @return
    */
-  @GetMapping("/{level}/{pageNumber}")
+  @GetMapping("/{level}")
   public ResponseEntity<Page<ProblemRankOverviewDto[]>> getProblemRankOverviewDto(
-      @PathVariable("level") long level, @PathVariable("pageNumber") int pageNumber) {
+      @PathVariable("level") long level, @RequestParam(required = false, defaultValue = "0") int pageNumber) {
     return ResponseEntity.ok(problemRankService.getProblemRankOverviews(level, pageNumber));
   }
 
@@ -46,10 +46,10 @@ public class RankController {
    * @param searchText
    * @return
    */
-  @GetMapping("/solutions/{problemId}/{pageNumber}")
+  @GetMapping("/solutions/{problemId}")
   public ResponseEntity<Page<ProblemRankDetailDto[]>> findSolutionsByProblemIdWithDetailsAndFilters(
       @PathVariable long problemId,
-      @PathVariable int pageNumber,
+      @RequestParam(required = false, defaultValue = "0") int pageNumber,
       @RequestParam(required = false) String languageFilter,
       @RequestParam(required = false) String sortCriteria,
       @RequestParam(required = false, defaultValue = "") String searchText){
