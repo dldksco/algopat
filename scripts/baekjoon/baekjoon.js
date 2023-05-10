@@ -100,7 +100,15 @@ function startLoader() {
                 if (res.status == 200) {
                   markUploadedCSS();
                   // 리팩토링 상태 진행중으로 변경
-                  chrome.storage.local.set({ commit_state: { submissionId: bojData.submissionId, state: false } }, () => { });
+                  chrome.storage.local.set({
+                    commit_state:
+                    {
+                      submissionId: bojData.submissionId,
+                      problemId: bojData.problemId,
+                      title: bojData.title,
+                      state: false
+                    }
+                  }, () => { });
                 } else if (res.status == 409) {
                   throw new Error("dupl");
                 }
