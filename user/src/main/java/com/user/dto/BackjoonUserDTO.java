@@ -14,6 +14,6 @@ import lombok.Setter;
 @AllArgsConstructor
 public class BackjoonUserDTO {
     private long userSeq;
-    @JsonProperty("username")
+    @JsonProperty("userName")
     private String userBackjoonId;
 }
