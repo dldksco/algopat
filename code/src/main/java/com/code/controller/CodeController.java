@@ -78,17 +78,6 @@ public class CodeController {
     return ResponseEntity.ok(problemService.getProblem(problemId));
   }
 
-  /**
-   * 랭킹 조회
-   * @param level
-   * @param pageNumber
-   * @return
-   */
-  @GetMapping("/rank/{level}/{pageNumber}")
-  public ResponseEntity<Page<ProblemRankOverviewDto[]>> getProblemRankOverviewDto(
-      @PathVariable("level") long level, @PathVariable("pageNumber") int pageNumber) {
-    return ResponseEntity.ok(problemRankService.getProblemRankOverviews(level, pageNumber));
-  }
 
   /**
    * 푼 문제 목록 조회
@@ -145,39 +134,5 @@ public class CodeController {
       @PathVariable("submissionId") long submissionId
   ) {
     return ResponseEntity.ok(problemService.isExistGptSolution(submissionId));
-  }
-
-  /**
-   * 랭킹 검색어 필터링
-   * @param problemId
-   * @param pageNumber
-   * @param languageFilter
-   * @param sortCriteria
-   * @param searchText
-   * @return
-   */
-  @GetMapping("/rank/{problemId}/solutions/{pageNumber}")
-  public ResponseEntity<Page<ProblemRankDetailDto[]>> findSolutionsByProblemIdWithDetailsAndFilters(
-      @PathVariable long problemId,
-      @PathVariable int pageNumber,
-      @RequestParam(required = false) String languageFilter,
-      @RequestParam(required = false) String sortCriteria,
-      @RequestParam(required = false, defaultValue = "") String searchText){
-
-    Page<ProblemRankDetailDto[]> result = problemRankService.findSolutionsByProblemIdWithDetailsAndFilters(
-        problemId, languageFilter, sortCriteria, searchText, pageNumber);
-    return ResponseEntity.ok(result);
-  }
-
-  @GetMapping("/rank/{problemId}/count")
-  public ResponseEntity<Long> countSolutionsByProblemId(@PathVariable long problemId) {
-    long result = problemRankService.countSolutionByProblemId(problemId);
-    return ResponseEntity.ok(result);
-  }
-
-  @GetMapping("/rank/{problemId}/solutions/top")
-  public ResponseEntity<ProblemRankDetailDto> findMasterUserSolutionByProblemIdWithDetail(@PathVariable long problemId) {
-    ProblemRankDetailDto masterUserProblemRankDetailDto = problemRankService.findMasterUserSolutionByProblemIdWithDetail(problemId);
-    return ResponseEntity.ok(masterUserProblemRankDetailDto);
   }
 }
