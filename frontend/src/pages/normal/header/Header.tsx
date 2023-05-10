@@ -3,10 +3,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { useEffect, useState } from "react";
 import { loginUser, logout, userInfoState } from "@/atoms/user.atom";
+import { useRecoilState } from "recoil";
 import logo from "@/assets/img/logo.png";
 import style from "./Header.module.css";
-import { useRecoilState } from "recoil";
-import { isMobile } from "@/pages/main/hooks/func";
 
 export const Header = () => {
   const loginUrl =
@@ -77,13 +76,16 @@ export const Header = () => {
             </div>
           </div>
         )}
-        {isMobile() && userInfo.userSeq ? (
+        {userInfo.userSeq ? (
           <>
-            <div className={style.for_hover} onClick={() => moveNav("/mypage")}>
+            <div
+              className={style.for_hover2}
+              onClick={() => moveNav("/mypage")}
+            >
               마이페이지
             </div>
             <div
-              className={style.for_hover}
+              className={style.for_hover2}
               onClick={() => {
                 logout(setUserInfo);
               }}

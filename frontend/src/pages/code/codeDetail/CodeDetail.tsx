@@ -4,7 +4,7 @@ import CodeBox from "../codeBox/CodeBox";
 import { getSolution } from "../hooks/query";
 import style from "./CodeDetail.module.css";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
-import { backgroundColor, pathColor } from "../hooks/func";
+import { addCommas, backgroundColor, pathColor } from "../hooks/func";
 import { LoadingSpinner } from "@/components/loadingspinner/LoadingSpinner";
 
 export const CodeDetail = () => {
@@ -20,7 +20,7 @@ export const CodeDetail = () => {
     <div className={style.code_detail}>
       {!nowProblem.submissionId ? (
         <div className={style.algopat}>ALGOPAT</div>
-      ) : !nowProblem.nowProcess ? (
+      ) : nowProblem.nowProcess ? (
         <div className={style.algopat} style={{ marginTop: "0px" }}>
           <LoadingSpinner />
           현재 GPT 응답을 처리중입니다.
@@ -169,7 +169,7 @@ export const CodeDetail = () => {
                     color: `${pathColor(timeComplexityData.score || 0)}`,
                   }}
                 >
-                  {timeComplexityData.solutionRuntime} ms
+                  {addCommas(timeComplexityData.solutionRuntime || 0)} ms
                 </h3>
               </div>
               <div style={{ width: "30%" }}>
@@ -189,7 +189,7 @@ export const CodeDetail = () => {
                     color: `${pathColor(spaceComplexityData.score || 0)}`,
                   }}
                 >
-                  {spaceComplexityData.solutionMemory} KB
+                  {addCommas(spaceComplexityData.solutionMemory || 0)} KB
                 </h3>
               </div>
               <div style={{ width: "30%" }}>

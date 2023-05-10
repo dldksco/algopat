@@ -46,6 +46,33 @@
   }
 }
 
+@media screen and (max-width: 1050px) {
+  .code_detail {
+    .circles {
+      h3 {
+        font-size: 0.7rem;
+      }
+    }
+    .info_box {
+      h2 {
+        font-size: 1.2rem;
+      }
+      .right_box {
+        .circle {
+          height: 0.6rem;
+          width: 0.6rem;
+        }
+        span {
+          font-size: 0.8rem;
+        }
+        h3 {
+          font-size: 0.9rem;
+        }
+      }
+    }
+  }
+}
+
 @media screen and (max-width: 768px) {
   .code_detail {
     width: 100%;

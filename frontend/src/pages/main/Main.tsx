@@ -8,34 +8,37 @@ import gpticon from "@/assets/img/main/gpticon.png";
 import bird from "@/assets/img/main/bird.png";
 
 export const Main = () => {
+  const moveExtention = () => {
+    window.location.href =
+      "https://chrome.google.com/webstore/detail/algopat/aalkbigjinaihechcjpigbahgembfbac?hl=ko";
+  };
+
   return (
     <div className={style.mainpage}>
       <div className={style.fpage}>
         <div className={style.content}>
-          <h1 style={{ border: "none" }}>ALGOPAT</h1>
-          <p>여러분의 코딩 문제 풀이를</p>
-          <p>피드백 해드립니다!</p>
+          <h1 style={{ border: "none", letterSpacing: "5px" }}>ALGOPAT</h1>
+          <p style={{ fontSize: "1.3rem", marginBottom: "12px" }}>
+            여러분의 코딩 문제 풀이를
+          </p>
+          <p style={{ fontSize: "1.3rem", marginTop: "12px" }}>
+            피드백 해드립니다!
+          </p>
           <div className={style.button_hover}>
             <Button
               content="설치하기"
               style={{
                 borderRadius: "0px",
                 padding: "10px 35px 10px 20px",
+                marginTop: "20px",
+                fontSize: "1.2rem",
               }}
-              onClick={() => {
-                window.location.href =
-                  "https://chrome.google.com/webstore/detail/algopat/kgajbdbdokjnkmbjngibhjknlkfikace?hl=ko";
-              }}
+              onClick={moveExtention}
             />
             <FontAwesomeIcon icon={faArrowUp} className={style.button_arrow} />
           </div>
         </div>
-        <div
-          className={style.code_background}
-          style={{
-            backgroundImage: "url(/assets/img/main/background_dark.png)",
-          }}
-        ></div>
+        <div className={style.code_background} />
       </div>
       <div className={style.cpage}>
         <div className={style.gptcode}>
@@ -49,9 +52,7 @@ export const Main = () => {
             <p>코드를 비교해서 완성도를 높여보세요</p>
           </div>
         </div>
-        <div
-          style={{ backgroundColor: "red", width: "100%", height: "30%" }}
-        ></div>
+        <div className={style.move_stick}></div>
       </div>
       <div className={style.cpage}>
         <div className={style.gptcode}>
@@ -102,14 +103,14 @@ export const Main = () => {
           content="바로 시작하기"
           style={{
             backgroundColor: "#61ff71",
-            color: "black",
             border: "1px solid black",
             fontSize: "1.3rem",
             fontWeight: "700",
             padding: "20px 60px",
-            marginBottom: "30px",
+            margin: "50px 0 100px",
+            color: "black",
           }}
-          onClick={() => {}}
+          onClick={moveExtention}
         />
       </div>
     </div>
