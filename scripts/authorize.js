@@ -65,6 +65,7 @@ const localAuth = {
     }).then((res) => {
       const accessToken = res.headers.get("authorization");
       console.log(accessToken)
+      if (!accessToken) throw new Error("");
       chrome.runtime.sendMessage({
         closeWebPage: true,
         isSuccess: true,
@@ -76,24 +77,9 @@ const localAuth = {
         window.close();
       }, 500);
 
+    }).catch((e) => {
+      alert("로그인이 실패했습니다")
     })
-
-    // const xhr = new XMLHttpRequest();
-    // xhr.addEventListener('readystatechange', function () {
-    //   if (xhr.readyState === 4) {
-    //     alert(xhr.status)
-    //     if (xhr.status === 200) {
-    //       that.finish(xhr.responseText.match(/access_token=([^&]*)/)[1]);
-    //     } else {
-    //       chrome.runtime.sendMessage({
-    //         closeWebPage: true,
-    //         isSuccess: false,
-    //       });
-    //     }
-    //   }
-    // });
-    // xhr.open('POST', this.ACCESS_TOKEN_URL, true);
-    // xhr.send(data);
   },
 
   /**

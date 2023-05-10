@@ -46,11 +46,10 @@ chrome.storage.local.get('userSeq', (data) => {
   let eventSource = new EventSource(`https://algopat.kr/api/alert/sse/${userSeq}`);
 
   eventSource.onmessage = function (event) {
-    console.log('받았음')
     console.log(event)
     chrome.notifications.create('my-notification', {
       type: 'basic',
-      iconUrl: `chrome-extension://${chrome.runtime.id}/assets/thumb.png`,
+      iconUrl: `chrome-extension://${chrome.runtime.id}/assets/icon.png`,
       title: '분석완료',
       message: '코드리펙토링이 완료되었습니다'
     });

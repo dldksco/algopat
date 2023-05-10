@@ -21,9 +21,9 @@ if (!isNull(username)) {
 function startLoader() {
   loader = setInterval(async () => {
 
-    if (await isProgressRefactoring()) {
-      toastThenStopLoader("아직 리팩토링이 진행중입니다", "리팩토링 진행중")
-    }
+    // if (await isProgressRefactoring()) {
+    //   toastThenStopLoader("아직 리팩토링이 진행중입니다", "리팩토링 진행중")
+    // }
 
     // 기능 Off시 작동하지 않도록 함
     const enable = await checkEnable();
@@ -56,38 +56,45 @@ function startLoader() {
           chrome.storage.local.get(['BaekjoonHub_token', 'gpt_key', 'commit_state'], (data) => {
             const token = data.BaekjoonHub_token;
             const key = data.gpt_key;
+            const commit_state = data.commit_state;
 
-            fetch("https://api.openai.com/v1/models",
-              {
-                method: 'GET',
-                headers: {
-                  'Content-Type': 'application/json',
-                  'Authorization': `Bearer ${key}`,
-                },
-
-              }).then((res) => {
-                if (res.status === 200) {
-                  bojData.openai_api_key = key;
-
-                  console.log('풀이가 맞았습니다. 전송을 시작합니다..');
-                  console.log("보낼 데이터 ", bojData)
-
-                  //fetch 요청
-                  return fetch('https://algopat.kr/api/code/problem', {
-                    method: 'POST',
+            commitMode(commit_state, token).then((res) => {
+              if (res) {
+                return fetch("https://api.openai.com/v1/models",
+                  {
+                    method: 'GET',
                     headers: {
                       'Content-Type': 'application/json',
-                      'authorization': token,
+                      'Authorization': `Bearer ${key}`,
                     },
-                    body: JSON.stringify(bojData)
-                  }).catch((e) => {
-                    throw new Error("")
-                  })
 
-                } else {
-                  throw new Error("key");
-                }
-              })
+                  })
+              } else {
+                throw new Error("refactoring")
+              }
+            }).then((res) => {
+              if (res.status === 200) {
+                bojData.openai_api_key = key;
+
+                console.log('풀이가 맞았습니다. 전송을 시작합니다..');
+                console.log("보낼 데이터 ", bojData)
+
+                //fetch 요청
+                return fetch('https://algopat.kr/api/code/problem', {
+                  method: 'POST',
+                  headers: {
+                    'Content-Type': 'application/json',
+                    'authorization': token,
+                  },
+                  body: JSON.stringify(bojData)
+                }).catch((e) => {
+                  throw new Error("")
+                })
+
+              } else {
+                throw new Error("key");
+              }
+            })
               .then((res) => {
 
                 if (res.status == 200) {
@@ -104,6 +111,8 @@ function startLoader() {
                   toastThenStopLoader("API Key를 확인해주세요")
                 } else if (e.message == "dupl") {
                   toastThenStopLoader("이미 제출한 코드입니다")
+                } else if (e.message == "refactoring") {
+                  toastThenStopLoader("다른 코드가 리팩토링이 진행중입니다")
                 } else {
                   toastThenStopLoader("전송에 실패했습니다")
                 }
@@ -128,17 +137,45 @@ function toastThenStopLoader(toastMessage, errorMessage) {
   throw new Error(errorMessage);
 }
 
-async function isProgressRefactoring() {
+// async function isProgressRefactoring() {
+//   return new Promise((resolve, reject) => {
+//     chrome.storage.local.get(['commit_state'], (data) => {
+//       console.log("진행중인지 체크 : ", data.commit_state)
+//       if (data.commit_state && !data.commit_state.state) {
+//         resolve(true)
+//       } else {
+//         resolve(false)
+//       }
+//     });
+//   })
+
+// }
+
+function commitMode(commit_state, token) {
   return new Promise((resolve, reject) => {
-    chrome.storage.local.get(['commit_state'], (data) => {
-      console.log("진행중인지 체크 : ", data.commit_state)
-      if (data.commit_state && !data.commit_state.state) {
-        resolve(true)
-      } else {
-        resolve(false)
-      }
-    });
+    if (commit_state && commit_state.submissionId && !commit_state.state) { // 코드 분석 진행중
+
+      fetch(`https://algopat.kr/api/code/problem/submission/solution/exist/${commit_state.submissionId}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'authorization': token,
+        }
+      }).then((res) => res.json())
+        .then(data => {
+          if (data.data) { // 분석 완료
+            resolve(true)
+            chrome.storage.local.set({ commit_state: { ...commit_state, state: true } }, () => { });
+          } else { // 분석 진행중
+            resolve(false)
+          }
+        }).catch((e) => {
+          reject()
+        })
+
+    }
   })
+
 
 }
 

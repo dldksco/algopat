@@ -78,6 +78,7 @@ $('#gear_icon').on('click', () => {
 chrome.storage.local.get(['BaekjoonHub_token', 'commit_state'], (data) => {
   const token = data.BaekjoonHub_token;
   const commit_state = data.commit_state;
+  // console.log(token)
   if (token === null || token === undefined) {
     action = true;
     $('#auth_mode').show();
@@ -146,7 +147,6 @@ function commitMode(commit_state, token) {
       }
     }).then((res) => res.json())
       .then(data => {
-        console.log("완료했니", data.data)
         if (data.data) { // 분석 완료
           $('#commit_state_text').html('<p>코드 분석이 완료되었습니다</p><div class="completed_icon">✓</div>');
           chrome.storage.local.set({ commit_state: { ...commit_state, state: true } }, () => { });
@@ -158,26 +158,11 @@ function commitMode(commit_state, token) {
       })
 
   } else if (commit_state && commit_state.submissionId && commit_state.state) {
-    $('#commit_state_text').html('<p>코드 분석이 완료되었습니다</p><div class="completed_icon">✓</div>');
-    chrome.storage.local.set({ commit_state: { ...commit_state, state: true } }, () => { });
+    $('#commit_state_text').html('<p>진행중인 코드 분석이 없습니다</p>');
   } else {
     $('#commit_state_text').html('<p>진행중인 코드 분석이 없습니다</p>');
   }
 }
-
-// chrome.storage.local.get('commit_state', ({ commit_state }) => {
-
-//   // if (!data.commit_state || data.commit_state == "idle") {
-//   //   $('#commit_state_text').html('<p>진행중인 코드 분석이 없습니다</p>');
-//   // } else if (data.commit_state == "progress") {
-//   //   $('#commit_state_text').html('<p>코드 분석이 진행중입니다</p><div class="spinner"></div>');
-//   // } else if (data.commit_state == "completed") {
-//   //   $('#commit_state_text').html('<p>코드 분석이 완료되었습니다</p><div class="completed_icon">✓</div>');
-//   //   $('#commit_state_text').after('<a id="result_link" target="_blank" href="https://github.com/">분석 결과 보기</a>');
-//   //   chrome.storage.local.set({ commit_state: "idle" }, () => { });
-//   // }
-// });
-
 
 /*
   gpt 키
