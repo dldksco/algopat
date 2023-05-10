@@ -34,7 +34,7 @@ import org.hibernate.annotations.Type;
 @Builder
 public class User {
   @Id
-  @GeneratedValue(generator = "GenerationType.IDENTITY")
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "user_seq", updatable = false, nullable = false)
   private Long userSeq;
 

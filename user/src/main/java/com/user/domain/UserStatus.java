@@ -36,7 +36,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @EntityListeners(AuditingEntityListener.class)
 public class UserStatus{
   @Id
-  @GeneratedValue(generator = "GenerationType.IDENTITY")
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "user_status_seq", updatable = false, nullable = false)
   private Long userStatusSeq;
 
