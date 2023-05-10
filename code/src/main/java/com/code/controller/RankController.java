@@ -28,34 +28,34 @@ public class RankController {
   /**
    * 랭킹 조회
    * @param level
-   * @param pageNumber
+   * @param pagenumber
    * @return
    */
   @GetMapping("/{level}")
   public ResponseEntity<Page<ProblemRankOverviewDto[]>> getProblemRankOverviewDto(
-      @PathVariable("level") long level, @RequestParam(required = false, defaultValue = "0") int pageNumber) {
-    return ResponseEntity.ok(problemRankService.getProblemRankOverviews(level, pageNumber));
+      @PathVariable("level") long level, @RequestParam(required = false, defaultValue = "0") int pagenumber) {
+    return ResponseEntity.ok(problemRankService.getProblemRankOverviews(level, pagenumber));
   }
 
     /**
    * 랭킹 검색어 필터링
    * @param problemId
-   * @param pageNumber
-   * @param languageFilter
-   * @param sortCriteria
-   * @param searchText
+   * @param pagenumber
+   * @param languagefilter
+   * @param sortcriteria
+   * @param searchtext
    * @return
    */
   @GetMapping("/solutions/{problemId}")
   public ResponseEntity<Page<ProblemRankDetailDto[]>> findSolutionsByProblemIdWithDetailsAndFilters(
       @PathVariable long problemId,
-      @RequestParam(required = false, defaultValue = "0") int pageNumber,
-      @RequestParam(required = false) String languageFilter,
-      @RequestParam(required = false) String sortCriteria,
-      @RequestParam(required = false, defaultValue = "") String searchText){
+      @RequestParam(required = false, defaultValue = "0") int pagenumber,
+      @RequestParam(required = false) String languagefilter,
+      @RequestParam(required = false) String sortcriteria,
+      @RequestParam(required = false, defaultValue = "") String searchtext){
 
     Page<ProblemRankDetailDto[]> result = problemRankService.findSolutionsByProblemIdWithDetailsAndFilters(
-        problemId, languageFilter, sortCriteria, searchText, pageNumber);
+        problemId, languagefilter, sortcriteria, searchtext, pagenumber);
     return ResponseEntity.ok(result);
   }
 
