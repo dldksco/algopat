@@ -73,7 +73,7 @@ export const RankingCarousel = () => {
 
     //selectbox 초기화
     setlevelRankSelect(Math.floor(index / 5).toString());
-    setlevelNumberSelect("0");
+    setlevelNumberSelect(Math.floor(index % 5).toString());
 
     // 초기화
     setLevelData((prev) =>
