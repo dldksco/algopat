@@ -10,6 +10,6 @@ public class ProblemRankOverviewDto {
   private String problemTitle;
   private long problemLevel;
   private long problemSubmittedCount;
-  private String userNickname;
-
+//  private String userNickname;
+  private String userGithubId;
 }
