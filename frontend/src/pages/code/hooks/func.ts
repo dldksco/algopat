@@ -23,9 +23,9 @@ export const addCommas = (num: string | number) =>
  * @returns
  */
 export const pathColor = (percent: number) => {
-  if (percent < 30) {
+  if (percent < 40) {
     return "rgba(255, 0, 0, 1)";
-  } else if (percent < 50) {
+  } else if (percent < 80) {
     return "rgba(255, 255, 0, 1)";
   } else if (percent <= 100) {
     return "rgba(0, 255, 0, 1)";
@@ -39,11 +39,28 @@ export const pathColor = (percent: number) => {
  * @returns
  */
 export const backgroundColor = (percent: number) => {
-  if (percent < 30) {
+  if (percent < 40) {
     return "rgba(255, 0, 0, 0.2)";
-  } else if (percent < 50) {
+  } else if (percent < 80) {
     return "rgba(255, 255, 0, 0.2)";
   } else if (percent <= 100) {
     return "rgba(0, 255, 0, 0.2)";
+  }
+};
+
+/**
+ *
+ * 점수에 맞춰서 높은 / 중간 / 낮은 평가를 해준다
+ * @param percent : 점수 입력
+ * @param state : 무슨 복잡도인지 입력
+ * @returns
+ */
+export const estimate = (score: number, state: string) => {
+  if (score < 40) {
+    return `높은 ${state} 복잡도`;
+  } else if (score < 80) {
+    return `중간 ${state} 복잡도`;
+  } else if (score <= 100) {
+    return `낮은 ${state} 복잡도`;
   }
 };
