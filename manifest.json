@@ -3,7 +3,7 @@
   "name": "ALGOPAT",
   "description": "Refactor the algorithm code",
   "homepage_url": "https://algopat.kr/",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "author": "A706",
   "action": {
     "default_icon": "assets/thumb.png",
