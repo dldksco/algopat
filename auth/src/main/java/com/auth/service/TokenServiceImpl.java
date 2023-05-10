@@ -90,6 +90,7 @@ private static final long ACCESS_TOKEN_EXPIRATION_TIME = 10; // 1 day (in millis
   @Override
   public String getGithubIdFromToken(TokenDTO tokenDTO){
     String jwt = tokenDTO.getToken();
+    System.out.println("getgituhㅇㅁㄴㅇㅁㄴㅇ"+jwt);
     try{
       Jws<Claims> jws = Jwts.parserBuilder()
           .setSigningKey(getSigningKey())

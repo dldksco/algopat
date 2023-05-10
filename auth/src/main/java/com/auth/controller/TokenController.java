@@ -53,7 +53,7 @@ public class TokenController {
           break;
         }
       }
-
+      System.out.println("리프레쉬토큰:"+ refreshToken);
       if (refreshToken == null) {
         return new ResponseEntity<>(TokenStatus.TOKEN_NOT_FOUND.getMessage(),TokenStatus.TOKEN_NOT_FOUND.getStatus());
       }else{
@@ -62,7 +62,10 @@ public class TokenController {
         if(tokenStatus==TokenStatus.VALID){
 
           String githubId = tokenService.getGithubIdFromToken(tokenDTO);
+          System.out.println("여기맞지");
+
           tokenDTO.setToken(tokenService.generateAccessToken(TokenGenerateDTO.builder().userGithubId(githubId).build()).getToken());
+          System.out.println("ㅇㅇㅇㅇㅇㅇㅇㅇ");
           HttpHeaders headers = new HttpHeaders();
           headers.add("Authorization", tokenDTO.getToken());
           return new ResponseEntity<>(TokenStatus.ISSUED_ACCESS_TOKEN,headers,TokenStatus.ISSUED_ACCESS_TOKEN.getStatus());
