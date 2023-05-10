@@ -65,7 +65,7 @@ async def send(topic : str, message_dto : MessageDTO):
         # value_serializer = lambda m : m.encode("utf-8") 
 
         # @@@@@@@@@@@@@@@@@@ 이부분 수정 @@@@@@@@@@@@@@@@@@@@
-        value_serializer = lambda m : json.dumps(m).encode("utf-8") 
+        value_serializer = lambda m : json.dumps(m.dict()).encode("utf-8") 
     )
     await producer.start()
     logger.info("Send to 토픽 : " + topic)
