@@ -70,7 +70,8 @@ public class AlertController {
     logger.info("알림 컨슘 !!!!");
     logger.info("받은 데이터 {}", messageDto);
     logger.info("유저 식별번호 {}", messageDto.getUserSeq());
-    emitService.emitMessageToUser(userSinks, messageDto.getUserSeq().getUserSeq());
+    emitService.emitMessageToUser(userSinks, messageDto.getUserSeq().getUserSeq(),
+        messageDto.getProgress());
   }
 
 //  @KafkaListener(topics = "${kafka.topic}", groupId = "${kafka.group-id}")
