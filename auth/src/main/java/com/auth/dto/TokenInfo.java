@@ -13,5 +13,5 @@ import lombok.Setter;
 @NoArgsConstructor
 public class TokenInfo {
   private String userGithubId;
-  Long userSeq;
+  long userSeq;
 }

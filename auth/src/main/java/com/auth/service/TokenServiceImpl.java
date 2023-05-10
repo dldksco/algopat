@@ -31,7 +31,7 @@ public class TokenServiceImpl implements TokenService {
   @Value("${secret-key}")
   private String SECRET_KEY;
 //  private static final long ACCESS_TOKEN_EXPIRATION_TIME = 86400_000; // 1 day (in milliseconds)
-private static final long ACCESS_TOKEN_EXPIRATION_TIME = 86400_000; // 1 day (in milliseconds)
+private static final long ACCESS_TOKEN_EXPIRATION_TIME = 10; // 1 day (in milliseconds)
   private static final long EXTENSION_TOKEN_EXPIRATION_TIME = 86400_000; // 1 day (in milliseconds)
   private static final long REFRESH_TOKEN_EXPIRATION_TIME = 86400_000; // 1 day (in milliseconds)
   private final Key getSigningKey() {
@@ -97,7 +97,9 @@ private static final long ACCESS_TOKEN_EXPIRATION_TIME = 86400_000; // 1 day (in
           .build()
           .parseClaimsJws(jwt);
       String userGithubId =jws.getBody().get("userGithubId", String.class);
+      System.out.println(userGithubId+"깃허브용");
       long userSeq = jws.getBody().get("userSeq", Long.class);
+      System.out.println("유저시크요"+userSeq);
       return TokenInfo.builder().userGithubId(userGithubId).userSeq(userSeq).build();
     }catch (JwtException e){
       throw new BaseException(ErrorCode.UNVALID_TOKEN);
