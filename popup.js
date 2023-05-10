@@ -154,7 +154,7 @@ function commitMode(commit_state, token) {
           $('#commit_state_text').html('<p>코드 분석이 진행중입니다</p><div class="spinner"></div>');
         }
       }).catch((e) => {
-        $('#commit_state_text').html('<p>진행중인 코드 분석이 없습니다</p>');
+        $('#commit_state_text').html('<p>에러!!</p>');
       })
 
   } else if (commit_state && commit_state.submissionId && commit_state.state) {
