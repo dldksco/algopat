@@ -19,6 +19,7 @@ $.interceptors.response.use(
   },
   (error) => {
     if (error.response.status === 401) {
+      console.log("access 토큰 만료");
       localStorage.removeItem("access-token");
       $.get("/token/accesstoken", {
         withCredentials: true,
