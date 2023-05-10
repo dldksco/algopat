@@ -6,6 +6,8 @@ import code2 from "@/assets/img/main/code2.png";
 import code3 from "@/assets/img/main/code3.png";
 import gpticon from "@/assets/img/main/gpticon.png";
 import bird from "@/assets/img/main/bird.png";
+import { MainMoveStick } from "./MainMoveStick";
+import { useEffect, useState } from "react";
 
 export const Main = () => {
   const moveExtention = () => {
@@ -52,7 +54,9 @@ export const Main = () => {
             <p>코드를 비교해서 완성도를 높여보세요</p>
           </div>
         </div>
-        <div className={style.move_stick}></div>
+        <div className={style.move_stick}>
+          <MainMoveStick />
+        </div>
       </div>
       <div className={style.cpage}>
         <div className={style.gptcode}>
