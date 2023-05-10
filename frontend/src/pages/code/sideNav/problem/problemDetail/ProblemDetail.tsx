@@ -7,6 +7,9 @@ import { nowProblemSubmissionIdState } from "@/atoms/code.atom";
 import { Problem } from "../Problem";
 
 import style from "./ProblemDetail.module.css";
+import axios from "axios";
+import { Modal } from "@/components/modal/Modal";
+import { useState } from "react";
 
 export interface SolveProps {
   detail?: Solve[];
@@ -19,6 +22,7 @@ export interface Solve {
 }
 
 export const ProblemDetail = (props: SolveProps) => {
+  const [modalOpen, setModalOpen] = useState(false);
   const [nowSubmission, setNowSubmission] = useRecoilState(
     nowProblemSubmissionIdState
   );
@@ -37,19 +41,35 @@ export const ProblemDetail = (props: SolveProps) => {
     ["problemDetail", props.problemDetail.problemId],
     fetchSubmission
   );
-  console.log(props.detail, "submission id 확인");
-  const handleSubmission = (submissionId: number) => {
-    setNowSubmission((prev) => ({
-      ...prev,
-      problemTitle: props.problemDetail.problemTitle,
-      problemLevel: props.problemDetail.problemLevel,
-      problemId: props.problemDetail.problemId,
-      submissionId: submissionId,
-    }));
-    //console.log("weq", submissionId);
+  const handleSubmission = async (submissionId: number) => {
+    const response = await $.get(
+      `/code/problem/submission/solution/exist/${submissionId}`
+    );
+    console.log(response.data, "response 확인");
+    //response.data = true 생성 완료
+    if (response.data === true) {
+      setNowSubmission((prev) => ({
+        ...prev,
+        problemTitle: props.problemDetail.problemTitle,
+        problemLevel: props.problemDetail.problemLevel,
+        problemId: props.problemDetail.problemId,
+        submissionId: submissionId,
+        nowProcess: false, // process 끝
+      }));
+    } else {
+      // false는 생성중
+      setNowSubmission((prev) => ({
+        ...prev,
+        problemTitle: props.problemDetail.problemTitle,
+        problemLevel: props.problemDetail.problemLevel,
+        problemId: props.problemDetail.problemId,
+        submissionId: submissionId,
+        nowProcess: true, // process 진행중
+      }));
+    }
   };
 
-  //console.log(data, "submission query 결과");
+  console.log(data, "submission query 결과");
   if (isLoading) {
     return <LoadingSpinner />;
   }
@@ -63,7 +83,7 @@ export const ProblemDetail = (props: SolveProps) => {
               className={style.submission_list}
               onClick={() => handleSubmission(el.submissionId)}
             >
-              - {new Date(el.userSubmitSolutionTime).toDateString()}
+              풀이 {new Date(el.userSubmitSolutionTime).toLocaleString()}
             </div>
           ))}
     </>

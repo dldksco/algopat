@@ -12,5 +12,6 @@ export const nowProblemSubmissionIdState = atom({
     problemId: 16236,
     problemLevel: 21,
     submissionId: 48210181,
+    nowProcess: true,
   },
 });

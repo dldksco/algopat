@@ -42,34 +42,18 @@ export const Profile = () => {
   } = useQuery(["tierupdate"], getTier, { enabled: false });
 
   useEffect(() => {
-    console.log("문제>");
     if (profileData && profileData.userBackjoonId !== "NO_SUBMITTED") {
-      console.log("무눙ㅁ나ㅜㅇ마누아ㅣ무니아 문제");
       refetchTier();
     }
   });
 
-  if (isLoadingTier || isLoadingProfile)
-    console.log("어떤게 문제 tier", isLoadingTier);
-  console.log("어떤게 문제 profile", isLoadingProfile);
-  return (
-    <div>
-      <LoadingSpinner />
-    </div>
-  );
-  //tier use-query
-
-  const dummyData = {
-    grass: [] as number[],
-  };
-  for (let i = 0; i < 120; i++) {
-    dummyData.grass.push(1);
-  }
-  for (let i = 0; i < 120; i++) {
-    dummyData.grass.push(3);
-  }
-  for (let i = 0; i < 125; i++) {
-    dummyData.grass.push(6);
+  if (isLoadingProfile) {
+    console.log(isLoadingTier);
+    return (
+      <div>
+        <LoadingSpinner />
+      </div>
+    );
   }
   return (
     <>
@@ -87,7 +71,9 @@ export const Profile = () => {
         <div className={style.profileinfo}>
           <div className={style.gitinfo}>
             <p className={style.nickname}>
-              {tierData.tier > 0 && tierData !== undefined ? (
+              {profileData !== undefined &&
+              profileData.userBackjoonId !== "NO_SUBMITTED" &&
+              tierData.tier > 0 ? (
                 <img
                   src={`https://static.solved.ac/tier_small/${tierData.tier}.svg`}
                   style={{ marginRight: "6px", width: "12px", height: "auto" }}
