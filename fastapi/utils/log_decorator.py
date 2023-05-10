@@ -2,32 +2,44 @@ import functools
 import time
 import os
 from logging import getLogger, FileHandler, Formatter, DEBUG, INFO
+import asyncio
+import datetime
 
-# logger 설정 
+# logger 설정
 logger = getLogger()
 logger.setLevel(DEBUG)
 
-# 로그 파일 저장 경로 설정
-log_directory = "/logs"
-os.makedirs(log_directory, exist_ok=True)
+def update_file_handler():
+    global file_handler
+    log_directory = "/logs"
+    os.makedirs(log_directory, exist_ok=True)
+    container_name = os.environ.get('CONTAINER_NAME', 'default_container_name')
 
-container_name = os.environ.get('CONTAINER_NAME', 'default_container_name')
-log_file_path = os.path.join(log_directory, f"{container_name}.log")
+    # 로그 파일 이름에 오늘의 날짜를 추가
+    today = datetime.date.today().strftime("%Y%m%d")
+    log_file_path = os.path.join(log_directory, f"{container_name}-{today}.log")
 
-# 로그 파일 핸들러 추가
-file_handler = FileHandler(log_file_path)
-file_handler.setLevel(INFO)
+    # 파일 핸들러 업데이트
+    if file_handler is not None:
+        logger.removeHandler(file_handler)
 
-# 로그 메시지 포맷 설정
-formatter = Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-file_handler.setFormatter(formatter)
+    file_handler = FileHandler(log_file_path)
+    file_handler.setLevel(INFO)
+    formatter = Formatter(f'[{container_name}] %(asctime)s - %(name)s - %(levelname)s - %(message)s')
+    file_handler.setFormatter(formatter)
+    logger.addHandler(file_handler)
 
-# 파일 핸들러를 로거에 추가
-logger.addHandler(file_handler)
+file_handler = None
+update_file_handler()
 
-# logger 설정 
-logger = getLogger()
-
+async def schedule_daily_update():
+    while True:
+        now = datetime.datetime.now()
+        tomorrow = now.date() + datetime.timedelta(days=1)
+        midnight = datetime.datetime.combine(tomorrow, datetime.time(0, 0))
+        seconds_until_midnight = (midnight - now).seconds
+        await asyncio.sleep(seconds_until_midnight)
+        update_file_handler()
 
 def log_decorator(custom_text):
     def decorator(func):
