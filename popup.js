@@ -153,7 +153,9 @@ function commitMode(commit_state, token) {
           $('#commit_state_text').after('<p>코드 분석이 완료되었습니다</p><div class="completed_icon">✓</div>');
           chrome.storage.local.set({ commit_state: { ...commit_state, state: true } }, () => { });
         } else { // 분석 진행중
-          $('#commit_state_text').html('<p>코드 분석이 진행중입니다</p><div class="spinner"></div>');
+          if (commit_state.problemId && commit_state.title)
+            $('#commit_state_text').html(`<p>${commit_state.problemId} ${commit_state.title}</p>`);
+          $('#commit_state_text').after('<p>코드 분석이 진행중입니다</p><div class="spinner"></div>');
         }
       }).catch((e) => {
         $('#commit_state_text').html('<p>에러!!</p>');
