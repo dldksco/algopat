@@ -56,18 +56,18 @@ public class AlertController {
   @KafkaListener(topics = "${kafka.topic}", groupId = "${kafka.group-id}")
   public void consume(@Payload String message) {
     logger.info("알림 컨슘 !!!!");
-
-    MessageDto messageDto;
-
+    logger.info(message);
     try {
-      messageDto = objectMapper.readValue(message, MessageDto.class);
+      MessageDto messageDto = objectMapper.readValue(message, MessageDto.class);
+
+      emitService.emitMessageToUser(userSinks, messageDto.getUserSeq(),
+          messageDto.getProgress());
     } catch (JsonProcessingException e) {
       logger.info("String -> Json 파싱 에러 발생");
       throw new RuntimeException(e);
     }
 
-    emitService.emitMessageToUser(userSinks, messageDto.getUserSeq(),
-        messageDto.getProgress());
+
   }
 
   /**
