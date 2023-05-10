@@ -35,6 +35,12 @@
     box-shadow: 1px 7px 14px -5px rgba(0,0,0,0.2);
 }
 
+.toast_show {
+  opacity: 1;
+  animation-name: shake;
+  animation-duration: 0.5s;
+}
+
 
 .toast:before {
     content: '';
