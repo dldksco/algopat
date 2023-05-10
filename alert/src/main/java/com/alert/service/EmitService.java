@@ -15,6 +15,7 @@ public class EmitService {
 
   public void emitMessageToUser(Map<String, Many<String>> userSinks, String userSeq, String progress) {
     Sinks.Many<String> userSink = userSinks.get(userSeq);
+    // Todo : GPT 응답 생성이 완료되거나 에러를 받은 시점에 연결 끊는 로직 구현
     if (userSink != null) {
       userSink.tryEmitNext(progress);
 
