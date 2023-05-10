@@ -23,7 +23,9 @@ async function findData(data) {
         'username': findUsername(),
         'language': table[0]["language"]
       })
-      data = selectBestSubmissionList(table)[0];
+      // console.log("table ", table)
+      // 가장 최신의 데이터만 전송
+      data = table[0];
     }
 
     if (data.level == 0) {
