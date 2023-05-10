@@ -12,7 +12,7 @@ class Toast {
         this.time = time;
         this.element = null;
         const element = document.createElement('div');
-        element.className = "toast toast--red";
+        element.className = `toast toast_show toast--${this.color}`;
         this.element = element;
 
         element.innerHTML +=
@@ -29,7 +29,7 @@ class Toast {
 
         element.innerHTML +=
             `<div class="toast__content">
-                <p class="toast__type">Warning</p>
+                <p class="toast__type">${this.color == 'red' ? "Warning" : "Success"}</p>
                 <p class="toast__message">${message}</p>
             </div>`
 
@@ -45,7 +45,7 @@ class Toast {
         log('Closed')
     }
 
-    static raiseToast(message, duration = 5000) {
-        return new Toast(message, ToastType.Danger, duration)
+    static raiseToast(message, color = "red", duration = 5000) {
+        return new Toast(message, color, duration)
     }
 }

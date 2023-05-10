@@ -98,7 +98,9 @@ function startLoader() {
               .then((res) => {
 
                 if (res.status == 200) {
+
                   markUploadedCSS();
+                  Toast.raiseToast("전송되었습니다", "green");
                   // 리팩토링 상태 진행중으로 변경
                   chrome.storage.local.set({
                     commit_state:
