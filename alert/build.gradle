@@ -35,6 +35,7 @@ dependencies {
 	//zipkin
 	implementation 'org.springframework.cloud:spring-cloud-starter-sleuth:3.1.7'
 	implementation 'org.springframework.cloud:spring-cloud-starter-zipkin:2.2.8.RELEASE'
+
 	compileOnly 'org.projectlombok:lombok'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	annotationProcessor 'org.projectlombok:lombok'
