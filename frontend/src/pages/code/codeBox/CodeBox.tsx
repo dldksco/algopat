@@ -40,10 +40,18 @@ const CodeBox = React.memo(({ type, data }: CodeBoxProps) => {
         <Refactoring isModalOpen={isModalOpen} data={data} />
       ) : null}
       {type === "TIME COMPLEXITY" ? (
-        <Complexity isModalOpen={isModalOpen} data={data} />
+        <Complexity
+          isModalOpen={isModalOpen}
+          data={data}
+          title={"시간 복잡도"}
+        />
       ) : null}
       {type === "SPACE COMPLEXITY" ? (
-        <Complexity isModalOpen={isModalOpen} data={data} />
+        <Complexity
+          isModalOpen={isModalOpen}
+          data={data}
+          title={"공간 복잡도"}
+        />
       ) : null}
     </div>
   );
