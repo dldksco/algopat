@@ -2,11 +2,11 @@ package com.alert.controller;
 
 import com.alert.dto.MessageDto;
 import com.alert.service.EmitService;
-import com.alert.service.KafkaProducerService;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import lombok.RequiredArgsConstructor;
-import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.MediaType;
@@ -29,63 +29,51 @@ public class AlertController {
   private static final Logger logger = LoggerFactory.getLogger(AlertController.class);
 
   // service 정의
-  private final KafkaProducerService kafkaProducerService;
   private final EmitService emitService;
 
   // Sink 관리 자료구조 정의
   private final Map<String, Many<String>> userSinks = new ConcurrentHashMap<>();
 
-  // 카프카에게 메시지 전송 (테스트 컨트롤러)
-  @GetMapping("/send/kafka")
-  public void sendKafka(String username) {
-    logger.info("alert 토픽에게 {} 전송", username);
-    kafkaProducerService.sendMessage("alert", username);
-  }
+  // Util 정의
+  private final ObjectMapper objectMapper;
 
-  // 파이프라인 연결 (단순 String)
-//  @GetMapping(value = "/sse/{userSeq}", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
-//  public Flux<String> sseSubscription(@PathVariable String userSeq){
-//    Sinks.Many<String> userSink = userSinks.computeIfAbsent(userSeq, key -> Sinks.many().multicast().onBackpressureBuffer());
-//    logger.info("파이프라인 시작");
-//    return userSink.asFlux();
-//  }
-
-  // 파이프라인 연결 (ResponseEntity)
+  /**
+   * 파이프라인 연결 -> SSE (WebFlux)
+   * @param userSeq
+   * @return
+   */
   @GetMapping(value = "/sse/{userSeq}", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
   public Mono<ResponseEntity<Flux<String>>> sseSubscription(@PathVariable String userSeq){
     Sinks.Many<String> userSink = userSinks.computeIfAbsent(userSeq, key -> Sinks.many().multicast().onBackpressureBuffer());
-    logger.info("파이프라인 시작");
+    logger.info("파이프라인 연결 시작 : {}", userSeq);
     return Mono.just(ResponseEntity.ok().contentType(MediaType.TEXT_EVENT_STREAM).body(userSink.asFlux()));
   }
 
-//  @KafkaListener(topics = "${kafka.topic}", groupId = "${kafka.group-id}")
-//  public void consume(String message) {
-//    logger.info("알림 컨슘 !!!!");
-//    logger.info("받은 데이터 {}", message);
-//    emitService.emitMessageToUser(userSinks,  message);
-//  }
-
+  /**
+   * GPT 응답 완료 알림 Consume
+   * @param message
+   */
   @KafkaListener(topics = "${kafka.topic}", groupId = "${kafka.group-id}")
-  public void consume(@Payload MessageDto messageDto) {
+  public void consume(@Payload String message) {
     logger.info("알림 컨슘 !!!!");
-    logger.info("진행 상황 : {}", messageDto.getProgress());
-    logger.info("메시지 : {}", messageDto.getMessage());
-    logger.info("유저 식별 번호 : {}", messageDto.getUserSeq());
+
+    MessageDto messageDto;
+
+    try {
+      messageDto = objectMapper.readValue(message, MessageDto.class);
+    } catch (JsonProcessingException e) {
+      logger.info("String -> Json 파싱 에러 발생");
+      throw new RuntimeException(e);
+    }
 
     emitService.emitMessageToUser(userSinks, messageDto.getUserSeq(),
         messageDto.getProgress());
   }
 
-//  @KafkaListener(topics = "${kafka.topic}", groupId = "${kafka.group-id}")
-//  public void consume(ConsumerRecord<String, String> record) {
-//    logger.debug("record key : {}, record value : {}", record.key(), record.value());
-//    String userSeq = record.key();
-//    String message  = record.value();
-//
-//    logger.info("{}에게 {}전송", userSeq, message);
-//    emitService.emitMessageToUser(userSinks, userSeq, message);
-//  }
-
+  /**
+   * Health 체크
+   * @return
+   */
   @GetMapping("/health")
   public String healthCheck() {
     return "ok";
