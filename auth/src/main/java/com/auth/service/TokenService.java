@@ -10,7 +10,7 @@ public interface TokenService {
   public TokenDTO generateAccessToken(TokenGenerateDTO tokenGenerateDTO);
   public TokenStatus validateToken(TokenDTO tokenDTO);
 
-  public String getGithubIdFromToken(TokenDTO tokenDTO);
+  public TokenInfo getGithubIdFromToken(TokenDTO tokenDTO);
   public TokenDTO generateRefreshToken(TokenGenerateDTO tokenGenerateDTO);
 
   public Cookie createRefreshTokenCookie(TokenDTO tokenDTO);

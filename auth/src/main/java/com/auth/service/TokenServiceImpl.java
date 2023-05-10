@@ -88,7 +88,7 @@ private static final long ACCESS_TOKEN_EXPIRATION_TIME = 10; // 1 day (in millis
     }
   }
   @Override
-  public String getGithubIdFromToken(TokenDTO tokenDTO){
+  public TokenInfo getGithubIdFromToken(TokenDTO tokenDTO){
     String jwt = tokenDTO.getToken();
     System.out.println("getgituhㅇㅁㄴㅇㅁㄴㅇ"+jwt);
     try{
@@ -96,7 +96,9 @@ private static final long ACCESS_TOKEN_EXPIRATION_TIME = 10; // 1 day (in millis
           .setSigningKey(getSigningKey())
           .build()
           .parseClaimsJws(jwt);
-      return jws.getBody().get("userGithubId", String.class);
+      String userGithubId =jws.getBody().get("userGithubId", String.class);
+      long userSeq = jws.getBody().get("userSeq", Long.class);
+      return TokenInfo.builder().userGithubId(userGithubId).userSeq(userSeq).build();
     }catch (JwtException e){
       throw new BaseException(ErrorCode.UNVALID_TOKEN);
     }
