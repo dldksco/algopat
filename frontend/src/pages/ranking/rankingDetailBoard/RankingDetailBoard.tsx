@@ -1,47 +1,25 @@
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 import { addCommas } from "@/pages/code/hooks/func";
-import { Pagenation } from "@/components/pagenation/Pagenation";
-import { SelectBox } from "@/components/selectBox/SelectBox";
-import { Input } from "@/components/input/Input";
-import { useState } from "react";
-
-import style from "./RankingDetailBoard.module.css";
 import { SearchGroup } from "./searchGroup/SearchGroup";
 
-export const RankingDetailBoard = () => {
-  const { id: problemId } = useParams();
+import style from "./RankingDetailBoard.module.css";
 
-  const data = [
-    {
-      author: "김싸피",
-      submissionTime: "2023-04-10",
-      language: "C++",
-      memory: 23708,
-      runtime: 247,
-      refactoring: 100,
-      codeLength: 149,
-    },
-    {
-      author: "박싸피",
-      submissionTime: "2023-04-10",
-      language: "Java",
-      memory: 20008,
-      runtime: 247,
-      refactoring: 100,
-      codeLength: 149,
-    },
-    {
-      author: "김싸피",
-      submissionTime: "2023-04-10",
-      language: "C++",
-      memory: 23708,
-      runtime: 247,
-      refactoring: 100,
-      codeLength: 149,
-    },
-  ];
+interface BoardColumn {
+  author: string;
+  submissionTime: string;
+  language: string;
+  memory: number;
+  runtime: number;
+  refactoring: number;
+  codeLength: number;
+}
 
+interface props {
+  data: BoardColumn[] | undefined;
+}
+
+export const RankingDetailBoard = ({ data }: props) => {
   return (
     <>
       <div className={style.header_container}>
@@ -95,7 +73,6 @@ export const RankingDetailBoard = () => {
             </div>
           );
         })}
-        <Pagenation first={true} last={true} />
       </div>
     </>
   );

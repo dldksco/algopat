@@ -8,6 +8,7 @@ import { getRankingList } from "./hooks/query";
 import { useRecoilValue } from "recoil";
 import { centerIndexState } from "@/atoms/ranking.atom";
 import { useEffect } from "react";
+import { LoadingSpinner } from "@/components/loadingspinner/LoadingSpinner";
 
 export const Ranking = () => {
   const location = useLocation();
@@ -37,7 +38,9 @@ export const Ranking = () => {
             />
           </>
         ) : (
-          <></>
+          <>
+            <LoadingSpinner />
+          </>
         )}
       </div>
     </>
