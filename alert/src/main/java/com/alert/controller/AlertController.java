@@ -9,6 +9,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.kafka.annotation.KafkaListener;
@@ -46,7 +47,9 @@ public class AlertController {
   public Mono<ResponseEntity<Flux<String>>> sseSubscription(@PathVariable String userSeq){
     Sinks.Many<String> userSink = userSinks.computeIfAbsent(userSeq, key -> Sinks.many().multicast().onBackpressureBuffer());
     logger.info("파이프라인 연결 시작 : {}", userSeq);
-    return Mono.just(ResponseEntity.ok().contentType(MediaType.TEXT_EVENT_STREAM).body(userSink.asFlux()));
+    return Mono.just(ResponseEntity.ok().header(
+        HttpHeaders.CONTENT_TYPE, MediaType.TEXT_EVENT_STREAM_VALUE + ";charset=UTF-8").body(userSink.asFlux()));
+    //    return Mono.just(ResponseEntity.ok().contentType(MediaType.TEXT_EVENT_STREAM).body(userSink.asFlux()));
   }
 
   /**
