@@ -1,10 +1,12 @@
 package com.code.data.repository;
 
 import com.code.data.dto.DateGrassCountDTO;
+import com.code.data.dto.DateGrassInfo;
 import com.code.data.dto.UserSubmissionSolutionDetailDto;
 import com.code.data.dto.UserSubmitProblemDto;
 import com.code.data.dto.UserSubmitSolutionTitleDto;
 import com.code.data.entity.UserSubmitProblem;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -60,6 +62,15 @@ public interface UserSubmitProblemRepository extends JpaRepository<UserSubmitPro
       "AND usp.userSubmitProblemCreatedAt BETWEEN :todayMinusYear AND :today " +
       "GROUP BY FUNCTION('DATE', usp.userSubmitProblemCreatedAt)")
   List<DateGrassCountDTO> findDateGrossCountByUserSeq(@Param("userSeq") Long userSeq, @Param("today") LocalDateTime today, @Param("todayMinusYear") LocalDateTime todayMinusYear);
+
+  @Query("SELECT new com.code.data.dto.DateGrassInfo(usp.userSubmitProblemSeq, usp.problemId, p.problemTitle, p.problemLevel) " +
+      "FROM UserSubmitProblem usp " +
+      "JOIN Problem p ON usp.problemId = p.problemId " +
+      "WHERE CAST(usp.userSubmitProblemCreatedAt AS LocalDate) = :userSubmitProblemCreatedAt " +
+      "AND usp.userSeq = :userSeq " +
+      "ORDER BY usp.userSubmitProblemCreatedAt DESC")
+  Page<DateGrassInfo> findDateGrassInfo(@Param("userSeq") Long userSeq, @Param("userSubmitProblemCreatedAt") LocalDate userSubmitProblemCreatedAt, Pageable pageable);
+
 
 }
 

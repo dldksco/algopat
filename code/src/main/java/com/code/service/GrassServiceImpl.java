@@ -1,6 +1,7 @@
 package com.code.service;
 
 import com.code.data.dto.DateGrassCountDTO;
+import com.code.data.dto.DateGrassInfo;
 import com.code.data.dto.UserGrassCountRequestDTO;
 import com.code.data.repository.UserSubmitProblemRepository;
 import java.sql.SQLOutput;
@@ -12,6 +13,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -54,5 +57,9 @@ public class GrassServiceImpl implements GrassService {
       dates.add(date);
     }
     return dates;
+  }
+@Override
+  public Page<DateGrassInfo> findDateGrassInfo(Long userSeq, LocalDate targetDate, Pageable pageable) {
+    return userSubmitProblemRepository.findDateGrassInfo(userSeq, targetDate, pageable);
   }
 }
