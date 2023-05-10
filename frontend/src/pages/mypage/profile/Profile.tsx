@@ -1,49 +1,59 @@
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
 import { Grid } from "./grid/Grid";
-import { useRecoilValue } from "recoil";
 import { LoadingSpinner } from "@/components/loadingspinner/LoadingSpinner";
-import { userInfoState } from "@/atoms/user.atom";
+import { $ } from "@/connect/axios";
 
 import style from "./Profile.module.css";
+import { useEffect } from "react";
 
 export const Profile = () => {
-  const userInfo = useRecoilValue(userInfoState);
-  //tier use-query
-  const fetchTier = async () => {
-    const response = await axios.get("https://solved.ac/api/v3/user/show", {
-      params: {
-        handle: "alice2596",
-      },
-    });
+  const id = "alice2596";
+  const getProfile = async () => {
+    const response = await $.get("/user/profile");
+    console.log("profile", response.data);
+    return response.data;
+  };
+
+  const {
+    isLoading: isLoadingProfile,
+    error: profileError,
+    data: profileData,
+  } = useQuery(["profileupdate"], getProfile);
+
+  const getTier = async () => {
+    console.log(profileData, "id찾기");
+    const response = await axios.get(
+      `https://solvedac-ixdn5ymk3a-du.a.run.app/userShow/${profileData.userBackjoonId}`
+    );
     const data = await response.data;
-    console.log(response, "response 확인");
-    console.log("data확인", data);
+    console.log(data, "tierData");
     return data;
   };
 
-  const { isLoading, error, data } = useQuery(["tierupdate"], fetchTier);
   // console.log(data, "query 결과");
   // console.log(data, "query solvedid");
-  if (isLoading) {
-    return <LoadingSpinner />;
-  }
 
-  const dummyData = {
-    email: "ssafy@github.com",
-    nickname: "김싸피",
-    imageUrl: "src/assets/img/main/bird.png",
-    solvedid: "alice2596",
-    grass: [] as number[],
-  };
-  for (let i = 0; i < 120; i++) {
-    dummyData.grass.push(1);
-  }
-  for (let i = 0; i < 120; i++) {
-    dummyData.grass.push(3);
-  }
-  for (let i = 0; i < 125; i++) {
-    dummyData.grass.push(6);
+  const {
+    isLoading: isLoadingTier,
+    error: tierError,
+    data: tierData,
+    refetch: refetchTier,
+  } = useQuery(["tierupdate"], getTier, { enabled: false });
+
+  useEffect(() => {
+    if (profileData && profileData.userBackjoonId !== "NO_SUBMITTED") {
+      refetchTier();
+    }
+  });
+
+  if (isLoadingProfile) {
+    console.log(isLoadingTier);
+    return (
+      <div>
+        <LoadingSpinner />
+      </div>
+    );
   }
   return (
     <>
@@ -51,21 +61,27 @@ export const Profile = () => {
         <div className={style.profiletitle}>마이 프로필</div>
         <div
           className={style.profileimage}
-          style={{ backgroundImage: `url(${dummyData.imageUrl})` }}
+          style={{
+            backgroundImage:
+              profileData === undefined
+                ? undefined
+                : `url(${profileData.userImageUrl})`,
+          }}
         ></div>
         <div className={style.profileinfo}>
           <div className={style.gitinfo}>
             <p className={style.nickname}>
-              {data.tier > 0 ? (
+              {profileData !== undefined &&
+              profileData.userBackjoonId !== "NO_SUBMITTED" &&
+              tierData.tier > 0 ? (
                 <img
-                  src={`https://static.solved.ac/tier_small/${data.tier}.svg`}
+                  src={`https://static.solved.ac/tier_small/${tierData.tier}.svg`}
                   style={{ marginRight: "6px", width: "12px", height: "auto" }}
                   alt="solved AC 연동"
                 />
               ) : null}
-              {dummyData.nickname}
+              {profileData === undefined ? null : profileData.userGithubId}
             </p>
-            <p className={style.email}>{dummyData.email}</p>
           </div>
         </div>
         <Grid />

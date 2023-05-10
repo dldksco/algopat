@@ -1,5 +1,5 @@
-import style from "./MyPage.module.css";
 import { Outlet } from "react-router-dom";
+import style from "./MyPage.module.css";
 
 export const MyPage = () => {
   return (
