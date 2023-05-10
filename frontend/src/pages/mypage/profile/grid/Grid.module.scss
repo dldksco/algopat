@@ -1,54 +1,41 @@
 .grid {
-  font-family: sans-serif;
-  text-align: center;
-  margin: 20px;
-  background-color: white;
+  margin: 2% 2%;
+  height: 220px;
+  width: 80%;
+  background-color: #1d2538;
   display: flex;
 
   .days {
+    display: flex;
+    flex-direction: column;
+    align-items: end;
     .day {
-      width: 20px;
-      height: 20px;
-      color: black;
-      padding: 11px;
+      font-size: 10px;
+      width: 11px;
+      height: 11px;
+      color: #898989;
+      padding: 7.8px;
+      text-align: right;
     }
     padding-top: 38px;
-    padding-left: 50px;
-    padding-right: 30px;
+    padding-left: 20px;
+    padding-right: 10px;
   }
   .grid_container {
     overflow-x: auto;
     max-width: 100%;
     display: grid;
-    grid-template-columns: repeat(53, 20px);
-    grid-template-rows: repeat(7, 20px);
-    grid-gap: 2px;
+    grid-template-columns: repeat(53, 15px);
+    grid-template-rows: repeat(7, 15px);
     padding-top: 50px;
     padding-bottom: 50px;
     padding-right: 50px;
     .grid_cell {
-      width: 20px;
-      height: 20px;
-      background-color: #e67e22;
+      width: 11px;
+      height: 11px;
       border: 1px solid black;
       border-radius: 2px;
       cursor: pointer;
     }
-  }
-
-  .color-null {
-    background-color: transparent;
-  }
-
-  .color-1 {
-    background-color: #f1c40f;
-  }
-
-  .color-2 {
-    background-color: #e67e22;
-  }
-
-  .color-6 {
-    background-color: #3498db;
   }
 }

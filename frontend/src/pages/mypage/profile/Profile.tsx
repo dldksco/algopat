@@ -3,12 +3,11 @@ import { useQuery } from "@tanstack/react-query";
 import { Grid } from "./grid/Grid";
 import { LoadingSpinner } from "@/components/loadingspinner/LoadingSpinner";
 import { $ } from "@/connect/axios";
-
-import style from "./Profile.module.css";
 import { useEffect } from "react";
 
+import style from "./Profile.module.css";
+
 export const Profile = () => {
-  const id = "alice2596";
   const getProfile = async () => {
     const response = await $.get("/user/profile");
     console.log("profile", response.data);
@@ -47,8 +46,8 @@ export const Profile = () => {
     }
   });
 
-  if (isLoadingProfile) {
-    console.log(isLoadingTier);
+  if (isLoadingProfile || isLoadingTier) {
+    console.log(isLoadingTier, "123123123");
     return (
       <div>
         <LoadingSpinner />
