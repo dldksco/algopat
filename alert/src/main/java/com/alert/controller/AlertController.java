@@ -59,8 +59,8 @@ public class AlertController {
     logger.info(message);
     try {
       MessageDto messageDto = objectMapper.readValue(message, MessageDto.class);
-
-      emitService.emitMessageToUser(userSinks, messageDto.getUserSeq(),
+      logger.info("변환 완료 : {}", messageDto);
+      emitService.emitMessageToUser(userSinks, String.valueOf(messageDto.getUserSeq()),
           messageDto.getProgress());
     } catch (JsonProcessingException e) {
       logger.info("String -> Json 파싱 에러 발생");

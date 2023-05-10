@@ -11,5 +11,5 @@ import lombok.NoArgsConstructor;
 public class MessageDto {
   private String progress; // 진행 사항
   private String message; // 데이터
-  private String userSeq; // 유저 식별 번호
+  private long userSeq; // 유저 식별 번호
 }
