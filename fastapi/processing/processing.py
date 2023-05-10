@@ -25,6 +25,7 @@ from utils.utils import parse_lang_type
 import redis_lock
 from redis import Redis
 import asyncio
+from my_dto.common_dto import MessageDTO
 
 # logger 설정 
 logger = getLogger()
@@ -92,7 +93,11 @@ async def processing(data : ProblemData, send_callback):
     ### GPT평가 DB 접근 ### 
     await save_gpt_solution(submission_id, user_seq, result)
     
-    await send_callback("alert", str(user_seq)) # Todo : message에 userSeq를 담아서 식별가능한 형태로 데이터를 alert spring server로 전송해줘야 한다. 
+    # await send_callback("alert", str(user_seq)) # Todo : message에 userSeq를 담아서 식별가능한 형태로 데이터를 alert spring server로 전송해줘야 한다. 
+    
+    # @@@@@@@@@@@@@@@@@@ 이부분 수정 @@@@@@@@@@@@@@@@@@@@
+    message_dto = MessageDTO("save_gpt_solution", {"message" : "ok"}, {"user_seq" : str(user_seq)})
+    await send_callback("alert", message_dto)
 
 async def summary_problem(problem_id : int, user_seq : int, data : ProblemData, chat_llm, json_chain):
     is_gpt_problem_summary_exist = await check_gpt_problem_summary_is_exist(problem_id)
