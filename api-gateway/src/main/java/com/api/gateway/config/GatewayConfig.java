@@ -35,11 +35,10 @@ public class GatewayConfig {
   public GlobalFilter customGlobalFilter() {
     return (exchange, chain) -> {
       ServerHttpRequest request = exchange.getRequest();
-      String k = request.getURI().toString();
+      String requestURL = request.getURI().toString();
       String path = request.getURI().getPath();
-      System.out.println(k+"==============");
-      logger.info("들어왔어요!!!!!!!!!!!!!!!!!!!!!!!!");
-      if (path.startsWith("/auth/") || path.startsWith("/user/che")|| path.startsWith("/sse")) {
+      logger.info(requestURL);
+      if (path.startsWith("/auth/") || path.startsWith("/user/che")|| path.startsWith("/sse")|| path.startsWith("/rank") ) {
         return chain.filter(exchange);
       } else {
 
