@@ -50,7 +50,7 @@ async def consume_problem_summary(topic : str):
 async def send(topic : str, message_dto : MessageDTO):
     producer = AIOKafkaProducer(
         bootstrap_servers = KAFKA_BOOTSTRAP_SERVERS,
-        value_serializer = lambda m : json.dumps(m).encode("utf-8") 
+        value_serializer = lambda m : json.dumps(m, ensure_ascii=False).encode("utf-8") 
     )
     await producer.start()
     logger.info("Send to 토픽 : " + topic)
