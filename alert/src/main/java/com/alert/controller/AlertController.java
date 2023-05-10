@@ -68,8 +68,9 @@ public class AlertController {
   @KafkaListener(topics = "${kafka.topic}", groupId = "${kafka.group-id}")
   public void consume(@Payload MessageDto messageDto) {
     logger.info("알림 컨슘 !!!!");
-    logger.info("받은 데이터 {}", messageDto);
-    logger.info("유저 식별번호 {}", messageDto.getUserSeq());
+    logger.info("진행 상황 : {}", messageDto.getProgress());
+    logger.info("메시지 : {}", messageDto.getPayload().getMessage());
+    logger.info("유저 식별번호 : {}", messageDto.getUserSeq());
     emitService.emitMessageToUser(userSinks, messageDto.getUserSeq().getUserSeq(),
         messageDto.getProgress());
   }
