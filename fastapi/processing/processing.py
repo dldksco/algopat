@@ -78,7 +78,7 @@ async def processing(data : ProblemData, send_callback):
     summary_code_refactor_coroutine = summary_code_refactor(chat_llm_0, data, gpt_problem_summary)
     summary_code_complexity_result, summary_code_refactor_result = await gather(summary_code_complexity_coroutine, summary_code_refactor_coroutine)
     logger.info("코드 요약 완료")
-    message_dto = MessageDTO("코드 요약 완료", {"message" : "ok"}, {"user_seq" : str(user_seq)})
+    message_dto = MessageDTO(progress="코드 요약 완료", message="ok", user_seq=user_seq)
     await send_callback("alert", message_dto)
     
     logger.info("코드 요약 json 타입으로 변환 시작")
@@ -98,7 +98,7 @@ async def processing(data : ProblemData, send_callback):
     # await send_callback("alert", str(user_seq)) # Todo : message에 userSeq를 담아서 식별가능한 형태로 데이터를 alert spring server로 전송해줘야 한다. 
     
     # @@@@@@@@@@@@@@@@@@ 이부분 수정 @@@@@@@@@@@@@@@@@@@@
-    message_dto = MessageDTO("GPT 응답 생성 끝", {"message" : "ok"}, {"user_seq" : str(user_seq)})
+    message_dto = MessageDTO(progress="GPT 응답 생성 끝",message="ok", user_seq=user_seq)
     await send_callback("alert", message_dto)
 
 async def summary_problem(problem_id : int, user_seq : int, data : ProblemData, chat_llm, json_chain):
@@ -128,10 +128,10 @@ async def summary_problem(problem_id : int, user_seq : int, data : ProblemData, 
 async def filtering_input_data(data : ProblemData, send_callback):
     code_language = await parse_lang_type(data.language)
     if code_language == "unknown":
-        message_dto = MessageDTO("인풋 데이터 필터링", {"message" : "미지원 언어입니다."}, {"user_seq" : str(data.userSeq)})
+        message_dto = MessageDTO(progress="인풋 데이터 필터링", message="미지원 언어입니다.", user_seq=data.userSeq)
         await send_callback("alert", message_dto)
         return True
     if data.resultCategory != "ac":
-        message_dto = MessageDTO("인풋 데이터 필터링", {"message" : "틀린 코드는 평가할 수 없습니다."}, {"user_seq" : str(data.userSeq)})
+        message_dto = MessageDTO(progress="인풋 데이터 필터링", message="틀린 코드는 평가할 수 없습니다.", user_seq=data.userSeq)
         await send_callback("alert", message_dto)
         return True
