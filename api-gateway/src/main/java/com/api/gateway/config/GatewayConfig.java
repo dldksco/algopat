@@ -8,6 +8,8 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import java.security.Key;
+import java.util.Arrays;
+import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,6 +25,8 @@ import org.springframework.web.server.ServerWebExchange;
 @Slf4j
 public class GatewayConfig {
   private static final Logger logger = LoggerFactory.getLogger(GatewayConfig.class);
+  private static final List<String> ALLOWED_PATHS = Arrays.asList("/auth/", "/user/che", "/sse", "/rank");
+
   @Value("${secret-key}")
   private String SECRET_KEY;
 
@@ -38,7 +42,9 @@ public class GatewayConfig {
       String requestURL = request.getURI().toString();
       String path = request.getURI().getPath();
       logger.info(requestURL);
-      if (path.startsWith("/auth/") || path.startsWith("/user/che")|| path.startsWith("/sse")|| path.startsWith("/rank") ) {
+      boolean isAllowedPath = ALLOWED_PATHS.stream().anyMatch(path::startsWith);
+
+      if (isAllowedPath) {
         return chain.filter(exchange);
       } else {
 
