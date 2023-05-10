@@ -30,8 +30,8 @@ public class TokenServiceImpl implements TokenService {
 //  private final RefreshTokenRepository refreshTokenRepository;
   @Value("${secret-key}")
   private String SECRET_KEY;
-  private static final long ACCESS_TOKEN_EXPIRATION_TIME = 86400_000; // 1 day (in milliseconds)
-
+//  private static final long ACCESS_TOKEN_EXPIRATION_TIME = 86400_000; // 1 day (in milliseconds)
+private static final long ACCESS_TOKEN_EXPIRATION_TIME = 10; // 1 day (in milliseconds)
   private static final long EXTENSION_TOKEN_EXPIRATION_TIME = 86400_000; // 1 day (in milliseconds)
   private static final long REFRESH_TOKEN_EXPIRATION_TIME = 86400_000; // 1 day (in milliseconds)
   private final Key getSigningKey() {
