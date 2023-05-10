@@ -69,9 +69,10 @@ public class AlertController {
   public void consume(@Payload MessageDto messageDto) {
     logger.info("알림 컨슘 !!!!");
     logger.info("진행 상황 : {}", messageDto.getProgress());
-    logger.info("메시지 : {}", messageDto.getPayload().getMessage());
-    logger.info("유저 식별번호 : {}", messageDto.getUserSeq());
-    emitService.emitMessageToUser(userSinks, messageDto.getUserSeq().getUserSeq(),
+    logger.info("메시지 : {}", messageDto.getMessage());
+    logger.info("유저 식별 번호 : {}", messageDto.getUserSeq());
+
+    emitService.emitMessageToUser(userSinks, messageDto.getUserSeq(),
         messageDto.getProgress());
   }
 

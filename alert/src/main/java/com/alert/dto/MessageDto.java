@@ -2,44 +2,16 @@ package com.alert.dto;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class MessageDto {
-  private String progress;
-  private Payload payload;
-  private UserSeq userSeq;
-
-  @JsonCreator
-  public MessageDto(
-      @JsonProperty("progress") String progress,
-      @JsonProperty("payload") Payload payload,
-      @JsonProperty("user_seq") UserSeq userSeq) {
-    this.progress = progress;
-    this.payload = payload;
-    this.userSeq = userSeq;
-  }
-
-  public String getProgress() {
-    return progress;
-  }
-
-  public Payload getPayload() {
-    return payload;
-  }
-
-  public UserSeq getUserSeq() {
-    return userSeq;
-  }
-
-  public void setProgress(String progress) {
-    this.progress = progress;
-  }
-
-  public void setPayload(Payload payload) {
-    this.payload = payload;
-  }
-
-  public void setUserSeq(UserSeq userSeq) {
-    this.userSeq = userSeq;
-  }
+  private String progress; // 진행 사항
+  private String message; // 데이터
+  private String userSeq; // 유저 식별번호
 }
