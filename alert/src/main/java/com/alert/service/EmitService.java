@@ -1,6 +1,5 @@
 package com.alert.service;
 
-import com.alert.controller.AlertController;
 import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,7 +19,7 @@ public class EmitService {
       userSink.tryEmitNext(progress);
 
       userSinks.remove(userSeq); // 연결 해제
-      logger.info("파이프라인 종료");
+      logger.info("파이프라인 연결 종료");
     }
   }
 
