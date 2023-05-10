@@ -95,7 +95,7 @@ async def processing(data : ProblemData, send_callback):
     ### GPT평가 DB 접근 ### 
     await save_gpt_solution(submission_id, user_seq, result)
 
-    message_dto = MessageDTO(progress="GPT 응답 생성 끝",message="ok", user_seq=user_seq)
+    message_dto = MessageDTO(progress="GPT 응답 생성 끝",message="finish", user_seq=user_seq)
     await send_callback("alert", message_dto)
 
 async def summary_problem(problem_id : int, user_seq : int, data : ProblemData, chat_llm, json_chain):
