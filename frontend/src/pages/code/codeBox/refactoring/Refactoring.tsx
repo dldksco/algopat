@@ -39,7 +39,7 @@ export const Refactoring = ({ isModalOpen, data }: RefactoringProps) => {
       }
     >
       <div className={style.info_box}>
-        <div style={{ width: "120px" }}>
+        <div style={{ width: "120px", textAlign: "center" }}>
           <CircularProgressbar
             value={refactorData?.cleanScore || 0}
             text={`${refactorData?.cleanScore || 0}%`}
@@ -55,9 +55,10 @@ export const Refactoring = ({ isModalOpen, data }: RefactoringProps) => {
               backgroundColor: backgroundColor(refactorData?.cleanScore || 0),
             })}
           />
+          <h2>클린 코드</h2>
         </div>
         <div style={{ width: "40%" }}>
-          Info
+          INFO
           <hr style={{ marginTop: "5px" }} />
           <div className={style.problem_list}>
             <img

@@ -33,12 +33,20 @@ export interface RefactoringData {
 }
 
 export interface ComplexityData {
-  Complexity: string | undefined;
-  ComplexityReason: string | undefined;
-  Score: number | undefined;
-  ComplexityGoodPoint: string | undefined;
-  ComplexityBadPoint: string | undefined;
-  ComplexitySuggestion: string | undefined;
+  complexity: string | undefined;
+  complexityReason: string | undefined;
+  score: number | undefined;
+  complexityGoodPoint: string | undefined;
+  complexityBadPoint: string | undefined;
+  complexitySuggestion: string | undefined;
+  solutionRuntime?: number | undefined;
+  solutionMemory?: number | undefined;
+}
+
+export interface TotalInfo {
+  gptTotalScore: number | undefined;
+  solutionRuntime: number | undefined;
+  solutionMemory: number | undefined;
 }
 
 export const getSolution = (solutionSeq: number) => {
@@ -62,20 +70,22 @@ export const getSolution = (solutionSeq: number) => {
     refactoringSuggestion: data?.gptSolutionRefactoringSuggestion,
   };
   const timeComplexityData = {
-    Complexity: data?.gptSolutionTimeComplexity,
-    ComplexityReason: data?.gptSolutionTimeComplexityReason,
-    Score: data?.gptSolutionTimeScore,
-    ComplexityGoodPoint: data?.gptSolutionTimeComplexityGoodPoint,
-    ComplexityBadPoint: data?.gptSolutionTimeComplexityBadPoint,
-    ComplexitySuggestion: data?.gptImprovingTimeComplexitySuggestion,
+    complexity: data?.gptSolutionTimeComplexity,
+    complexityReason: data?.gptSolutionTimeComplexityReason,
+    score: data?.gptSolutionTimeScore,
+    complexityGoodPoint: data?.gptSolutionTimeComplexityGoodPoint,
+    complexityBadPoint: data?.gptSolutionTimeComplexityBadPoint,
+    complexitySuggestion: data?.gptImprovingTimeComplexitySuggestion,
+    solutionRuntime: data?.userSubmitSolutionRuntime,
   };
   const spaceComplexityData = {
-    Complexity: data?.gptSolutionSpaceComplexity,
-    ComplexityReason: data?.gptSolutionSpaceComplexityReason,
-    Score: data?.gptSolutionSpaceScore,
-    ComplexityGoodPoint: data?.gptSolutionSpaceComplexityGoodPoint,
-    ComplexityBadPoint: data?.gptSolutionSpaceComplexityBadPoint,
-    ComplexitySuggestion: data?.gptImprovingSpaceComplexitySuggestion,
+    complexity: data?.gptSolutionSpaceComplexity,
+    complexityReason: data?.gptSolutionSpaceComplexityReason,
+    score: data?.gptSolutionSpaceScore,
+    complexityGoodPoint: data?.gptSolutionSpaceComplexityGoodPoint,
+    complexityBadPoint: data?.gptSolutionSpaceComplexityBadPoint,
+    complexitySuggestion: data?.gptImprovingSpaceComplexitySuggestion,
+    solutionMemory: data?.userSubmitSolutionMemory,
   };
 
   const totalInfo = {

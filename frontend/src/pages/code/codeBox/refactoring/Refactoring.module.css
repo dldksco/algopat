@@ -29,6 +29,7 @@
 }
 .box_content .info_box .problem_list img {
   height: 100%;
+  margin-top: 3px;
 }
 .box_content .info_box .clicklink {
   cursor: pointer;

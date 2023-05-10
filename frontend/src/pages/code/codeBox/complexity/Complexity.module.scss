@@ -9,6 +9,36 @@
   margin-right: auto;
   border-radius: 10px;
   overflow: hidden;
+
+  .info_box {
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+    margin-bottom: 20px;
+    margin-top: 15px;
+    min-height: 180px;
+
+    .right_box {
+      width: 60%;
+      background-color: #28292c;
+      border-radius: 10px;
+      padding: 0px 10px;
+
+      .circle {
+        position: relative;
+        top: 1px;
+        height: 0.8rem;
+        width: 0.8rem;
+        display: inline-block;
+        border-radius: 100%;
+        margin-right: 5px;
+      }
+
+      h3 {
+        margin: 10px 2px;
+      }
+    }
+  }
 }
 
 .not_open {
@@ -21,6 +51,9 @@
   .box_content {
     p {
       padding: 12px;
+    }
+    .info_box {
+      font-size: 0.7rem;
     }
   }
 }
