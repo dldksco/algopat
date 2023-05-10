@@ -62,7 +62,7 @@ public class TokenController {
         if(tokenStatus==TokenStatus.VALID){
 
           String githubId = tokenService.getGithubIdFromToken(tokenDTO);
-          System.out.println("여기맞지");
+            System.out.println("여기맞지"+githubId);
 
           tokenDTO.setToken(tokenService.generateAccessToken(TokenGenerateDTO.builder().userGithubId(githubId).build()).getToken());
           System.out.println("ㅇㅇㅇㅇㅇㅇㅇㅇ");
