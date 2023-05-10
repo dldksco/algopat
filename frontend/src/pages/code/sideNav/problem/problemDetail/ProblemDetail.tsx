@@ -5,11 +5,9 @@ import { LoadingSpinner } from "@/components/loadingspinner/LoadingSpinner";
 import { useRecoilState } from "recoil";
 import { nowProblemSubmissionIdState } from "@/atoms/code.atom";
 import { Problem } from "../Problem";
+import { useState } from "react";
 
 import style from "./ProblemDetail.module.css";
-import axios from "axios";
-import { Modal } from "@/components/modal/Modal";
-import { useState } from "react";
 
 export interface SolveProps {
   detail?: Solve[];
@@ -45,9 +43,8 @@ export const ProblemDetail = (props: SolveProps) => {
     const response = await $.get(
       `/code/problem/submission/solution/exist/${submissionId}`
     );
-    console.log(response.data, "response 확인");
     //response.data = true 생성 완료
-    if (response.data === true) {
+    if (response.data.data === true) {
       setNowSubmission((prev) => ({
         ...prev,
         problemTitle: props.problemDetail.problemTitle,
@@ -69,7 +66,6 @@ export const ProblemDetail = (props: SolveProps) => {
     }
   };
 
-  console.log(data, "submission query 결과");
   if (isLoading) {
     return <LoadingSpinner />;
   }
