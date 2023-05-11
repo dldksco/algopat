@@ -1,0 +1,33 @@
+.search_group {
+  font-size: 0.9rem;
+  display: flex;
+  gap: 10px;
+}
+.search_group .search {
+  display: flex;
+}
+.search_group .search .search_button {
+  margin-left: 2px;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  border: 1px solid var(--font-color);
+  cursor: pointer;
+}
+
+@media screen and (max-width: 768px) {
+  .search_group {
+    font-size: 0.9rem;
+    display: flex;
+    gap: 10px;
+    flex-direction: column;
+  }
+  .search_group .search_button {
+    margin-left: -8px;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    border: 1px solid var(--font-color);
+    cursor: pointer;
+  }
+}/*# sourceMappingURL=SearchGroup.module.css.map */

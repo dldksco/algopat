@@ -1,0 +1,120 @@
+.header {
+  height: 80px;
+  background-color: var(--background-color);
+  padding: 0 4%;
+  display: flex;
+  justify-content: space-between;
+  max-width: var(--max-width);
+  margin-right: auto;
+  margin-left: auto;
+}
+.header .for_hover:hover {
+  color: gray;
+}
+.header .for_hover2 {
+  display: none;
+}
+.header .for_hover2:hover {
+  color: gray;
+}
+.header .logo {
+  margin-top: auto;
+  margin-bottom: auto;
+  cursor: pointer;
+}
+.header .menu {
+  display: flex;
+  font-weight: 600;
+  justify-content: space-around;
+  align-items: center;
+  font-size: 1.5rem;
+  width: 35%;
+}
+.header .menu :nth-child(n) {
+  cursor: pointer;
+  transition: 0.25s;
+}
+.header .bars {
+  display: none;
+}
+.header .profile_div {
+  position: relative;
+}
+.header .profile_div:hover .down_slide {
+  height: 125px;
+  border-bottom: 1px solid var(--font-color);
+}
+.header .profile_div .down_slide {
+  overflow: hidden;
+  position: absolute;
+  background-color: var(--background-color);
+  width: 140px;
+  text-align: center;
+  right: -40px;
+  top: 42px;
+  height: 0;
+  z-index: 1;
+}
+.header .profile_div img {
+  width: 42px;
+  height: 42px;
+  border-radius: 100%;
+  box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
+  margin-left: 10px;
+  display: block;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+
+@media screen and (max-width: 1200px) {
+  .header .menu {
+    width: 36%;
+    min-width: 260px;
+    font-size: 1.1rem;
+  }
+  .header .profile_div:hover .down_slide {
+    height: 95px;
+  }
+  .header .profile_div .down_slide {
+    width: 120px;
+  }
+}
+@media screen and (max-width: 768px) {
+  .header {
+    position: relative;
+  }
+  .header .for_hover2 {
+    display: block;
+  }
+  .header .menu {
+    position: absolute;
+    flex-direction: column;
+    justify-content: space-around;
+    min-width: auto;
+    width: 120px;
+    top: 80px;
+    left: calc(100% - 121px);
+    background-color: black;
+    border: 1px solid white;
+    transition: 0.2s;
+    z-index: 1;
+  }
+  .header .menu :nth-child(n) {
+    margin: 20px 0px;
+    display: inline-block;
+  }
+  .header .menu_false {
+    width: 0;
+    opacity: 0;
+    left: 97.5%;
+  }
+  .header .bars {
+    display: block;
+    margin-top: auto;
+    margin-bottom: auto;
+    font-size: 1.5rem;
+  }
+  .header .disnone {
+    display: none !important;
+  }
+}/*# sourceMappingURL=Header.module.css.map */

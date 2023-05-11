@@ -1,0 +1,18 @@
+:root {
+  --font-color: #ffffff;
+  --fade-font-color: rgb(161, 161, 161);
+  --background-color: black;
+  --mypage-background-color: #28292c;
+  --mypage-nav-color: #28292c;
+  --box-color: #ffffff;
+  --mypage-box-color: rgb(236, 236, 236, 0.3);
+  --code-background-color: #242f3c;
+  --mypage-font-color: #ececec;
+  --max-width: 1300px;
+  --modal-background: red;
+}
+
+div,
+button {
+  color: var(--font-color);
+}
