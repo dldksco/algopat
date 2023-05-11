@@ -19,6 +19,8 @@ import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -142,4 +144,32 @@ public class CodeController {
       @RequestHeader("userSeq") long userSeq) {
     return ResponseEntity.ok(problemRankService.findProblemIdsByUserSeq(userSeq));
   }
+
+  /**
+   * 회원 푼 문제 정렬 조회
+   * @param pageNumber
+   * @param category
+   * @param condition
+   * @return
+   */
+  @GetMapping("/submission/sort/{pageNumber}")
+  public ResponseEntity<?> getUserSubmitProblemDtoOrderByCondition(
+      @PathVariable(value = "pageNumber") int pageNumber,
+      @RequestParam(value = "category", defaultValue = "date") String category,
+      @RequestParam(value = "condition", defaultValue = "desc") String condition,
+      @RequestHeader(value = "userSeq") long userSeq
+  ) {
+
+    Direction direction = "ASC".equalsIgnoreCase(condition) ? Direction.ASC : Direction.DESC;
+    if (category.equalsIgnoreCase("date")) {
+      category = "userSubmitProblemUpdatedAt";
+    } else if (category.equalsIgnoreCase("id")) {
+      category = "problemId";
+    } else if (category.equalsIgnoreCase("level")) {
+      category = "p.problemLevel";
+    }
+
+    return ResponseEntity.ok(problemService.getUserSubmitProblemDtoFilterConditionPage(pageNumber, userSeq, direction, category));
+  }
+
 }
