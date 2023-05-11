@@ -59,7 +59,8 @@ public class AuthServiceImpl implements AuthService {
     loginProcessDTO.setAccessToken(accessToken.getToken());
 
     TokenDTO refreshToken = tokenService.generateRefreshToken(
-        TokenGenerateDTO.builder().userGithubId(githubUserResponseDTO.getUserGithubId()).build());
+        TokenGenerateDTO.builder().userGithubId(githubUserResponseDTO.getUserGithubId()).userSeq(
+            userServiceIdResponseDTO.getUserSeq()).build());
 
     Cookie cookie = tokenService.createRefreshTokenCookie(refreshToken);
     loginProcessDTO.setCookie(cookie);
