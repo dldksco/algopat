@@ -9,6 +9,8 @@ export const $ = axios.create({
 });
 
 $.interceptors.request.use((config) => {
+  console.log("헤더에 access 토큰을 담아서 날린다");
+  console.log(localStorage.getItem("access-token"));
   config.headers["authorization"] = localStorage.getItem("access-token");
   return config;
 });
