@@ -98,12 +98,12 @@
         display: block;
         height: auto;
         .row {
-          position: relative;
           height: 50px;
+          position: absolute;
         }
 
         .green {
-          background-color: green;
+          background-color: #4fda4c;
         }
 
         .white {
@@ -114,8 +114,23 @@
           background-color: black;
         }
 
-        .col {
+        ._0 {
+          width: 50px;
+        }
+
+        ._1 {
           width: 100px;
+        }
+
+        ._2 {
+          width: 140px;
+        }
+
+        ._3 {
+          width: 170px;
+        }
+
+        .col {
           height: 20px;
           margin: 2px;
           display: inline-block;

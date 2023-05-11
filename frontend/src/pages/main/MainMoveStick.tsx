@@ -24,46 +24,61 @@ export const MainMoveStick = () => {
   }
 
   const move_style_right: CSSProperties = {
-    position: "absolute",
-    top: 0,
-    // 스크롤 위치에 따라 왼쪽 또는 오른쪽에 위치하도록 설정합니다.
-    left: `${scrollPosition / 4}px`,
+    left: `${scrollPosition / 3}px`,
   };
 
   const move_style_left: CSSProperties = {
-    position: "absolute",
-    top: 0,
-    // 스크롤 위치에 따라 왼쪽 또는 오른쪽에 위치하도록 설정합니다.
-    right: `${scrollPosition / 4}px`,
+    right: `${scrollPosition / 3}px`,
   };
 
   return (
     <div className={style.block}>
-      <div className={style.row}>
-        <div style={move_style_right}>
-          <div className={style.green + " " + style.col}></div>
-          <div className={style.black + " " + style.col}></div>
-          <div className={style.black + " " + style.col}></div>
-          <div className={style.green + " " + style.col}></div>
-          <div className={style.white + " " + style.col}></div>
+      <div className={style.row} style={move_style_right}>
+        <div className={style.white + " " + style.col + " " + style._3} />
+        <div className={style.black + " " + style.col + " " + style._3} />
+        <div className={style.white + " " + style.col + " " + style._1} />
+        <div className={style.black + " " + style.col + " " + style._3} />
+      </div>
+      {/* <div className={style.row} style={move_style_left}>
+        <div className={style.green + " " + style.col + " " + style._3} />
+        <div className={style.black + " " + style.col + " " + style._3} />
+        <div className={style.green + " " + style.col + " " + style._3} />
+        <div className={style.black + " " + style.col + " " + style._3} />
+        <div className={style.white + " " + style.col + " " + style._2} />
+        <div className={style.black + " " + style.col + " " + style._1} />
+        <div className={style.green + " " + style.col + " " + style._1} />
+      </div> */}
+      {/* <div className={style.row}>
+        <div className={style.moving_block} style={move_style_right}>
+          <div className={style.black + " " + style.col + " " + style._2} />
+          <div className={style.white + " " + style.col + " " + style._1} />
+          <div className={style.black + " " + style.col + " " + style._1} />
+          <div className={style.white + " " + style.col + " " + style._1} />
         </div>
       </div>
       <div className={style.row}>
-        <div style={move_style_left}>
-          <div className={style.green + " " + style.col}></div>
-          <div className={style.black + " " + style.col}></div>
-          <div className={style.green + " " + style.col}></div>
-          <div className={style.black + " " + style.col}></div>
-          <div className={style.white + " " + style.col}></div>
+        <div className={style.moving_block} style={move_style_left}>
+          <div className={style.black + " " + style.col + " " + style._3} />
+          <div className={style.green + " " + style.col + " " + style._3} />
+          <div className={style.black + " " + style.col + " " + style._3} />
         </div>
       </div>
-      {/* {dummy.map((row) => (
-        <div style={move_style} className={style.row} key={uuidv4()}>
-          {row.map((col) => (
-            <div className={style.green + " " + style.col} key={uuidv4()} />
-          ))}
+      <div className={style.row}>
+        <div className={style.moving_block} style={move_style_right}>
+          <div className={style.green + " " + style.col + " " + style._3} />
+          <div className={style.black + " " + style.col + " " + style._3} />
+          <div className={style.white + " " + style.col + " " + style._1} />
+          <div className={style.black + " " + style.col + " " + style._1} />
         </div>
-      ))} */}
+      </div>
+      <div className={style.row}>
+        <div className={style.moving_block} style={move_style_left}>
+          <div className={style.green + " " + style.col + " " + style._2} />
+          <div className={style.black + " " + style.col + " " + style._0} />
+          <div className={style.white + " " + style.col + " " + style._1} />
+          <div className={style.green + " " + style.col + " " + style._1} />
+        </div>
+      </div> */}
     </div>
   );
 };

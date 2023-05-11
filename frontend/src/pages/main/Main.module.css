@@ -72,11 +72,11 @@
   height: auto;
 }
 .mainpage .cpage .move_stick .block .row {
-  position: relative;
   height: 50px;
+  position: absolute;
 }
 .mainpage .cpage .move_stick .block .green {
-  background-color: green;
+  background-color: #4fda4c;
 }
 .mainpage .cpage .move_stick .block .white {
   background-color: white;
@@ -84,8 +84,19 @@
 .mainpage .cpage .move_stick .block .black {
   background-color: black;
 }
-.mainpage .cpage .move_stick .block .col {
+.mainpage .cpage .move_stick .block ._0 {
+  width: 50px;
+}
+.mainpage .cpage .move_stick .block ._1 {
   width: 100px;
+}
+.mainpage .cpage .move_stick .block ._2 {
+  width: 140px;
+}
+.mainpage .cpage .move_stick .block ._3 {
+  width: 170px;
+}
+.mainpage .cpage .move_stick .block .col {
   height: 20px;
   margin: 2px;
   display: inline-block;
