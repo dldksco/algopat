@@ -31,8 +31,11 @@
   display: inline-block;
 }
 .sideNav .problem_list {
-  height: 600px;
+  height: 400px;
   overflow-y: auto;
+}
+.sideNav .extra_length {
+  height: 452px;
 }
 .sideNav .nav_header {
   text-align: left;
@@ -74,6 +77,6 @@
     color: gray;
   }
   .sideNav .nav_header {
-    padding-bottom: calc(5% + 25px);
+    padding-bottom: calc(5% + 10px);
   }
 }/*# sourceMappingURL=SideNav.module.css.map */

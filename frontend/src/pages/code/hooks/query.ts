@@ -1,5 +1,6 @@
 import { $ } from "@/connect/axios";
-import { useQuery } from "@tanstack/react-query";
+import { PagableResponse } from "@/types/type";
+import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 
 interface Solution {
   userSubmitSolutionResult: string;
@@ -49,6 +50,9 @@ export interface TotalInfo {
   solutionMemory: number | undefined;
 }
 
+/**
+ * 선택한 문제에 대한 상세한 코드 리뷰를 불러오는 함수
+ */
 export const getSolution = (solutionSeq: number) => {
   const fetchSolution = async (): Promise<Solution> => {
     const { data } = await $.get(
@@ -104,3 +108,40 @@ export const getSolution = (solutionSeq: number) => {
     refetch,
   };
 };
+
+/******************************/
+export interface ProblemInfo {
+  problemId: number;
+  problemLevel: number;
+  problemTitle: string;
+}
+
+/**
+ * Infinity Query를 불러오는 함수
+ */
+export const getInfinityProblemList = () => {
+  const fetchData = async (
+    page: number
+  ): Promise<PagableResponse<ProblemInfo>> => {
+    const response = await $.get(`/code/problem/submission/${page}`).then(
+      (res) => res.data
+    );
+    return response;
+  };
+
+  const { data, fetchNextPage, isFetchingNextPage, hasNextPage } =
+    useInfiniteQuery(
+      ["infinityProblemList"],
+      ({ pageParam = 0 }) => fetchData(pageParam),
+      {
+        getNextPageParam: (lastPage, allPages) => {
+          if (lastPage.last) return undefined;
+          else return lastPage.number + 1;
+        },
+      }
+    );
+
+  return { data, fetchNextPage, isFetchingNextPage, hasNextPage };
+};
+
+/******************************/
