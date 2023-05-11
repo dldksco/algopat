@@ -1,10 +1,9 @@
 package com.code.service;
 
 import com.code.data.dto.DateGrassCountDTO;
-import com.code.data.dto.DateGrassInfo;
+import com.code.data.dto.DateGrassInfoDTO;
 import com.code.data.dto.UserGrassCountRequestDTO;
 import com.code.data.repository.UserSubmitProblemRepository;
-import java.sql.SQLOutput;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
@@ -59,7 +58,7 @@ public class GrassServiceImpl implements GrassService {
     return dates;
   }
 @Override
-  public Page<DateGrassInfo> findDateGrassInfo(Long userSeq, LocalDate targetDate, Pageable pageable) {
+  public Page<DateGrassInfoDTO> findDateGrassInfo(Long userSeq, LocalDate targetDate, Pageable pageable) {
     return userSubmitProblemRepository.findDateGrassInfo(userSeq, targetDate, pageable);
   }
 }

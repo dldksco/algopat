@@ -11,7 +11,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class DateGrassInfo {
+public class DateGrassInfoDTO {
   private long submissionId;
   private long problemId;
 

@@ -18,6 +18,8 @@ import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -134,4 +136,24 @@ public class CodeController {
   ) {
     return ResponseEntity.ok(problemService.isExistGptSolution(submissionId));
   }
+
+  @GetMapping("/submission/sort/{pageNumber}")
+  public ResponseEntity<?> getUserSubmitProblemDtoOrderByCondition(
+      @PathVariable(value = "pageNumber") int pageNumber,
+      @RequestParam(value = "category", defaultValue = "date") String category,
+      @RequestParam(value = "condition", defaultValue = "desc") String condition
+  ) {
+
+    Direction direction = "ASC".equalsIgnoreCase(condition) ? Direction.ASC : Direction.DESC;
+    if (category.equalsIgnoreCase("date")) {
+      category = "userSubmitProblemUpdatedAt";
+    } else if (category.equalsIgnoreCase("id")) {
+      category = "problemId";
+    } else if (category.equalsIgnoreCase("level")) {
+      category = "p.problemLevel";
+    }
+
+    return ResponseEntity.ok(problemService.getUserSubmitProblemDtoFilterConditionPage(pageNumber, 1, direction, category));
+  }
+
 }
