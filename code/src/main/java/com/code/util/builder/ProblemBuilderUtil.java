@@ -1,8 +1,10 @@
 package com.code.util.builder;
 
 import com.code.data.dto.ProblemResponseDto;
+import com.code.data.dto.UserSubmittedProblemIdListDto;
 import com.code.data.entity.Problem;
 import com.code.util.common.CommonUtil;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -27,4 +29,5 @@ public class ProblemBuilderUtil {
         .problemSpaceLimit(problem.getProblemSpaceLimit())
         .build();
   }
+
 }
