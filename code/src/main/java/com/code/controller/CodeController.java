@@ -43,7 +43,6 @@ public class CodeController {
   // Service 정의
   private final KafkaProducerService kafkaProducerService;
   private final ProblemService problemService;
-  private final ProblemRankService problemRankService;
   private final UserService userService;
 
   /**
