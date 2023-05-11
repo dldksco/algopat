@@ -31,7 +31,7 @@ $.interceptors.response.use(
         })
         .catch(() => {
           Swal.fire({
-            icon: "warning",
+            icon: "error",
             title: "",
             text: "토큰이 만료되었습니다! 다시 로그인 해주세요!",
             confirmButtonText: "닫기",
