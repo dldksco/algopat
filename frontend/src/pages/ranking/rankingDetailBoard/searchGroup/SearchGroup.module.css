@@ -1,12 +1,26 @@
-.search_group {
+.header_container {
+  margin-top: 50px;
+  height: 50px;
+  width: 100%;
+  text-align: left;
+  align-items: center;
+  font-style: bold;
+  font-size: 1.2rem;
+  border-bottom: 4px solid var(--font-color);
+  color: var(--font-color);
+  display: flex;
+  justify-content: space-between;
+  padding: 0px 20px 30px 20px;
+}
+.header_container .search_group {
   font-size: 0.9rem;
   display: flex;
   gap: 10px;
 }
-.search_group .search {
+.header_container .search_group .search {
   display: flex;
 }
-.search_group .search .search_button {
+.header_container .search_group .search .search_button {
   margin-left: 2px;
   padding: 10px;
   display: flex;

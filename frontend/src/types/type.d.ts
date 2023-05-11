@@ -28,3 +28,15 @@ export interface PagableResponse<T> {
   numberOfElements: number;
   empty: boolean;
 }
+
+export interface SolutionColumn {
+  gptSolutionSeq: number;
+  userGithubId: string;
+  userSubmitSolutionLanguage: string;
+  userSubmitSolutionRuntime: number;
+  userSubmitSolutionMemory: number;
+  userSubmitSolutionCodeLength: number;
+  gptTotalScore: number;
+  userImageUrl: string;
+  userSubmitSolutionTime: string;
+}

@@ -7,65 +7,23 @@ import { useLocation, useNavigate, useParams } from "react-router-dom";
 import style from "./RankingDetail.module.css";
 import { getRankPageInfo, getRankingDetail } from "../hooks/query";
 import { Pagenation } from "@/components/pagenation/Pagenation";
+import { SearchGroup } from "../rankingDetailBoard/searchGroup/SearchGroup";
 
 export const RankingDetail = () => {
-  const problemInfo = {
-    title: "배열 돌리기5",
-    level: "14",
-  };
   const navigate = useNavigate();
   const location = useLocation();
   const { id: problemId } = useParams();
 
   const searchParams = new URLSearchParams(location.search);
-  const page = searchParams.get("page") ?? "1";
+  const page = Number(searchParams.get("page")) ?? 0;
 
-  // const { data, isLoading } = getRankingDetail(problemId as string, page);
-
-  const { data: pageInfoData, isLoading: pageInfoLoading } = getRankPageInfo(
-    problemId as string
+  const { data, isLoading, refetch } = getRankingDetail(
+    Number(problemId),
+    page
   );
-
-  console.log(pageInfoData);
-
-  // const problemInfo = {
-  //   title: location.state.title,
-  //   level: location.state.level,
-  // };
-
-  // const { data } = getRankingDetail();
-
-  // console.log(data);
-
-  // const data = [
-  //   {
-  //     author: "김싸피",
-  //     submissionTime: "2023-04-10",
-  //     language: "C++",
-  //     memory: 23708,
-  //     runtime: 247,
-  //     refactoring: 100,
-  //     codeLength: 149,
-  //   },
-  //   {
-  //     author: "박싸피",
-  //     submissionTime: "2023-04-10",
-  //     language: "Java",
-  //     memory: 20008,
-  //     runtime: 247,
-  //     refactoring: 100,
-  //     codeLength: 149,
-  //   },
-  //   {
-  //     author: "김싸피",
-  //     submissionTime: "2023-04-10",
-  //     language: "C++",
-  //     memory: 23708,
-  //     runtime: 247,
-  //     refactoring: 100,
-  //     codeLength: 149,
-  //   },
-  // ];
+  const { data: pageInfoData, isLoading: pageInfoLoading } = getRankPageInfo(
+    Number(problemId)
+  );
 
   const listClickCallback = () => navigate("/ranking");
   const problemSolveClickCallback = (problemId: string) =>
@@ -106,16 +64,15 @@ export const RankingDetail = () => {
               <div className={style.user_info}>
                 <div
                   style={{
-                    backgroundColor: "white",
+                    // backgroundColor: "white",
+                    backgroundImage: `url(${pageInfoData?.masterUserProblemRank.userImageUrl})`,
+                    backgroundSize: "2rem 2rem",
                     width: "2rem",
                     height: "2rem",
                     borderRadius: "100px",
                   }}
                 />
                 <div>{pageInfoData?.masterUserProblemRank.userGithubId}</div>
-              </div>
-              <div style={{ marginTop: "10px" }}>
-                {pageInfoData?.masterUserProblemRank.userSubmitSolutionTime}
               </div>
             </div>
             <div className={style.info_list}>
@@ -168,17 +125,18 @@ export const RankingDetail = () => {
           </>
         )}
       </div>
-      <RankingDetailBoard
-        data={[]}
+      <SearchGroup
+        refetch={refetch}
         solutionCount={pageInfoData?.solutionCount ?? 0}
       />
-      {/* <Pagenation
+      <RankingDetailBoard data={data?.content} />
+      <Pagenation
         number={data?.number}
         first={data?.first}
         last={data?.last}
         totalPages={data?.totalPages}
         url="?page="
-      /> */}
+      />
     </div>
   );
 };
