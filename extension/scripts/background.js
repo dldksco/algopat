@@ -51,7 +51,7 @@ chrome.storage.local.get('userSeq', (data) => {
       type: 'basic',
       iconUrl: `chrome-extension://${chrome.runtime.id}/assets/icon.png`,
       title: '분석완료',
-      message: '코드리펙토링이 완료되었습니다'
+      message: `${event.data}`
     });
   };
 

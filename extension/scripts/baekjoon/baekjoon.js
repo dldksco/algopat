@@ -48,10 +48,10 @@ function startLoader() {
           const nowMonth = now.getMonth() + 1; // 현재 월 (0부터 시작하므로 1을 더해줌)
           const nowDate = now.getDate(); // 
 
-          if (!(year == nowYear && month == nowMonth && date == nowDate)) {
-            toastThenStopLoader("제출 시간이 오늘과 동일해야 전송이 가능합니다", "같은 날짜만!")
-            return;
-          }
+          // if (!(year == nowYear && month == nowMonth && date == nowDate)) {
+          //   toastThenStopLoader("제출 시간이 오늘과 동일해야 전송이 가능합니다", "같은 날짜만!")
+          //   return;
+          // }
 
           chrome.storage.local.get(['BaekjoonHub_token', 'gpt_key', 'commit_state'], (data) => {
             const token = data.BaekjoonHub_token;
