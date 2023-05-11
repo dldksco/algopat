@@ -13,8 +13,13 @@ export const stringCutter = (str: string, num: number) =>
  * 천의 자리마다 컴마 찍기
  * @returns
  */
-export const addCommas = (num: string | number) =>
-  num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+export const addCommas = (num: string | number | undefined) => {
+  if (typeof num == "undefined") {
+    return "";
+  } else {
+    return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  }
+};
 
 /**
  *

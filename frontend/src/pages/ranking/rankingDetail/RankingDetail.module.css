@@ -1,6 +1,7 @@
 @charset "UTF-8";
 .ranking_detail {
   margin-top: 10%;
+  margin-bottom: 5%;
 }
 .ranking_detail .box {
   border: 1px solid var(--font-color);
