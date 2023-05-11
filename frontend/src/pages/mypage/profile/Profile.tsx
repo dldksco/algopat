@@ -10,7 +10,7 @@ import style from "./Profile.module.css";
 export const Profile = () => {
   const getProfile = async () => {
     const response = await $.get("/user/profile");
-    console.log("profile", response.data);
+    // console.log("profile", response.data);
     return response.data;
   };
 
@@ -21,12 +21,12 @@ export const Profile = () => {
   } = useQuery(["profileupdate"], getProfile);
 
   const getTier = async () => {
-    console.log(profileData, "id찾기");
+    // console.log(profileData, "id찾기");
     const response = await axios.get(
       `https://solvedac-ixdn5ymk3a-du.a.run.app/userShow/${profileData.userBackjoonId}`
     );
     const data = await response.data;
-    console.log(data, "tierData");
+    // console.log(data, "tierData");
     return data;
   };
 
@@ -47,7 +47,7 @@ export const Profile = () => {
   });
 
   if (isLoadingProfile || isLoadingTier) {
-    console.log(isLoadingTier, "123123123");
+    // console.log(isLoadingTier, "123123123");
     return (
       <div>
         <LoadingSpinner />
