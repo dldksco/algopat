@@ -1,5 +1,6 @@
 .problem_container {
   display: flex;
+  cursor: pointer;
 }
 .problem_container .problemLevel {
   height: 10px;

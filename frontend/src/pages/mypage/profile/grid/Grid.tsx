@@ -13,7 +13,7 @@ interface StreakData {
 export const Grid = () => {
   const getGrid = async () => {
     const response = await $.get("/code/grass");
-    // console.log("gridASDASdasdas", response.data);
+    //console.log("gridASDASdasdas", response.data);
     return response.data;
   };
   const [streakDateState, setStreakDateState] = useState<string>("");
@@ -174,8 +174,17 @@ export const Grid = () => {
           </div>
         </div>
       </div>
+      <div style={{ float: "right" }}>
+        {" "}
+        <p>암ㄴ암ㄴ암낭</p>
+      </div>
       <div className={style.memo}>
-        <Memo date={streakDateState} thenum={streakColorState}></Memo>
+        {streakColorState === 0 ? null : (
+          <p>{streakDateState} 내가 푼 문제 목록</p>
+        )}
+        {streakColorState === 0 ? null : (
+          <Memo date={streakDateState} thenum={streakColorState}></Memo>
+        )}
       </div>
     </>
   );

@@ -5,57 +5,35 @@ import { v4 as uuidv4 } from "uuid";
 import { ProblemItem } from "./problemitem/ProblemItem";
 
 import style from "./Memo.module.css";
+import { useEffect } from "react";
+import { getGridDetail, problemByDate } from "@/pages/mypage/hooks/query";
 
 interface dateData {
   date: string;
   thenum: number;
 }
 
-export interface problemByDate {
-  problemId: number;
-  problemLevel: number;
-  problemTitle: string;
-  submissionId: number;
-}
-
 export const Memo = (props: dateData) => {
-  const dateConvert = props.date.split("-"); // ["2023", "01", "01"]
-  const dateToSend = dateConvert.join(""); // "20230101"
-  console.log(dateToSend);
-  const memoEnabled = props.thenum > 0;
-  const getGridDetail = async () => {
-    const response = await $.get(`/code/grass/${dateToSend}`);
-    console.log(response.data);
-    return response.data;
-  };
-  const {
-    isLoading: isLoadingProblem,
-    error: problemError,
-    data: problemData,
-  } = useQuery(["gridDetailupdate"], getGridDetail, { enabled: memoEnabled });
-
-  if (props.thenum != 0 && isLoadingProblem) {
+  const { data, isLoading, refetch } = getGridDetail(props.date);
+  console.log(isLoading, "oasdasdiajsdi");
+  if (props.thenum == 0 || isLoading) {
     return (
       <div>
         <LoadingSpinner />
       </div>
     );
   }
-
+  useEffect(() => {
+    refetch();
+  }, [props.date]);
   return (
     <>
-      <div
-        className={style.memo_container}
-        style={{
-          display: props.date === "" ? "none" : "block",
-        }}
-      >
-        <p>{props.date} 내가 푼 문제 목록</p>
-        {problemData === undefined
+      <div className={style.memo_container}>
+        {data === undefined
           ? null
-          : problemData.content.map((el: problemByDate) => (
-              <div key={uuidv4()}>
-                <ProblemItem data={el} />
+          : data.content.map((el: problemByDate) => (
+              <div className={style.problem_item} key={uuidv4()}>
+                <ProblemItem list={el} />
               </div>
             ))}
       </div>
