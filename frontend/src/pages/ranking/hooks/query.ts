@@ -83,3 +83,70 @@ export function getRankingDetail(
   );
   return { data, isLoading, refetch };
 }
+
+interface IMasterUserProblemRank {
+  gptSolutionSeq: number;
+  userGithubId: string;
+  userSubmitSolutionLanguage: string;
+  userSubmitSolutionRuntime: number;
+  userSubmitSolutionMemory: number;
+  userSubmitSolutionCodeLength: number;
+  gptTotalScore: number;
+  userSubmitSolutionTime: string;
+}
+
+interface IProblemSimpInfo {
+  problemLevel: number;
+  problemTitle: string;
+}
+
+interface IProblemSolution {
+  masterUserProblemRank: IMasterUserProblemRank;
+  problemSimpInfo: IProblemSimpInfo;
+  solutionCount: number;
+}
+
+// 문제 번호로 랭킹 페이지 정보 전체 조회
+export function getRankPageInfo(problemId: string) {
+  const { data, isLoading } = useQuery(
+    ["getRankPageInfo", problemId],
+    async (): Promise<IProblemSolution> => {
+      const { data } = await $.get(`/code/rank/pageinfo/${problemId}`);
+      return data;
+    },
+    {
+      staleTime: 5 * 60 * 1000,
+    }
+  );
+  return { data, isLoading };
+}
+
+// // 문제 번호로 마스터 유저 조회
+// export function getMasterInfo(problemId: string) {
+//   const { data, isLoading } = useQuery(
+//     ["getMasterInfo", problemId],
+//     async (): Promise<PagableResponse<ProblemInfo>> => {
+//       const { data } = await $.get(`/code/rank/master/${problemId}`);
+//       return data;
+//     },
+//     {
+//       staleTime: 5 * 60 * 1000,
+//     }
+//   );
+//   return { data, isLoading };
+// }
+
+// // 문제 번호로 문제 푼 사람 수 조회
+// export function getRankCount(problemId: string) {
+//   const { data, isLoading } = useQuery(
+//     ["getRankCount", problemId],
+//     async (): Promise<PagableResponse<ProblemInfo>> => {
+//       const { data } = await $.get(`/code/rank/count/${problemId}`);
+//       return data;
+//     },
+//     {
+//       staleTime: 5 * 60 * 1000,
+//     }
+//   );
+//   return { data, isLoading };
+// }

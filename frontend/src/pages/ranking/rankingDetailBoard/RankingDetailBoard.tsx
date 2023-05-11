@@ -17,9 +17,10 @@ interface BoardColumn {
 
 interface props {
   data: BoardColumn[] | undefined;
+  solutionCount: number;
 }
 
-export const RankingDetailBoard = ({ data }: props) => {
+export const RankingDetailBoard = ({ data, solutionCount }: props) => {
   return (
     <>
       <div className={style.header_container}>
