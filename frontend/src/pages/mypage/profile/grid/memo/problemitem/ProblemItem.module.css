@@ -1,0 +1,7 @@
+.problem_container {
+  display: flex;
+}
+.problem_container .problemLevel {
+  height: 10px;
+  width: 10px;
+}/*# sourceMappingURL=ProblemItem.module.css.map */

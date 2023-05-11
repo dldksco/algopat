@@ -1,51 +1,23 @@
 import { $ } from "@/connect/axios";
-
-import style from "./Grid.module.css";
 import { useQuery } from "@tanstack/react-query";
 import { LoadingSpinner } from "@/components/loadingspinner/LoadingSpinner";
-
-type GrassColorData = {
-  date: string;
-  color: number;
-};
+import { Memo } from "./memo/Memo";
+import { useState } from "react";
+import style from "./Grid.module.css";
 
 interface StreakData {
   userSubmitProblemCreatedAt: string;
   solvedCount: number;
 }
 
-export interface Data {
-  grassColor: GrassColorData[];
-}
-
-const data: Data = {
-  grassColor: [
-    { date: "2023-02-13", color: 2 },
-    { date: "2023-02-14", color: 1 },
-    { date: "2023-02-15", color: 6 },
-    { date: "2023-02-16", color: 1 },
-    { date: "2023-02-17", color: 2 },
-    { date: "2023-02-18", color: 3 },
-    { date: "2023-02-19", color: 4 },
-    { date: "2023-02-20", color: 2 },
-    { date: "2023-02-21", color: 3 },
-    { date: "2023-02-22", color: 5 },
-    { date: "2023-02-23", color: 1 },
-    { date: "2023-02-24", color: 3 },
-    { date: "2023-02-25", color: 5 },
-    { date: "2023-02-26", color: 2 },
-    { date: "2023-02-27", color: 1 },
-    { date: "2023-02-28", color: 6 },
-  ],
-};
-
-export function Grid() {
+export const Grid = () => {
   const getGrid = async () => {
     const response = await $.get("/code/grass");
-    console.log("gridASDASdasdas", response.data);
+    // console.log("gridASDASdasdas", response.data);
     return response.data;
   };
-
+  const [streakDateState, setStreakDateState] = useState<string>("");
+  const [streakColorState, setStreakColorState] = useState<number>(0);
   const {
     isLoading: isLoadingGrid,
     error: gridError,
@@ -65,12 +37,13 @@ export function Grid() {
     const col = gridData.length / 7;
     column = Math.floor(col) < col ? Math.floor(col) + 1 : Math.floor(col);
     startDate = new Date(gridData[0].userSubmitProblemCreatedAt);
-    console.log(column, "col");
-    console.log("startDate", startDate);
+    // console.log(column, "col");
+    // console.log("startDate", startDate);
   }
-  console.log("gridData", gridData);
+  // console.log("gridData", gridData);
   // Initialize the grid with null values
   const grid = Array.from({ length: 7 }, () => Array(column).fill(-1));
+  const gridDate = Array.from({ length: 7 }, () => Array(column).fill(-1));
 
   // console.log(startDate, "시작날짜");
   const startYear = startDate.getFullYear();
@@ -95,11 +68,11 @@ export function Grid() {
         ) - startWeek;
       const day = currentDate.getDay() % 7; //
       if (day == 6) week = week - 1;
-      console.log(day, week, grid[day][week], "확인");
+      // console.log(day, week, grid[day][week], "확인");
       grid[day][week] = object.solvedCount;
+      gridDate[day][week] = object.userSubmitProblemCreatedAt;
     });
   }
-  const check = new Date(startYear, 0, 1);
   const days = ["S", "M", "T", "W", "T", "F", "S"];
   const months = [
     "Jan",
@@ -131,8 +104,11 @@ export function Grid() {
     else if (index == 3 || index == 4) return colors[3];
     else if (index >= 5) return colors[4];
   };
+  const handleClick = (date: string, color: number) => {
+    setStreakDateState(date);
+    setStreakColorState(color);
+  };
 
-  const daysOfMonth = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
   return (
     <>
       <div className={style.grid}>
@@ -154,15 +130,23 @@ export function Grid() {
             row.map((col, colIndex) => {
               const bgColor = colorIndexFunc(grid[rowIndex][colIndex]);
               return (
-                <div
-                  style={{
-                    backgroundColor: bgColor,
-                    visibility:
-                      grid[rowIndex][colIndex] >= 0 ? "visible" : "hidden",
-                  }}
-                  key={`${rowIndex}-${colIndex}`}
-                  className={style.grid_cell}
-                />
+                <>
+                  <div
+                    style={{
+                      backgroundColor: bgColor,
+                      visibility:
+                        grid[rowIndex][colIndex] >= 0 ? "visible" : "hidden",
+                    }}
+                    key={`${rowIndex}-${colIndex}`}
+                    className={style.grid_cell}
+                    onClick={() =>
+                      handleClick(
+                        gridDate[rowIndex][colIndex],
+                        grid[rowIndex][colIndex]
+                      )
+                    }
+                  />
+                </>
               );
             })
           )}
@@ -190,6 +174,9 @@ export function Grid() {
           </div>
         </div>
       </div>
+      <div className={style.memo}>
+        <Memo date={streakDateState} thenum={streakColorState}></Memo>
+      </div>
     </>
   );
-}
+};
