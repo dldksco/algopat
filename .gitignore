@@ -1,8 +1,9 @@
-# Created by https://www.toptal.com/developers/gitignore/api/windows,macos,gradle,intellij+all,eclipse
-# Edit at https://www.toptal.com/developers/gitignore?templates=windows,macos,gradle,intellij+all,eclipse
+# Created by https://www.toptal.com/developers/gitignore/api/macos,windows,gradle,intellij+all,eclipse
+# Edit at https://www.toptal.com/developers/gitignore?templates=macos,windows,gradle,intellij+all,eclipse
 
 # Spring
-**.yml
+**/resources/application.yml
+**/resources/application.properties
 
 ### Eclipse ###
 .metadata
@@ -244,4 +245,4 @@ gradle-app.setting
 # Java heap dump
 *.hprof
 
-# End of https://www.toptal.com/developers/gitignore/api/windows,macos,gradle,intellij+all,eclipse
+# End of https://www.toptal.com/developers/gitignore/api/macos,windows,gradle,intellij+all,eclipse
