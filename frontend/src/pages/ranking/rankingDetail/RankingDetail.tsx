@@ -8,6 +8,10 @@ import style from "./RankingDetail.module.css";
 import { getRankPageInfo, getRankingDetail } from "../hooks/query";
 import { Pagenation } from "@/components/pagenation/Pagenation";
 import { SearchGroup } from "../rankingDetailBoard/searchGroup/SearchGroup";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { rankingDetailState } from "@/atoms/ranking.atom";
+import { RankingDetailParam } from "@/types/type";
+import { useEffect } from "react";
 
 export const RankingDetail = () => {
   const navigate = useNavigate();
@@ -17,10 +21,21 @@ export const RankingDetail = () => {
   const searchParams = new URLSearchParams(location.search);
   const page = Number(searchParams.get("page")) ?? 0;
 
-  const { data, isLoading, refetch } = getRankingDetail(
-    Number(problemId),
-    page
-  );
+  const [rankingdetailParam, setRankingdetailParam] =
+    useRecoilState(rankingDetailState);
+
+  const { data } = getRankingDetail(rankingdetailParam);
+
+  useEffect(() => {
+    setRankingdetailParam({
+      problemId: Number(problemId),
+      pagenumber: page,
+      defaultvalue: "",
+      languagefilter: "",
+      sortcriteria: "",
+    });
+  }, []);
+
   const { data: pageInfoData, isLoading: pageInfoLoading } = getRankPageInfo(
     Number(problemId)
   );
@@ -125,10 +140,7 @@ export const RankingDetail = () => {
           </>
         )}
       </div>
-      <SearchGroup
-        refetch={refetch}
-        solutionCount={pageInfoData?.solutionCount ?? 0}
-      />
+      <SearchGroup solutionCount={pageInfoData?.solutionCount ?? 0} />
       <RankingDetailBoard data={data?.content} />
       <Pagenation
         number={data?.number}

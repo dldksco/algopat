@@ -40,3 +40,11 @@ export interface SolutionColumn {
   userImageUrl: string;
   userSubmitSolutionTime: string;
 }
+
+export interface RankingDetailParam {
+  problemId: number;
+  pagenumber: number;
+  languagefilter: string;
+  sortcriteria: string;
+  defaultvalue: string;
+}

@@ -2,26 +2,19 @@ import { SelectBox } from "@/components/selectBox/SelectBox";
 import { Input } from "@/components/input/Input";
 import { useState } from "react";
 
-import style from "./SearchGroup.module.css";
-import { Button } from "@/components/button/Button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { addCommas } from "@/pages/code/hooks/func";
-import {
-  QueryObserverResult,
-  RefetchOptions,
-  RefetchQueryFilters,
-} from "@tanstack/react-query";
-import { PagableResponse, SolutionColumn } from "@/types/type";
+import { rankingDetailState } from "@/atoms/ranking.atom";
+import { useRecoilState } from "recoil";
+
+import style from "./SearchGroup.module.css";
 
 interface props {
   solutionCount: number;
-  refetch: <TPageData>(
-    options?: (RefetchOptions & RefetchQueryFilters<TPageData>) | undefined
-  ) => Promise<any>;
 }
 
-export const SearchGroup = ({ solutionCount, refetch }: props) => {
+export const SearchGroup = ({ solutionCount }: props) => {
   const langSelectOption = [
     { value: "", name: "전체보기" },
     { value: "c", name: "C" },
@@ -42,9 +35,19 @@ export const SearchGroup = ({ solutionCount, refetch }: props) => {
   const [sortSelect, setSortSelect] = useState(sortSelectOption[0].value);
   const [searchInput, setSearchInput] = useState("");
 
+  const [rankingdetailParam, setRankingdetailParam] =
+    useRecoilState(rankingDetailState);
+
   const clickEvent = () => {
     // console.log(lagnSelect, sortSelect, searchInput);
-    refetch({ queryKey: ["getRankingDetail", 1000] });
+    setRankingdetailParam((prev) => {
+      return {
+        ...prev,
+        languagefilter: lagnSelect,
+        sortcriteria: sortSelect,
+        defaultvalue: searchInput,
+      };
+    });
   };
 
   return (

@@ -1,4 +1,8 @@
-import { PagableResponse, SolutionColumn } from "@/types/type";
+import {
+  PagableResponse,
+  RankingDetailParam,
+  SolutionColumn,
+} from "@/types/type";
 import { useQuery } from "@tanstack/react-query";
 import { $ } from "@/connect/axios";
 
@@ -28,13 +32,9 @@ export function getRankingList(level: number, pageNum: number) {
 }
 
 // 문제 번호로 사용자 풀이 조회 (검색, 필터링, 정렬 기능 지원)
-export function getRankingDetail(
-  problemId: number,
-  pagenumber: number,
-  languagefilter?: string,
-  sortcriteria?: string,
-  defaultvalue?: string
-) {
+export function getRankingDetail(param: RankingDetailParam) {
+  const { problemId, pagenumber, languagefilter, sortcriteria, defaultvalue } =
+    param;
   const { data, isLoading, refetch } = useQuery(
     [
       "getRankingDetail",
@@ -44,18 +44,7 @@ export function getRankingDetail(
       sortcriteria,
       defaultvalue,
     ],
-    async ({ queryKey }): Promise<PagableResponse<SolutionColumn>> => {
-      const [
-        _,
-        problemId,
-        pagenumber,
-        languagefilter,
-        sortcriteria,
-        defaultvalue,
-      ] = queryKey;
-
-      console.log("querykey ", queryKey);
-
+    async (): Promise<PagableResponse<SolutionColumn>> => {
       let url = `/code/rank/solutions/${problemId}?pagenumber=${pagenumber}`;
 
       if (languagefilter) {
@@ -70,10 +59,10 @@ export function getRankingDetail(
 
       const { data } = await $.get(url);
       return data;
+    },
+    {
+      staleTime: 1 * 60 * 1000,
     }
-    // {
-    //   staleTime: 1 * 60 * 1000,
-    // }
   );
   return { data, isLoading, refetch };
 }
