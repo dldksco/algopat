@@ -39,7 +39,7 @@
 }
 .sideNav .nav_header {
   text-align: left;
-  padding-top: 5%;
+  padding-top: 1%;
   padding-left: 10%;
   font-size: 1.2rem;
 }
@@ -47,14 +47,14 @@
   position: relative;
   font-size: 1.2rem;
   margin-left: 3%;
-  margin-top: 10px;
-  transition: 0.25s;
+  margin-top: 15px;
 }
 .sideNav .nav_header .nav_header_tag:hover :nth-child(n) {
   color: gray;
 }
 .sideNav .nav_header .nav_header_tag :nth-child(n) {
   cursor: pointer;
+  transition: 0.2s;
 }
 .sideNav .nav_header .nav_header_tag :nth-child(1) {
   position: absolute;
