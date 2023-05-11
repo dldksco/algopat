@@ -1,8 +1,10 @@
-# Created by https://www.toptal.com/developers/gitignore/api/intellij+all,gradle,macos,windows,eclipse
-# Edit at https://www.toptal.com/developers/gitignore?templates=intellij+all,gradle,macos,windows,eclipse
 
 ### Spring ###
 *.yml
+
+# Spring
+**/resources/application.yml
+**/resources/application.properties
 
 ### Eclipse ###
 .metadata
@@ -244,4 +246,3 @@ gradle-app.setting
 # Java heap dump
 *.hprof
 
-# End of https://www.toptal.com/developers/gitignore/api/intellij+all,gradle,macos,windows,eclipse
