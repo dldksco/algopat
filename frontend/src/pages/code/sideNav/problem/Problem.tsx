@@ -18,11 +18,11 @@ export const Problem = ({ detail }: ProblemProps) => {
 
   return (
     <>
-      <hr />
       <div className={style.problem_list} onClick={problemClick}>
         <FontAwesomeIcon
           icon={faChevronUp}
-          className={isProblemOpen ? undefined : "fa-rotate-180"}
+          className={isProblemOpen ? undefined : style.rotate}
+          style={{ transition: "0.2s" }}
         />
         <img
           src={`https://static.solved.ac/tier_small/${detail.problemLevel}.svg`}
@@ -30,7 +30,8 @@ export const Problem = ({ detail }: ProblemProps) => {
         />
         {detail.problemId}. {stringCutter(detail.problemTitle, 8)}
       </div>
-      {isProblemOpen ? <ProblemDetail problemDetail={detail} /> : null}
+      <hr />
+      <ProblemDetail problemDetail={detail} isProblemOpen={isProblemOpen} />
     </>
   );
 };

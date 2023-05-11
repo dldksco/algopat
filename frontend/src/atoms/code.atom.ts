@@ -5,6 +5,11 @@ export const problemOpenState = atom({
   default: {},
 });
 
+export const isCodeNavOpenState = atom({
+  key: "isCodeNavOpenState",
+  default: false,
+});
+
 export const nowProblemSubmissionIdState = atom({
   key: "nowProblemSubmissionIdState",
   default: {

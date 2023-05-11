@@ -1,1 +1,1 @@
-{"version":3,"sources":["Problem.module.scss","Problem.module.css"],"names":[],"mappings":"AAAA;EACE,YAAA;EACA,aAAA;EACA,SAAA;EACA,mBAAA;EACA,eAAA;EACA,eAAA;ACCF;ADAE;EACE,WAAA;ACEJ","file":"Problem.module.css"}
+{"version":3,"sources":["Problem.module.scss","Problem.module.css"],"names":[],"mappings":"AAAA;EACE,YAAA;EACA,aAAA;EACA,SAAA;EACA,mBAAA;EACA,eAAA;EACA,gBAAA;EACA,eAAA;ACCF;ADCE;EACE,yBAAA;ACCJ;ADEE;EACE,WAAA;ACAJ;ADGE;EACE,yBAAA;ACDJ","file":"Problem.module.css"}
