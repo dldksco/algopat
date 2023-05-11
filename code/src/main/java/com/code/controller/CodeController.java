@@ -137,11 +137,19 @@ public class CodeController {
     return ResponseEntity.ok(problemService.isExistGptSolution(submissionId));
   }
 
+  /**
+   * 회원 푼 문제 정렬 조회
+   * @param pageNumber
+   * @param category
+   * @param condition
+   * @return
+   */
   @GetMapping("/submission/sort/{pageNumber}")
   public ResponseEntity<?> getUserSubmitProblemDtoOrderByCondition(
       @PathVariable(value = "pageNumber") int pageNumber,
       @RequestParam(value = "category", defaultValue = "date") String category,
-      @RequestParam(value = "condition", defaultValue = "desc") String condition
+      @RequestParam(value = "condition", defaultValue = "desc") String condition,
+      @RequestHeader(value = "userSeq") long userSeq
   ) {
 
     Direction direction = "ASC".equalsIgnoreCase(condition) ? Direction.ASC : Direction.DESC;
@@ -153,7 +161,7 @@ public class CodeController {
       category = "p.problemLevel";
     }
 
-    return ResponseEntity.ok(problemService.getUserSubmitProblemDtoFilterConditionPage(pageNumber, 1, direction, category));
+    return ResponseEntity.ok(problemService.getUserSubmitProblemDtoFilterConditionPage(pageNumber, userSeq, direction, category));
   }
 
 }
