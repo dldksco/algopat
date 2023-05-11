@@ -4,7 +4,7 @@ import { Pagenation } from "@/components/pagenation/Pagenation";
 import { useLocation } from "react-router-dom";
 
 import style from "./Ranking.module.css";
-import { getRankingList } from "./hooks/query";
+import { getRankingList, getSolvedList } from "./hooks/query";
 import { useRecoilValue } from "recoil";
 import { centerIndexState } from "@/atoms/ranking.atom";
 import { useEffect } from "react";
@@ -17,9 +17,12 @@ export const Ranking = () => {
 
   const level = useRecoilValue(centerIndexState);
   const { data, isLoading } = getRankingList(level + 1, Number(page));
+  const { data: solvedList } = getSolvedList();
+
+  const solvedSet = new Set(solvedList?.problemIdList);
 
   const boardData = data?.content.map((v) => {
-    return { ...v, isSolved: true };
+    return { ...v, isSolved: solvedSet.has(v.problemId) };
   });
 
   return (
