@@ -8,6 +8,7 @@ import com.code.data.dto.ProblemResponseDto;
 import com.code.data.dto.UserServiceBackjoonRequestDto;
 import com.code.data.dto.UserSubmitProblemDto;
 import com.code.data.dto.UserSubmitSolutionTitleDto;
+import com.code.data.dto.UserSubmittedProblemIdListDto;
 import com.code.service.KafkaProducerService;
 import com.code.service.ProblemRankService;
 import com.code.service.ProblemService;
@@ -139,8 +140,8 @@ public class CodeController {
     return ResponseEntity.ok(problemService.isExistGptSolution(submissionId));
   }
 
-  @GetMapping("/submission/problem/list")
-  public ResponseEntity<List<Long>> getUserSubmissionProblemSeqList(
+  @GetMapping("/submission/list")
+  public ResponseEntity<UserSubmittedProblemIdListDto> getUserSubmissionProblemSeqList(
       @RequestHeader("userSeq") long userSeq) {
     return ResponseEntity.ok(problemRankService.findProblemIdsByUserSeq(userSeq));
   }
