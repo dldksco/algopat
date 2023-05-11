@@ -64,7 +64,7 @@ public interface UserSubmitProblemRepository extends JpaRepository<UserSubmitPro
       "GROUP BY FUNCTION('DATE', usp.userSubmitProblemCreatedAt)")
   List<DateGrassCountDTO> findDateGrossCountByUserSeq(@Param("userSeq") Long userSeq, @Param("today") LocalDateTime today, @Param("todayMinusYear") LocalDateTime todayMinusYear);
 
-  @Query("SELECT new com.code.data.dto.DateGrassInfoDTO(uss.userSubmitProblemSeq, uss.problemId, p.problemTitle, p.problemLevel) " +
+  @Query("SELECT new com.code.data.dto.DateGrassInfoDTO(uss.submissionId, uss.problemId, p.problemTitle, p.problemLevel) " +
       "FROM UserSubmitSolution uss " +
       "JOIN Problem p ON uss.problemId = p.problemId " +
       "WHERE CAST(uss.userSubmitSolutionTime AS LocalDate) = :userSubmitSolutionTime " +
