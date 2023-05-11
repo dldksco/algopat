@@ -1,14 +1,20 @@
 package com.code.data.repository;
 
+import com.code.data.dto.DateGrassCountDTO;
+import com.code.data.dto.DateGrassInfo;
 import com.code.data.dto.UserSubmissionSolutionDetailDto;
 import com.code.data.dto.UserSubmitProblemDto;
 import com.code.data.dto.UserSubmitSolutionTitleDto;
 import com.code.data.entity.UserSubmitProblem;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 public interface UserSubmitProblemRepository extends JpaRepository<UserSubmitProblem, Long> {
 
@@ -50,5 +56,21 @@ public interface UserSubmitProblemRepository extends JpaRepository<UserSubmitPro
       "JOIN GptSolution gs ON uss.submissionId = gs.submissionId " +
       "WHERE uss.submissionId = :submissionId")
   Optional<UserSubmissionSolutionDetailDto> findUserSubmitSolutionDetailBySubmissionId(long submissionId);
+  @Query("SELECT new com.code.data.dto.DateGrassCountDTO(CAST(FUNCTION('DATE', usp.userSubmitProblemCreatedAt) AS LocalDate), COUNT(usp.userSubmitProblemCreatedAt)) " +
+      "FROM UserSubmitProblem usp " +
+      "WHERE usp.userSeq = :userSeq " +
+      "AND usp.userSubmitProblemCreatedAt BETWEEN :todayMinusYear AND :today " +
+      "GROUP BY FUNCTION('DATE', usp.userSubmitProblemCreatedAt)")
+  List<DateGrassCountDTO> findDateGrossCountByUserSeq(@Param("userSeq") Long userSeq, @Param("today") LocalDateTime today, @Param("todayMinusYear") LocalDateTime todayMinusYear);
+
+  @Query("SELECT new com.code.data.dto.DateGrassInfo(usp.userSubmitProblemSeq, usp.problemId, p.problemTitle, p.problemLevel) " +
+      "FROM UserSubmitProblem usp " +
+      "JOIN Problem p ON usp.problemId = p.problemId " +
+      "WHERE CAST(usp.userSubmitProblemCreatedAt AS LocalDate) = :userSubmitProblemCreatedAt " +
+      "AND usp.userSeq = :userSeq " +
+      "ORDER BY usp.userSubmitProblemCreatedAt DESC")
+  Page<DateGrassInfo> findDateGrassInfo(@Param("userSeq") Long userSeq, @Param("userSubmitProblemCreatedAt") LocalDate userSubmitProblemCreatedAt, Pageable pageable);
+
+
 }
 
