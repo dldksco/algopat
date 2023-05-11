@@ -28,9 +28,10 @@ $.interceptors.response.use(
       })
         .then((res) => {
           const accessToken = res.headers["authorization"];
-          console.log(accessToken);
           console.log("토큰 세팅 시작");
           localStorage.setItem("access-token", accessToken);
+          console.log(localStorage.getItem("access-token"));
+          console.log("이게 설정된 토큰임");
         })
         .catch(() => {
           alert("토큰이 만료되었습니다! 다시 로그인 해주세요!");
