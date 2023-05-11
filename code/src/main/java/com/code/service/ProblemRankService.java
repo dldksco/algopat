@@ -2,9 +2,13 @@ package com.code.service;
 
 import com.code.data.dto.ProblemRankDetailDto;
 import com.code.data.dto.ProblemRankOverviewDto;
+import com.code.data.dto.ProblemSimpInfoDto;
+import com.code.data.dto.RankPageDto;
 import com.code.data.repository.ProblemRepository;
 import com.code.data.repository.RankRepository;
+import com.code.util.builder.RankBuilderUtil;
 import java.util.List;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,6 +27,8 @@ public class ProblemRankService {
   private static final Logger logger = LoggerFactory.getLogger(ProblemRankService.class);
 
   private final ProblemRepository problemRepository;
+
+  private final RankBuilderUtil rankBuilderUtil;
 
   private final RankRepository rankRepository;
 
@@ -53,6 +59,20 @@ public class ProblemRankService {
         .orElseThrow(() -> new RuntimeException("Problem not found"));
 
     return problemRankDetailDtoList.get(0);
+  }
+
+  public RankPageDto findRankPageInfoByProblemId(long problemId) {
+    ProblemSimpInfoDto problemSimpInfoDto = rankRepository.findProblemSimpInfoByProblemId(problemId)
+        .orElseThrow(() -> new RuntimeException("Problem not found"));
+    Long count = rankRepository.countSolutionsByProblemId(problemId);
+    Optional<List<ProblemRankDetailDto>> masterUserSoultionOptional = rankRepository.findTopSolutionByProblemId(
+        problemId, PageRequest.of(0, 1));
+    ProblemRankDetailDto masterUserSolution = null;
+    if (masterUserSoultionOptional.isPresent()) {
+      masterUserSolution = masterUserSoultionOptional.get().get(0);
+    }
+    RankPageDto rankPageDto = rankBuilderUtil.rankPageDtoBuilder(problemSimpInfoDto, masterUserSolution, count);
+    return rankPageDto;
   }
 
 }
