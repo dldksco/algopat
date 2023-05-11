@@ -7,15 +7,13 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Setter
+@Builder
 @Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
-public class GithubUserIdInfoDTO {
-
-  private String userGithubId;
-
-  private String userImageUrl;
-
+public class BackjoonUserDTO {
+    private long userSeq;
+    @JsonProperty("userName")
+    private String userBackjoonId;
 }
