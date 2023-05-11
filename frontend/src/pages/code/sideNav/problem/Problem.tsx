@@ -1,25 +1,17 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronUp } from "@fortawesome/free-solid-svg-icons";
 import { stringCutter } from "../../hooks/func";
-import { problemOpenState } from "@/atoms/code.atom";
-
-import style from "./Problem.module.css";
 import { ProblemDetail } from "./problemDetail/ProblemDetail";
-import { useRecoilState } from "recoil";
+import { ProblemInfo } from "../../hooks/query";
+import { useState } from "react";
+import style from "./Problem.module.css";
 
 export interface ProblemProps {
-  detail: Problem;
-}
-
-export interface Problem {
-  problemLevel: number;
-  problemId: number;
-  problemTitle: string;
+  detail: ProblemInfo;
 }
 
 export const Problem = ({ detail }: ProblemProps) => {
-  const [isProblemOpen, setIsProblemOpen] = useRecoilState(problemOpenState);
-  // 이벤트는 코드 내에
+  const [isProblemOpen, setIsProblemOpen] = useState(false);
   const problemClick = () => {
     setIsProblemOpen((prev) => !prev);
   };

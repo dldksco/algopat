@@ -2,16 +2,15 @@ import { v4 as uuidv4 } from "uuid";
 import { $ } from "@/connect/axios";
 import { useQuery } from "@tanstack/react-query";
 import { LoadingSpinner } from "@/components/loadingspinner/LoadingSpinner";
-import { useRecoilState } from "recoil";
+import { useSetRecoilState } from "recoil";
 import { nowProblemSubmissionIdState } from "@/atoms/code.atom";
-import { Problem } from "../Problem";
-import { useState } from "react";
-
+import { ProblemInfo } from "@/pages/code/hooks/query";
+import { stringCutter } from "@/pages/code/hooks/func";
 import style from "./ProblemDetail.module.css";
 
 export interface SolveProps {
   detail?: Solve[];
-  problemDetail: Problem;
+  problemDetail: ProblemInfo;
 }
 
 export interface Solve {
@@ -20,13 +19,9 @@ export interface Solve {
 }
 
 export const ProblemDetail = (props: SolveProps) => {
-  const [modalOpen, setModalOpen] = useState(false);
-  const [nowSubmission, setNowSubmission] = useRecoilState(
-    nowProblemSubmissionIdState
-  );
+  const setNowSubmission = useSetRecoilState(nowProblemSubmissionIdState);
 
   const fetchSubmission = async () => {
-    console.log("제출번호 조회 문제 번호", props.problemDetail.problemId);
     const response = await $.get(
       `/code/problem/submission/solution/${props.problemDetail.problemId}/0`
     );
@@ -43,26 +38,22 @@ export const ProblemDetail = (props: SolveProps) => {
     const response = await $.get(
       `/code/problem/submission/solution/exist/${submissionId}`
     );
-    //response.data = true 생성 완료
     if (response.data.data === true) {
-      setNowSubmission((prev) => ({
-        ...prev,
+      setNowSubmission({
         problemTitle: props.problemDetail.problemTitle,
         problemLevel: props.problemDetail.problemLevel,
         problemId: props.problemDetail.problemId,
         submissionId: submissionId,
-        nowProcess: false, // process 끝
-      }));
+        nowProcess: false,
+      });
     } else {
-      // false는 생성중
-      setNowSubmission((prev) => ({
-        ...prev,
+      setNowSubmission({
         problemTitle: props.problemDetail.problemTitle,
         problemLevel: props.problemDetail.problemLevel,
         problemId: props.problemDetail.problemId,
         submissionId: submissionId,
-        nowProcess: true, // process 진행중
-      }));
+        nowProcess: true,
+      });
     }
   };
 
@@ -79,7 +70,10 @@ export const ProblemDetail = (props: SolveProps) => {
               className={style.submission_list}
               onClick={() => handleSubmission(el.submissionId)}
             >
-              풀이 {new Date(el.userSubmitSolutionTime).toLocaleString()}
+              {stringCutter(
+                `풀이 ${new Date(el.userSubmitSolutionTime).toLocaleString()}`,
+                23
+              )}
             </div>
           ))}
     </>
