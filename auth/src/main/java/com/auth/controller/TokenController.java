@@ -62,7 +62,7 @@ public class TokenController {
         if(tokenStatus==TokenStatus.VALID){
           TokenInfo tokenInfo =tokenService.getGithubIdFromToken(tokenDTO);
 
-          tokenDTO.setToken(tokenService.generateAccessToken(TokenGenerateDTO.builder().userGithubId(tokenInfo.getUserGithubId()).userSeq(tokenInfo.getUserSeq()).build()).getToken());
+          tokenDTO.setToken(tokenService.generateAccessToken(TokenGenerateDTO.builder().userGithubId(tokenInfo.getUserGithubId()).userSeq(tokenInfo.getUserSeq()).isExtension("NO").build()).getToken());
           System.out.println("ㅇㅇㅇㅇㅇㅇㅇㅇ");
           HttpHeaders headers = new HttpHeaders();
           headers.add("Authorization", tokenDTO.getToken());
