@@ -55,6 +55,9 @@ export const RankingCarousel = () => {
   const onInitCallback = () => {
     const index = centerIndex;
 
+    // console.log("center ", index);
+
+    // sliderRef.current?.slickGoTo(index);
     // center
     setLevelData((prev) => {
       prev[index].center = true;
@@ -105,12 +108,9 @@ export const RankingCarousel = () => {
     }
   };
 
-  const contentClick = (index: number) => {
-    if (!sliderRef.current) return;
-    sliderRef.current.slickGoTo(index);
-  };
-
   const settings: Settings = {
+    // initialSlide: 4,
+    focusOnSelect: true,
     className: style.slider,
     centerPadding: "60px",
     centerMode: true,
@@ -121,6 +121,7 @@ export const RankingCarousel = () => {
     // afterChange: afterChangeCallback,
     beforeChange: changeCallback,
     onInit: onInitCallback,
+    // onReInit: onInitCallback,
   };
 
   // 셀렉트 박스 선택에 따라 슬라이드 이동
@@ -167,7 +168,6 @@ export const RankingCarousel = () => {
                   (v.center ? style.center : "")
                 }
                 key={uuidv4()}
-                onClick={() => contentClick(v.level - 1)}
               >
                 <img
                   src={`https://static.solved.ac/tier_small/${v.level}.svg`}

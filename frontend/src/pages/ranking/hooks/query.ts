@@ -45,7 +45,9 @@ export function getRankingDetail(param: RankingDetailParam) {
       defaultvalue,
     ],
     async (): Promise<PagableResponse<SolutionColumn>> => {
-      let url = `/code/rank/solutions/${problemId}?pagenumber=${pagenumber}`;
+      let url = `/code/rank/solutions/${problemId}?pagenumber=${
+        pagenumber - 1
+      }`;
 
       if (languagefilter) {
         url += `&languagefilter=${languagefilter}`;

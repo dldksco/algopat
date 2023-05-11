@@ -19,7 +19,7 @@ export const RankingDetail = () => {
   const { id: problemId } = useParams();
 
   const searchParams = new URLSearchParams(location.search);
-  const page = Number(searchParams.get("page")) ?? 0;
+  const page = searchParams.get("page") ? Number(searchParams.get("page")) : 1;
 
   const [rankingdetailParam, setRankingdetailParam] =
     useRecoilState(rankingDetailState);
@@ -35,6 +35,12 @@ export const RankingDetail = () => {
       sortcriteria: "",
     });
   }, []);
+
+  useEffect(() => {
+    setRankingdetailParam((prev) => {
+      return { ...prev, problemId: Number(problemId), pagenumber: page };
+    });
+  }, [location]);
 
   const { data: pageInfoData, isLoading: pageInfoLoading } = getRankPageInfo(
     Number(problemId)
