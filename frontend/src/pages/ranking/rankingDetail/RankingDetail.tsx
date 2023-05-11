@@ -1,22 +1,67 @@
 import { addCommas } from "@/pages/code/hooks/func";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faAngleLeft, faThumbsUp } from "@fortawesome/free-solid-svg-icons";
+import { faAngleLeft } from "@fortawesome/free-solid-svg-icons";
 import { RankingDetailBoard } from "../rankingDetailBoard/RankingDetailBoard";
 import { useState, useEffect } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 
 import style from "./RankingDetail.module.css";
+import { getRankingDetail } from "../hooks/query";
+import { Pagenation } from "@/components/pagenation/Pagenation";
 
 export const RankingDetail = () => {
-  const dummy = {};
-
   const problemInfo = {
-    name: "배열 돌리기5",
+    title: "배열 돌리기5",
     level: "14",
   };
-
   const navigate = useNavigate();
+  const location = useLocation();
   const { id: problemId } = useParams();
+
+  const searchParams = new URLSearchParams(location.search);
+  const page = searchParams.get("page") ?? "1";
+
+  const { data, isLoading } = getRankingDetail(problemId as string, page);
+
+  console.log(data);
+  // const problemInfo = {
+  //   title: location.state.title,
+  //   level: location.state.level,
+  // };
+
+  // const { data } = getRankingDetail();
+
+  // console.log(data);
+
+  // const data = [
+  //   {
+  //     author: "김싸피",
+  //     submissionTime: "2023-04-10",
+  //     language: "C++",
+  //     memory: 23708,
+  //     runtime: 247,
+  //     refactoring: 100,
+  //     codeLength: 149,
+  //   },
+  //   {
+  //     author: "박싸피",
+  //     submissionTime: "2023-04-10",
+  //     language: "Java",
+  //     memory: 20008,
+  //     runtime: 247,
+  //     refactoring: 100,
+  //     codeLength: 149,
+  //   },
+  //   {
+  //     author: "김싸피",
+  //     submissionTime: "2023-04-10",
+  //     language: "C++",
+  //     memory: 23708,
+  //     runtime: 247,
+  //     refactoring: 100,
+  //     codeLength: 149,
+  //   },
+  // ];
 
   const listClickCallback = () => navigate("/ranking");
   const problemSolveClickCallback = (problemId: string) =>
@@ -35,7 +80,7 @@ export const RankingDetail = () => {
             style={{ width: "1.3rem", height: "auto", marginRight: "10px" }}
             alt=""
           />
-          <span>{`${problemId}. ${problemInfo.name}`}</span>
+          <span>{`${problemId}. ${problemInfo.title}`}</span>
         </div>
         <div
           className={style.box}
@@ -91,7 +136,14 @@ export const RankingDetail = () => {
           </div>
         </div>
       </div>
-      <RankingDetailBoard />
+      {/* <RankingDetailBoard data={data?.content} /> */}
+      <Pagenation
+        number={data?.number}
+        first={data?.first}
+        last={data?.last}
+        totalPages={data?.totalPages}
+        url="?page="
+      />
     </div>
   );
 };
