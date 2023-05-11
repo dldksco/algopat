@@ -1,0 +1,156 @@
+body {
+  width: 350px;
+  height: 100%;
+  background-color: white !important;
+  padding: 10px;
+  text-align: center;
+  transition: background-color 0.75s ease;
+  font-size: 13px;
+
+  
+  font-family: 'Helvetica Neue', 'Lucida Grande', sans-serif;
+}
+
+#popup_container {
+  height: 100%;
+}
+
+#commit_state_text {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+
+}
+
+#code_link {
+
+}
+
+#title {
+  font-family: 'Norwester', 'Helvetica Neue', 'Lucida Grande', sans-serif;
+  font-size: 30px;
+  font-weight: bold;
+  margin-bottom: 0px;
+  margin-top: 10px;
+}
+
+#caption {
+  font-family: 'Norwester', 'Helvetica Neue', 'Lucida Grande', sans-serif;
+  font-size: 14px;
+  font-weight: normal;
+  margin-bottom: 0px;
+}
+
+.onboarding {
+  font-family: sans-serif;
+  border-top: solid black 1px;
+  font-weight: 500;
+  padding-top: 2%;
+  font-size: medium;
+}
+
+#onffbox {
+  appearance: none;
+}
+
+#onffmain {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+  width: 55px;
+  height: 25px;
+  border: 0px solid #ff8585;
+  border-radius: 20px;
+  transition: 0.2s;
+  background: #ff8585;
+}
+
+#onffball {
+  position: absolute;
+  display: inline-block;
+  width: 21px;
+  height: 21px;
+  top: 2px;
+  left: 4px;
+  border: 0px solid #ff3737;
+  border-radius: 20px;
+  transition: 0.2s;
+  background: #ff3737;
+}
+
+#onffbox:checked + #onffmain {
+  border: 0px solid #8faadc;
+  background: #8faadc;
+}
+
+#onffbox:checked + #onffmain #onffball {
+  left: 30px;
+  border: 0px solid #2f5496;
+  background: #2f5496;
+}
+
+#api_key_button {
+  margin-top: 20px;
+}
+
+.container {
+	display: flex;
+  /* justify-content: flex-start; */
+  gap: 10px;
+  flex-wrap: wrap;
+	align-content: stretch;
+}
+
+#api_key {
+  width: 150px;
+}
+
+#api_key_model {
+  width: 205px;
+}
+
+#gear_icon {
+  position: absolute;
+  right: 2px;
+  cursor: pointer;
+}
+
+#gear_icon:hover {
+  color: gray;
+}
+
+#result_link {
+  margin-top: -10px;
+  color: rgb(10, 89, 92) !important
+}
+
+.spinner {
+  display: inline-block;
+  margin-top: -19px;
+  border: 3px solid rgba(0, 0, 0, 0.1);
+  border-top-color: #3bafda;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  animation: spin 1s infinite linear;
+}
+
+.completed_icon {
+  display: inline-block;
+  margin-top: -16px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background-color: #1c7cd6;
+  text-align: center;
+  color: white;
+  font-size: 12px;
+  line-height: 16px;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
