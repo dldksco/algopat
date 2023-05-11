@@ -63,9 +63,32 @@
   margin-bottom: auto;
 }
 .mainpage .cpage .move_stick {
-  background-color: red;
   width: 100%;
   height: 30%;
+}
+.mainpage .cpage .move_stick .block {
+  position: relative;
+  display: block;
+  height: auto;
+}
+.mainpage .cpage .move_stick .block .row {
+  position: relative;
+  height: 50px;
+}
+.mainpage .cpage .move_stick .block .green {
+  background-color: green;
+}
+.mainpage .cpage .move_stick .block .white {
+  background-color: white;
+}
+.mainpage .cpage .move_stick .block .black {
+  background-color: black;
+}
+.mainpage .cpage .move_stick .block .col {
+  width: 100px;
+  height: 20px;
+  margin: 2px;
+  display: inline-block;
 }
 .mainpage .cpage .code_image {
   width: 40%;
