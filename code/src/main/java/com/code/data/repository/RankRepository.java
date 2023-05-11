@@ -94,4 +94,9 @@ public interface RankRepository extends JpaRepository<Problem, Long> {
       + "WHERE p.problemId = :problemId ")
   Optional<ProblemSimpInfoDto> findProblemSimpInfoByProblemId(long problemId);
 
+  @Query("SELECT usp.problemId "
+      + "FROM UserSubmitProblem usp "
+      + "WHERE usp.userSeq = :userSeq")
+  Optional<List<Long>> findProblemIdsByUserSeq(long userSeq);
+
 }

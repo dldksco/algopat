@@ -75,4 +75,8 @@ public class ProblemRankService {
     return rankPageDto;
   }
 
+  public List<Long> findProblemIdsByUserSeq(long userSeq) {
+    List<Long> problemIdList = rankRepository.findProblemIdsByUserSeq(userSeq).orElseThrow(() -> new RuntimeException("Problem not found"));
+    return problemIdList;
+  }
 }

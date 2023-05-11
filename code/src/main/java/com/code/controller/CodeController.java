@@ -13,6 +13,7 @@ import com.code.service.ProblemRankService;
 import com.code.service.ProblemService;
 import com.code.service.UserService;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import java.util.List;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -45,6 +46,7 @@ public class CodeController {
   // Service 정의
   private final KafkaProducerService kafkaProducerService;
   private final ProblemService problemService;
+  private final ProblemRankService problemRankService;
   private final UserService userService;
 
   /**
@@ -135,6 +137,12 @@ public class CodeController {
       @PathVariable("submissionId") long submissionId
   ) {
     return ResponseEntity.ok(problemService.isExistGptSolution(submissionId));
+  }
+
+  @GetMapping("/submission/problem/list")
+  public ResponseEntity<List<Long>> getUserSubmissionProblemSeqList(
+      @RequestHeader("userSeq") long userSeq) {
+    return ResponseEntity.ok(problemRankService.findProblemIdsByUserSeq(userSeq));
   }
 
   /**
