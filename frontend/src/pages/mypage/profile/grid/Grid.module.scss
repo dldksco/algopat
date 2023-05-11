@@ -1,10 +1,10 @@
 .grid {
   margin: 2% 2%;
-  height: 220px;
-  width: 80%;
+  height: 210px;
+  width: 78%;
   background-color: #1d2538;
   display: flex;
-
+  position: relative;
   .days {
     display: flex;
     flex-direction: column;
@@ -17,7 +17,7 @@
       padding: 7.8px;
       text-align: right;
     }
-    padding-top: 38px;
+    padding-top: 40px;
     padding-left: 20px;
     padding-right: 10px;
   }
@@ -25,17 +25,106 @@
     overflow-x: auto;
     max-width: 100%;
     display: grid;
-    grid-template-columns: repeat(53, 15px);
-    grid-template-rows: repeat(7, 15px);
     padding-top: 50px;
     padding-bottom: 50px;
-    padding-right: 50px;
+    padding-right: 10px;
     .grid_cell {
       width: 11px;
       height: 11px;
-      border: 1px solid black;
+      border: 0.5px solid #ececec;
       border-radius: 2px;
       cursor: pointer;
+    }
+    .grid_cell:hover {
+      display: block;
+    }
+  }
+  .gridColor_container {
+    position: absolute;
+    bottom: 20px;
+    right: 0px;
+    display: flex;
+    float: right;
+    .gridColor_zero {
+      display: flex;
+      align-items: center;
+      margin-right: 20px;
+      .item_zero {
+        height: 15px;
+        width: 15px;
+        border: 1px solid;
+        border-radius: 2px;
+        background-color: #ececec;
+        margin-right: 5px;
+      }
+      .text_zero {
+        font-size: 0.8rem;
+        background-color: transparent;
+      }
+    }
+    .gridColor_one {
+      display: flex;
+      align-items: center;
+      margin-right: 20px;
+      .item_one {
+        height: 15px;
+        width: 15px;
+        border: 1px solid;
+        border-radius: 2px;
+        background-color: #a8e4aa;
+        margin-right: 5px;
+      }
+      .text_one {
+        font-size: 0.8rem;
+      }
+    }
+    .gridColor_two {
+      display: flex;
+      align-items: center;
+      margin-right: 20px;
+      .item_two {
+        height: 15px;
+        width: 15px;
+        border: 1px solid;
+        border-radius: 2px;
+        background-color: #82cb92;
+        margin-right: 5px;
+      }
+      .text_two {
+        font-size: 0.8rem;
+      }
+    }
+    .gridColor_three {
+      display: flex;
+      align-items: center;
+      margin-right: 20px;
+      .item_three {
+        height: 15px;
+        width: 15px;
+        border: 1px solid;
+        border-radius: 2px;
+        background-color: #5cb17a;
+        margin-right: 5px;
+      }
+      .text_three {
+        font-size: 0.8rem;
+      }
+    }
+    .gridColor_four {
+      display: flex;
+      align-items: center;
+      margin-right: 20px;
+      .item_four {
+        height: 15px;
+        width: 15px;
+        border: 1px solid;
+        border-radius: 2px;
+        background-color: #23794f;
+        margin-right: 5px;
+      }
+      .text_four {
+        font-size: 0.8rem;
+      }
     }
   }
 }
