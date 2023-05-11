@@ -11,11 +11,6 @@ import lombok.Setter;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class TokenGenerateDTO {
-  private String userGithubId;
-  private Long userSeq;
-  private String isExtension;
-
-
-
+public class UserServiceIdResponseDTO {
+  Long userSeq;
 }
