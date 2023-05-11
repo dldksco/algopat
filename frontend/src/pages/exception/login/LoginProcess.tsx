@@ -26,7 +26,7 @@ export const LoginProcess = () => {
       })
       .catch(() => {
         Swal.fire({
-          icon: "warning",
+          icon: "error",
           title: "",
           text: "로그인에 실패했습니다!! 다시 시도해 주세요!!",
           confirmButtonText: "닫기",
