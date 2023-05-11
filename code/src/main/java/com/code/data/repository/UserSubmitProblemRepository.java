@@ -27,7 +27,7 @@ public interface UserSubmitProblemRepository extends JpaRepository<UserSubmitPro
   @Query("SELECT new com.code.data.dto.UserSubmitSolutionTitleDto(uss.submissionId, uss.userSubmitSolutionTime) " +
       "FROM UserSubmitSolution uss " +
       "JOIN UserSubmitProblem usp ON uss.problemId = usp.problemId " +
-      "WHERE uss.userSeq = :userSeq and usp.problemId = :problemId"
+      "WHERE uss.userSeq = :userSeq and usp.userSeq = :userSeq and usp.problemId = :problemId"
   )
   Page<UserSubmitSolutionTitleDto> findUserSubmitSolutionTitleByUserSeq(long userSeq, long problemId, Pageable pageable);
 
