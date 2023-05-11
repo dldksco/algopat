@@ -11,6 +11,7 @@ public class ProblemRankDetailDto {
   private long gptSolutionSeq;
 //  private String userNickname;
   private String userGithubId;
+  private String userImageUrl;
   private String userSubmitSolutionLanguage;
   private long userSubmitSolutionRuntime;
   private long userSubmitSolutionMemory;
