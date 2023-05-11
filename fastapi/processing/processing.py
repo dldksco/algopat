@@ -55,6 +55,7 @@ async def processing(data : ProblemData, send_callback):
     json_chain = await json_formatter(chat_llm_0)
     
     lock_name = f"problem_id{problem_id}"
+    ### 분산락 
     while True:
         try:
             lock = redis_lock.Lock(redis_conn, lock_name, expire=LOCK_TIMEOUT, auto_renewal=True)
@@ -70,19 +71,24 @@ async def processing(data : ProblemData, send_callback):
             logger.error(f"예외 발생: {e}")
             raise
 
-    ### 회원 푼 문제 DB 접근 ### 
-    user_submit_problem_data = await save_user_problem_origin(problem_id, user_seq, data.submissionTime)
-    submission_id = await save_user_submit_solution_origin(problem_id, user_seq, user_submit_problem_data.user_submit_problem_seq, data)
+
+
+
+
     
-    # 여기서 DB에서 불러오는 로직이 들어가는거
+    # DB에서 문제 요약 정보 조회 
     gpt_problem_summary = await get_gpt_problem_summary(problem_id)
 
+    ### SSE 1 
     logger.info("코드 요약 시작")
     message_dto = MessageDTO(progress="[코드 요약] : 시작", message="ok", user_seq=user_seq)
     await send_callback("alert", message_dto)
+    
     summary_code_complexity_coroutine = summary_code_complexity(chat_llm_0, data, gpt_problem_summary)
     summary_code_refactor_coroutine = summary_code_refactor(chat_llm_0, data, gpt_problem_summary)
     summary_code_complexity_result, summary_code_refactor_result = await gather(summary_code_complexity_coroutine, summary_code_refactor_coroutine)
+
+    ### SSE 2
     logger.info("코드 요약 완료")
     message_dto = MessageDTO(progress="[코드 요약] : 끝", message="ok", user_seq=user_seq)
     await send_callback("alert", message_dto)
@@ -93,22 +99,34 @@ async def processing(data : ProblemData, send_callback):
     summary_code_json = await parse_summary_code(chat_llm_0, preprocessed_summary_code)
     logger.info("코드 요약 json 타입으로 변환 완료")
 
+    ### SSE 3
     logger.info("데이터 번역 작업 시작")
     message_dto = MessageDTO(progress="[데이터 번역] : 시작", message="ok", user_seq=user_seq)
     await send_callback("alert", message_dto)
 
     result = await translate_texts(chat_llm_0, summary_code_json)
     logger.info("데이터 번역 작업 완료")
+
     result.total_score = (result.gpt_solution_time_score + result.gpt_solution_space_score + result.gpt_solution_clean_score) // 3
 
+    ### SSE 4
     message_dto = MessageDTO(progress="[데이터 번역] : 끝", message="ok", user_seq=user_seq)
     await send_callback("alert", message_dto)
     
-    ### GPT평가 DB 접근 ### 
+    ### DB 접근 ###
+    ### 1. 회원 푼 문제 DB 접근 ### 
+    user_submit_problem_data = await save_user_problem_origin(problem_id, user_seq, data.submissionTime)
+    submission_id = await save_user_submit_solution_origin(problem_id, user_seq, user_submit_problem_data.user_submit_problem_seq, data)
+    ### 2. GPT평가 DB 접근 ### 
     await save_gpt_solution(submission_id, user_seq, result)
 
+    ### SSE 5
     message_dto = MessageDTO(progress="[GPT 비즈니스 로직] : 끝",message="finish", user_seq=user_seq)
     await send_callback("alert", message_dto)
+
+
+
+
 
 async def summary_problem(problem_id : int, user_seq : int, data : ProblemData, chat_llm, json_chain):
     is_gpt_problem_summary_exist = await check_gpt_problem_summary_is_exist(problem_id)
