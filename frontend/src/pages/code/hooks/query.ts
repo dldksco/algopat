@@ -117,7 +117,7 @@ export interface ProblemInfo {
 }
 
 /**
- * Infinity Query를 불러오는 함수
+ * 제출한 문제들의 Infinity Query를 불러오는 함수
  */
 export const getInfinityProblemList = () => {
   const fetchData = async (
@@ -134,7 +134,7 @@ export const getInfinityProblemList = () => {
       ["infinityProblemList"],
       ({ pageParam = 0 }) => fetchData(pageParam),
       {
-        getNextPageParam: (lastPage, allPages) => {
+        getNextPageParam: (lastPage) => {
           if (lastPage.last) return undefined;
           else return lastPage.number + 1;
         },
@@ -142,6 +142,32 @@ export const getInfinityProblemList = () => {
     );
 
   return { data, fetchNextPage, isFetchingNextPage, hasNextPage };
+};
+
+/******************************/
+
+export interface Solve {
+  submissionId: number;
+  userSubmitSolutionTime: string;
+}
+
+/**
+ * 특정 문제에 대한 제출 리스트를 불러오는 함수
+ */
+export const getSubmissionList = (problemId: number) => {
+  const fetchSubmission = async (): Promise<PagableResponse<Solve>> => {
+    const response = await $.get(
+      `/code/problem/submission/solution/${problemId}/0`
+    ).then((res) => res.data);
+    return response;
+  };
+
+  const { data, isLoading } = useQuery(
+    ["problemDetail", problemId],
+    fetchSubmission
+  );
+
+  return { data, isLoading };
 };
 
 /******************************/

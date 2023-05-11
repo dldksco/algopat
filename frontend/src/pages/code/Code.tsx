@@ -6,9 +6,11 @@ import { faBars } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import style from "./Code.module.css";
+import { useRecoilState } from "recoil";
+import { isCodeNavOpenState } from "@/atoms/code.atom";
 
 export const Code = () => {
-  const [isSidenavOpen, setIsSidenavOpen] = useState(false);
+  const [isSidenavOpen, setIsSidenavOpen] = useRecoilState(isCodeNavOpenState);
   const navigate = useNavigate();
   const burgerClick = () => setIsSidenavOpen((prev) => !prev);
 
@@ -31,7 +33,7 @@ export const Code = () => {
           isSidenavOpen ? style.leftTab + " " + style.mobileon : style.leftTab
         }
       >
-        <SideNav setIsSidenavOpen={setIsSidenavOpen} />
+        <SideNav />
       </div>
       <div className={style.rightTab}>
         <CodeDetail />

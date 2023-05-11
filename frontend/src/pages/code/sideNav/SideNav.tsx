@@ -14,13 +14,12 @@ import sort_tier_img from "@/assets/img/code/sort_tier.png";
 import { Button } from "@/components/button/Button";
 import { getInfinityProblemList } from "../hooks/query";
 import { Problem } from "./problem/Problem";
+import { isCodeNavOpenState } from "@/atoms/code.atom";
+import { useSetRecoilState } from "recoil";
 import style from "./SideNav.module.css";
 
-export const SideNav = ({
-  setIsSidenavOpen,
-}: {
-  setIsSidenavOpen: React.Dispatch<React.SetStateAction<boolean>>;
-}) => {
+export const SideNav = () => {
+  const setIsSidenavOpen = useSetRecoilState(isCodeNavOpenState);
   const { data, fetchNextPage, hasNextPage } = getInfinityProblemList();
   const navigate = useNavigate();
   const xButtonClick = () => setIsSidenavOpen(false);
@@ -52,10 +51,10 @@ export const SideNav = ({
             : style.problem_list + " " + style.extra_length
         }
       >
+        <hr style={{ marginTop: "10px" }} />
         {data?.pages.map((page) =>
           page.content.map((el) => <Problem key={uuidv4()} detail={el} />)
         )}
-        <hr />
       </div>
       {hasNextPage ? (
         <Button

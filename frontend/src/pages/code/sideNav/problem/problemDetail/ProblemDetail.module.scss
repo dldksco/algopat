@@ -1,23 +1,19 @@
-.submission_list {
-  padding-left: 18%;
-  padding-right: 8%;
-  height: 2rem;
-  padding-top: 4%;
-  color: gray;
-  width: 100%;
-  border-top: 1px solid white;
-  cursor: pointer;
-  &:hover .trash_icon {
-    visibility: visible;
-  }
+.detail_list {
+  overflow: hidden;
+  transition: 0.2s;
 
-  .trash_icon {
-    float: right;
-    visibility: hidden;
+  .submission_list {
+    padding-left: 18%;
+    padding-right: 8%;
+    height: 2rem;
+    padding-top: 2%;
+    color: gray;
+    width: 100%;
+    transition: 0.2s;
     cursor: pointer;
 
     &:hover {
-      visibility: visible;
+      color: rgb(192, 192, 192);
     }
   }
 }
