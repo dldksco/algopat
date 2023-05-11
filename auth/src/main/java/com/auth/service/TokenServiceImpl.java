@@ -31,8 +31,8 @@ public class TokenServiceImpl implements TokenService {
   @Value("${secret-key}")
   private String SECRET_KEY;
 //  private static final long ACCESS_TOKEN_EXPIRATION_TIME = 86400_000; // 1 day (in milliseconds)
-private static final long ACCESS_TOKEN_EXPIRATION_TIME = 3000; // 1 day (in milliseconds)
-  private static final long EXTENSION_TOKEN_EXPIRATION_TIME = 86400_000; // 1 day (in milliseconds)
+private static final long ACCESS_TOKEN_EXPIRATION_TIME = 60*1000*15; // 15 min (in milliseconds)
+  private static final long EXTENSION_TOKEN_EXPIRATION_TIME = 1000*60*60*24*365; // 1 day (in milliseconds)
   private static final long REFRESH_TOKEN_EXPIRATION_TIME = 86400_000; // 1 day (in milliseconds)
   private final Key getSigningKey() {
     byte[] keyBytes = Decoders.BASE64.decode(SECRET_KEY);
