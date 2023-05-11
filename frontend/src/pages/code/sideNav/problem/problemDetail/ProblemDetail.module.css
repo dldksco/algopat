@@ -1,0 +1,21 @@
+.submission_list {
+  padding-left: 18%;
+  padding-right: 8%;
+  height: 2rem;
+  padding-top: 4%;
+  color: gray;
+  width: 100%;
+  border-top: 1px solid white;
+  cursor: pointer;
+}
+.submission_list:hover .trash_icon {
+  visibility: visible;
+}
+.submission_list .trash_icon {
+  float: right;
+  visibility: hidden;
+  cursor: pointer;
+}
+.submission_list .trash_icon:hover {
+  visibility: visible;
+}/*# sourceMappingURL=ProblemDetail.module.css.map */

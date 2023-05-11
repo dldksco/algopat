@@ -1,0 +1,138 @@
+.code_detail {
+  width: 100%;
+  padding: 2% 8%;
+
+  .algopat {
+    font-size: 3rem;
+    color: gray;
+    text-align: center;
+    margin-top: 42vh;
+  }
+
+  .circles {
+    display: flex;
+    justify-content: space-evenly;
+  }
+
+  .info_box {
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+    margin-bottom: 20px;
+    margin-top: 40px;
+    min-height: 180px;
+
+    .right_box {
+      width: 60%;
+      border-radius: 10px;
+      padding: 0px 10px;
+      display: flex;
+      flex-wrap: wrap;
+
+      .circle {
+        position: relative;
+        top: 1px;
+        height: 0.8rem;
+        width: 0.8rem;
+        display: inline-block;
+        border-radius: 100%;
+        margin-right: 5px;
+      }
+
+      h3 {
+        margin: 10px 2px;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 1050px) {
+  .code_detail {
+    .circles {
+      h3 {
+        font-size: 0.7rem;
+      }
+    }
+    .info_box {
+      h2 {
+        font-size: 1.2rem;
+      }
+      .right_box {
+        .circle {
+          height: 0.6rem;
+          width: 0.6rem;
+        }
+        span {
+          font-size: 0.8rem;
+        }
+        h3 {
+          font-size: 0.9rem;
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .code_detail {
+    width: 100%;
+    padding: 13% 4% 2%;
+
+    .algopat {
+      font-size: 2.4rem;
+      color: gray;
+      text-align: center;
+    }
+
+    .circles {
+      display: flex;
+      justify-content: space-evenly;
+
+      h3 {
+        font-size: 0.6rem;
+      }
+    }
+
+    .info_box {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 20px;
+      margin-top: 40px;
+      min-height: 180px;
+
+      h2 {
+        font-size: 1.5rem;
+      }
+
+      .right_box {
+        width: 100%;
+        border-radius: 10px;
+        padding: 0px 10px;
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+
+        .circle {
+          position: relative;
+          top: 1px;
+          height: 0.4rem;
+          width: 0.4rem;
+          display: inline-block;
+          border-radius: 100%;
+          margin-right: 5px;
+        }
+
+        span {
+          font-size: 0.5rem;
+        }
+
+        h3 {
+          margin: 10px 2px;
+          font-size: 1rem;
+        }
+      }
+    }
+  }
+}

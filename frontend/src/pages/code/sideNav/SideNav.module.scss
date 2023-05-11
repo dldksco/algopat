@@ -1,0 +1,89 @@
+.sideNav {
+  background-color: #28292c;
+  color: white;
+  height: 100%;
+
+  .x_button {
+    display: none;
+  }
+
+  .sort_button_group {
+    display: flex;
+    justify-content: space-around;
+
+    .sort_button {
+      display: flex;
+      justify-content: center;
+      align-items: baseline;
+      width: 60px;
+      padding: 5px 10px;
+      border: 1px solid white;
+      border-radius: 10px;
+      cursor: pointer;
+
+      img {
+        display: inline;
+      }
+    }
+  }
+
+  p {
+    padding: 8%;
+    margin: 0;
+    font-size: 1.2rem;
+    font-weight: 600;
+    display: inline-block;
+  }
+  .problem_list{
+    height: 600px;
+    overflow-y: auto;
+  }
+  .nav_header {
+    text-align: left;
+    padding-top: 5%;
+    padding-left: 10%;
+    font-size: 1.2rem;
+
+    .nav_header_tag {
+      position: relative;
+      font-size: 1.2rem;
+      margin-left: 3%;
+      margin-top: 10px;
+      transition: 0.25s;
+
+      &:hover :nth-child(n) {
+        color: gray;
+      }
+
+      :nth-child(n) {
+        cursor: pointer;
+      }
+      :nth-child(1) {
+        position: absolute;
+        left: -10%;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .sideNav {
+    height: 100%;
+    border: 1px solid white;
+
+    .x_button {
+      display: inline-block;
+      font-size: 1.2rem;
+      margin-left: 140px;
+      transition: 0.2s;
+      cursor: pointer;
+
+      &:hover {
+        color: gray;
+      }
+    }
+    .nav_header {
+      padding-bottom: calc(5% + 25px);
+    }
+  }
+}

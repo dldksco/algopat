@@ -1,3 +1,6 @@
+<<<<<<< HEAD
+# ALGOPHA ....
+=======
 # AlGoPaT
 
 ![프로젝트 로고](./image/Logo.png/)  
@@ -70,3 +73,4 @@ ChatGPT & LangChain을 활용한 알고리즘 소스코드 효율성 분석 플�
 
 - [프로젝트 Notino](https://www.notion.so/ramen-buang/SSAFY-2-ALGOPAT-dbb58b913794443d8592f46eca0477be) AlGoPaT
 - [GitHub - Link](자기 githut 링크) 포트폴리오 Github Link
+>>>>>>> origin/dev-user

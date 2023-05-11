@@ -1,0 +1,40 @@
+.grid {
+  margin: 2% 2%;
+  height: 220px;
+  width: 80%;
+  background-color: #1d2538;
+  display: flex;
+}
+.grid .days {
+  display: flex;
+  flex-direction: column;
+  align-items: end;
+  padding-top: 38px;
+  padding-left: 20px;
+  padding-right: 10px;
+}
+.grid .days .day {
+  font-size: 10px;
+  width: 11px;
+  height: 11px;
+  color: #898989;
+  padding: 7.8px;
+  text-align: right;
+}
+.grid .grid_container {
+  overflow-x: auto;
+  max-width: 100%;
+  display: grid;
+  grid-template-columns: repeat(53, 15px);
+  grid-template-rows: repeat(7, 15px);
+  padding-top: 50px;
+  padding-bottom: 50px;
+  padding-right: 50px;
+}
+.grid .grid_container .grid_cell {
+  width: 11px;
+  height: 11px;
+  border: 1px solid black;
+  border-radius: 2px;
+  cursor: pointer;
+}/*# sourceMappingURL=Grid.module.css.map */

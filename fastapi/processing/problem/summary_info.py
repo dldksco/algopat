@@ -1,14 +1,20 @@
 from langchain.chat_models import ChatOpenAI
 from myclass.problem import ProblemData
 from utils.utils import count_token
+from utils.log_decorator import log_decorator
 from chain.problem.summary_info import summary_info_chain
 from chain.problem.summary_info_long import summary_info_long_chain
 from langchain.text_splitter import TokenTextSplitter
+from logging import getLogger
 
+# logger 설정 
+logger = getLogger()
+
+@log_decorator("문제 정보 요약")
 async def summary_info(chat_llm : ChatOpenAI, data : ProblemData):
     problem_info_origin = await build_problem_info_origin(data)
     token_length = await count_token(problem_info_origin)
-    print(token_length)
+    logger.info(token_length)
     if token_length < 2000:
         return await summary_info_short(chat_llm, problem_info_origin)
     else:
@@ -29,7 +35,7 @@ async def summary_info_long(chat_llm : ChatOpenAI, problem_info_origin : str):
     existing_summary = ""
     texts_len = len(texts)
     for i in range(texts_len):
-        print(f"iter_count = {i + 1}/{texts_len}, token: {await count_token(texts[i])}")
+        logger.info(f"iter_count = {i + 1}/{texts_len}, token: {await count_token(texts[i])}")
         if i > 0:
             first_text = texts[i - 1]
         second_text = texts[i]
