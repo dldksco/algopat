@@ -23,9 +23,6 @@ export const Memo = (props: dateData) => {
       </div>
     );
   }
-  useEffect(() => {
-    refetch();
-  }, [props.date]);
   return (
     <>
       <div className={style.memo_container}>

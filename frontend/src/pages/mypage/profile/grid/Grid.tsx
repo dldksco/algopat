@@ -1,28 +1,17 @@
-import { $ } from "@/connect/axios";
-import { useQuery } from "@tanstack/react-query";
 import { LoadingSpinner } from "@/components/loadingspinner/LoadingSpinner";
 import { Memo } from "./memo/Memo";
 import { useState } from "react";
 import style from "./Grid.module.css";
-
-interface StreakData {
-  userSubmitProblemCreatedAt: string;
-  solvedCount: number;
-}
+import { getGrid } from "../../hooks/query";
 
 export const Grid = () => {
-  const getGrid = async () => {
-    const response = await $.get("/code/grass");
-    //console.log("gridASDASdasdas", response.data);
-    return response.data;
-  };
   const [streakDateState, setStreakDateState] = useState<string>("");
   const [streakColorState, setStreakColorState] = useState<number>(0);
   const {
     isLoading: isLoadingGrid,
     error: gridError,
     data: gridData,
-  } = useQuery<StreakData[]>(["gridupdate"], getGrid);
+  } = getGrid();
 
   if (isLoadingGrid) {
     return (
