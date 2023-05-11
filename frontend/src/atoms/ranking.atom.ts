@@ -10,7 +10,7 @@ export const rankingDetailState = atom<RankingDetailParam>({
   key: "rankingDetailState",
   default: {
     problemId: 0,
-    pagenumber: 0,
+    pagenumber: 1,
     languagefilter: "",
     sortcriteria: "",
     defaultvalue: "",
