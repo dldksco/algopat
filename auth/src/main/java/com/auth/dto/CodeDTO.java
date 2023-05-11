@@ -1,15 +1,16 @@
 package com.auth.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.Setter;
+import lombok.NoArgsConstructor;
 
-@Builder
 @Getter
-@Setter
-public class GithubCodeResponseDTO {
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
+public class CodeDTO {
   private String code;
   @Builder.Default
   private String isExtension="NO";
-
 }
