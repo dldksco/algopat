@@ -106,3 +106,26 @@ export function getRankPageInfo(problemId: number) {
   );
   return { data, isLoading };
 }
+
+// 사용자 Seq로 푼 문제 리스트 조회
+
+interface SolvedList {
+  problemIdList: number[];
+}
+export function getSolvedList() {
+  const { data, isLoading } = useQuery(
+    ["getSolvedList"],
+    async (): Promise<SolvedList> => {
+      if (localStorage.getItem("access-token")) {
+        const { data, status } = await $.get(`/code/problem/submission/list`);
+        return data;
+      } else {
+        return { problemIdList: [] };
+      }
+    },
+    {
+      staleTime: 1 * 60 * 1000,
+    }
+  );
+  return { data, isLoading };
+}
