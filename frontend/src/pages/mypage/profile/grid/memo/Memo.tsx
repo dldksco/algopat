@@ -43,20 +43,22 @@ export const Memo = (props: dateData) => {
   }
 
   return (
-    <div
-      className={style.memo_container}
-      style={{
-        display: props.date === "" ? "none" : "block",
-      }}
-    >
-      <p>{props.date} 내가 푼 문제 목록</p>
-      {problemData === undefined
-        ? null
-        : problemData.content.map((el: problemByDate) => (
-            <div key={uuidv4()}>
-              <ProblemItem data={el} />
-            </div>
-          ))}
-    </div>
+    <>
+      <div
+        className={style.memo_container}
+        style={{
+          display: props.date === "" ? "none" : "block",
+        }}
+      >
+        <p>{props.date} 내가 푼 문제 목록</p>
+        {problemData === undefined
+          ? null
+          : problemData.content.map((el: problemByDate) => (
+              <div key={uuidv4()}>
+                <ProblemItem data={el} />
+              </div>
+            ))}
+      </div>
+    </>
   );
 };
