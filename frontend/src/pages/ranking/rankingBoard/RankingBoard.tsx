@@ -14,7 +14,7 @@ import { addCommas, stringCutter } from "@/pages/code/hooks/func";
  */
 
 interface RankingDatacolumn {
-  problemId: string;
+  problemId: number;
   problemTitle: string;
   problemSubmittedCount: string;
   userGithubId: string;
