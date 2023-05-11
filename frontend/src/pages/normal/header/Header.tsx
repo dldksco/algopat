@@ -33,10 +33,10 @@ export const Header = () => {
     const getProfile = async () => {
       const response = await $.get("/user/profile");
       console.log("profile", response.data);
-      return response.data;
+      return response.data.userImageUrl;
     };
-    console.log(getProfile());
-  }, []);
+    if (userInfo.userSeq) getProfile().then((res) => setProfileUrl(res));
+  }, [userInfo]);
 
   return (
     <div className={style.header}>
