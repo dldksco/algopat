@@ -6,6 +6,7 @@ import com.auth.dto.GithubUserResponseDTO;
 import com.auth.dto.LoginProcessDTO;
 import com.auth.dto.TokenDTO;
 import com.auth.dto.TokenGenerateDTO;
+import com.auth.dto.UserServiceIdResponseDTO;
 import java.util.Collections;
 import javax.servlet.http.Cookie;
 import lombok.RequiredArgsConstructor;
@@ -28,6 +29,7 @@ public class AuthServiceImpl implements AuthService {
 
   private final UserService userService;
   private final TokenService tokenService;
+  private final RestTemplate restTemplate;
   @Value("${client-id}")
   private String clientId;
   @Value("${client-secret}")
@@ -35,22 +37,31 @@ public class AuthServiceImpl implements AuthService {
   @Value("${redirect-uri}")
   private String redirectURI;
 
-  private final RestTemplate restTemplate;
-
   //헤더에 엑세스토큰담는 작업해야함
   @Override
   public LoginProcessDTO loginProcess(GithubCodeResponseDTO githubCodeResponseDTO) {
     LoginProcessDTO loginProcessDTO = new LoginProcessDTO();
+
     GithubAccessTokenResponseDTO githubAccessTokenResponseDTO = requestGithubAccessToken(
         githubCodeResponseDTO);
-    GithubUserResponseDTO githubUserResponseDTO = requestGithubUserId(githubAccessTokenResponseDTO);
+
+    GithubUserResponseDTO githubUserResponseDTO = requestGithubUserInfo(
+        githubAccessTokenResponseDTO);
+
+    UserServiceIdResponseDTO userServiceIdResponseDTO = userService.checkId(githubUserResponseDTO);
 
     TokenDTO accessToken = tokenService.generateAccessToken(
-        TokenGenerateDTO.builder().userGithubId(githubUserResponseDTO.getUserGithubId()).build());
+        TokenGenerateDTO.builder()
+            .userGithubId(githubUserResponseDTO.getUserGithubId())
+            .isExtension(githubCodeResponseDTO.getIsExtension())
+            .userSeq(userServiceIdResponseDTO.getUserSeq())
+            .build());
     loginProcessDTO.setAccessToken(accessToken.getToken());
 
     TokenDTO refreshToken = tokenService.generateRefreshToken(
-        TokenGenerateDTO.builder().userGithubId(githubUserResponseDTO.getUserGithubId()).build());
+        TokenGenerateDTO.builder().userGithubId(githubUserResponseDTO.getUserGithubId()).userSeq(
+            userServiceIdResponseDTO.getUserSeq()).build());
+
     Cookie cookie = tokenService.createRefreshTokenCookie(refreshToken);
     loginProcessDTO.setCookie(cookie);
 
@@ -72,15 +83,16 @@ public class AuthServiceImpl implements AuthService {
     HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(body, headers);
     GithubAccessTokenResponseDTO githubAccessTokenResponse = restTemplate.postForObject(url,
         request, GithubAccessTokenResponseDTO.class);
+    System.out.println("githubaccess :" + githubAccessTokenResponse.getGitHubaAccessToken());
     return githubAccessTokenResponse;
   }
 
   @Override
-  public GithubUserResponseDTO requestGithubUserId(
+  public GithubUserResponseDTO requestGithubUserInfo(
       GithubAccessTokenResponseDTO githubAccessTokenResponseDTO) {
     String githubaAccessToken = githubAccessTokenResponseDTO.getGitHubaAccessToken();
     String url = "https://api.github.com/user";
-
+    System.out.println("method" + githubaAccessToken);
     HttpHeaders headers = new HttpHeaders();
     headers.setAccept(Collections.singletonList(MediaType.valueOf("application/vnd.github+json")));
     headers.set("Authorization", "Bearer " + githubaAccessToken);
@@ -94,7 +106,8 @@ public class AuthServiceImpl implements AuthService {
         GithubUserResponseDTO.class
     );
     GithubUserResponseDTO githubUserResponseDTO = response.getBody();
-    System.out.println("id"+githubUserResponseDTO.getUserGithubId());
+    System.out.println("id" + githubUserResponseDTO.getUserGithubId());
+    System.out.println("url " + githubUserResponseDTO.getUserImageUrl());
     return githubUserResponseDTO;
   }
 
@@ -102,7 +115,7 @@ public class AuthServiceImpl implements AuthService {
   public String setGithubRedirectURL() {
     String githubRedirectBaseURL = "https://github.com/login/oauth/authorize";
     String githubRedirectURL =
-        githubRedirectBaseURL + "?client_id=" + clientId + "&" + "redirect_uri=" + redirectURI;
+        githubRedirectBaseURL + "?client_id=" + clientId;
     return githubRedirectURL;
   }
 

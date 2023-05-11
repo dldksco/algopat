@@ -5,8 +5,9 @@ import com.auth.domain.RefreshToken;
 import com.auth.dto.TokenDTO;
 import com.auth.dto.TokenGenerateDTO;
 import com.auth.domain.TokenStatus;
+import com.auth.dto.TokenInfo;
 import com.auth.exception.BaseException;
-import com.auth.repository.RefreshTokenRepository;
+//import com.auth.repository.RefreshTokenRepository;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jws;
@@ -26,10 +27,12 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class TokenServiceImpl implements TokenService {
-  private final RefreshTokenRepository refreshTokenRepository;
+//  private final RefreshTokenRepository refreshTokenRepository;
   @Value("${secret-key}")
   private String SECRET_KEY;
-  private static final long ACCESS_TOKEN_EXPIRATION_TIME = 10; // 1 day (in milliseconds)
+//  private static final long ACCESS_TOKEN_EXPIRATION_TIME = 86400_000; // 1 day (in milliseconds)
+private static final long ACCESS_TOKEN_EXPIRATION_TIME = 3000; // 1 day (in milliseconds)
+  private static final long EXTENSION_TOKEN_EXPIRATION_TIME = 86400_000; // 1 day (in milliseconds)
   private static final long REFRESH_TOKEN_EXPIRATION_TIME = 86400_000; // 1 day (in milliseconds)
   private final Key getSigningKey() {
     byte[] keyBytes = Decoders.BASE64.decode(SECRET_KEY);
@@ -37,10 +40,22 @@ public class TokenServiceImpl implements TokenService {
   }
   @Override
   public TokenDTO generateAccessToken(TokenGenerateDTO tokenGenerateDTO) {
+    String isExtension= tokenGenerateDTO.getIsExtension();
+    long tokenExpiredTime=0;
+    if(isExtension.equals("YES")){
+      tokenExpiredTime=EXTENSION_TOKEN_EXPIRATION_TIME;
+      System.out.println("익스텐션");
+    }
+    else {
+      tokenExpiredTime=ACCESS_TOKEN_EXPIRATION_TIME;
+      System.out.println("엑세스토큰");
+    }
+
      String token = Jwts.builder()
-        .claim("user_github_id",tokenGenerateDTO.getUserGithubId())
+        .claim("userGithubId",tokenGenerateDTO.getUserGithubId())
+         .claim("userSeq",tokenGenerateDTO.getUserSeq())
         .setIssuedAt(new Date(System.currentTimeMillis()))
-        .setExpiration(new Date(System.currentTimeMillis() + ACCESS_TOKEN_EXPIRATION_TIME))
+        .setExpiration(new Date(System.currentTimeMillis() + tokenExpiredTime))
         .signWith(getSigningKey(), SignatureAlgorithm.HS256)
         .compact();
      return TokenDTO.builder().token(token).build();
@@ -48,12 +63,13 @@ public class TokenServiceImpl implements TokenService {
   @Override
   public TokenDTO generateRefreshToken(TokenGenerateDTO tokenGenerateDTO) {
     String token = Jwts.builder()
-        .claim("user_github_id",tokenGenerateDTO.getUserGithubId())
+        .claim("userGithubId",tokenGenerateDTO.getUserGithubId())
+        .claim("userSeq",tokenGenerateDTO.getUserSeq())
         .setIssuedAt(new Date(System.currentTimeMillis()))
         .setExpiration(new Date(System.currentTimeMillis() + REFRESH_TOKEN_EXPIRATION_TIME))
         .signWith(getSigningKey(), SignatureAlgorithm.HS256)
         .compact();
-    refreshTokenRepository.save(RefreshToken.builder().refreshToken(token).userGithubId(tokenGenerateDTO.getUserGithubId()).build());
+//    refreshTokenRepository.save(RefreshToken.builder().refreshToken(token).userGithubId(tokenGenerateDTO.getUserGithubId()).build());
     return TokenDTO.builder().token(token).build();
   }
   @Override
@@ -73,16 +89,21 @@ public class TokenServiceImpl implements TokenService {
     }
   }
   @Override
-  public String getGithubIdFromToken(TokenDTO tokenDTO){
+  public TokenInfo getGithubIdFromToken(TokenDTO tokenDTO){
     String jwt = tokenDTO.getToken();
+    System.out.println("getgituhㅇㅁㄴㅇㅁㄴㅇ"+jwt);
     try{
       Jws<Claims> jws = Jwts.parserBuilder()
           .setSigningKey(getSigningKey())
           .build()
           .parseClaimsJws(jwt);
-      return jws.getBody().get("user_github_id", String.class);
+      String userGithubId =jws.getBody().get("userGithubId", String.class);
+      System.out.println(userGithubId+"깃허브용");
+      long userSeq = jws.getBody().get("userSeq", Long.class);
+      System.out.println("유저시크요"+userSeq);
+      return TokenInfo.builder().userGithubId(userGithubId).userSeq(userSeq).build();
     }catch (JwtException e){
-      throw new BaseException(ErrorCode.UNVALID_TOKEN,"getGithubIdFromToken");
+      throw new BaseException(ErrorCode.UNVALID_TOKEN);
     }
 
   }
@@ -91,6 +112,20 @@ public class TokenServiceImpl implements TokenService {
 
     return null;
   }
+
+  @Override
+  public TokenInfo parseToken(String token) {
+    Jws<Claims> claimsJws = Jwts.parserBuilder()
+        .setSigningKey(getSigningKey())
+        .build()
+        .parseClaimsJws(token);
+
+    return TokenInfo.builder()
+        .userGithubId(claimsJws.getBody().get("userGithubId", String.class))
+        .userSeq(claimsJws.getBody().get("userSeq",Long.class))
+        .build();
+  }
+
   @Override
   public Cookie createRefreshTokenCookie(TokenDTO tokenDTO) {
     Cookie refreshTokenCookie = new Cookie("refreshToken", tokenDTO.getToken());
