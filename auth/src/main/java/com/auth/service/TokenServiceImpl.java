@@ -64,6 +64,7 @@ private static final long ACCESS_TOKEN_EXPIRATION_TIME = 10; // 1 day (in millis
   public TokenDTO generateRefreshToken(TokenGenerateDTO tokenGenerateDTO) {
     String token = Jwts.builder()
         .claim("userGithubId",tokenGenerateDTO.getUserGithubId())
+        .claim("userSeq",tokenGenerateDTO.getUserSeq())
         .setIssuedAt(new Date(System.currentTimeMillis()))
         .setExpiration(new Date(System.currentTimeMillis() + REFRESH_TOKEN_EXPIRATION_TIME))
         .signWith(getSigningKey(), SignatureAlgorithm.HS256)
