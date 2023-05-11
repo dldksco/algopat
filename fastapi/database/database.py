@@ -59,8 +59,8 @@ async def get_gpt_problem_summary(problem_id : int):
 async def save_user_submit_solution_origin(problem_id : int, user_seq : int, user_submit_problem_seq : int, data : ProblemData):
     logger.info("회원 제출 코드 DB 접근")
     
-    origin_date_format = "%Y년 %m월 %d일 %H:%M:%S"
-    date_format = "%Y-%m-%d %H:%M:%S"
+    # origin_date_format = "%Y년 %m월 %d일 %H:%M:%S"
+    # date_format = "%Y-%m-%d %H:%M:%S"
 
     
     async with get_session() as session:
