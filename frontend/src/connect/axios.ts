@@ -27,6 +27,7 @@ $.interceptors.response.use(
         .then((res) => {
           const accessToken = res.headers["authorization"];
           localStorage.setItem("access-token", accessToken);
+          location.reload();
         })
         .catch(() => {
           Swal.fire({

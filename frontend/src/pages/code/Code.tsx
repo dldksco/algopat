@@ -16,7 +16,8 @@ export const Code = () => {
   const burgerClick = () => setIsSidenavOpen((prev) => !prev);
 
   useEffect(() => {
-    if (!userInfo.userSeq) {
+    const info = localStorage.getItem("access-token");
+    if (!info) {
       Swal.fire({
         icon: "warning",
         title: "",

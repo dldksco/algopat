@@ -32,7 +32,6 @@ export const Header = () => {
   useEffect(() => {
     const getProfile = async () => {
       const response = await $.get("/user/profile");
-      console.log("profile", response.data);
       return response.data.userImageUrl;
     };
     if (userInfo.userSeq) getProfile().then((res) => setProfileUrl(res));
