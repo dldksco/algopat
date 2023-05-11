@@ -1,7 +1,7 @@
 package com.code.data.repository;
 
 import com.code.data.dto.DateGrassCountDTO;
-import com.code.data.dto.DateGrassInfo;
+import com.code.data.dto.DateGrassInfoDTO;
 import com.code.data.dto.UserSubmissionSolutionDetailDto;
 import com.code.data.dto.UserSubmitProblemDto;
 import com.code.data.dto.UserSubmitSolutionTitleDto;
@@ -23,6 +23,7 @@ public interface UserSubmitProblemRepository extends JpaRepository<UserSubmitPro
       "JOIN Problem p ON p.problemId = usp.problemId " +
       "WHERE usp.userSeq = :userSeq")
   Page<UserSubmitProblemDto> findUserSubmitProblemDtoByUserSeq(long userSeq, Pageable pageable);
+
 
   @Query("SELECT new com.code.data.dto.UserSubmitSolutionTitleDto(uss.submissionId, uss.userSubmitSolutionTime) " +
       "FROM UserSubmitSolution uss " +
@@ -63,13 +64,13 @@ public interface UserSubmitProblemRepository extends JpaRepository<UserSubmitPro
       "GROUP BY FUNCTION('DATE', usp.userSubmitProblemCreatedAt)")
   List<DateGrassCountDTO> findDateGrossCountByUserSeq(@Param("userSeq") Long userSeq, @Param("today") LocalDateTime today, @Param("todayMinusYear") LocalDateTime todayMinusYear);
 
-  @Query("SELECT new com.code.data.dto.DateGrassInfo(usp.userSubmitProblemSeq, usp.problemId, p.problemTitle, p.problemLevel) " +
+  @Query("SELECT new com.code.data.dto.DateGrassInfoDTO(usp.userSubmitProblemSeq, usp.problemId, p.problemTitle, p.problemLevel) " +
       "FROM UserSubmitProblem usp " +
       "JOIN Problem p ON usp.problemId = p.problemId " +
       "WHERE CAST(usp.userSubmitProblemCreatedAt AS LocalDate) = :userSubmitProblemCreatedAt " +
       "AND usp.userSeq = :userSeq " +
       "ORDER BY usp.userSubmitProblemCreatedAt DESC")
-  Page<DateGrassInfo> findDateGrassInfo(@Param("userSeq") Long userSeq, @Param("userSubmitProblemCreatedAt") LocalDate userSubmitProblemCreatedAt, Pageable pageable);
+  Page<DateGrassInfoDTO> findDateGrassInfo(@Param("userSeq") Long userSeq, @Param("userSubmitProblemCreatedAt") LocalDate userSubmitProblemCreatedAt, Pageable pageable);
 
 
 }
