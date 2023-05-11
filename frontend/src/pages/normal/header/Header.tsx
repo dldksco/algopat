@@ -6,12 +6,14 @@ import { loginUser, logout, userInfoState } from "@/atoms/user.atom";
 import { useRecoilState } from "recoil";
 import logo from "@/assets/img/logo.png";
 import style from "./Header.module.css";
+import { $ } from "@/connect/axios";
 
 export const Header = () => {
   const loginUrl =
     "https://github.com/login/oauth/authorize?client_id=62a8bd9fd0300fdc6d37&redirect_uri=https://algopat.kr/login-process";
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
+  const [profileUrl, setProfileUrl] = useState("");
   const [userInfo, setUserInfo] = useRecoilState(userInfoState);
 
   const changeOpen = () => {
@@ -25,6 +27,15 @@ export const Header = () => {
 
   useEffect(() => {
     loginUser(setUserInfo);
+  }, []);
+
+  useEffect(() => {
+    const getProfile = async () => {
+      const response = await $.get("/user/profile");
+      console.log("profile", response.data);
+      return response.data;
+    };
+    console.log(getProfile());
   }, []);
 
   return (
@@ -55,7 +66,7 @@ export const Header = () => {
         ) : (
           <div className={style.profile_div + " " + style.disnone}>
             <img
-              src={userInfo.userProfile}
+              src={profileUrl}
               alt="프로필 이미지"
               onClick={() => {
                 navigate("/mypage");
@@ -99,11 +110,7 @@ export const Header = () => {
         {!isOpen ? (
           userInfo.userSeq ? (
             <div className={style.profile_div}>
-              <img
-                src={userInfo.userProfile}
-                alt="프로필 이미지"
-                onClick={changeOpen}
-              />
+              <img src={profileUrl} alt="프로필 이미지" onClick={changeOpen} />
             </div>
           ) : (
             <FontAwesomeIcon icon={faBars} onClick={changeOpen} />
