@@ -1,6 +1,7 @@
 import { LoadingSpinner } from "@/components/loadingspinner/LoadingSpinner";
 import { $ } from "@/connect/axios";
 import { useLocation } from "react-router-dom";
+import Swal from "sweetalert2";
 
 export const LoginProcess = () => {
   const location = useLocation();
@@ -24,8 +25,12 @@ export const LoginProcess = () => {
         }
       })
       .catch(() => {
-        alert("로그인에 실패했습니다!! 다시 시도해 주세요!!");
-        window.close();
+        Swal.fire({
+          icon: "warning",
+          title: "",
+          text: "로그인에 실패했습니다!! 다시 시도해 주세요!!",
+          confirmButtonText: "닫기",
+        }).then(() => window.close());
       });
   }
   return (

@@ -1,4 +1,5 @@
 import axios from "axios";
+import Swal from "sweetalert2";
 
 // axios 객체 생성
 export const $ = axios.create({
@@ -34,8 +35,14 @@ $.interceptors.response.use(
           console.log("이게 설정된 토큰임");
         })
         .catch(() => {
-          alert("토큰이 만료되었습니다! 다시 로그인 해주세요!");
-          window.location.href = `https://www.algopat.kr`;
+          Swal.fire({
+            icon: "warning",
+            title: "",
+            text: "토큰이 만료되었습니다! 다시 로그인 해주세요!",
+            confirmButtonText: "닫기",
+          }).then(() => {
+            window.location.href = `https://www.algopat.kr`;
+          });
         });
     }
     return Promise.reject(error);
