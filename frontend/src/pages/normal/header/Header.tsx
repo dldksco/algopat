@@ -4,9 +4,9 @@ import { faBars, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { useEffect, useState } from "react";
 import { loginUser, logout, userInfoState } from "@/atoms/user.atom";
 import { useRecoilState } from "recoil";
+import { $ } from "@/connect/axios";
 import logo from "@/assets/img/logo.png";
 import style from "./Header.module.css";
-import { $ } from "@/connect/axios";
 
 export const Header = () => {
   const loginUrl =
@@ -56,7 +56,7 @@ export const Header = () => {
               window.open(
                 loginUrl,
                 "로그인 페이지",
-                "height=500, width=500, resizable=false, menubar=false, toolbar=false"
+                "height=380, width=400, resizable=false, menubar=false, toolbar=false"
               );
             }}
           >

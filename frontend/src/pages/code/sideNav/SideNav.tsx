@@ -12,11 +12,8 @@ import { faArrowDown91 } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
 import sort_tier_img from "@/assets/img/code/sort_tier.png";
 import { Button } from "@/components/button/Button";
+import { getInfinityProblemList } from "../hooks/query";
 import { Problem } from "./problem/Problem";
-import { $ } from "@/connect/axios";
-import { useInfiniteQuery } from "@tanstack/react-query";
-import { useMemo, useState } from "react";
-
 import style from "./SideNav.module.css";
 
 export const SideNav = ({
@@ -24,48 +21,10 @@ export const SideNav = ({
 }: {
   setIsSidenavOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
-  //const isOpen = [false, false, false, false, false];
-  const [page, setPage] = useState<number>(0);
-
-  const fetchData = async (page: number) => {
-    const response = await $.get(`/code/problem/submission/${page}`);
-    console.log(response.data, "data 확인");
-    console.log(response.data.content, "content 확인");
-    return response.data;
-  };
-  const { data, error, fetchNextPage, isFetchingNextPage, isLoading } =
-    useInfiniteQuery(["sideBar"], ({ pageParam = 0 }) => fetchData(pageParam), {
-      getNextPageParam: (lastPage) => lastPage.nextPage,
-    });
-
-  const mergedData = useMemo(() => {
-    if (!data) return [];
-    console.log(data.pages, "data.pages 확인");
-    const mergedPages = data.pages.reduce((prevPages, nextPage) => {
-      const mergedPage = prevPages.concat(nextPage.content);
-      return mergedPage;
-    }, []);
-    return mergedPages;
-  }, [data]);
-
-  const hasMorePages = page < data?.pages[0].totalPages - 1;
-  // console.log(page);
-  // console.log(data?.pages[0].totalPages, "totalpage");
-  // console.log(mergedData, "merge?");
-  // console.log(hasMorePages, "확인");
-  // console.log(data?.pages[0].totalPages, "page는 어딧지");
-  // if (isLoading) {
-  //   return <div>asdasd</div>;
-  // // }
-  // console.log(data?.pages, "data 확인 찐");
-  // console.log(data?.pages[page].content, "content 확인 찐");
-  const handleLoadMore = () => {
-    setPage((prevPage) => prevPage + 1);
-    fetchNextPage({ pageParam: page + 1 });
-    // console.log(page, "pagenum");
-  };
+  const { data, fetchNextPage, hasNextPage } = getInfinityProblemList();
   const navigate = useNavigate();
   const xButtonClick = () => setIsSidenavOpen(false);
+
   return (
     <div className={style.sideNav}>
       <p>코드 분석</p>
@@ -86,44 +45,54 @@ export const SideNav = ({
           <FontAwesomeIcon icon={faArrowDown91} />
         </div>
       </div>
-      <div className={style.problem_list}>
-        {mergedData === undefined
-          ? null
-          : mergedData.map((el: Problem) => (
-              <Problem key={uuidv4()} detail={el} />
-            ))}
+      <div
+        className={
+          hasNextPage
+            ? style.problem_list
+            : style.problem_list + " " + style.extra_length
+        }
+      >
+        {data?.pages.map((page) =>
+          page.content.map((el) => <Problem key={uuidv4()} detail={el} />)
+        )}
         <hr />
       </div>
-      {!isFetchingNextPage && hasMorePages ? (
+      {hasNextPage ? (
         <Button
           content="더보기"
           style={{
-            margin: "20px auto",
+            margin: "10px auto",
             backgroundColor: "#28292C",
             display: "block",
           }}
-          onClick={handleLoadMore}
+          onClick={() => fetchNextPage()}
         />
       ) : null}
       <hr />
       <div className={style.nav_header}>
-        <div className={style.nav_header_tag}>
-          <div onClick={() => navigate("/")}>
+        <div className={style.nav_header_tag} onClick={() => navigate("/")}>
+          <div>
             <FontAwesomeIcon icon={faHouse} />
           </div>
-          <span onClick={() => navigate("/")}>메인페이지</span>
+          <span>메인페이지</span>
         </div>
-        <div className={style.nav_header_tag}>
-          <div onClick={() => navigate("/ranking")}>
+        <div
+          className={style.nav_header_tag}
+          onClick={() => navigate("/ranking")}
+        >
+          <div>
             <FontAwesomeIcon icon={faTrophy} />
           </div>
-          <span onClick={() => navigate("/ranking")}>랭킹</span>
+          <span>랭킹</span>
         </div>
-        <div className={style.nav_header_tag}>
-          <div onClick={() => navigate("/mypage")}>
+        <div
+          className={style.nav_header_tag}
+          onClick={() => navigate("/mypage")}
+        >
+          <div>
             <FontAwesomeIcon icon={faUser} />
           </div>
-          <span onClick={() => navigate("/mypage")}>마이페이지</span>
+          <span>마이페이지</span>
         </div>
       </div>
     </div>

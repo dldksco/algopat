@@ -12,12 +12,8 @@ export const LoginProcess = () => {
   if (!extension) {
     $.post(`/auth/code`, { code: code })
       .then((res) => {
-        console.log(res);
         const accessToken = res.headers["authorization"];
-        console.log(accessToken);
-        console.log("토큰 세팅 시작");
         window.opener.localStorage.setItem("access-token", accessToken);
-        console.log("세팅 완료");
 
         if (window.opener) {
           window.opener.location.reload();
