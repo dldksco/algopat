@@ -4,6 +4,7 @@ import com.code.data.dto.ProblemRankDetailDto;
 import com.code.data.dto.ProblemRankOverviewDto;
 import com.code.data.dto.ProblemSimpInfoDto;
 import com.code.data.dto.RankPageDto;
+import com.code.data.dto.UserSubmittedProblemIdListDto;
 import com.code.data.repository.ProblemRepository;
 import com.code.data.repository.RankRepository;
 import com.code.util.builder.RankBuilderUtil;
@@ -71,8 +72,16 @@ public class ProblemRankService {
     if (masterUserSoultionOptional.isPresent()) {
       masterUserSolution = masterUserSoultionOptional.get().get(0);
     }
-    RankPageDto rankPageDto = rankBuilderUtil.rankPageDtoBuilder(problemSimpInfoDto, masterUserSolution, count);
+    RankPageDto rankPageDto = rankBuilderUtil.rankPageDtoBuilder(problemSimpInfoDto,
+        masterUserSolution, count);
     return rankPageDto;
   }
 
+  public UserSubmittedProblemIdListDto findProblemIdsByUserSeq(long userSeq) {
+    List<Long> problemIdList = rankRepository.findProblemIdsByUserSeq(userSeq)
+        .orElseThrow(() -> new RuntimeException("Problem not found"));
+    UserSubmittedProblemIdListDto userSubmittedProblemIdListDto = rankBuilderUtil.userSubmittedProblemIdListDto(
+        problemIdList);
+    return userSubmittedProblemIdListDto;
+  }
 }

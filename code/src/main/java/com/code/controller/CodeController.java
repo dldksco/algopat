@@ -8,11 +8,13 @@ import com.code.data.dto.ProblemResponseDto;
 import com.code.data.dto.UserServiceBackjoonRequestDto;
 import com.code.data.dto.UserSubmitProblemDto;
 import com.code.data.dto.UserSubmitSolutionTitleDto;
+import com.code.data.dto.UserSubmittedProblemIdListDto;
 import com.code.service.KafkaProducerService;
 import com.code.service.ProblemRankService;
 import com.code.service.ProblemService;
 import com.code.service.UserService;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import java.util.List;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -45,6 +47,7 @@ public class CodeController {
   // Service 정의
   private final KafkaProducerService kafkaProducerService;
   private final ProblemService problemService;
+  private final ProblemRankService problemRankService;
   private final UserService userService;
 
   /**
@@ -137,11 +140,25 @@ public class CodeController {
     return ResponseEntity.ok(problemService.isExistGptSolution(submissionId));
   }
 
+  @GetMapping("/submission/list")
+  public ResponseEntity<UserSubmittedProblemIdListDto> getUserSubmissionProblemSeqList(
+      @RequestHeader("userSeq") long userSeq) {
+    return ResponseEntity.ok(problemRankService.findProblemIdsByUserSeq(userSeq));
+  }
+
+  /**
+   * 회원 푼 문제 정렬 조회
+   * @param pageNumber
+   * @param category
+   * @param condition
+   * @return
+   */
   @GetMapping("/submission/sort/{pageNumber}")
   public ResponseEntity<?> getUserSubmitProblemDtoOrderByCondition(
       @PathVariable(value = "pageNumber") int pageNumber,
       @RequestParam(value = "category", defaultValue = "date") String category,
-      @RequestParam(value = "condition", defaultValue = "desc") String condition
+      @RequestParam(value = "condition", defaultValue = "desc") String condition,
+      @RequestHeader(value = "userSeq") long userSeq
   ) {
 
     Direction direction = "ASC".equalsIgnoreCase(condition) ? Direction.ASC : Direction.DESC;
@@ -153,7 +170,7 @@ public class CodeController {
       category = "p.problemLevel";
     }
 
-    return ResponseEntity.ok(problemService.getUserSubmitProblemDtoFilterConditionPage(pageNumber, 1, direction, category));
+    return ResponseEntity.ok(problemService.getUserSubmitProblemDtoFilterConditionPage(pageNumber, userSeq, direction, category));
   }
 
 }
