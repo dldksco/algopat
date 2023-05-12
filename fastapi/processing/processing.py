@@ -42,8 +42,10 @@ async def processing(data : ProblemData, send_callback):
     user_seq = data.userSeq 
     problem_id = data.problemId
 
-    message_dto = MessageDTO(progress="[GPT 비즈니스 로직] : 시작", message="ok", user_seq=user_seq)
+    # SSE 1
+    message_dto = MessageDTO(progress_info="코드 분석 시작", percentage=25, state="ok", user_seq=user_seq)
     await send_callback("alert", message_dto)
+
 
     if await filtering_input_data(data, send_callback):
         return
@@ -79,10 +81,7 @@ async def processing(data : ProblemData, send_callback):
     # DB에서 문제 요약 정보 조회 
     gpt_problem_summary = await get_gpt_problem_summary(problem_id)
 
-    ### SSE 1 
     logger.info("코드 요약 시작")
-    message_dto = MessageDTO(progress="[코드 요약] : 시작", message="ok", user_seq=user_seq)
-    await send_callback("alert", message_dto)
     
     summary_code_complexity_coroutine = summary_code_complexity(chat_llm_0, data, gpt_problem_summary)
     summary_code_refactor_coroutine = summary_code_refactor(chat_llm_0, data, gpt_problem_summary)
@@ -90,7 +89,7 @@ async def processing(data : ProblemData, send_callback):
 
     ### SSE 2
     logger.info("코드 요약 완료")
-    message_dto = MessageDTO(progress="[코드 요약] : 끝", message="ok", user_seq=user_seq)
+    message_dto = MessageDTO(progress_info="코드 요약 완료", percentage=50, state="ok", user_seq=user_seq)
     await send_callback("alert", message_dto)
     
     logger.info("코드 요약 json 타입으로 변환 시작")
@@ -99,18 +98,14 @@ async def processing(data : ProblemData, send_callback):
     summary_code_json = await parse_summary_code(chat_llm_0, preprocessed_summary_code)
     logger.info("코드 요약 json 타입으로 변환 완료")
 
-    ### SSE 3
     logger.info("데이터 번역 작업 시작")
-    message_dto = MessageDTO(progress="[데이터 번역] : 시작", message="ok", user_seq=user_seq)
-    await send_callback("alert", message_dto)
-
     result = await translate_texts(chat_llm_0, summary_code_json)
     logger.info("데이터 번역 작업 완료")
 
     result.total_score = (result.gpt_solution_time_score + result.gpt_solution_space_score + result.gpt_solution_clean_score) // 3
 
-    ### SSE 4
-    message_dto = MessageDTO(progress="[데이터 번역] : 끝", message="ok", user_seq=user_seq)
+    ### SSE 3
+    message_dto = MessageDTO(progress_info="데이터 번역 완료", percentage=75, state="ok", user_seq=user_seq)
     await send_callback("alert", message_dto)
     
     ### DB 접근 ###
@@ -120,8 +115,8 @@ async def processing(data : ProblemData, send_callback):
     ### 2. GPT평가 DB 접근 ### 
     await save_gpt_solution(submission_id, user_seq, result)
 
-    ### SSE 5
-    message_dto = MessageDTO(progress="[GPT 비즈니스 로직] : 끝",message="finish", user_seq=user_seq)
+    ### SSE 4
+    message_dto = MessageDTO(progress_info="코드 분석 완료", percentage=100, state="finish", user_seq=user_seq)
     await send_callback("alert", message_dto)
 
 
@@ -155,10 +150,12 @@ async def summary_problem(problem_id : int, user_seq : int, data : ProblemData, 
 async def filtering_input_data(data : ProblemData, send_callback):
     code_language = await parse_lang_type(data.language)
     if code_language == "unknown":
-        message_dto = MessageDTO(progress="[인풋 데이터 필터링 예외] : 미지원 언어입니다", message="error", user_seq=data.userSeq)
+        logger.info("지원하지 않는 언어")
+        message_dto = MessageDTO(progress_info="지원하지 않는 언어입니다.", percentage=-1, state="error", user_seq=data.userSeq)
         await send_callback("alert", message_dto)
         return True
     if data.resultCategory != "ac":
-        message_dto = MessageDTO(progress="[인풋 데이터 필터링 예외] : 틀린 코드는 평가할 수 없습니다", message="error", user_seq=data.userSeq)
+        logger.info("오답 코드")
+        message_dto = MessageDTO(progress_info="틀린 코드는 평가할 수 없습니다", percentage=-1, state="error", user_seq=data.userSeq)
         await send_callback("alert", message_dto)
         return True
