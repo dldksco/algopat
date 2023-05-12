@@ -33,6 +33,7 @@
     }
 
     .slider {
+      cursor: grab;
       .content {
         width: 10%;
         display: flex;
@@ -45,12 +46,14 @@
       .center_side {
         img {
           width: 100px;
+          // transition: width 0.5s ease-in-out;
         }
       }
 
       .center {
         img {
           width: 120px;
+          // transition: width 0.5s ease-in-out;
         }
       }
     }

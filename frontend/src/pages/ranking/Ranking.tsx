@@ -42,7 +42,7 @@ export const Ranking = () => {
           </>
         ) : (
           <>
-            <LoadingSpinner />
+            <LoadingSpinner customStyle={{ height: "100px" }} />
           </>
         )}
       </div>
