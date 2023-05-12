@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { SideNav } from "./sideNav/SideNav";
 import { CodeDetail } from "./codeDetail/CodeDetail";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";

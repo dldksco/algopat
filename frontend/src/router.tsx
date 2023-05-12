@@ -8,6 +8,8 @@ import { Exception } from "./pages/exception/Exception";
 import { Ranking } from "./pages/ranking/Ranking";
 import { RankingDetail } from "./pages/ranking/rankingDetail/RankingDetail";
 import { LoginProcess } from "./pages/exception/login/LoginProcess";
+import { Page404 } from "./pages/exception/page404/Page404";
+import { Extension } from "./pages/code/extension/Extension";
 
 const router: RouteObject[] = [
   {
@@ -38,11 +40,15 @@ const router: RouteObject[] = [
     element: <Code />,
   },
   {
+    path: "/extension",
+    element: <Extension />,
+  },
+  {
     path: "*",
     element: <Exception />,
     children: [
       { path: "login-process", element: <LoginProcess /> },
-      // { path: "*", element: <Page404 /> },
+      { path: "*", element: <Page404 /> },
     ],
   },
 ];

@@ -1,0 +1,16 @@
+.rightTab {
+  min-height: 100vh;
+  width: calc(100vw - 300px);
+  display: flex;
+  justify-content: center;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: var(--code-background-color);
+  position: relative;
+}
+
+@media screen and (max-width: 768px) {
+  .rightTab {
+    width: 100%;
+  }
+}/*# sourceMappingURL=Extension.module.css.map */

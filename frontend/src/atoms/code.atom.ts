@@ -1,8 +1,8 @@
 import { atom } from "recoil";
 
-export const problemOpenState = atom({
-  key: "problemOpenState",
-  default: {},
+export const toekenForDetailState = atom({
+  key: "toekenForDetailState",
+  default: "",
 });
 
 export const isCodeNavOpenState = atom({

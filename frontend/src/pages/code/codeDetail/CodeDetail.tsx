@@ -1,5 +1,8 @@
 import { useRecoilValue } from "recoil";
-import { nowProblemSubmissionIdState } from "@/atoms/code.atom";
+import {
+  nowProblemSubmissionIdState,
+  toekenForDetailState,
+} from "@/atoms/code.atom";
 import CodeBox from "../codeBox/CodeBox";
 import { getSolution } from "../hooks/query";
 import style from "./CodeDetail.module.css";
@@ -9,12 +12,13 @@ import { LoadingSpinner } from "@/components/loadingspinner/LoadingSpinner";
 
 export const CodeDetail = () => {
   const nowProblem = useRecoilValue(nowProblemSubmissionIdState);
+  const token = useRecoilValue(toekenForDetailState);
   const {
     refactoringData,
     timeComplexityData,
     spaceComplexityData,
     totalInfo,
-  } = getSolution(nowProblem.submissionId);
+  } = getSolution(nowProblem.submissionId, token);
 
   return (
     <div className={style.code_detail}>
