@@ -53,9 +53,10 @@ public class GrassServiceImpl implements GrassService {
   @Override
   public List<LocalDate> generateAllDatesBetween(LocalDate startDate, LocalDate endDate) {
     List<LocalDate> dates = new ArrayList<>();
-    for (LocalDate date = startDate; !date.isAfter(endDate); date = date.plusDays(1)) {
+    for (LocalDate date = startDate; !date.isAfter(endDate.minusDays(1)); date = date.plusDays(1)) {
       dates.add(date);
     }
+
     return dates;
   }
 @Override
