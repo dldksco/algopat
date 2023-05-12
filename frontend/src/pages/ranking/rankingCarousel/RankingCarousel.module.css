@@ -29,6 +29,9 @@
   display: inline-block;
   width: 80px;
 }
+.ranking_carousel .carousel .slider {
+  cursor: grab;
+}
 .ranking_carousel .carousel .slider .content {
   width: 10%;
   display: flex;

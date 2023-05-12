@@ -109,16 +109,15 @@ export const RankingCarousel = () => {
   };
 
   const settings: Settings = {
-    // initialSlide: 4,
-    focusOnSelect: true,
     className: style.slider,
-    centerPadding: "60px",
-    centerMode: true,
+    // focusOnSelect: true,
     infinite: true,
     speed: 350,
     slidesToShow: isMobile() ? 1 : 5,
-    slidesToScroll: 1,
+    centerMode: true,
+    centerPadding: "80px",
     // afterChange: afterChangeCallback,
+    swipeToSlide: true,
     beforeChange: changeCallback,
     onInit: onInitCallback,
     // onReInit: onInitCallback,
