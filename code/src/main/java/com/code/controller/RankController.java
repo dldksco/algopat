@@ -60,18 +60,33 @@ public class RankController {
     return ResponseEntity.ok(result);
   }
 
+  /**
+   * 특정 문제 제출 횟수 조회
+   * @param problemId
+   * @return
+   */
   @GetMapping("/count/{problemId}")
   public ResponseEntity<Long> countSolutionsByProblemId(@PathVariable long problemId) {
     long result = problemRankService.countSolutionByProblemId(problemId);
     return ResponseEntity.ok(result);
   }
 
+  /**
+   * 특정 문제 마스터 조회
+   * @param problemId
+   * @return
+   */
   @GetMapping("/master/{problemId}")
   public ResponseEntity<ProblemRankDetailDto> findMasterUserSolutionByProblemIdWithDetail(@PathVariable long problemId) {
     ProblemRankDetailDto masterUserProblemRankDetailDto = problemRankService.findMasterUserSolutionByProblemIdWithDetail(problemId);
     return ResponseEntity.ok(masterUserProblemRankDetailDto);
   }
 
+  /**
+   * 특정 문제 랭킹 상세 페이지 접근 시 필요한 데이터 조회
+   * @param problemId
+   * @return
+   */
   @GetMapping("/pageinfo/{problemId}")
   public ResponseEntity<RankPageDto> findRankPageInfoByProblemId(@PathVariable long problemId) {
     RankPageDto rankPageDto = problemRankService.findRankPageInfoByProblemId(problemId);
