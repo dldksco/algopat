@@ -16,10 +16,9 @@ async def save_problem_origin(problem_id : int, data : ProblemData):
             logger.info("문제 DB 저장")
             await db_problem.insert_problem(data, session)
 
-async def update_problem_meta(problem_id : int, user_seq : int, data : ProblemData):
-    async with get_session() as session:
-        logger.info("문제 메타데이터 DB 업데이트")
-        await db_problem.update_problem_meta(problem_id, user_seq, data, session)
+async def update_problem_meta(problem_id : int, user_seq : int, data : ProblemData, session):
+    logger.info("문제 메타데이터 DB 업데이트")
+    await db_problem.update_problem_meta(problem_id, user_seq, data, session)
 
 async def save_problem_summary(problem_id : int, summary_json):
     logger.info("GPT 문제 요약 존재 여부 확인")

@@ -1,4 +1,4 @@
-from sqlalchemy import Column, BigInteger, DateTime, Text, select, desc
+from sqlalchemy import Column, BigInteger, DateTime, Text, select, desc, text
 from sqlalchemy.ext.declarative import declarative_base
 from myclass.problem import ProblemData
 import json
@@ -82,7 +82,11 @@ async def update_problem_meta(problem_id : int, user_seq : int, data : ProblemDa
     if problem_meta is not None:
         logger.info("문제 메타 데이터 있음")
         # 문제 메타 데이터 업데이트 
-        problem_meta.problem_submitted_count += 1
+        # problem_meta.problem_submitted_count += 1
+        count = await count_rows_with_problem_id_in_user_submit_solution(problem_id)
+        logger.info("제출 횟수 : " + str(count+1))
+        problem_meta.problem_submitted_count = count + 1
+
         master_user_seq = await get_highest_total_score_user_seq(session)
         logger.info("마스터 user_seq : " + str(master_user_seq))
         problem_meta.problem_master_user_seq = master_user_seq
@@ -203,7 +207,15 @@ async def check_user_submit_solution_is_exist(submission_id : int, session):
         return False # 회원제출코드 정보 없음
     else:
         return True # 회원제출코드 정보 있음
+    
+# 문제 제출 횟수 조회 
+async def count_rows_with_problem_id_in_user_submit_solution(problem_id : int, session):
+    result = await session.execute(select(UserSubmitSolution).filter(UserSubmitSolution.problem_id == problem_id))
+    count  = result.rowcount
+    
+    logger.info("문제 푼 사람(명)수 조회 : " + str(count))
 
+    return count
 
 
 #=================================================================================

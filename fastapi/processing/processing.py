@@ -136,6 +136,10 @@ async def main_transaction(problem_id : int, user_seq : int, data : ProblemData,
             submission_id = await save_user_submit_solution_origin(problem_id, user_seq, user_submit_problem_data.user_submit_problem_seq, data, session)
             await save_gpt_solution(submission_id, user_seq, result, session)
 
+            # Todo : DB 동시성 처리 (락) 해주기  
+            ### 문제 메타데이터 DB에 메타데이터 저장 ### 
+            await update_problem_meta(problem_id, user_seq, data, session)
+
             await session.commit()
         except Exception as e:
             logger.error(f"트랜잭션 처리 중 예외 발생 : {e}")
@@ -165,8 +169,8 @@ async def summary_problem(problem_id : int, user_seq : int, data : ProblemData, 
         ### GPT_문제 요약 DB 접근 ###
         await save_problem_summary(problem_id, summary_json)
     
-    ### 문제 메타데이터 DB에 메타데이터 저장 ### 
-    await update_problem_meta(problem_id, user_seq, data)
+    # ### 문제 메타데이터 DB에 메타데이터 저장 ### 
+    # await update_problem_meta(problem_id, user_seq, data)
     
     
 async def filtering_input_data(data : ProblemData, send_callback):
