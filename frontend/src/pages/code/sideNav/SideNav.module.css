@@ -17,8 +17,15 @@
   width: 60px;
   padding: 5px 10px;
   border: 1px solid white;
-  border-radius: 10px;
   cursor: pointer;
+  transition: 0.1s;
+}
+.sideNav .sort_button_group .sort_button:hover {
+  color: gray !important;
+  border: 1px solid gray !important;
+}
+.sideNav .sort_button_group .sort_button:hover img {
+  filter: brightness(40%);
 }
 .sideNav .sort_button_group .sort_button img {
   display: inline;

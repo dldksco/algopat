@@ -23,7 +23,9 @@ const CodeBox = React.memo(({ type, data }: CodeBoxProps) => {
       <div className={style.box_title}>
         <hr />
         <div style={{ display: "flex", justifyContent: "space-between" }}>
-          <span>{type}</span>
+          <span className={style.sppan} onClick={modalOpen}>
+            {type}
+          </span>
           <FontAwesomeIcon
             icon={faChevronUp}
             className={

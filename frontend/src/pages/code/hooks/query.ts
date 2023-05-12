@@ -110,6 +110,7 @@ export const getSolution = (solutionSeq: number) => {
 };
 
 /******************************/
+
 export interface ProblemInfo {
   problemId: number;
   problemLevel: number;
@@ -119,20 +120,22 @@ export interface ProblemInfo {
 /**
  * 제출한 문제들의 Infinity Query를 불러오는 함수
  */
-export const getInfinityProblemList = () => {
+export const getInfinityProblemList = (category: string, condition: string) => {
   const fetchData = async (
-    page: number
+    page: number,
+    category: string,
+    condition: string
   ): Promise<PagableResponse<ProblemInfo>> => {
-    const response = await $.get(`/code/problem/submission/${page}`).then(
-      (res) => res.data
-    );
+    const response = await $.get(
+      `/code/problem/submission/sort/${page}?category=${category}&condition=${condition}`
+    ).then((res) => res.data);
     return response;
   };
 
   const { data, fetchNextPage, isFetchingNextPage, hasNextPage } =
     useInfiniteQuery(
-      ["infinityProblemList"],
-      ({ pageParam = 0 }) => fetchData(pageParam),
+      ["infinityProblemList", category, condition],
+      ({ pageParam = 0 }) => fetchData(pageParam, category, condition),
       {
         getNextPageParam: (lastPage) => {
           if (lastPage.last) return undefined;
