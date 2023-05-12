@@ -3,7 +3,7 @@ import { Memo } from "./memo/Memo";
 import { useState } from "react";
 import { getGrid } from "../../hooks/query";
 import { v4 as uuidv4 } from "uuid";
-
+import { colors, days, months, monthsWeight } from "../../hooks/gridtype";
 import style from "./Grid.module.css";
 
 export const Grid = () => {
@@ -28,8 +28,6 @@ export const Grid = () => {
     const col = gridData.length / 7;
     column = Math.floor(col) < col ? Math.floor(col) + 1 : Math.floor(col);
     startDate = new Date(gridData[0].userSubmitProblemCreatedAt);
-    // console.log(column, "col");
-    // console.log("startDate", startDate);
   }
   const grid = Array.from({ length: 7 }, () => Array(column).fill(-1));
   const gridDate = Array.from({ length: 7 }, () => Array(column).fill(-1));
@@ -54,30 +52,6 @@ export const Grid = () => {
       gridDate[day][week] = object.userSubmitProblemCreatedAt;
     });
   }
-  const days = ["S", "M", "T", "W", "T", "F", "S"];
-  const months = [
-    "Jan",
-    "Feb",
-    "Mar",
-    "Apr",
-    "May",
-    "Jun",
-    "Jul",
-    "Aug",
-    "Sep",
-    "Oct",
-    "Nov",
-    "Dec",
-    "",
-  ];
-  const monthsWeight = [52, 52, 52, 51, 65, 51, 51, 51, 51, 51, 65, 65];
-  const colors = {
-    0: "#ECECEC",
-    1: "#A8E4AA",
-    2: "#82CB92",
-    3: "#5CB17A",
-    4: "#23794F",
-  };
 
   const colorIndexFunc = (index: number) => {
     if (index <= 0) return colors[0];
@@ -89,6 +63,7 @@ export const Grid = () => {
   const handleClick = (date: string, color: number) => {
     setStreakDateState(date);
     setStreakColorState(color);
+    console.log(date);
   };
 
   return (
@@ -96,7 +71,7 @@ export const Grid = () => {
       <div className={style.grid}>
         <div className={style.days}>
           {days.map((day, index) => (
-            <div key={index} className={style.day}>
+            <div key={uuidv4()} className={style.day}>
               {day}
             </div>
           ))}
@@ -127,23 +102,21 @@ export const Grid = () => {
               row.map((col, colIndex) => {
                 const bgColor = colorIndexFunc(grid[rowIndex][colIndex]);
                 return (
-                  <>
-                    <div
-                      style={{
-                        backgroundColor: bgColor,
-                        visibility:
-                          grid[rowIndex][colIndex] >= 0 ? "visible" : "hidden",
-                      }}
-                      key={`${rowIndex}-${colIndex}`}
-                      className={style.grid_cell}
-                      onClick={() =>
-                        handleClick(
-                          gridDate[rowIndex][colIndex],
-                          grid[rowIndex][colIndex]
-                        )
-                      }
-                    />
-                  </>
+                  <div
+                    style={{
+                      backgroundColor: bgColor,
+                      visibility:
+                        grid[rowIndex][colIndex] >= 0 ? "visible" : "hidden",
+                    }}
+                    key={uuidv4()}
+                    className={style.grid_cell}
+                    onClick={() =>
+                      handleClick(
+                        gridDate[rowIndex][colIndex],
+                        grid[rowIndex][colIndex]
+                      )
+                    }
+                  />
                 );
               })
             )}
@@ -172,9 +145,6 @@ export const Grid = () => {
             <div className={style.text_four}>6이상</div>
           </div>
         </div>
-      </div>
-      <div className={style.description}>
-        <p>당일 제출 코드는 명일 자정에 업데이트됩니다.</p>
       </div>
       <div className={style.memo}>
         {streakColorState === 0 ? null : (

@@ -2,10 +2,8 @@ import { useSetRecoilState } from "recoil";
 import { nowProblemSubmissionIdState } from "@/atoms/code.atom";
 import { useNavigate } from "react-router-dom";
 import { problemByDate } from "@/pages/mypage/hooks/query";
-
-import style from "./ProblemItem.module.css";
-import { Button } from "@/components/button/Button";
 import { stringCutter } from "@/pages/code/hooks/func";
+import style from "./ProblemItem.module.css";
 
 interface dateDetail {
   list: problemByDate;
@@ -16,8 +14,6 @@ export const ProblemItem = (props: dateDetail) => {
 
   const navigate = useNavigate();
   const handleClick = () => {
-    // console.log(123123);
-    // console.log(props.data.problemId);
     setSubmissionState({
       problemId: props.list.problemId,
       submissionId: props.list.submissionId,
@@ -25,7 +21,6 @@ export const ProblemItem = (props: dateDetail) => {
       problemTitle: props.list.problemTitle,
       nowProcess: false,
     });
-    console.log(props.list.submissionId, "제출번호 내놔라 없다");
     navigate("/code");
   };
   const handleButton = () => {

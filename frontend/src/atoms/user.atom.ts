@@ -7,6 +7,11 @@ export interface UserInfo {
   userGithubId: string;
 }
 
+export interface MyProfile {
+  myBackImage: string;
+  myTier: number;
+}
+
 export const userInfoState = atom<UserInfo>({
   key: "userInfoState",
   default: {
@@ -15,6 +20,14 @@ export const userInfoState = atom<UserInfo>({
     userGithubId: "",
   },
 });
+
+export const profileState =atom <MyProfile>({
+  key: "profileState",
+  default: {
+    myTier: 0,
+    myBackImage: "",
+  },
+})
 
 export const loginUser = (setUserInfo: SetterOrUpdater<UserInfo>) => {
   const token = localStorage.getItem("access-token");

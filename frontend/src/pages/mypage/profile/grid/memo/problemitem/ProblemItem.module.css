@@ -1,4 +1,16 @@
+@keyframes list_animation {
+  0% {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
 .problem_family {
+  animation-name: list_animation;
+  animation-duration: 1s;
   display: flex;
   align-items: center;
   position: relative;
@@ -39,7 +51,7 @@
   height: 30px;
   background-color: rgb(255, 255, 255);
   border-radius: 5px;
-  cursor: ponter;
+  cursor: pointer;
 }
 .problem_family .button_container .problemNavigate {
   color: #1d2538;

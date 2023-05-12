@@ -1,64 +1,39 @@
-import axios from "axios";
-import { useQuery } from "@tanstack/react-query";
 import { Grid } from "./grid/Grid";
 import { LoadingSpinner } from "@/components/loadingspinner/LoadingSpinner";
-import { $ } from "@/connect/axios";
 import { useEffect } from "react";
-
+import { getProfile } from "../hooks/query";
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
+import { profileState } from "@/atoms/user.atom";
+import { useRecoilState } from "recoil";
 import style from "./Profile.module.css";
 
-export interface backgroundMyPage {
-  authors: [];
-  backgroundCategory: string;
-  backgroundId: string;
-  backgroundImageUrl: string;
-  backgroundVideoUrl: string | null;
-  displayDescription: string;
-  displayName: string;
-  hiddenConditions: boolean;
-  fallbackBackgroundImageUrl: string | null;
-  isIllust: boolean;
-  unlockedUserCount: number;
-}
 export const Profile = () => {
-  const getProfile = async () => {
-    const response = await $.get("/user/profile");
-    // console.log("profile", response.data);
-    return response.data;
-  };
+  const { isLoading: isLoadingProfile, data: profileData } = getProfile();
+  //const [myProfile, setMyProfile] = useRecoilState(profileState);
+
   const getBackImage = async () => {
-    console.log(profileData, "id찾기");
     const response = await axios.get(
       `https://solvedac-ixdn5ymk3a-du.a.run.app/backgroundShow/${tierData.backgroundId}`
     );
     const data = await response.data;
-    console.log(data, "imageData 내놔");
     return data;
   };
-  const {
-    isLoading: isLoadingProfile,
-    error: profileError,
-    data: profileData,
-  } = useQuery(["profileupdate"], getProfile);
 
   const getTier = async () => {
-    // console.log(profileData, "id찾기");
+    if (profileData === undefined) return;
     const response = await axios.get(
       `https://solvedac-ixdn5ymk3a-du.a.run.app/userShow/${profileData.userBackjoonId}`
     );
     const data = await response.data;
-    console.log(data, "tierData");
     return data;
   };
-
-  // console.log(data, "query 결과");
-  // console.log(data, "query solvedid");
 
   const {
     isLoading: isLoadingImage,
     data: imageData,
     refetch: refetchImage,
-  } = useQuery(["imageupdate"], getBackImage, { enabled: false });
+  } = useQuery(["backimageupdate"], getBackImage, { enabled: false });
 
   const {
     isLoading: isLoadingTier,
@@ -74,21 +49,31 @@ export const Profile = () => {
       }
     }
   });
-
   if (isLoadingProfile || isLoadingTier || isLoadingImage) {
-    // console.log(isLoadingTier, "123123123");
     return (
       <div>
         <LoadingSpinner />
       </div>
     );
   }
+
+  // if (tierData && imageData && myProfile.myTier != 0) {
+  //   setMyProfile({
+  //     myBackImage: imageData.myBackImage,
+  //     myTier: tierData.myTier,
+  //   });
+  // }
+
   return (
     <>
       <div className={style.box}>
         {imageData ? (
           <div className={style.backgroundImage}>
-            <img src={imageData.backgroundImageUrl} alt="" />
+            <img
+              src={imageData.backgroundImageUrl}
+              style={{ backgroundSize: "cover" }}
+              alt=""
+            />
           </div>
         ) : null}
         <div className={style.profileAll}>
@@ -97,15 +82,16 @@ export const Profile = () => {
               className={style.profileimage}
               style={{
                 backgroundImage:
-                  profileData === undefined
-                    ? undefined
-                    : `url(${profileData.userImageUrl})`,
+                  profileData !== undefined
+                    ? `url(${profileData.userImageUrl})`
+                    : undefined,
               }}
             ></div>
             <div className={style.profileinfo}>
               <div className={style.gitinfo}>
                 <p className={style.nickname}>
                   {profileData !== undefined &&
+                  profileData &&
                   profileData.userBackjoonId !== "NO_SUBMITTED" &&
                   tierData.tier > 0 ? (
                     <img
@@ -118,7 +104,7 @@ export const Profile = () => {
                       alt="solved AC 연동"
                     />
                   ) : null}
-                  {profileData === undefined ? null : profileData.userGithubId}
+                  {profileData !== undefined ? profileData.userGithubId : null}
                 </p>
               </div>
             </div>
