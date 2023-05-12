@@ -83,7 +83,7 @@ async def update_problem_meta(problem_id : int, user_seq : int, data : ProblemDa
         logger.info("문제 메타 데이터 있음")
         # 문제 메타 데이터 업데이트 
         # problem_meta.problem_submitted_count += 1
-        count = await count_rows_with_problem_id_in_user_submit_solution(problem_id)
+        count = await count_rows_with_problem_id_in_user_submit_solution(problem_id, session)
         logger.info("제출 횟수 : " + str(count+1))
         problem_meta.problem_submitted_count = count + 1
 
