@@ -1,7 +1,5 @@
 import json
 from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
-from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
-from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm import declarative_base
 from database.problem import UserSubmitSolution, GPTSolution, Problem, UserSubmitProblem, GPTProblemSummary, ProblemMeta
