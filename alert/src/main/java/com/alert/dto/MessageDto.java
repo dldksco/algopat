@@ -10,8 +10,16 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class MessageDto {
-  private String progress; // 진행 사항
-  private String message; // 데이터
+
+  @JsonProperty("progress_info")
+  private String progressInfo; // 진행 사항 정보
+
+  @JsonProperty("percentage")
+  private int percentage; // 진행 사항 퍼센트
+
+  @JsonProperty("state")
+  private String state; // 상태 (ok, finish, error)
+
   @JsonProperty("user_seq")
   private long userSeq; // 유저 식별 번호
 }
