@@ -91,14 +91,14 @@
       margin-top: 2%;
       margin-bottom: 1%;
 
-      height: 200px;
+      height: 100px;
       width: 75%;
       background-color: black;
       border-radius: 20px;
       padding-top: 1%;
       img {
         display: inline-block;
-        width: 80px;
+        width: 30px;
         // transition: all 0.1s ease-in-out;
       }
 
@@ -114,13 +114,13 @@
 
         .center_side {
           img {
-            width: 100px;
+            width: 40px;
           }
         }
 
         .center {
           img {
-            width: 120px;
+            width: 50px;
           }
         }
       }

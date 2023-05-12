@@ -14,7 +14,7 @@ import style from "./RankingCarousel.module.css";
 import "./carousel.css";
 import { isMobile } from "@/pages/main/hooks/func";
 
-const MAX_LEGNTH = 30;
+const MAX_LEGNTH = 34;
 
 export const RankingCarousel = () => {
   const initData = Array.from({ length: MAX_LEGNTH }, (_, i) => {
@@ -57,6 +57,9 @@ export const RankingCarousel = () => {
   const onInitCallback = () => {
     const index = centerIndex;
 
+    //selectbox 현재 위치에 맞게 수정
+    setlevelRankSelect(Math.floor(index / 5).toString());
+    setlevelNumberSelect(Math.floor(index % 5).toString());
     // left
     if (index - 1 >= 0) {
       setLevelData((prev) => {
@@ -141,8 +144,8 @@ export const RankingCarousel = () => {
   const settings: Settings = {
     className: style.slider,
     initialSlide: centerIndex,
-    // focusOnSelect: true,
-    infinite: true,
+    focusOnSelect: true,
+    infinite: false,
     speed: 350,
     slidesToShow: isMobile() ? 1 : 5,
     centerMode: true,
@@ -188,24 +191,28 @@ export const RankingCarousel = () => {
       </div>
       <div className={style.carousel}>
         <Slider ref={sliderRef} {...settings}>
-          {levelData.map((v) => {
-            return (
-              <div
-                className={
-                  style.content +
-                  " " +
-                  (v.left || v.right ? style.center_side : "") +
-                  " " +
-                  (v.center ? style.center : "")
-                }
-                key={uuidv4()}
-              >
-                <img
-                  src={`https://static.solved.ac/tier_small/${v.level}.svg`}
-                />
-                <p>{v.center ? bj_level[v.level] : ""}</p>
-              </div>
-            );
+          {levelData.map((v, i) => {
+            if (i < 30) {
+              return (
+                <div
+                  className={
+                    style.content +
+                    " " +
+                    (v.left || v.right ? style.center_side : "") +
+                    " " +
+                    (v.center ? style.center : "")
+                  }
+                  key={uuidv4()}
+                >
+                  <img
+                    src={`https://static.solved.ac/tier_small/${v.level}.svg`}
+                  />
+                  <p>{v.center ? bj_level[v.level] : ""}</p>
+                </div>
+              );
+            } else {
+              return <div key={uuidv4()}></div>;
+            }
           })}
         </Slider>
       </div>
