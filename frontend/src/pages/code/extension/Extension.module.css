@@ -9,6 +9,26 @@
   position: relative;
 }
 
+.scroll_to_top {
+  position: fixed;
+  bottom: 65px;
+  right: 15px;
+  width: 40px;
+  height: 40px;
+  border-radius: 100%;
+  background-color: rgba(146, 146, 146, 0.5);
+  color: var(--font-color);
+  text-align: center;
+  line-height: 40px;
+  font-size: 16px;
+  transition: 0.2s;
+  cursor: pointer;
+}
+.scroll_to_top:hover {
+  color: rgb(51, 51, 51);
+  background-color: rgba(190, 190, 190, 0.8);
+}
+
 @media screen and (max-width: 768px) {
   .rightTab {
     width: 100%;

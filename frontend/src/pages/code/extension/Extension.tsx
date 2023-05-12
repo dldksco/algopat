@@ -1,6 +1,6 @@
 import { CodeDetail } from "../codeDetail/CodeDetail";
 import { TopArrow } from "@/components/toparrow/TopArrow";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
 import { useSetRecoilState } from "recoil";
 import {
@@ -8,6 +8,8 @@ import {
   toekenForDetailState,
 } from "@/atoms/code.atom";
 import style from "./Extension.module.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faHouse } from "@fortawesome/free-solid-svg-icons";
 
 export const Extension = () => {
   const location = useLocation();
@@ -19,7 +21,6 @@ export const Extension = () => {
   const submissionId = Number(searchParams.get("submissionid")) || 0;
   const setNowSubmission = useSetRecoilState(nowProblemSubmissionIdState);
   const setToekenForDetail = useSetRecoilState(toekenForDetailState);
-  const navigate = useNavigate();
 
   useEffect(() => {
     setNowSubmission({
@@ -41,6 +42,14 @@ export const Extension = () => {
           <CodeDetail />
         </div>
         <TopArrow />
+        <div
+          className={style.scroll_to_top}
+          onClick={() => {
+            window.location.href = "https://www.algopat.kr";
+          }}
+        >
+          <FontAwesomeIcon icon={faHouse} />
+        </div>
       </div>
     </div>
   );

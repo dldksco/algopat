@@ -64,7 +64,7 @@ export const getSolution = (solutionSeq: number, token: string) => {
 
   const fetchForExtension = async (): Promise<Solution> => {
     const { data } = await axios.get(
-      `/code/problem/submission/solution/detail/${solutionSeq}`,
+      `https://algopat.kr/api/code/problem/submission/solution/detail/${solutionSeq}`,
       {
         headers: {
           authorization: token,
