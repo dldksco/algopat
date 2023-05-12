@@ -116,7 +116,7 @@ async def processing(data : ProblemData, send_callback):
     ### 2. GPT평가 DB 접근 ### 
     # await save_gpt_solution(submission_id, user_seq, result)
     logger.info("메인 트랜잭션 시작")
-    await main_transaction(problem_id=problem_id, user_seq=user_seq, data=ProblemData, result=result, user_seq=user_seq)
+    await main_transaction(problem_id=problem_id, user_seq=user_seq, data=ProblemData, result=result, send_callback=send_callback)
     logger.info("메인 트랜잭션 종료")
 
 
