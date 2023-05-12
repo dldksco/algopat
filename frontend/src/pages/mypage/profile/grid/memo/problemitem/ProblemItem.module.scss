@@ -1,8 +1,66 @@
-.problem_container {
+.problem_family {
   display: flex;
-  cursor: pointer;
-  .problemLevel {
-    height: 10px;
-    width: 10px;
+  align-items: center;
+  position: relative;
+  .problem_container {
+    display: flex;
+    align-items: center;
+    width: 400px;
+    cursor: pointer;
+    .problemLevel {
+      height: 10px;
+      width: 10px;
+      margin-right: 10px;
+      align-self: flex-start;
+    }
+    .problemId {
+      margin-right: 10px;
+    }
+    .problemName {
+      margin-right: 10px;
+    }
+  }
+  .button_container {
+    display: flex;
+    align-items: center;
+    position: absolute;
+    right: 20px;
+    .codeNavigate {
+      color: #1d2538;
+      padding-top: 3px;
+      font-weight: 800;
+      text-align: center;
+      border: 1px solid white;
+      margin-left: 10px;
+      margin-right: 10px;
+      width: 80px;
+      height: 30px;
+      background-color: rgb(255, 255, 255);
+      border-radius: 5px;
+      cursor: ponter;
+    }
+    .problemNavigate {
+      color: #1d2538;
+      padding-top: 3px;
+      font-weight: 800;
+      text-align: center;
+      border: 1px solid white;
+      width: 120px;
+      margin-left: 10px;
+      margin-right: 20px;
+      background-color: white;
+      border-radius: 5px;
+      height: 30px;
+      cursor: pointer;
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .problem_family {
+    width: 100%;
+    .button_container {
+      display: none;
+    }
   }
 }

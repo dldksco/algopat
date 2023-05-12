@@ -16,6 +16,25 @@ export interface problemByDate {
     solvedCount: number;
   }
 
+  export interface profileData {
+    userBackjoonId: string;
+    userGithubId: string;
+    userImageUrl: string;
+  }
+  export const getProfile = async () => {
+    const { data, isLoading, error} = useQuery(
+      ["profileupdate"],
+      async (): Promise<profileData> => {
+        const { data } = await $.get("/user/profile");
+        return data;
+      },
+      {
+        staleTime: 5 * 1000 * 60,
+      }
+    );
+    return {data, isLoading,error };
+  };
+
   export const getGridDetail=(date:string)=>{
     const dateConvert = date.split("-"); // ["2023", "01", "01"]
     const dateToSend = dateConvert.join(""); // "20230101"
@@ -52,3 +71,4 @@ export interface problemByDate {
     return { data, isLoading, error };
   };
   
+
