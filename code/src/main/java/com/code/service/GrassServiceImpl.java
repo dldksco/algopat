@@ -56,6 +56,7 @@ public class GrassServiceImpl implements GrassService {
     for (LocalDate date = startDate; !date.isAfter(endDate); date = date.plusDays(1)) {
       dates.add(date);
     }
+    dates.remove(dates.size()-1);
     return dates;
   }
 @Override
