@@ -211,7 +211,7 @@ async def check_user_submit_solution_is_exist(submission_id : int, session):
 # 문제 제출 횟수 조회 
 async def count_rows_with_problem_id_in_user_submit_solution(problem_id : int, session):
     result = await session.execute(select(UserSubmitSolution).filter(UserSubmitSolution.problem_id == problem_id))
-    count  = result.rowcount
+    count  = len(result.scalars().all())
     
     logger.info("문제 푼 사람(명)수 조회 : " + str(count))
 
