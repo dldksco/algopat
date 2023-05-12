@@ -66,9 +66,7 @@ export const RankingBoard = ({ data }: props) => {
               style={{ color: content.isSolved ? "#309E61" : "" }}
             >
               <img
-                src={`https://static.solved.ac/tier_small/${
-                  content.isSolved ? rank + 1 : 0
-                }.svg`}
+                src={`https://static.solved.ac/tier_small/${rank + 1}.svg`}
                 style={{ width: "1rem", height: "auto", marginRight: "10px" }}
                 alt=""
               />
