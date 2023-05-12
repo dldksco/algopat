@@ -1,13 +1,12 @@
-from sqlalchemy import Column, BigInteger, String, ForeignKey, DateTime, Text, select, desc
+from sqlalchemy import Column, BigInteger, DateTime, Text, select, desc
 from sqlalchemy.ext.declarative import declarative_base
-from pydantic import BaseModel
 from myclass.problem import ProblemData
 import json
 from myclass.problem import UserSubmitProblem, UserSubmitSolution
 from datetime import datetime
-from fastapi import HTTPException
 from logging import getLogger
 from utils.utils import parse_problem_space_limit, parse_problem_time_limit, parse_date_format
+
 # logger 설정 
 logger = getLogger()
 
@@ -129,17 +128,15 @@ async def insert_user_submit_problem(data : UserSubmitProblem, user_seq : int, s
         user_submit_problem_updated_at = submission_time
     )
 
-    async with session.begin():
-        session.add(user_submit_problem)
-    await session.commit()
+
+    session.add(user_submit_problem)
+    await session.flush()
     await session.refresh(user_submit_problem)
-    await session.close()
 
     return user_submit_problem
 
 async def get_user_submit_problem(problem_id : int, user_seq : int,  session):
     result = await session.execute(select(UserSubmitProblem).filter(UserSubmitProblem.problem_id == problem_id).filter(UserSubmitProblem.user_seq == user_seq))
-    await session.close()
     return result.scalar()
 
 async def update_user_submit_problem(data : UserSubmitProblem, submissionTime : datetime, session):
@@ -148,11 +145,10 @@ async def update_user_submit_problem(data : UserSubmitProblem, submissionTime : 
     
     data.user_submit_problem_updated_at = submission_time
 
-    async with session.begin():
-        session.add(data)
-    await session.commit()
+
+    session.add(data)
+    await session.flush()
     await session.refresh(data)
-    await session.close()
 
     return data
 
@@ -193,11 +189,9 @@ async def insert_user_submit_solution(data : UserSubmitSolution, user_seq : int,
         user_submit_problem_seq = data.user_submit_problem_seq
     )
 
-    async with session.begin():
-        session.add(user_submit_solution)
-    await session.commit()
+    session.add(user_submit_solution)
+    await session.flush()
     await session.refresh(user_submit_solution)
-    await session.close()
 
     return user_submit_solution.submission_id
 
@@ -206,10 +200,8 @@ async def check_user_submit_solution_is_exist(submission_id : int, session):
     user_submit_solution = result.scalar()
 
     if user_submit_solution is None:
-        await session.close()
         return False # 회원제출코드 정보 없음
     else:
-        await session.close()
         return True # 회원제출코드 정보 있음
 
 
@@ -323,11 +315,9 @@ async def insert_gpt_solution(data : GPTSolution, user_seq : int, session):
         gpt_total_score = data.gpt_total_score
     )
 
-    async with session.begin():
-        session.add(gpt_solution)
-    await session.commit()
+    session.add(gpt_solution)
+    await session.flush()
     await session.refresh(gpt_solution)
-    await session.close()
 
 # ============================================================================================================
 # 랭킹 조회 

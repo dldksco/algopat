@@ -26,6 +26,7 @@ import redis_lock
 from redis import Redis
 import asyncio
 from my_dto.common_dto import MessageDTO
+from my_exception.exception import MyCustomError 
 
 # logger 설정 
 logger = getLogger()
@@ -71,7 +72,7 @@ async def processing(data : ProblemData, send_callback):
                 await asyncio.sleep(1)
         except Exception as e:
             logger.error(f"예외 발생: {e}")
-            raise
+            raise MyCustomError("분산락 에러 발생")
 
 
 
@@ -110,16 +111,35 @@ async def processing(data : ProblemData, send_callback):
     
     ### DB 접근 ###
     ### 1. 회원 푼 문제 DB 접근 ### 
-    user_submit_problem_data = await save_user_problem_origin(problem_id, user_seq, data.submissionTime)
-    submission_id = await save_user_submit_solution_origin(problem_id, user_seq, user_submit_problem_data.user_submit_problem_seq, data)
+    # user_submit_problem_data = await save_user_problem_origin(problem_id, user_seq, data.submissionTime)
+    # submission_id = await save_user_submit_solution_origin(problem_id, user_seq, user_submit_problem_data.user_submit_problem_seq, data)
     ### 2. GPT평가 DB 접근 ### 
-    await save_gpt_solution(submission_id, user_seq, result)
+    # await save_gpt_solution(submission_id, user_seq, result)
+    logger.info("메인 트랜잭션 시작")
+    await main_transaction(problem_id=problem_id, user_seq=user_seq, data=ProblemData, result=result, user_seq=user_seq)
+    logger.info("메인 트랜잭션 종료")
+
+
 
     ### SSE 4
     message_dto = MessageDTO(progress_info="코드 분석 완료", percentage=100, state="finish", user_seq=user_seq)
     await send_callback("alert", message_dto)
 
 
+
+
+from database.get_session import async_session
+async def main_transaction(problem_id : int, user_seq : int, data : ProblemData, result, send_callback):
+    async with async_session() as session:
+        try:
+            user_submit_problem_data = await save_user_problem_origin(problem_id, user_seq, data.submissionTime, session)
+            submission_id = await save_user_submit_solution_origin(problem_id, user_seq, user_submit_problem_data.user_submit_problem_seq, data, session)
+            await save_gpt_solution(submission_id, user_seq, result, session)
+        except Exception as e:
+            logger.error(f"트랜잭션 처리 중 예외 발생 : {e}")
+            message_dto = MessageDTO(progress_info="코드 분석 완료", percentage=100, state="finish", user_seq=user_seq)
+            await send_callback("alert", message_dto)
+            raise MyCustomError("트랜잭션 처리 중 에러 발생")
 
 
 
