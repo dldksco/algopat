@@ -139,8 +139,7 @@ async def main_transaction(problem_id : int, user_seq : int, data : ProblemData,
             await session.commit()
         except Exception as e:
             logger.error(f"트랜잭션 처리 중 예외 발생 : {e}")
-            message_dto = MessageDTO(progress_info="코드 분석 완료", percentage=100, state="finish", user_seq=user_seq)
-            await session.rollback()
+            message_dto = MessageDTO(progress_info="DB 작업 중 예외 발생", percentage=-1, state="error", user_seq=user_seq)
             await send_callback("alert", message_dto)
             raise MyCustomError("트랜잭션 처리 중 에러 발생")
 
