@@ -1,7 +1,6 @@
 .grid {
-  margin: 2% 2%;
-  height: 220px;
-  width: 80%;
+  height: 210px;
+  width: 100%;
   background-color: #1d2538;
   display: flex;
   position: relative;
@@ -17,28 +16,41 @@
       padding: 7.8px;
       text-align: right;
     }
-    padding-top: 40px;
+    padding-top: 34px;
     padding-left: 20px;
-    padding-right: 20px;
+    padding-right: 16px;
   }
-  .grid_container {
+  .grid_family {
     overflow-x: auto;
-    max-width: 100%;
-    display: grid;
-    padding-top: 50px;
-    padding-bottom: 50px;
-    padding-right: 10px;
-    .grid_cell {
-      width: 11px;
-      height: 11px;
-      border: 0.5px solid #ececec;
-      border-radius: 2px;
-      cursor: pointer;
+    overflow-y: hidden;
+    margin-top: 22px;
+    margin-right: 30px;
+    .months {
+      display: flex;
+      .month {
+        width: 9px;
+        font-size: 8px;
+      }
+    }
+    .grid_container {
+      max-width: 100%;
+      display: grid;
+      padding-top: 10px;
+      .grid_cell {
+        width: 11px;
+        height: 11px;
+        border: 0.5px solid #ececec;
+        border-radius: 2px;
+        cursor: pointer;
+        .grid_cell:hover {
+          background-color: blue;
+        }
+      }
     }
   }
   .gridColor_container {
     position: absolute;
-    bottom: 20px;
+    bottom: 30px;
     right: 0px;
     display: flex;
     float: right;
@@ -126,6 +138,9 @@
   }
 }
 .memo {
-  margin: 2% 2%;
+  margin: 2% 0%;
   width: 100%;
+}
+.description {
+  text-align: right;
 }

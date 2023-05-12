@@ -1,8 +1,10 @@
 import { LoadingSpinner } from "@/components/loadingspinner/LoadingSpinner";
 import { Memo } from "./memo/Memo";
 import { useState } from "react";
-import style from "./Grid.module.css";
 import { getGrid } from "../../hooks/query";
+import { v4 as uuidv4 } from "uuid";
+
+import style from "./Grid.module.css";
 
 export const Grid = () => {
   const [streakDateState, setStreakDateState] = useState<string>("");
@@ -29,12 +31,8 @@ export const Grid = () => {
     // console.log(column, "col");
     // console.log("startDate", startDate);
   }
-  // console.log("gridData", gridData);
-  // Initialize the grid with null values
   const grid = Array.from({ length: 7 }, () => Array(column).fill(-1));
   const gridDate = Array.from({ length: 7 }, () => Array(column).fill(-1));
-
-  // console.log(startDate, "시작날짜");
   const startYear = startDate.getFullYear();
   const startWeek = Math.floor(
     (startDate.getTime() - new Date(startDate.getFullYear(), 0, 1).getTime()) /
@@ -42,11 +40,6 @@ export const Grid = () => {
   );
   const startMonth = startDate.getMonth();
   const startDay = startDate.getDay();
-  // console.log(startDate.getDay(), "요일 알려줘");
-  // console.log(startDate.getDate(), "날짜알려줘");
-  // console.log(startMonth, "월알려줘");
-  // console.log(startDate.getFullYear(), "년알려줘");
-  // Fill in the grid with the grassColor data
   if (gridData !== undefined) {
     gridData.forEach((object) => {
       const currentDate = new Date(object.userSubmitProblemCreatedAt);
@@ -57,7 +50,6 @@ export const Grid = () => {
         ) - startWeek;
       const day = currentDate.getDay() % 7; //
       if (day == 6) week = week - 1;
-      // console.log(day, week, grid[day][week], "확인");
       grid[day][week] = object.solvedCount;
       gridDate[day][week] = object.userSubmitProblemCreatedAt;
     });
@@ -76,8 +68,9 @@ export const Grid = () => {
     "Oct",
     "Nov",
     "Dec",
+    "",
   ];
-
+  const monthsWeight = [52, 52, 52, 51, 65, 51, 51, 51, 51, 51, 65, 65];
   const colors = {
     0: "#ECECEC",
     1: "#A8E4AA",
@@ -108,38 +101,55 @@ export const Grid = () => {
             </div>
           ))}
         </div>
-        <div
-          className={style.grid_container}
-          style={{
-            gridTemplateColumns: `repeat(${column}, 15px)`,
-            gridTemplateRows: "repeat(7, 15px)",
-          }}
-        >
-          {grid.map((row, rowIndex) =>
-            row.map((col, colIndex) => {
-              const bgColor = colorIndexFunc(grid[rowIndex][colIndex]);
+        <div className={style.grid_family}>
+          <div className={style.months}>
+            {months.map((_, i) => {
+              const index = (startMonth + i) % 12;
               return (
-                <>
-                  <div
-                    style={{
-                      backgroundColor: bgColor,
-                      visibility:
-                        grid[rowIndex][colIndex] >= 0 ? "visible" : "hidden",
-                    }}
-                    key={`${rowIndex}-${colIndex}`}
-                    className={style.grid_cell}
-                    onClick={() =>
-                      handleClick(
-                        gridDate[rowIndex][colIndex],
-                        grid[rowIndex][colIndex]
-                      )
-                    }
-                  />
-                </>
+                <div
+                  key={uuidv4()}
+                  style={{ marginRight: `${monthsWeight[index]}px` }}
+                  className={style.month}
+                >
+                  {months[index]}
+                </div>
               );
-            })
-          )}
+            })}
+          </div>
+          <div
+            className={style.grid_container}
+            style={{
+              gridTemplateColumns: `repeat(${column}, 15px)`,
+              gridTemplateRows: "repeat(7, 15px)",
+            }}
+          >
+            {grid.map((row, rowIndex) =>
+              row.map((col, colIndex) => {
+                const bgColor = colorIndexFunc(grid[rowIndex][colIndex]);
+                return (
+                  <>
+                    <div
+                      style={{
+                        backgroundColor: bgColor,
+                        visibility:
+                          grid[rowIndex][colIndex] >= 0 ? "visible" : "hidden",
+                      }}
+                      key={`${rowIndex}-${colIndex}`}
+                      className={style.grid_cell}
+                      onClick={() =>
+                        handleClick(
+                          gridDate[rowIndex][colIndex],
+                          grid[rowIndex][colIndex]
+                        )
+                      }
+                    />
+                  </>
+                );
+              })
+            )}
+          </div>
         </div>
+
         <div className={style.gridColor_container}>
           <div className={style.gridColor_zero}>
             <div className={style.item_zero}></div>
@@ -163,9 +173,8 @@ export const Grid = () => {
           </div>
         </div>
       </div>
-      <div style={{ float: "right" }}>
-        {" "}
-        <p>암ㄴ암ㄴ암낭</p>
+      <div className={style.description}>
+        <p>당일 제출 코드는 명일 자정에 업데이트됩니다.</p>
       </div>
       <div className={style.memo}>
         {streakColorState === 0 ? null : (

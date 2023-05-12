@@ -1,11 +1,8 @@
-import { useQuery } from "@tanstack/react-query";
-import { $ } from "@/connect/axios";
 import { LoadingSpinner } from "@/components/loadingspinner/LoadingSpinner";
 import { v4 as uuidv4 } from "uuid";
 import { ProblemItem } from "./problemitem/ProblemItem";
 
 import style from "./Memo.module.css";
-import { useEffect } from "react";
 import { getGridDetail, problemByDate } from "@/pages/mypage/hooks/query";
 
 interface dateData {
@@ -15,6 +12,7 @@ interface dateData {
 
 export const Memo = (props: dateData) => {
   const { data, isLoading, refetch } = getGridDetail(props.date);
+  console.log(data, "data 내놔봐");
   console.log(isLoading, "oasdasdiajsdi");
   if (props.thenum == 0 || isLoading) {
     return (
