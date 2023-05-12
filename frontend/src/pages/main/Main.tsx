@@ -110,6 +110,7 @@ export const Main = () => {
             border: "1px solid black",
             fontSize: "1.3rem",
             fontWeight: "700",
+            borderRadius: "10px",
             padding: "20px 60px",
             margin: "50px 0 100px",
             color: "black",

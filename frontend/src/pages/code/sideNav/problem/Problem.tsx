@@ -4,6 +4,8 @@ import { stringCutter } from "../../hooks/func";
 import { ProblemDetail } from "./problemDetail/ProblemDetail";
 import { ProblemInfo } from "../../hooks/query";
 import { useState } from "react";
+import { nowProblemSubmissionIdState } from "@/atoms/code.atom";
+import { useRecoilValue } from "recoil";
 import style from "./Problem.module.css";
 
 export interface ProblemProps {
@@ -11,7 +13,11 @@ export interface ProblemProps {
 }
 
 export const Problem = ({ detail }: ProblemProps) => {
-  const [isProblemOpen, setIsProblemOpen] = useState(false);
+  const nowSubmission = useRecoilValue(nowProblemSubmissionIdState);
+  const [isProblemOpen, setIsProblemOpen] = useState(
+    detail.problemId === nowSubmission.problemId ? true : false
+  );
+
   const problemClick = () => {
     setIsProblemOpen((prev) => !prev);
   };
@@ -28,7 +34,7 @@ export const Problem = ({ detail }: ProblemProps) => {
           src={`https://static.solved.ac/tier_small/${detail.problemLevel}.svg`}
           alt={detail.problemTitle}
         />
-        {detail.problemId}. {stringCutter(detail.problemTitle, 8)}
+        {detail.problemId}. {stringCutter(detail.problemTitle, 10)}
       </div>
       <hr />
       <ProblemDetail problemDetail={detail} isProblemOpen={isProblemOpen} />

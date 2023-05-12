@@ -1,6 +1,6 @@
 import { v4 as uuidv4 } from "uuid";
 import { LoadingSpinner } from "@/components/loadingspinner/LoadingSpinner";
-import { useSetRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import {
   isCodeNavOpenState,
   nowProblemSubmissionIdState,
@@ -15,7 +15,9 @@ export interface SolveProps {
 }
 
 export const ProblemDetail = ({ problemDetail, isProblemOpen }: SolveProps) => {
-  const setNowSubmission = useSetRecoilState(nowProblemSubmissionIdState);
+  const [nowSubmission, setNowSubmission] = useRecoilState(
+    nowProblemSubmissionIdState
+  );
   const setIsSidenavOpen = useSetRecoilState(isCodeNavOpenState);
   const { isLoading, data } = getSubmissionList(problemDetail.problemId);
   const height = (data?.content.length as number) * 2 + 1;
@@ -56,10 +58,15 @@ export const ProblemDetail = ({ problemDetail, isProblemOpen }: SolveProps) => {
           key={uuidv4()}
           className={style.submission_list}
           onClick={() => handleSubmission(el.submissionId)}
+          style={
+            nowSubmission.submissionId === el.submissionId
+              ? { color: "green" }
+              : undefined
+          }
         >
           {stringCutter(
             `풀이 ${new Date(el.userSubmitSolutionTime).toLocaleString()}`,
-            23
+            27
           )}
         </div>
       ))}

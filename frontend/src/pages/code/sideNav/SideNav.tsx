@@ -16,13 +16,25 @@ import { getInfinityProblemList } from "../hooks/query";
 import { Problem } from "./problem/Problem";
 import { isCodeNavOpenState } from "@/atoms/code.atom";
 import { useSetRecoilState } from "recoil";
+import { useState } from "react";
 import style from "./SideNav.module.css";
 
 export const SideNav = () => {
+  const [category, setCategory] = useState("date");
+  const [condition, setCondition] = useState("asc");
   const setIsSidenavOpen = useSetRecoilState(isCodeNavOpenState);
-  const { data, fetchNextPage, hasNextPage } = getInfinityProblemList();
   const navigate = useNavigate();
+  const { data, fetchNextPage, hasNextPage } = getInfinityProblemList(
+    category,
+    condition
+  );
+
   const xButtonClick = () => setIsSidenavOpen(false);
+  const serchClick = (str: string) => {
+    setCategory(str);
+    if (category !== str) setCondition("asc");
+    else setCondition((prev) => (prev === "asc" ? "desc" : "asc"));
+  };
 
   return (
     <div className={style.sideNav}>
@@ -32,16 +44,68 @@ export const SideNav = () => {
       </div>
 
       <div className={style.sort_button_group}>
-        <div className={style.sort_button}>
-          <FontAwesomeIcon icon={faClock} />
-          <FontAwesomeIcon icon={faArrowDownWideShort} />
+        <div
+          className={style.sort_button}
+          onClick={() => serchClick("date")}
+          style={
+            category === "date"
+              ? { color: "skyblue", border: "1px solid skyblue" }
+              : undefined
+          }
+        >
+          <FontAwesomeIcon icon={faClock} style={{ transition: "0.1s" }} />
+          <FontAwesomeIcon
+            icon={faArrowDownWideShort}
+            style={
+              condition === "desc" && category === "date"
+                ? { transform: "rotate(180deg)", transition: "0.2s" }
+                : { transition: "0.2s" }
+            }
+          />
         </div>
-        <div className={style.sort_button}>
-          <img src={sort_tier_img} />
-          <FontAwesomeIcon icon={faArrowDownWideShort} />
+        <div
+          className={style.sort_button}
+          onClick={() => serchClick("level")}
+          style={
+            category === "level"
+              ? { color: "skyblue", border: "1px solid skyblue" }
+              : undefined
+          }
+        >
+          <img
+            src={sort_tier_img}
+            style={
+              category === "level"
+                ? { filter: "opacity(0.7)", transition: "0.2s" }
+                : { transition: "0.2s" }
+            }
+          />
+          <FontAwesomeIcon
+            icon={faArrowDownWideShort}
+            style={
+              condition === "desc" && category === "level"
+                ? { transform: "rotate(180deg)", transition: "0.19s" }
+                : { transition: "0.19s" }
+            }
+          />
         </div>
-        <div className={style.sort_button}>
-          <FontAwesomeIcon icon={faArrowDown91} />
+        <div
+          className={style.sort_button}
+          onClick={() => serchClick("id")}
+          style={
+            category === "id"
+              ? { color: "skyblue", border: "1px solid skyblue" }
+              : undefined
+          }
+        >
+          <FontAwesomeIcon
+            icon={faArrowDown91}
+            style={
+              condition === "desc" && category === "id"
+                ? { transform: "rotate(180deg)", transition: "0.2s" }
+                : { transition: "0.2s" }
+            }
+          />
         </div>
       </div>
       <div
