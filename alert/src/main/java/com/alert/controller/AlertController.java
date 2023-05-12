@@ -4,8 +4,10 @@ import com.alert.dto.MessageDto;
 import com.alert.service.EmitService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.time.Duration;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import javax.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,6 +39,20 @@ public class AlertController {
 
   // Util 정의
   private final ObjectMapper objectMapper;
+
+  /**
+   * 10초마다 Sink에 데이터 전송
+   */
+  @PostConstruct
+  public void init() {
+    Flux.interval(Duration.ofSeconds(10)).subscribe(i -> sendKeepAliveMessageToAllUsers());
+  }
+
+  private void sendKeepAliveMessageToAllUsers() {
+    userSinks.forEach((userSeq, userSink) -> {
+      userSink.tryEmitNext("연결유지");
+    });
+  }
 
   /**
    * 파이프라인 연결 -> SSE (WebFlux)
