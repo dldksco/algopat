@@ -4,21 +4,15 @@
   height: auto;
   position: relative;
 }
-.box .profiletitle {
-  font-size: 1.36em;
-  font-weight: 600;
-  margin-bottom: 10px;
-  height: 30px;
-  width: 150px;
-}
 .box .backgroundImage img {
   width: 100%;
   height: 300px;
+  background-size: cover;
 }
 .box .profileAll {
   position: absolute;
   top: 250px;
-  left: 60px;
+  left: 10%;
 }
 .box .profileAll .profilecontainer .profileimage {
   background-size: cover;

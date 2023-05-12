@@ -1,9 +1,8 @@
 import { LoadingSpinner } from "@/components/loadingspinner/LoadingSpinner";
 import { v4 as uuidv4 } from "uuid";
 import { ProblemItem } from "./problemitem/ProblemItem";
-
-import style from "./Memo.module.css";
 import { getGridDetail, problemByDate } from "@/pages/mypage/hooks/query";
+import style from "./Memo.module.css";
 
 interface dateData {
   date: string;
@@ -12,8 +11,6 @@ interface dateData {
 
 export const Memo = (props: dateData) => {
   const { data, isLoading, refetch } = getGridDetail(props.date);
-  console.log(data, "data 내놔봐");
-  console.log(isLoading, "oasdasdiajsdi");
   if (props.thenum == 0 || isLoading) {
     return (
       <div>

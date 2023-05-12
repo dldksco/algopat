@@ -2,37 +2,35 @@ import { PagableResponse } from "@/types/type";
 import { useQuery } from "@tanstack/react-query";
 import { $ } from "@/connect/axios";
 
-
+interface StreakData {
+  userSubmitProblemCreatedAt: string;
+  solvedCount: number;
+}
 export interface problemByDate {
     problemId: number;
     problemLevel: number;
     problemTitle: string;
     submissionId: number;
-  }
+}
 
-  
-  interface StreakData {
-    userSubmitProblemCreatedAt: string;
-    solvedCount: number;
-  }
-
-  export interface profileData {
+interface myProfileData {
     userBackjoonId: string;
     userGithubId: string;
     userImageUrl: string;
-  }
-  export const getProfile = async () => {
-    const { data, isLoading, error} = useQuery(
+}
+  
+  export const getProfile = () => {
+    const { data, isLoading} = useQuery(
       ["profileupdate"],
-      async (): Promise<profileData> => {
-        const { data } = await $.get("/user/profile");
+      async (): Promise<myProfileData> => {
+        const {data} = await $.get("/user/profile");
         return data;
       },
       {
         staleTime: 5 * 1000 * 60,
       }
     );
-    return {data, isLoading,error };
+    return {data, isLoading};
   };
 
   export const getGridDetail=(date:string)=>{
