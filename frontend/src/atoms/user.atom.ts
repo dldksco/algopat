@@ -22,8 +22,6 @@ export const loginUser = (setUserInfo: SetterOrUpdater<UserInfo>) => {
     const base64Payload = token.split(".")[1];
     const payload = Buffer.from(base64Payload, "base64");
     const result = JSON.parse(payload.toString());
-    console.log("이것이 토큰결과");
-    console.log(result);
 
     setUserInfo({
       userSeq: result.userSeq,

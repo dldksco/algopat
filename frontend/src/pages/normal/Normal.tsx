@@ -14,7 +14,7 @@ export const Normal = () => {
       <div
         style={{
           maxWidth: "var(--max-width)",
-          minHeight: "calc(100vh - 350px)",
+          minHeight: "calc(100vh - 330px)",
           marginLeft: "auto",
           marginRight: "auto",
           paddingLeft: "2%",
@@ -23,7 +23,9 @@ export const Normal = () => {
       >
         <Outlet />
       </div>
-      <Footer />
+      <div style={{ backgroundColor: "#d4d4d4" }}>
+        <Footer />
+      </div>
     </div>
   );
 };

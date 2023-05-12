@@ -7,6 +7,7 @@ import code3 from "@/assets/img/main/code3.png";
 import gpticon from "@/assets/img/main/gpticon.png";
 import bird from "@/assets/img/main/bird.png";
 import { MainMoveStick } from "./MainMoveStick";
+import { TopArrow } from "@/components/toparrow/TopArrow";
 
 export const Main = () => {
   const moveExtention = () => {
@@ -116,6 +117,7 @@ export const Main = () => {
           onClick={moveExtention}
         />
       </div>
+      <TopArrow />
     </div>
   );
 };

@@ -8,6 +8,7 @@ import Swal from "sweetalert2";
 import style from "./Code.module.css";
 import { useRecoilState } from "recoil";
 import { isCodeNavOpenState } from "@/atoms/code.atom";
+import { TopArrow } from "@/components/toparrow/TopArrow";
 
 export const Code = () => {
   const [isSidenavOpen, setIsSidenavOpen] = useRecoilState(isCodeNavOpenState);
@@ -41,6 +42,7 @@ export const Code = () => {
           <FontAwesomeIcon icon={faBars} />
         </div>
       </div>
+      <TopArrow />
     </div>
   );
 };
