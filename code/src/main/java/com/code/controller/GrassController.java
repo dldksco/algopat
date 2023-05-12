@@ -8,6 +8,8 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -24,8 +26,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/grass")
 public class GrassController {
     private final GrassService grassService;
+
+    private static final Logger logger = LoggerFactory.getLogger(GrassController.class);
     @GetMapping("")
     public ResponseEntity<List<DateGrassCountDTO>> getGrassCount (@RequestHeader("userSeq") long userSeq){
+        logger.info("잔디숫잣마ㅐㄻㄴㅇㄻㄴㅇㄹ");
         return new ResponseEntity<>(grassService.getGrassCount(UserGrassCountRequestDTO.builder()
             .userSeq(userSeq)
             .build()),HttpStatus.OK);

@@ -64,13 +64,13 @@ public interface UserSubmitProblemRepository extends JpaRepository<UserSubmitPro
       "GROUP BY FUNCTION('DATE', usp.userSubmitProblemCreatedAt)")
   List<DateGrassCountDTO> findDateGrossCountByUserSeq(@Param("userSeq") Long userSeq, @Param("today") LocalDateTime today, @Param("todayMinusYear") LocalDateTime todayMinusYear);
 
-  @Query("SELECT new com.code.data.dto.DateGrassInfoDTO(usp.userSubmitProblemSeq, usp.problemId, p.problemTitle, p.problemLevel) " +
-      "FROM UserSubmitProblem usp " +
-      "JOIN Problem p ON usp.problemId = p.problemId " +
-      "WHERE CAST(usp.userSubmitProblemCreatedAt AS LocalDate) = :userSubmitProblemCreatedAt " +
-      "AND usp.userSeq = :userSeq " +
-      "ORDER BY usp.userSubmitProblemCreatedAt DESC")
-  Page<DateGrassInfoDTO> findDateGrassInfo(@Param("userSeq") Long userSeq, @Param("userSubmitProblemCreatedAt") LocalDate userSubmitProblemCreatedAt, Pageable pageable);
+  @Query("SELECT new com.code.data.dto.DateGrassInfoDTO(uss.submissionId, uss.problemId, p.problemTitle, p.problemLevel) " +
+      "FROM UserSubmitSolution uss " +
+      "JOIN Problem p ON uss.problemId = p.problemId " +
+      "WHERE CAST(uss.userSubmitSolutionTime AS LocalDate) = :userSubmitSolutionTime " +
+      "AND uss.userSeq = :userSeq " +
+      "ORDER BY uss.userSubmitSolutionTime DESC")
+  Page<DateGrassInfoDTO> findDateGrassInfo(@Param("userSeq") Long userSeq, @Param("userSubmitSolutionTime") LocalDate userSubmitSolutionTime, Pageable pageable);
 
 
 }
