@@ -109,6 +109,10 @@ chrome.storage.local.get(['BaekjoonHub_token', 'commit_state'], (data) => {
         chrome.storage.local.set({ userGithubId: data.userGithubId }, () => { });
         chrome.storage.local.set({ userSeq: data.userSeq }, () => { });
 
+        chrome.runtime.sendMessage({
+          sseEvent: true
+        })
+
         commitMode(commit_state, token);
 
       }).catch((e) => {
@@ -150,7 +154,10 @@ function commitMode(commit_state, token) {
         if (data.data) { // 분석 완료
           if (commit_state.problemId && commit_state.title)
             $('#commit_state_text').html(`<p>${commit_state.problemId} ${commit_state.title}</p>`);
-          $('#commit_state_text').after('<p>코드 분석이 완료되었습니다</p><div class="completed_icon">✓</div>');
+
+          let url = `https://algopat.kr/extension?problemtitle=${commit_state.title}&problemid=${commit_state.problemId}&problemlevel=${commit_state.level}&submissionid=${commit_state.submissionId}&token=${token}`
+
+          $('#commit_state_text').after(`<p>코드 분석이 완료되었습니다</p><p><a title="myLink" id="myCodeLink" href="${url}" target="_blank">분석 결과 보기</a></p>`);
           chrome.storage.local.set({ commit_state: { ...commit_state, state: true } }, () => { });
         } else { // 분석 진행중
           if (commit_state.problemId && commit_state.title)

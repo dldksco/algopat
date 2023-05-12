@@ -108,6 +108,7 @@ function startLoader() {
                       submissionId: bojData.submissionId,
                       problemId: bojData.problemId,
                       title: bojData.title,
+                      level: bojData.level,
                       state: false
                     }
                   }, () => { });

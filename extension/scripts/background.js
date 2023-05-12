@@ -1,6 +1,37 @@
+let eventSource;
+
+function sseEventListener() {
+  chrome.storage.local.get('userSeq', (data) => {
+
+    const userSeq = data.userSeq;
+
+    if (!userSeq) return;
+
+    eventSource = new EventSource(`https://algopat.kr/api/alert/sse/${userSeq}`);
+
+    eventSource.onmessage = function (event) {
+      console.log(event)
+      const data = JSON.parse(event.data)
+      chrome.notifications.create('my-notification', {
+        type: 'basic',
+        iconUrl: `chrome-extension://${chrome.runtime.id}/assets/icon.png`,
+        title: `${data.progress_info}`,
+        message: `${data.progress_info}`
+      });
+    };
+
+    eventSource.onerror = function (event) {
+      console.log("SSE Error : ", event)
+    }
+
+  });
+}
+
 function handleMessage(request) {
-  console.log("receive")
-  if (request && request.closeWebPage === true && request.isSuccess === true) {
+  console.log("receive ", request)
+  if (request && request.sseEvent === true) {
+    sseEventListener();
+  } else if (request && request.closeWebPage === true && request.isSuccess === true) {
     /* Set username */
     // chrome.storage.local.set(
     //   { BaekjoonHub_username: request.username } /* , () => {
@@ -10,9 +41,7 @@ function handleMessage(request) {
 
     /* Set token */
     chrome.storage.local.set(
-      { BaekjoonHub_token: request.token } /* ]], () => {
-      window.localStorage[request.KEY] = request.token;
-    } */,
+      { BaekjoonHub_token: request.token }
     );
 
     /* Close pipe */
@@ -35,30 +64,9 @@ function handleMessage(request) {
   }
 }
 
+console.log("background start")
 chrome.runtime.onMessage.addListener(handleMessage);
 
-chrome.storage.local.get('userSeq', (data) => {
-
-  const userSeq = data.userSeq;
-
-  if (!userSeq) return;
-
-  let eventSource = new EventSource(`https://algopat.kr/api/alert/sse/${userSeq}`);
-
-  eventSource.onmessage = function (event) {
-    console.log(event)
-    chrome.notifications.create('my-notification', {
-      type: 'basic',
-      iconUrl: `chrome-extension://${chrome.runtime.id}/assets/icon.png`,
-      title: '분석완료',
-      message: `${event.data}`
-    });
-  };
-
-  eventSource.onerror = function (event) {
-    console.log("SSE Error : ", event)
-  }
-
-});
+sseEventListener();
 
 
