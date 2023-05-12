@@ -33,7 +33,7 @@ public class AlertController {
   private final EmitService emitService;
 
   // Sink 관리 자료구조 정의
-  private final Map<String, Many<String>> userSinks = new ConcurrentHashMap<>();
+  private final Map<Long, Many<String>> userSinks = new ConcurrentHashMap<>();
 
   // Util 정의
   private final ObjectMapper objectMapper;
@@ -44,7 +44,7 @@ public class AlertController {
    * @return
    */
   @GetMapping(value = "/sse/{userSeq}", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
-  public Mono<ResponseEntity<Flux<String>>> sseSubscription(@PathVariable String userSeq){
+  public Mono<ResponseEntity<Flux<String>>> sseSubscription(@PathVariable long userSeq){
     Sinks.Many<String> userSink = userSinks.computeIfAbsent(userSeq, key -> Sinks.many().multicast().onBackpressureBuffer());
     logger.info("파이프라인 연결 시작 : {}", userSeq);
     return Mono.just(ResponseEntity.ok().header(
@@ -58,14 +58,12 @@ public class AlertController {
    */
   @KafkaListener(topics = "${kafka.topic}", groupId = "${kafka.group-id}")
   public void consume(@Payload String message) {
-    logger.info("알림 컨슘 !!!!");
+    logger.info("알림 컨슘");
     logger.info(message);
     try {
       MessageDto messageDto = objectMapper.readValue(message, MessageDto.class);
       logger.info("변환 완료 : {}", messageDto);
-      emitService.emitMessageToUser(userSinks, String.valueOf(messageDto.getUserSeq()),
-          messageDto.getProgress(),
-          messageDto.getMessage());
+      emitService.emitMessageToUser(userSinks, messageDto);
     } catch (JsonProcessingException e) {
       logger.info("String -> Json 파싱 에러 발생");
       throw new RuntimeException(e);
