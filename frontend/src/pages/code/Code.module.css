@@ -35,8 +35,9 @@
     width: 100%;
   }
   .code .rightTab .hamberger {
+    color: rgba(255, 255, 255, 0.8);
     display: block;
-    position: absolute;
+    position: fixed;
     font-size: 1.7rem;
     top: 10px;
     left: 10px;
