@@ -73,7 +73,7 @@
 
 @media screen and (max-width: 768px) {
   .sideNav {
-    height: 95%;
+    height: auto;
     border: 1px solid white;
   }
   .sideNav .x_button {
@@ -88,5 +88,12 @@
   }
   .sideNav .nav_header {
     padding-bottom: calc(5% + 10px);
+  }
+  .sideNav .problem_list {
+    height: 340px;
+    overflow-y: auto;
+  }
+  .sideNav .extra_length {
+    height: 390px;
   }
 }/*# sourceMappingURL=SideNav.module.css.map */

@@ -82,7 +82,7 @@
 
 @media screen and (max-width: 768px) {
   .sideNav {
-    height: 95%;
+    height: auto;
     border: 1px solid white;
 
     .x_button {
@@ -98,6 +98,13 @@
     }
     .nav_header {
       padding-bottom: calc(5% + 10px);
+    }
+    .problem_list {
+      height: 340px;
+      overflow-y: auto;
+    }
+    .extra_length {
+      height: 390px;
     }
   }
 }
