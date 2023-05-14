@@ -42,7 +42,7 @@ public class AuthServiceImpl implements AuthService {
   //헤더에 엑세스토큰담는 작업해야함
   @Override
   public LoginProcessDTO loginProcess(GithubCodeResponseDTO githubCodeResponseDTO) {
-    log.info("start loginProcess");
+
     LoginProcessDTO loginProcessDTO = new LoginProcessDTO();
 
     GithubAccessTokenResponseDTO githubAccessTokenResponseDTO = requestGithubAccessToken(
@@ -67,14 +67,12 @@ public class AuthServiceImpl implements AuthService {
 
     Cookie cookie = tokenService.createRefreshTokenCookie(refreshToken);
     loginProcessDTO.setCookie(cookie);
-    log.info("end loginProcess");
     return loginProcessDTO;
   }
 
   @Override
   public GithubAccessTokenResponseDTO requestGithubAccessToken(
       GithubCodeResponseDTO githubCodeResponseDTO) {
-    log.info("start requestGithubAccessToken");
 
     String url = "https://github.com/login/oauth/access_token";
     String code = githubCodeResponseDTO.getCode();
@@ -90,7 +88,6 @@ public class AuthServiceImpl implements AuthService {
     try{
       GithubAccessTokenResponseDTO githubAccessTokenResponse = restTemplate.postForObject(url,
           request, GithubAccessTokenResponseDTO.class);
-      log.info("end requestGithubAccessToken");
       return githubAccessTokenResponse;
     }catch (Exception e){
       log.error("error reqeust github accesstoken");
@@ -104,7 +101,6 @@ public class AuthServiceImpl implements AuthService {
   @Override
   public GithubUserResponseDTO requestGithubUserInfo(
       GithubAccessTokenResponseDTO githubAccessTokenResponseDTO) {
-    log.info("start requestGithubUserInfo");
 
     String githubaAccessToken = githubAccessTokenResponseDTO.getGitHubaAccessToken();
     String url = "https://api.github.com/user";
@@ -123,7 +119,6 @@ public class AuthServiceImpl implements AuthService {
           GithubUserResponseDTO.class
       );
       GithubUserResponseDTO githubUserResponseDTO = response.getBody();
-      log.info("end requestGithubUserInfo");
       return githubUserResponseDTO;
     }catch (Exception e){
       log.error("error request github user info");

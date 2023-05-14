@@ -31,10 +31,8 @@ public class TokenController {
   @GetMapping("/parse")
   public ResponseEntity<TokenInfo> parseToken(@RequestHeader HttpHeaders headers){
 
-      log.info("start parseToken");
       String token = headers.getFirst("Authorization");
       TokenInfo tokenInfo=tokenService.parseToken(token);
-      log.info("end parseToken");
       return new ResponseEntity<>(tokenInfo,HttpStatus.OK);
 
   }
@@ -45,7 +43,6 @@ public class TokenController {
   public ResponseEntity<?> checkRefreshTokenIssueAccessToken(HttpServletRequest request) {
     Cookie[] cookies = request.getCookies();
     String refreshToken = null;
-    log.info("start checkRefreshTokenIssueAccessToken");
     if (cookies != null) {
       for (Cookie cookie : cookies) {
         if (cookie.getName().equals("refreshToken")) {
@@ -67,7 +64,6 @@ public class TokenController {
           tokenDTO.setToken(tokenService.generateAccessToken(TokenGenerateDTO.builder().userGithubId(tokenInfo.getUserGithubId()).userSeq(tokenInfo.getUserSeq()).isExtension("NO").build()).getToken());
           HttpHeaders headers = new HttpHeaders();
           headers.add("Authorization", tokenDTO.getToken());
-          log.info("end checkRefreshTokenIssueAccessToken");
           return new ResponseEntity<>(TokenStatus.ISSUED_ACCESS_TOKEN,headers,TokenStatus.ISSUED_ACCESS_TOKEN.getStatus());
         }else{
           log.error("error checkRefreshTokenIssueAccessToken: "+ tokenStatus.getMessage());

@@ -34,12 +34,10 @@ public class AuthController {
 
   @PostMapping("/code")
   public ResponseEntity<?> getCode (@RequestBody CodeDTO codeDTO, HttpServletResponse response){
-    log.info("start getCode");
     LoginProcessDTO loginProcessDTO =authService.loginProcess(GithubCodeResponseDTO.builder().code(
         codeDTO.getCode()).isExtension(codeDTO.getIsExtension()).build());
     response.addHeader("Authorization",loginProcessDTO.getAccessToken());
     response.addCookie(loginProcessDTO.getCookie());
-    log.info("end getCode");
     return new ResponseEntity<>("fd",HttpStatus.OK);
   }
 
@@ -56,7 +54,6 @@ public class AuthController {
 
   @GetMapping("/validate")
   public ResponseEntity<?> checkTokenValidate(@RequestHeader("Authorization") String jwt){
-    log.info("start checkTokenValidate");
     if(jwt != null){
       log.info("jwt is not null");
       TokenDTO tokenDTO = TokenDTO.builder().token(jwt).build();
@@ -66,7 +63,6 @@ public class AuthController {
       return new ResponseEntity<>(tokenStatus.getMessage(),tokenStatus.getStatus());
     }else{
       log.error("jwt is null");
-      log.info("end checkTokenValidate");
       return new ResponseEntity<>("타당하지 않은 요청입니다.", HttpStatus.BAD_REQUEST);
     }
   }

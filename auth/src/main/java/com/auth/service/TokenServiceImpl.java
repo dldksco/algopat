@@ -42,7 +42,6 @@ private static final long ACCESS_TOKEN_EXPIRATION_TIME = 1000*30; // 15 min (in 
   }
   @Override
   public TokenDTO generateAccessToken(TokenGenerateDTO tokenGenerateDTO) {
-    log.info("start generateAccessToken");
     String isExtension= tokenGenerateDTO.getIsExtension();
     long tokenExpiredTime=0;
     if(isExtension.equals("YES")){
@@ -61,7 +60,6 @@ private static final long ACCESS_TOKEN_EXPIRATION_TIME = 1000*30; // 15 min (in 
           .setExpiration(new Date(System.currentTimeMillis() + tokenExpiredTime))
           .signWith(getSigningKey(), SignatureAlgorithm.HS256)
           .compact();
-      log.info("end generate Token");
       return TokenDTO.builder().token(token).build();
     }catch (JwtException j){
       log.error("fail generate token",j);
@@ -72,7 +70,6 @@ private static final long ACCESS_TOKEN_EXPIRATION_TIME = 1000*30; // 15 min (in 
   }
   @Override
   public TokenDTO generateRefreshToken(TokenGenerateDTO tokenGenerateDTO) {
-    log.info("start generateRefreshToken");
     try{
       String token = Jwts.builder()
           .claim("userGithubId",tokenGenerateDTO.getUserGithubId())
@@ -81,7 +78,6 @@ private static final long ACCESS_TOKEN_EXPIRATION_TIME = 1000*30; // 15 min (in 
           .setExpiration(new Date(System.currentTimeMillis() + REFRESH_TOKEN_EXPIRATION_TIME))
           .signWith(getSigningKey(), SignatureAlgorithm.HS256)
           .compact();
-      log.info("end generateRefreshToken");
       return TokenDTO.builder().token(token).build();
     }catch (JwtException j){
         log.error("fail generateRefreshToken",j);
@@ -93,14 +89,12 @@ private static final long ACCESS_TOKEN_EXPIRATION_TIME = 1000*30; // 15 min (in 
   }
   @Override
   public TokenStatus validateToken(TokenDTO tokenDTO) {
-    log.info("start validateToken");
     try {
       Jwts.parserBuilder()
           .setSigningKey(getSigningKey())
           .build()
           .parseClaimsJws(tokenDTO.getToken());
       log.info("is valid token");
-      log.info("end validateToken");
       return TokenStatus.VALID;
     } catch (ExpiredJwtException expiredJwtException) {
       log.warn("jwt Expired");
@@ -113,7 +107,6 @@ private static final long ACCESS_TOKEN_EXPIRATION_TIME = 1000*30; // 15 min (in 
   }
   @Override
   public TokenInfo getGithubIdFromToken(TokenDTO tokenDTO){
-    log.info("start getGithubIdFromToken");
     String jwt = tokenDTO.getToken();
     try{
       log.info("start parse token in getGithubIdFromToken");
@@ -124,7 +117,6 @@ private static final long ACCESS_TOKEN_EXPIRATION_TIME = 1000*30; // 15 min (in 
       String userGithubId =jws.getBody().get("userGithubId", String.class);
       long userSeq = jws.getBody().get("userSeq", Long.class);
       log.info("end parse token in getGithubIdFromToken");
-      log.info("end getGithubIdFromToken");
       return TokenInfo.builder().userGithubId(userGithubId).userSeq(userSeq).build();
     }catch (JwtException e){
       log.error("error parse token in getGithubIdFromToken",e);
@@ -142,12 +134,10 @@ private static final long ACCESS_TOKEN_EXPIRATION_TIME = 1000*30; // 15 min (in 
   @Override
   public TokenInfo parseToken(String token) {
     try{
-      log.info("start parseToken");
       Jws<Claims> claimsJws = Jwts.parserBuilder()
           .setSigningKey(getSigningKey())
           .build()
           .parseClaimsJws(token);
-      log.info("end parseToken");
       return TokenInfo.builder()
           .userGithubId(claimsJws.getBody().get("userGithubId", String.class))
           .userSeq(claimsJws.getBody().get("userSeq",Long.class))
@@ -163,7 +153,6 @@ private static final long ACCESS_TOKEN_EXPIRATION_TIME = 1000*30; // 15 min (in 
 
   @Override
   public Cookie createRefreshTokenCookie(TokenDTO tokenDTO) {
-    log.info("start createRefreshTokenCookie");
     try
     {
       Cookie refreshTokenCookie = new Cookie("refreshToken", tokenDTO.getToken());
@@ -171,7 +160,6 @@ private static final long ACCESS_TOKEN_EXPIRATION_TIME = 1000*30; // 15 min (in 
       refreshTokenCookie.setSecure(true); // HTTPS를 사용하는 경우에만 쿠키를 전송합니다.
       refreshTokenCookie.setPath("/");
       refreshTokenCookie.setMaxAge((int)REFRESH_TOKEN_EXPIRATION_TIME);
-      log.info("end createRefreshTokenCookie");
       return refreshTokenCookie;
     }catch (Exception e){
       log.error("error createRefreshTokenCookie");
