@@ -78,7 +78,7 @@ export const RankingDetail = () => {
             <div className={style.master_info}>
               <div
                 className={style.box}
-                style={{ marginBottom: "10px", textAlign: "center" }}
+                style={{ marginBottom: "10px", textAlign: "center", cursor: "default" }}
               >
                 master
               </div>
