@@ -1,5 +1,6 @@
 package com.auth.service;
 
+import com.auth.domain.ErrorCode;
 import com.auth.dto.GithubAccessTokenResponseDTO;
 import com.auth.dto.GithubCodeResponseDTO;
 import com.auth.dto.GithubUserResponseDTO;
@@ -7,6 +8,7 @@ import com.auth.dto.LoginProcessDTO;
 import com.auth.dto.TokenDTO;
 import com.auth.dto.TokenGenerateDTO;
 import com.auth.dto.UserServiceIdResponseDTO;
+import com.auth.exception.BaseException;
 import java.util.Collections;
 import javax.servlet.http.Cookie;
 import lombok.RequiredArgsConstructor;
@@ -40,6 +42,7 @@ public class AuthServiceImpl implements AuthService {
   //헤더에 엑세스토큰담는 작업해야함
   @Override
   public LoginProcessDTO loginProcess(GithubCodeResponseDTO githubCodeResponseDTO) {
+    log.info("start loginProcess");
     LoginProcessDTO loginProcessDTO = new LoginProcessDTO();
 
     GithubAccessTokenResponseDTO githubAccessTokenResponseDTO = requestGithubAccessToken(
@@ -64,15 +67,18 @@ public class AuthServiceImpl implements AuthService {
 
     Cookie cookie = tokenService.createRefreshTokenCookie(refreshToken);
     loginProcessDTO.setCookie(cookie);
-
+    log.info("end loginProcess");
     return loginProcessDTO;
   }
 
   @Override
   public GithubAccessTokenResponseDTO requestGithubAccessToken(
       GithubCodeResponseDTO githubCodeResponseDTO) {
+    log.info("start requestGithubAccessToken");
+
     String url = "https://github.com/login/oauth/access_token";
     String code = githubCodeResponseDTO.getCode();
+
     HttpHeaders headers = new HttpHeaders();
     headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
 
@@ -81,38 +87,55 @@ public class AuthServiceImpl implements AuthService {
     body.add("client_secret", clientSecret);
     body.add("code", code);
     HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(body, headers);
-    GithubAccessTokenResponseDTO githubAccessTokenResponse = restTemplate.postForObject(url,
-        request, GithubAccessTokenResponseDTO.class);
-    System.out.println("githubaccess :" + githubAccessTokenResponse.getGitHubaAccessToken());
-    return githubAccessTokenResponse;
+    try{
+      GithubAccessTokenResponseDTO githubAccessTokenResponse = restTemplate.postForObject(url,
+          request, GithubAccessTokenResponseDTO.class);
+      log.info("end requestGithubAccessToken");
+      return githubAccessTokenResponse;
+    }catch (Exception e){
+      log.error("error reqeust github accesstoken");
+      log.debug("github code: :" + code);
+      throw new BaseException(ErrorCode.SERVICE_SERVLET_ERROR);
+    }
+
+
   }
 
   @Override
   public GithubUserResponseDTO requestGithubUserInfo(
       GithubAccessTokenResponseDTO githubAccessTokenResponseDTO) {
+    log.info("start requestGithubUserInfo");
+
     String githubaAccessToken = githubAccessTokenResponseDTO.getGitHubaAccessToken();
     String url = "https://api.github.com/user";
-    System.out.println("method" + githubaAccessToken);
+
     HttpHeaders headers = new HttpHeaders();
     headers.setAccept(Collections.singletonList(MediaType.valueOf("application/vnd.github+json")));
     headers.set("Authorization", "Bearer " + githubaAccessToken);
 
     HttpEntity<String> request = new HttpEntity<>(headers);
+    try{
+      log.info("request githubuserInfo");
+      ResponseEntity<GithubUserResponseDTO> response = restTemplate.exchange(
+          url,
+          HttpMethod.GET,
+          request,
+          GithubUserResponseDTO.class
+      );
+      GithubUserResponseDTO githubUserResponseDTO = response.getBody();
+      log.info("end requestGithubUserInfo");
+      return githubUserResponseDTO;
+    }catch (Exception e){
+      log.error("error request github user info");
 
-    ResponseEntity<GithubUserResponseDTO> response = restTemplate.exchange(
-        url,
-        HttpMethod.GET,
-        request,
-        GithubUserResponseDTO.class
-    );
-    GithubUserResponseDTO githubUserResponseDTO = response.getBody();
-    System.out.println("id" + githubUserResponseDTO.getUserGithubId());
-    System.out.println("url " + githubUserResponseDTO.getUserImageUrl());
-    return githubUserResponseDTO;
+      throw new BaseException(ErrorCode.SERVICE_SERVLET_ERROR);
+    }
+
   }
 
   @Override
   public String setGithubRedirectURL() {
+
     String githubRedirectBaseURL = "https://github.com/login/oauth/authorize";
     String githubRedirectURL =
         githubRedirectBaseURL + "?client_id=" + clientId;

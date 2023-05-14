@@ -10,6 +10,7 @@ import com.auth.service.TokenService;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,20 +23,19 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/token")
 @RequiredArgsConstructor
+@Slf4j
 public class TokenController {
   private final TokenService tokenService;
 
 
   @GetMapping("/parse")
   public ResponseEntity<TokenInfo> parseToken(@RequestHeader HttpHeaders headers){
-    try{
+
+      log.info("start parseToken");
       String token = headers.getFirst("Authorization");
       TokenInfo tokenInfo=tokenService.parseToken(token);
+      log.info("end parseToken");
       return new ResponseEntity<>(tokenInfo,HttpStatus.OK);
-    }catch(Exception e){
-      throw new BaseException(ErrorCode.REQUEST_ERROR);
-    }
-
 
   }
 
@@ -45,36 +45,39 @@ public class TokenController {
   public ResponseEntity<?> checkRefreshTokenIssueAccessToken(HttpServletRequest request) {
     Cookie[] cookies = request.getCookies();
     String refreshToken = null;
-
+    log.info("start checkRefreshTokenIssueAccessToken");
     if (cookies != null) {
       for (Cookie cookie : cookies) {
         if (cookie.getName().equals("refreshToken")) {
           refreshToken = cookie.getValue();
+          log.info("find complete refreshToken at cookie");
           break;
         }
       }
-      System.out.println("리프레쉬토큰:"+ refreshToken);
       if (refreshToken == null) {
+        log.error("refreshToken is null");
         return new ResponseEntity<>(TokenStatus.TOKEN_NOT_FOUND.getMessage(),TokenStatus.TOKEN_NOT_FOUND.getStatus());
       }else{
-        System.out.println("여기2");
+        log.info("start IssueAccestoken at checkRefreshTokenIssueAccessToken");
         TokenDTO tokenDTO = TokenDTO.builder().token(refreshToken).build();
         TokenStatus tokenStatus = tokenService.validateToken(tokenDTO);
         if(tokenStatus==TokenStatus.VALID){
+          log.info("tokenstatus is valid");
           TokenInfo tokenInfo =tokenService.getGithubIdFromToken(tokenDTO);
-          System.out.println("여기");
           tokenDTO.setToken(tokenService.generateAccessToken(TokenGenerateDTO.builder().userGithubId(tokenInfo.getUserGithubId()).userSeq(tokenInfo.getUserSeq()).isExtension("NO").build()).getToken());
-          System.out.println("ㅇㅇㅇㅇㅇㅇㅇㅇ");
           HttpHeaders headers = new HttpHeaders();
           headers.add("Authorization", tokenDTO.getToken());
+          log.info("end checkRefreshTokenIssueAccessToken");
           return new ResponseEntity<>(TokenStatus.ISSUED_ACCESS_TOKEN,headers,TokenStatus.ISSUED_ACCESS_TOKEN.getStatus());
         }else{
+          log.error("error checkRefreshTokenIssueAccessToken: "+ tokenStatus.getMessage());
           return new ResponseEntity<>(tokenStatus.getMessage(),tokenStatus.getStatus());
         }
 
       }
 
     }else{
+      log.error("cookie is null");
       return new ResponseEntity<>(TokenStatus.TOKEN_NOT_FOUND.getMessage(),TokenStatus.TOKEN_NOT_FOUND.getStatus());
     }
   }
