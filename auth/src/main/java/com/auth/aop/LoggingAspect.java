@@ -9,11 +9,11 @@ import org.aspectj.lang.annotation.Aspect;
 import org.springframework.stereotype.Component;
 
 @Slf4j
-//@Aspect
-//@Component
+@Aspect
+@Component
 public class LoggingAspect {
 
-  @Around("execution(* com.auth.controller.*(..)) || execution(* com.auth.service.*(..))")
+  @Around("execution(* com.auth.controller..*.*(..)) || execution(* com.auth.service..*.*(..))")
   public Object logAround(ProceedingJoinPoint joinPoint) throws Throwable {
 
       log.info("Start " + joinPoint.getSignature().getName());
