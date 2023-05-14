@@ -57,11 +57,12 @@ public class TokenController {
       if (refreshToken == null) {
         return new ResponseEntity<>(TokenStatus.TOKEN_NOT_FOUND.getMessage(),TokenStatus.TOKEN_NOT_FOUND.getStatus());
       }else{
+        System.out.println("여기2");
         TokenDTO tokenDTO = TokenDTO.builder().token(refreshToken).build();
         TokenStatus tokenStatus = tokenService.validateToken(tokenDTO);
         if(tokenStatus==TokenStatus.VALID){
           TokenInfo tokenInfo =tokenService.getGithubIdFromToken(tokenDTO);
-
+          System.out.println("여기");
           tokenDTO.setToken(tokenService.generateAccessToken(TokenGenerateDTO.builder().userGithubId(tokenInfo.getUserGithubId()).userSeq(tokenInfo.getUserSeq()).isExtension("NO").build()).getToken());
           System.out.println("ㅇㅇㅇㅇㅇㅇㅇㅇ");
           HttpHeaders headers = new HttpHeaders();
