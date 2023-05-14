@@ -3,7 +3,9 @@ package com.auth.service.feign;
 import com.auth.exception.CustomFeignException;
 import feign.Response;
 import feign.codec.ErrorDecoder;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public class CustomErrorDecoder implements ErrorDecoder {
 
   private final ErrorDecoder defaultErrorDecoder = new Default();
