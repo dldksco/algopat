@@ -23,7 +23,7 @@ public class GrassServiceImpl implements GrassService {
 
   @Override
   public List<DateGrassCountDTO> getGrassCount(UserGrassCountRequestDTO userGrassCountRequestDTO) {
-    LocalDateTime today = getTodayDate();
+    LocalDateTime today = getTodayDate().plusDays(1L);
     LocalDateTime todayMinusYear = today.minusMonths(12).withDayOfMonth(1);
     List<DateGrassCountDTO> dateGrossLists = userSubmitProblemRepository.findDateGrossCountByUserSeq(userGrassCountRequestDTO.getUserSeq(), today, todayMinusYear);
 
@@ -42,6 +42,7 @@ public class GrassServiceImpl implements GrassService {
 
   @Override
   public LocalDateTime getTodayDate() {
+
     return LocalDateTime.now().truncatedTo(ChronoUnit.DAYS);
   }
   @Override
@@ -52,9 +53,10 @@ public class GrassServiceImpl implements GrassService {
   @Override
   public List<LocalDate> generateAllDatesBetween(LocalDate startDate, LocalDate endDate) {
     List<LocalDate> dates = new ArrayList<>();
-    for (LocalDate date = startDate; !date.isAfter(endDate); date = date.plusDays(1)) {
+    for (LocalDate date = startDate; !date.isAfter(endDate.minusDays(1)); date = date.plusDays(1)) {
       dates.add(date);
     }
+
     return dates;
   }
 @Override
