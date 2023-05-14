@@ -9,8 +9,8 @@ import org.aspectj.lang.annotation.Aspect;
 import org.springframework.stereotype.Component;
 
 @Slf4j
-@Aspect
-@Component
+//@Aspect
+//@Component
 public class LoggingAspect {
 
   @Around("execution(* com.auth.controller.*(..)) || execution(* com.auth.service.*(..))")
