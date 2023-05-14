@@ -72,10 +72,7 @@ async def processing(data : ProblemData, send_callback):
                 await asyncio.sleep(1)
         except Exception as e:
             logger.error(f"예외 발생: {e}")
-            raise MyCustomError("분산락 에러 발생")
-
-
-
+            raise MyCustomError("분산락 에러 발생 - 문제 요약")
 
 
     
@@ -110,16 +107,9 @@ async def processing(data : ProblemData, send_callback):
     await send_callback("alert", message_dto)
     
     ### DB 접근 ###
-    ### 1. 회원 푼 문제 DB 접근 ### 
-    # user_submit_problem_data = await save_user_problem_origin(problem_id, user_seq, data.submissionTime)
-    # submission_id = await save_user_submit_solution_origin(problem_id, user_seq, user_submit_problem_data.user_submit_problem_seq, data)
-    ### 2. GPT평가 DB 접근 ### 
-    # await save_gpt_solution(submission_id, user_seq, result)
     logger.info("메인 트랜잭션 시작")
     await main_transaction(problem_id, user_seq, data, result, send_callback)
     logger.info("메인 트랜잭션 종료")
-
-
 
     ### SSE 4
     message_dto = MessageDTO(progress_info="코드 분석 완료", percentage=100, state="finish", user_seq=user_seq)
@@ -136,9 +126,25 @@ async def main_transaction(problem_id : int, user_seq : int, data : ProblemData,
             submission_id = await save_user_submit_solution_origin(problem_id, user_seq, user_submit_problem_data.user_submit_problem_seq, data, session)
             await save_gpt_solution(submission_id, user_seq, result, session)
 
-            # Todo : DB 동시성 처리 (락) 해주기  
             ### 문제 메타데이터 DB에 메타데이터 저장 ### 
-            await update_problem_meta(problem_id, user_seq, data, session)
+            # await update_problem_meta(problem_id, user_seq, data, session)
+
+            lock_name = f"problem_meta{problem_id}"
+            ### 분산락 
+            while True:
+                try:
+                    lock = redis_lock.Lock(redis_conn, lock_name, expire=LOCK_TIMEOUT, auto_renewal=True)
+                    logger.info("동일한 문제 메타 데이터 대기중")
+                    if lock.acquire(blocking=False):
+                        logger.info("분산락 시작")
+                        await update_problem_meta(problem_id, user_seq, data, session)
+                        lock.release()
+                        break
+                    else:
+                        await asyncio.sleep(1)
+                except Exception as e:
+                    logger.error(f"예외 발생: {e}")
+                    raise MyCustomError("분산락 에러 발생 - 문제 메타 데이터")
 
             await session.commit()
         except Exception as e:
@@ -168,9 +174,6 @@ async def summary_problem(problem_id : int, user_seq : int, data : ProblemData, 
 
         ### GPT_문제 요약 DB 접근 ###
         await save_problem_summary(problem_id, summary_json)
-    
-    # ### 문제 메타데이터 DB에 메타데이터 저장 ### 
-    # await update_problem_meta(problem_id, user_seq, data)
     
     
 async def filtering_input_data(data : ProblemData, send_callback):
