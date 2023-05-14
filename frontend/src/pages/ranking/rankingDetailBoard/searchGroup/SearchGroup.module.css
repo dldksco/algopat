@@ -30,13 +30,27 @@
 }
 
 @media screen and (max-width: 768px) {
-  .search_group {
+  .header_container {
+    width: 100%;
+    text-align: left;
+    font-style: bold;
+    font-size: 1.2rem;
+    border-bottom: 4px solid var(--font-color);
+    color: var(--font-color);
+    display: flex;
+    justify-content: space-between;
+    padding-top: 0px;
+    height: auto;
+    margin-top: 0;
+    flex-direction: column;
+  }
+  .header_container .search_group {
     font-size: 0.9rem;
     display: flex;
     gap: 10px;
     flex-direction: column;
   }
-  .search_group .search_button {
+  .header_container .search_group .search_button {
     margin-left: -8px;
     padding: 10px;
     display: flex;
