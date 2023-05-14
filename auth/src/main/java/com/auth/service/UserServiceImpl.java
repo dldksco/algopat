@@ -21,12 +21,10 @@ public class UserServiceImpl implements UserService {
   private final UserServiceFeignClient userServiceFeignClient;
   @Override
   public UserServiceIdResponseDTO checkId(GithubUserResponseDTO gitHubUserResponseDTO) {
-      log.info("start checkId");
       ResponseEntity<UserServiceIdResponseDTO> userServiceIdResponse = userServiceFeignClient.userCheck(UserServiceIdRequestDTO.builder().userGithubId(gitHubUserResponseDTO.getUserGithubId()).userImageUrl(
           gitHubUserResponseDTO.getUserImageUrl()).build());
 
       UserServiceIdResponseDTO userServiceIdResponseDTO = userServiceIdResponse.getBody();
-      log.info("end checkId");
       return userServiceIdResponseDTO;
   }
 
