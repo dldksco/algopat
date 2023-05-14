@@ -51,13 +51,16 @@ public class TokenController {
           break;
         }
       }
+      log.info("refresh token": refreshToken);
       if (refreshToken == null) {
         log.error("refreshToken is null");
         return new ResponseEntity<>(TokenStatus.TOKEN_NOT_FOUND.getMessage(),TokenStatus.TOKEN_NOT_FOUND.getStatus());
       }else{
         log.info("start IssueAccestoken at checkRefreshTokenIssueAccessToken");
         TokenDTO tokenDTO = TokenDTO.builder().token(refreshToken).build();
+        log.info("여기지");
         TokenStatus tokenStatus = tokenService.validateToken(tokenDTO);
+        log.inf("여길걸");
         if(tokenStatus==TokenStatus.VALID){
           log.info("tokenstatus is valid");
           TokenInfo tokenInfo =tokenService.getGithubIdFromToken(tokenDTO);
