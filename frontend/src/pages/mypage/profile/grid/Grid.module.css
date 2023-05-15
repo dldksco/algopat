@@ -4,7 +4,6 @@
   background-color: #1d2538;
   display: flex;
   position: relative;
-  z-index: 1;
 }
 .grid .days {
   display: flex;
@@ -23,7 +22,6 @@
   text-align: right;
 }
 .grid .grid_family {
-  z-index: 1;
   overflow-x: auto;
   overflow-y: hidden;
   margin-top: 22px;
@@ -40,7 +38,6 @@
   max-width: 100%;
   display: grid;
   padding-top: 10px;
-  z-index: 1;
 }
 .grid .grid_family .grid_container .grid_cell {
   width: 11px;
@@ -56,7 +53,6 @@
   font-size: 0.5rem;
   text-align: center;
   border-radius: 5px;
-  z-index: 3;
 }
 .grid .grid_family .grid_container .grid_cell:hover {
   border: 3px solid white;
@@ -67,7 +63,6 @@
   position: absolute;
   top: 14px;
   left: -62px;
-  z-index: 3;
   width: 130px;
   height: 25px;
   padding-top: 6px;
