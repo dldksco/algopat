@@ -75,9 +75,10 @@ $('#gear_icon').on('click', () => {
 /*
   깃허브 auth 로그인
  */
-chrome.storage.local.get(['BaekjoonHub_token', 'commit_state'], (data) => {
+chrome.storage.local.get(['BaekjoonHub_token', 'commit_state', 'commit_progress'], (data) => {
   const token = data.BaekjoonHub_token;
   const commit_state = data.commit_state;
+  const commit_progress = data.commit_progress;
   // console.log(token)
   if (token === null || token === undefined) {
     action = true;
@@ -109,7 +110,11 @@ chrome.storage.local.get(['BaekjoonHub_token', 'commit_state'], (data) => {
         chrome.storage.local.set({ userGithubId: data.userGithubId }, () => { });
         chrome.storage.local.set({ userSeq: data.userSeq }, () => { });
 
-        commitMode(commit_state, token);
+        chrome.runtime.sendMessage({
+          sseEvent: true
+        })
+
+        commitMode(commit_state, commit_progress, token);
 
       }).catch((e) => {
         console.error(e)
@@ -135,7 +140,7 @@ chrome.storage.local.get('bjhEnable', (data4) => {
 /*
   코드 리팩토링 상태
  */
-function commitMode(commit_state, token) {
+function commitMode(commit_state, commit_progress, token) {
   console.log("commit_state : ", commit_state)
   if (commit_state && commit_state.submissionId && !commit_state.state) { // 코드 분석 진행중
 
@@ -150,19 +155,45 @@ function commitMode(commit_state, token) {
         if (data.data) { // 분석 완료
           if (commit_state.problemId && commit_state.title)
             $('#commit_state_text').html(`<p>${commit_state.problemId} ${commit_state.title}</p>`);
-          $('#commit_state_text').after('<p>코드 분석이 완료되었습니다</p><div class="completed_icon">✓</div>');
+
+          let url = `https://algopat.kr/extension?problemtitle=${commit_state.title}&problemid=${commit_state.problemId}&problemlevel=${commit_state.level}&submissionid=${commit_state.submissionId}&token=${token}`
+
+          $('#commit_state_text').html(`<p>코드 분석이 완료되었습니다</p>
+          <div class="ui indicating progress success" data-value="${commit_progress.percentage}" data-total="100">
+            <div class="bar">
+              <div class="progress"></div>
+            </div>
+            <div class="label">${commit_progress.progress_info}</div>
+          </div>`);
+          $('#commit_state_text .ui.progress').progress({})
+          $('#commit_state_text').after(`<p><a title="myLink" id="myCodeLink" href="${url}" target="_blank">분석 결과 보기</a></p>`);
           chrome.storage.local.set({ commit_state: { ...commit_state, state: true } }, () => { });
         } else { // 분석 진행중
-          if (commit_state.problemId && commit_state.title)
-            $('#commit_state_text').html(`<p>${commit_state.problemId} ${commit_state.title}</p>`);
-          $('#commit_state_text').after('<p>코드 분석이 진행중입니다</p><div class="spinner"></div>');
+          if (!isWithin10Minutes(commit_state.date, new Date().getTime())) { //  코드 보낸지 10분 지났으면
+            $('#commit_state_text').html(`<p>서버에서 응답을 받을 수 없습니다</p>`);
+            chrome.storage.local.set({ commit_state: { ...commit_state, state: true } }, () => { });
+          } else {
+            if (commit_state.problemId && commit_state.title)
+              $('#commit_state_text').html(`<p>${commit_state.problemId} ${commit_state.title}</p>`);
+            $('#commit_state_text').html(`<p>코드 분석이 진행중입니다</p>
+            <div class="ui indicating progress success" data-value="${commit_progress.percentage}" data-total="100">
+              <div class="bar">
+                <div class="progress"></div>
+              </div>
+              <div class="label">${commit_progress.progress_info}</div>
+          </div>`);
+            $('#commit_state_text .ui.progress').progress({})
+          }
+
+
         }
       }).catch((e) => {
         $('#commit_state_text').html('<p>에러!!</p>');
       })
 
   } else if (commit_state && commit_state.submissionId && commit_state.state) {
-    $('#commit_state_text').html('<p>진행중인 코드 분석이 없습니다</p>');
+    $('#commit_state_text').html(`<p>진행중인 코드 분석이 없습니다</p>`);
+
   } else {
     $('#commit_state_text').html('<p>진행중인 코드 분석이 없습니다</p>');
   }
@@ -176,4 +207,16 @@ chrome.storage.local.get(['gpt_key'], (data) => {
     $('#api_key').attr('value', data.gpt_key)
 });
 
+
+function isWithin10Minutes(date1, date2) {
+
+  // 두 날짜의 차이를 밀리초 단위로 계산
+  const diffInMilliseconds = Math.abs(date2 - date1);
+
+  // 밀리초를 분으로 변환
+  const diffInMinutes = diffInMilliseconds / (1000 * 60);
+
+  // 차이가 5분 이내인지 확인
+  return diffInMinutes <= 10;
+}
 
