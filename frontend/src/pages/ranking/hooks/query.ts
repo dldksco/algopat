@@ -24,11 +24,10 @@ export function getRankingList(
     ["getRankingList", level, pageNum, usercheck],
     async (): Promise<PagableResponse<RankingColumn>> => {
       const { data } = await $.get(
-        `/code/rank?level=${level}&usercheck=${usercheck}&pagenumber=${
-          pageNum ? pageNum - 1 : ""
-        }`
+        `/code/rank?level=${
+          level > 0 ? level : ""
+        }&usercheck=${usercheck}&pagenumber=${pageNum ? pageNum - 1 : ""}`
       );
-      console.log(data);
       return data;
     },
     {
