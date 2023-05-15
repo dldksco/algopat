@@ -195,6 +195,9 @@ export const RankingCarousel = () => {
     sliderRef.current.slickGoTo(
       Number(levelRankSelect) * 5 + 1 + Number(levelNumberSelect)
     );
+    changeCallback(
+      Math.max(Number(levelRankSelect) * 5 + 1 + Number(levelNumberSelect), 0)
+    );
   }, [levelNumberSelect]);
 
   return (
