@@ -5,6 +5,7 @@ import { getGrid } from "../../hooks/query";
 import { v4 as uuidv4 } from "uuid";
 import { colors, days, months, monthsWeight } from "../../hooks/gridtype";
 import style from "./Grid.module.css";
+import { colorIndexFunc } from "../../hooks/func";
 
 export const Grid = () => {
   const [streakDateState, setStreakDateState] = useState<string>("");
@@ -52,13 +53,6 @@ export const Grid = () => {
     });
   }
 
-  const colorIndexFunc = (index: number) => {
-    if (index <= 0) return colors[0];
-    else if (index == 1) return colors[1];
-    else if (index == 2) return colors[2];
-    else if (index == 3 || index == 4) return colors[3];
-    else if (index >= 5) return colors[4];
-  };
   const handleClick = (date: string, color: number) => {
     setStreakDateState(date);
     setStreakColorState(color);
