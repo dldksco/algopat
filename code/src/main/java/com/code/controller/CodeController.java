@@ -62,7 +62,7 @@ public class CodeController {
     problemService.checkExistUserSubmitSolution(Long.parseLong(problemRequestDto.getSubmissionId())); // 이미 제출한 코드가 있는지 체크 (있다면 409)
     problemRequestDto.setUserSeq(userSeq);
     kafkaProducerService.send(USER_CODE_TOPIC, problemRequestDto);
-    if(!problemRequestDto.getOpenaiApiKey().equals("0")){
+    if(problemRequestDto.getOpenaiApiKey().equals("0")){
       kafkaProducerService.sendUserSubmitTransactionDto(USER_SERVICE_TOPIC, UserSubmitTransactionDto.builder()
           .userSeq(userSeq)
           .build());
