@@ -3,6 +3,7 @@ import { addCommas } from "@/pages/code/hooks/func";
 
 import style from "./RankingDetailBoard.module.css";
 import { SolutionColumn } from "@/types/type";
+import { codeLanguage } from "@/variable/variable";
 
 interface props {
   data: SolutionColumn[] | undefined;
@@ -33,7 +34,7 @@ export const RankingDetailBoard = ({ data }: props) => {
               </div>
               <div className={style.info_list}>
                 <div>
-                  <p>{v.userSubmitSolutionLanguage}</p>
+                  <p>{codeLanguage(v.userSubmitSolutionLanguage)}</p>
                   <p>언어</p>
                 </div>
                 <div className={style.vertical_line} />
@@ -48,13 +49,13 @@ export const RankingDetailBoard = ({ data }: props) => {
                 </div>
                 <div className={style.vertical_line} />
                 <div>
-                  <p>{v.gptTotalScore}점</p>
-                  <p>리팩토링</p>
+                  <p>{addCommas(v.userSubmitSolutionCodeLength)}</p>
+                  <p>코드길이</p>
                 </div>
                 <div className={style.vertical_line} />
                 <div>
-                  <p>{addCommas(v.userSubmitSolutionCodeLength)}</p>
-                  <p>코드길이</p>
+                  <p>{v.gptTotalScore}점</p>
+                  <p>종합점수</p>
                 </div>
               </div>
             </div>

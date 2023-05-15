@@ -12,6 +12,7 @@ import { useRecoilState, useRecoilValue } from "recoil";
 import { rankingDetailState } from "@/atoms/ranking.atom";
 import { RankingDetailParam } from "@/types/type";
 import { useEffect } from "react";
+import { codeLanguage } from "@/variable/variable";
 
 export const RankingDetail = () => {
   const navigate = useNavigate();
@@ -78,7 +79,11 @@ export const RankingDetail = () => {
             <div className={style.master_info}>
               <div
                 className={style.box}
-                style={{ marginBottom: "10px", textAlign: "center", cursor: "default" }}
+                style={{
+                  marginBottom: "10px",
+                  textAlign: "center",
+                  cursor: "default",
+                }}
               >
                 master
               </div>
@@ -99,10 +104,10 @@ export const RankingDetail = () => {
             <div className={style.info_list}>
               <div>
                 <p>
-                  {
+                  {codeLanguage(
                     pageInfoData?.masterUserProblemRank
                       .userSubmitSolutionLanguage
-                  }
+                  )}
                 </p>
                 <p>언어</p>
               </div>
@@ -129,11 +134,6 @@ export const RankingDetail = () => {
               </div>
               <div className={style.vertical_line} />
               <div>
-                <p>{pageInfoData?.masterUserProblemRank.gptTotalScore}점</p>
-                <p>리팩토링</p>
-              </div>
-              <div className={style.vertical_line} />
-              <div>
                 <p>
                   {addCommas(
                     pageInfoData?.masterUserProblemRank
@@ -141,6 +141,11 @@ export const RankingDetail = () => {
                   )}
                 </p>
                 <p>코드길이</p>
+              </div>
+              <div className={style.vertical_line} />
+              <div>
+                <p>{pageInfoData?.masterUserProblemRank.gptTotalScore}점</p>
+                <p>종합점수</p>
               </div>
             </div>
           </>
