@@ -47,10 +47,12 @@ async def consume_problem_summary(topic : str):
 
 # Producer
 # 카프카로 메시지 전송 함수 
-async def send(topic : str, message_dto : MessageDTO):
+async def send(topic : str, message_dto):
     producer = AIOKafkaProducer(
         bootstrap_servers = KAFKA_BOOTSTRAP_SERVERS,
-        value_serializer = lambda m : json.dumps(m, ensure_ascii=False).encode("utf-8") 
+        value_serializer = lambda m : json.dumps(m, ensure_ascii=False).encode("utf-8"),
+        retry_backoff_ms=10,
+        retries=50
     )
     await producer.start()
     logger.info("Send to 토픽 : " + topic)
@@ -58,5 +60,4 @@ async def send(topic : str, message_dto : MessageDTO):
     serialized_message = message_dto.dict()
     await producer.send_and_wait(topic, serialized_message)
     await producer.stop()
-
 

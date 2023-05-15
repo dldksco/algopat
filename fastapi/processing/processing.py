@@ -25,7 +25,7 @@ from utils.utils import parse_lang_type
 import redis_lock
 from redis import Redis
 import asyncio
-from my_dto.common_dto import MessageDTO
+from my_dto.common_dto import MessageDTO, UserServiceDTO
 from my_exception.exception import MyCustomError 
 
 # logger 설정 
@@ -72,6 +72,11 @@ async def processing(data : ProblemData, send_callback):
                 await asyncio.sleep(1)
         except Exception as e:
             logger.error(f"예외 발생: {e}")
+
+            # User 서버에게 실패 이벤트 전송  
+            user_service_dto = UserServiceDTO(is_success="NO", user_seq=user_seq)
+            send_callback("user-service", user_service_dto)
+
             raise MyCustomError("분산락 에러 발생 - 문제 요약")
 
 
@@ -149,6 +154,11 @@ async def main_transaction(problem_id : int, user_seq : int, data : ProblemData,
             await session.commit()
         except Exception as e:
             logger.error(f"트랜잭션 처리 중 예외 발생 : {e}")
+
+            # User 서버에게 실패 이벤트 전송  
+            user_service_dto = UserServiceDTO(is_success="NO", user_seq=user_seq)
+            send_callback("user-service", user_service_dto)
+
             message_dto = MessageDTO(progress_info="DB 작업 중 예외 발생", percentage=-1, state="error", user_seq=user_seq)
             await send_callback("alert", message_dto)
             raise MyCustomError("트랜잭션 처리 중 에러 발생")
@@ -180,11 +190,21 @@ async def filtering_input_data(data : ProblemData, send_callback):
     code_language = await parse_lang_type(data.language)
     if code_language == "unknown":
         logger.info("지원하지 않는 언어")
+
+        # User 서버에게 실패 이벤트 전송  
+        user_service_dto = UserServiceDTO(is_success="NO", user_seq=data.userSeq)
+        send_callback("user-service", user_service_dto)
+
         message_dto = MessageDTO(progress_info="지원하지 않는 언어입니다.", percentage=-1, state="error", user_seq=data.userSeq)
         await send_callback("alert", message_dto)
         return True
     if data.resultCategory != "ac":
         logger.info("오답 코드")
+
+        # User 서버에게 실패 이벤트 전송  
+        user_service_dto = UserServiceDTO(is_success="NO", user_seq=data.userSeq)
+        send_callback("user-service", user_service_dto)
+
         message_dto = MessageDTO(progress_info="틀린 코드는 평가할 수 없습니다", percentage=-1, state="error", user_seq=data.userSeq)
         await send_callback("alert", message_dto)
         return True
