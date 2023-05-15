@@ -130,8 +130,6 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public void plusUserSubmitCount(UserTransactionDTO userTransactionDTO) {
-        if(!userTransactionDTO.getOpenApiKey().equals("0"))
-            return;
         UserSubmitCount userSubmitCount = userSubmitCountRepostiory.findByUserUserSeqWithFetchJoin(
             userTransactionDTO.getUserSeq()).orElseThrow(()->{
             log.error("error plusUserSubmitCount");
@@ -145,6 +143,9 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public void minusUserSubmitCount(UserTransactionDTO userTransactionDTO) {
+        if (!userTransactionDTO.getOpenApiKey().equals("0")) {
+            return;
+        }
         UserSubmitCount userSubmitCount = userSubmitCountRepostiory.findByUserUserSeqWithFetchJoin(userTransactionDTO.getUserSeq()).orElseThrow(()->{
             log.error("error minusUserSubmitCount");
             throw new BaseException(ErrorCode.DATABASE_GET_ERROR);
