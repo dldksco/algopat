@@ -133,8 +133,10 @@ public class UserServiceImpl implements UserService {
             log.error("error plusUserSubmitCount");
             throw new BaseException(ErrorCode.DATABASE_GET_ERROR);
         });
+        log.info("==============================: "+ userSubmitCount.getUserSubmitCount());
         Long userSubmitCountCount = userSubmitCount.getUserSubmitCount();
         userSubmitCount.setUserSubmitCount(userSubmitCountCount+1);
+        log.info("==============================: "+ userSubmitCount.getUserSubmitCount());
         userSubmitCountRepostiory.save(userSubmitCount);
     }
 
