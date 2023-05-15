@@ -55,12 +55,14 @@ public class CodeController {
   private final EncryptionService encryptionService;
   /**
    * 유저 코드 제출 (Spring -> Kafka)
+   *
    * @param problemRequestDto
    * @return
    * @throws JsonProcessingException
    */
   @PostMapping("")
-  public ResponseEntity<Void> sendProblemToKafka(@RequestBody @Valid ProblemRequestDto problemRequestDto,
+  public ResponseEntity<Void> sendProblemToKafka(
+      @RequestBody @Valid ProblemRequestDto problemRequestDto,
       @RequestHeader("userSeq") long userSeq)
       throws JsonProcessingException {
     try{
@@ -88,6 +90,7 @@ public class CodeController {
 
   /**
    * 문제 조회
+   *
    * @param problemId
    * @return
    */
@@ -99,6 +102,7 @@ public class CodeController {
 
   /**
    * 푼 문제 목록 조회
+   *
    * @param pageNumber
    * @param userSeq
    * @return
@@ -107,13 +111,14 @@ public class CodeController {
   public ResponseEntity<Page<UserSubmitProblemDto>> getUserSubmitProblemDto(
       @PathVariable("pageNumber") int pageNumber,
       @RequestHeader(value = "userSeq", defaultValue = "-1") long userSeq
-      ) {
+  ) {
     logger.info("헤더에서 userSeq 꺼냄 : {}", userSeq);
     return ResponseEntity.ok(problemService.getUserSubmitProblemDtoPage(pageNumber, userSeq));
   }
 
   /**
    * 푼 문제 -> 제출 목록 조회
+   *
    * @param pageNumber
    * @param problemId
    * @param userSeq
@@ -131,6 +136,7 @@ public class CodeController {
 
   /**
    * 제출 문제 상세 조회
+   *
    * @param submissionId
    * @return
    */
@@ -141,9 +147,8 @@ public class CodeController {
   }
 
   /**
-   * GPT 응답 존재 여부
-   * false : GPT 응답 생성중
-   * true  : GPT 응답 생성 완료
+   * GPT 응답 존재 여부 false : GPT 응답 생성중 true  : GPT 응답 생성 완료
+   *
    * @param submissionId
    * @return
    */
@@ -162,6 +167,7 @@ public class CodeController {
 
   /**
    * 회원 푼 문제 정렬 조회
+   *
    * @param pageNumber
    * @param category
    * @param condition
@@ -184,16 +190,25 @@ public class CodeController {
       category = "p.problemLevel";
     }
 
-    return ResponseEntity.ok(problemService.getUserSubmitProblemDtoFilterConditionPage(pageNumber, userSeq, direction, category));
+    return ResponseEntity.ok(
+        problemService.getUserSubmitProblemDtoFilterConditionPage(pageNumber, userSeq, direction,
+            category));
   }
 
-  @GetMapping("/submission/rank/{pageNumber}")
-  public ResponseEntity<Page<ProblemRankOverviewDto[]>> getProblemRankOverviewDto(
-      @PathVariable(value = "pageNumber") int pageNumber,
-      @RequestParam(required = false, value = "level") Long level,
-      @RequestHeader(required = false, value = "userSeq") Long userSeq
-      ) {
-    return ResponseEntity.ok(problemRankService.getProblemRankOverviewsByLevelAndUser(level, userSeq, pageNumber));
-  }
+//  @GetMapping("/submission/rank")
+//  public ResponseEntity<Page<ProblemRankOverviewDto[]>> getProblemRankOverviewDto(
+//      @RequestParam(required = false, value = "pagenumber", defaultValue = "0") int pagenumber,
+//      @RequestParam(required = false, value = "level") Long level,
+//      @RequestParam(required = false, value = "usercheck", defaultValue = "false") Boolean userCheck,
+//      @RequestHeader(required = false, value = "userSeq") Long userSeq
+//  ) {
+//    if (userCheck) {
+//      return ResponseEntity.ok(
+//          problemRankService.getProblemRankOverviewsByLevelAndUser(level, userSeq, pagenumber));
+//    } else {
+//      return ResponseEntity.ok(
+//          problemRankService.getProblemRankOverviewsByLevelAndUser(level, null, pagenumber));
+//    }
+//  }
 
 }
