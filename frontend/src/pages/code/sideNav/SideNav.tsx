@@ -37,7 +37,10 @@ export const SideNav = () => {
   };
 
   return (
-    <div className={style.sideNav}>
+    <div
+      className={style.sideNav}
+      style={{ animation: "left_right_effect 0.65s" }}
+    >
       <p>코드 분석</p>
       <div className={style.x_button} onClick={xButtonClick}>
         <FontAwesomeIcon icon={faCircleXmark} />
