@@ -173,4 +173,13 @@ public class CodeController {
     return ResponseEntity.ok(problemService.getUserSubmitProblemDtoFilterConditionPage(pageNumber, userSeq, direction, category));
   }
 
+  @GetMapping("/submission/rank/{pageNumber}")
+  public ResponseEntity<Page<ProblemRankOverviewDto[]>> getProblemRankOverviewDto(
+      @PathVariable(value = "pageNumber") int pageNumber,
+      @RequestParam(required = false, value = "level") Long level,
+      @RequestHeader(required = false, value = "userSeq") Long userSeq
+      ) {
+    return ResponseEntity.ok(problemRankService.getProblemRankOverviewsByLevelAndUser(level, userSeq, pageNumber));
+  }
+
 }
