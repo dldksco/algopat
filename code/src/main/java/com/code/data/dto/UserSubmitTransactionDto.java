@@ -13,4 +13,6 @@ public class UserSubmitTransactionDto {
     @Builder.Default
     String isSuccess ="YES";
     long userSeq;
+
+    String openaiApiKey;
 }
