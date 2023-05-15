@@ -6,6 +6,7 @@ import { useRecoilValue } from "recoil";
 import { profileState } from "@/atoms/user.atom";
 
 import style from "./Profile.module.css";
+import { stringBackCutter } from "@/pages/code/hooks/func";
 
 export const Profile = () => {
   const { isLoading: isLoadingProfile, data: profileData } = getProfile();
@@ -44,19 +45,44 @@ export const Profile = () => {
       </div>
     );
   }
+  const image11 = "@/assets/img/defaultBackImage.gif";
 
+  console.log(myProfile.backImage, "backIMage 내놔");
+  console.log(stringBackCutter(myProfile.backImage, 3), "backIMage 내놔");
   return (
     <>
       <div className={style.box}>
         <div className={style.backgroundImage}>
-          {myProfile.backImage !== "" ? (
+          {stringBackCutter(myProfile.backImage, 3) === "png" ? (
             <img
               src={myProfile.backImage}
               style={{ backgroundSize: "cover" }}
               alt=""
             />
+          ) : stringBackCutter(myProfile.backImage, 3) === "mp4" ? (
+            <div
+              className={style.videoDiv}
+              style={{ backgroundImage: "cover" }}
+            >
+              <video autoPlay loop muted playsInline width="100%" height="100%">
+                <source src={myProfile.backImage} type="video/mp4" />
+              </video>
+            </div>
           ) : (
-            <div style={{ width: "100%", height: "300px" }} />
+            <div
+              className={style.defaultBack}
+              style={{
+                width: "100%",
+                height: "300px",
+              }}
+            >
+              <div className={style.hoverContainer}>
+                <div className={style.hoverBack}>
+                  백준 사이트에서 문제를 제출해주세요!
+                </div>
+                <div className={style.triangle}></div>
+              </div>
+            </div>
           )}
         </div>
         <div className={style.profileAll}>

@@ -5,10 +5,57 @@
   height: auto;
   position: relative;
   .backgroundImage {
+    height: 300px;
+    width: 100%;
     img {
       background-size: cover;
       width: 100%;
+      height: 100%;
+    }
+    .defaultBack {
+      background-image: url("@/assets/img/mypage/defaultBackImage.gif");
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: 80%;
+      background-color: white;
       height: 300px;
+      width: 100%;
+      cursor: pointer;
+      position: relative;
+      .hoverContainer {
+        display: none;
+      }
+    }
+    .defaultBack:hover .hoverContainer {
+      display: block;
+      position: relative;
+      top: 20%;
+      right: 38%;
+      .hoverBack {
+        height: 80px;
+        width: 300px;
+        background-color: skyblue;
+        position: absolute;
+        top: 28%;
+        right: 1%;
+        color: white;
+        font-weight: 700;
+        font-size: 1rem;
+        text-align: center;
+        border-radius: 5px;
+        padding-top: 30px;
+      }
+      .triangle {
+        position: absolute;
+        right: 2%;
+        top: 56px;
+        width: 0;
+        height: 0;
+        border-left: 15px solid transparent;
+        border-right: 15px solid transparent;
+        border-bottom: 30px solid skyblue;
+        transform: rotate(30deg);
+      }
     }
   }
   .profileAll {
@@ -47,5 +94,13 @@
   .box {
     width: 100%;
     overflow-x: auto;
+    .backgroundImage {
+      .defaultBack {
+        background-position: 80%;
+      }
+      .defaultBack:hover .hoverContainer {
+        display: none;
+      }
+    }
   }
 }
