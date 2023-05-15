@@ -1,7 +1,7 @@
+import axios from "axios";
 import { $ } from "@/connect/axios";
 import { PagableResponse } from "@/types/type";
 import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
-import axios from "axios";
 
 interface Solution {
   userSubmitSolutionResult: string;
@@ -55,6 +55,7 @@ export interface TotalInfo {
  * 선택한 문제에 대한 상세한 코드 리뷰를 불러오는 함수
  */
 export const getSolution = (solutionSeq: number, token: string) => {
+  console.log(token);
   const fetchSolution = async (): Promise<Solution> => {
     const { data } = await $.get(
       `/code/problem/submission/solution/detail/${solutionSeq}`
@@ -68,6 +69,7 @@ export const getSolution = (solutionSeq: number, token: string) => {
       {
         headers: {
           authorization: token,
+          "Content-Type": "application/json",
         },
       }
     );
@@ -76,7 +78,7 @@ export const getSolution = (solutionSeq: number, token: string) => {
 
   const { data, isLoading, isError, refetch } = useQuery(
     ["GptSolution", solutionSeq],
-    token ? fetchForExtension : fetchSolution,
+    !token ? fetchForExtension : fetchSolution,
     { enabled: !!solutionSeq }
   );
 
