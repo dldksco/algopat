@@ -10,5 +10,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserSubmitTransactionDto {
+    @Builder.Default
+    String isSuccess ="YES";
     long userSeq;
 }

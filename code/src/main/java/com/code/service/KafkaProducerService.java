@@ -39,7 +39,6 @@ public class KafkaProducerService {
    */
   public void sendUserSubmitTransactionDto(String topic, UserSubmitTransactionDto userSubmitTransactionDto) throws JsonProcessingException {
     String jsonString = objectMapper.writeValueAsString(userSubmitTransactionDto);
-
     kafkaRetryService.sendWithRetry(topic, jsonString);
   }
 

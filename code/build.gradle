@@ -37,8 +37,8 @@ dependencies {
 	//eureka
 	implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
 	//zipkin
-//	implementation 'org.springframework.cloud:spring-cloud-starter-sleuth:3.1.7'
-//	implementation 'org.springframework.cloud:spring-cloud-starter-zipkin:2.2.8.RELEASE'
+	implementation 'org.springframework.cloud:spring-cloud-starter-sleuth:3.1.7'
+	implementation 'org.springframework.cloud:spring-cloud-starter-zipkin:2.2.8.RELEASE'
 
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
