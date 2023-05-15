@@ -53,7 +53,7 @@ async def send(topic : str, message_dto : BaseModel):
         request_timeout_ms=500,                                                              # 요청 만료 시간 설정 (예: 500ms)
     )
     await producer.start()
-    logger.info("Send to 토픽 : " + topic)
+    logger.info("Send to " + topic + " : " + str(message_dto))
 
     serialized_message = message_dto.dict()
     await producer.send_and_wait(topic, serialized_message)
