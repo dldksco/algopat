@@ -13,7 +13,9 @@ import style from "./Main.module.css";
 
 export const Main = () => {
   const [ref, inView] = useInView();
+  const [ref1, inView1] = useInView();
   const [ref2, inView2] = useInView();
+  const [ref3, inView3] = useInView();
 
   const moveExtention = () => {
     window.location.href =
@@ -25,7 +27,14 @@ export const Main = () => {
       <div className={style.fpage}>
         <div
           className={style.content}
-          style={{ animation: "left_right_effect 0.5s" }}
+          style={
+            inView
+              ? {
+                  animation: `left_right_effect 0.5s`,
+                }
+              : undefined
+          }
+          ref={ref}
         >
           <h1 style={{ border: "none", letterSpacing: "5px" }}>ALGOPAT</h1>
           <p style={{ fontSize: "1.3rem", marginBottom: "12px" }}>
@@ -53,10 +62,15 @@ export const Main = () => {
       <div className={style.cpage}>
         <div
           className={style.gptcode}
-          style={inView ? { animation: "right_left_effect 0.5s" } : undefined}
-          ref={ref}
+          style={
+            inView1
+              ? {
+                  animation: `right_left_effect 0.8s`,
+                }
+              : undefined
+          }
+          ref={ref1}
         >
-          <img src={code2} className={style.code_image} />
           <div className={style.gptdesc}>
             <h1>
               <span style={{ color: "#7472CB" }}>수치화</span>된 분석
@@ -65,6 +79,7 @@ export const Main = () => {
             <p> GPT가 부여한 점수를 비교하고 여러분의 </p>
             <p>코드를 비교해서 완성도를 높여보세요</p>
           </div>
+          <img src={code2} className={style.code_image} />
         </div>
         <div className={style.move_stick}>
           <MainMoveStick />
@@ -73,7 +88,13 @@ export const Main = () => {
       <div className={style.cpage}>
         <div
           className={style.gptcode}
-          style={inView2 ? { animation: "left_right_effect 0.5s" } : undefined}
+          style={
+            inView2
+              ? {
+                  animation: `left_right_effect 0.8s`,
+                }
+              : undefined
+          }
           ref={ref2}
         >
           <img
@@ -95,8 +116,17 @@ export const Main = () => {
         </div>
       </div>
       <div className={style.lpage}>
-        <h1>Main Tech.</h1>
-        <div className={style.contentbox}>
+        <h1 ref={ref3}>Main Tech.</h1>
+        <div
+          className={style.contentbox}
+          style={
+            inView3
+              ? {
+                  animation: `down_top_effect 1.3s`,
+                }
+              : undefined
+          }
+        >
           <div
             className={style.gptbox}
             style={{
