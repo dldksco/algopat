@@ -25,6 +25,7 @@ export const Grid = () => {
   }
   let column = 53;
   let startDate = new Date("2022-02-13");
+  let maxCount = 1;
   if (gridData !== undefined && gridData.length > 0) {
     const col = gridData.length / 7;
     column = Math.floor(col) < col ? Math.floor(col) + 1 : Math.floor(col);
@@ -48,6 +49,7 @@ export const Grid = () => {
         ) - startWeek;
       const day = currentDate.getDay() % 7; //
       if (day == 6) week = week - 1;
+      if (object.solvedCount > maxCount) maxCount = object.solvedCount;
       grid[day][week] = object.solvedCount;
       gridDate[day][week] = object.userSubmitProblemCreatedAt;
     });
@@ -92,7 +94,10 @@ export const Grid = () => {
           >
             {grid.map((row, rowIndex) =>
               row.map((col, colIndex) => {
-                const bgColor = colorIndexFunc(grid[rowIndex][colIndex]);
+                const bgColor = colorIndexFunc(
+                  grid[rowIndex][colIndex],
+                  maxCount
+                );
                 return (
                   <div
                     style={{
@@ -125,24 +130,71 @@ export const Grid = () => {
 
         <div className={style.gridColor_container}>
           <div className={style.gridColor_zero}>
-            <div className={style.item_zero}></div>
+            <div
+              className={style.item_zero}
+              style={{ backgroundColor: `${colors[0]}` }}
+            ></div>
             <div className={style.text_zero}>0</div>
           </div>
-          <div className={style.gridColor_one}>
+          <div
+            className={style.gridColor_one}
+            style={{ display: maxCount >= 4 ? "flex" : "none" }}
+          >
             <div className={style.item_one}></div>
-            <div className={style.text_one}>1</div>
+            <div
+              className={style.text_one}
+              style={{ backgroundColor: `${colors[1]}` }}
+            >
+              1{Math.floor(maxCount / 4) > 1 ? "~" : null}
+              {Math.floor(maxCount / 4) > 1 ? Math.floor(maxCount / 4) : null}
+            </div>
           </div>
-          <div className={style.gridColor_two}>
+          <div
+            className={style.gridColor_two}
+            style={{ display: maxCount >= 3 ? "flex" : "none" }}
+          >
             <div className={style.item_two}></div>
-            <div className={style.text_two}>2~3</div>
+            <div
+              className={style.text_two}
+              style={{ backgroundColor: `${colors[2]}` }}
+            >
+              {Math.floor(maxCount / 4) + 1}
+              {Math.floor(maxCount / 2) - Math.floor(maxCount / 4) > 1
+                ? "~"
+                : null}
+              {Math.floor(maxCount / 2) - Math.floor(maxCount / 4) > 1
+                ? Math.floor(maxCount / 2)
+                : null}
+            </div>
           </div>
-          <div className={style.gridColor_three}>
-            <div className={style.item_three}></div>
-            <div className={style.text_three}>4~5</div>
+          <div
+            className={style.gridColor_three}
+            style={{ display: maxCount >= 2 ? "flex" : "none" }}
+          >
+            <div
+              className={style.item_three}
+              style={{ backgroundColor: `${colors[3]}` }}
+            ></div>
+            <div className={style.text_three}>
+              {Math.floor(maxCount / 2)}
+              {Math.floor((maxCount / 4) * 3) - Math.floor(maxCount / 2) > 1
+                ? "~"
+                : null}
+              {Math.floor((maxCount / 4) * 3) - Math.floor(maxCount / 2) > 1
+                ? Math.floor((maxCount / 4) * 3)
+                : null}
+            </div>
           </div>
           <div className={style.gridColor_four}>
-            <div className={style.item_four}></div>
-            <div className={style.text_four}>6이상</div>
+            <div
+              className={style.item_four}
+              style={{ backgroundColor: `${colors[4]}` }}
+            ></div>
+            <div className={style.text_four}>
+              {Math.floor((maxCount / 4) * 3) + 1}
+              {maxCount - Math.floor((maxCount / 4) * 3) > 1 ? "~" : null}
+              {maxCount - Math.floor((maxCount / 4) * 3) > 1 ? maxCount : null}
+            </div>
           </div>
         </div>
       </div>
