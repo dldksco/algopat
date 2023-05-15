@@ -20,7 +20,6 @@ $.interceptors.response.use(
   },
   (error) => {
     if (error.response.status === 401) {
-      // console.log("access 토큰 만료");
       $.get("/auth/token/accesstoken", {
         withCredentials: true,
       })
