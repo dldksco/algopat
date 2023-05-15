@@ -143,9 +143,9 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public void minusUserSubmitCount(UserTransactionDTO userTransactionDTO) {
-        log.info("제발이유가 뭐야 : "+ userTransactionDTO.getOpenApiKey());
-        if (!userTransactionDTO.getOpenApiKey().equals("0")) {
-            log.info("들어왔어요!: "+ userTransactionDTO.getOpenApiKey());
+        log.info("제발이유가 뭐야 : "+ userTransactionDTO.getOpenaiApiKey());
+        if (!userTransactionDTO.getOpenaiApiKey().equals("0")) {
+            log.info("들어왔어요!: "+ userTransactionDTO.getOpenaiApiKey());
             return;
         }
         UserSubmitCount userSubmitCount = userSubmitCountRepostiory.findByUserUserSeqWithFetchJoin(userTransactionDTO.getUserSeq()).orElseThrow(()->{
