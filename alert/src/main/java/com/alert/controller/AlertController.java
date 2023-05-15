@@ -41,19 +41,6 @@ public class AlertController {
   // Util 정의
   private final ObjectMapper objectMapper;
 
-  /**
-   * 10초마다 Sink에 데이터 전송
-   */
-  @PostConstruct
-  public void init() {
-    Flux.interval(Duration.ofSeconds(10)).subscribe(i -> sendKeepAliveMessageToAllUsers());
-  }
-
-  private void sendKeepAliveMessageToAllUsers() {
-    userSinks.forEach((userSeq, userSink) -> {
-      userSink.tryEmitNext("연결유지");
-    });
-  }
 
   /**
    * 파이프라인 연결 -> SSE (WebFlux)
@@ -63,8 +50,10 @@ public class AlertController {
    */
   @GetMapping(value = "/sse/{userSeq}", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
   public Mono<ResponseEntity<Flux<String>>> sseSubscription(@PathVariable long userSeq) {
-    Sinks.Many<String> userSink = userSinks.computeIfAbsent(userSeq,
-        key -> Sinks.many().multicast().onBackpressureBuffer());
+    Sinks.Many<String> userSink = Sinks.many().multicast().onBackpressureBuffer();
+    userSinks.put(userSeq, userSink);
+//    Sinks.Many<String> userSink = userSinks.computeIfAbsent(userSeq,
+//        key -> Sinks.many().multicast().onBackpressureBuffer());
     logger.info("파이프라인 연결 시작 : {}", userSeq);
     MessageDto recentResponse = userRecentResponse.get(userSeq);
     if (recentResponse != null) {
