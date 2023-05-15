@@ -43,6 +43,8 @@ async def processing(data : ProblemData, send_callback):
     user_seq = data.userSeq 
     problem_id = data.problemId
 
+    logger.info("user_seq : " + str(user_seq))
+
     # SSE 1
     message_dto = MessageDTO(progress_info="코드 분석 시작", percentage=25, state="ok", user_seq=user_seq)
     await send_callback("alert", message_dto)
