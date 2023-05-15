@@ -3,8 +3,13 @@
   margin-bottom: 5%;
   .box {
     border: 1px solid var(--font-color);
-    padding: 20px;
+    padding: 15px 18px;
     cursor: pointer;
+    transition: 0.3s;
+    &:hover {
+      color: gray;
+      border: 1px solid gray;
+    }
   }
   .header {
     font-size: 1.5rem;

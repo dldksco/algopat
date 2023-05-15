@@ -184,6 +184,7 @@ export const RankingCarousel = () => {
       sliderRef.current.slickGoTo(Number(levelRankSelect) * 5 + 1);
     }
   }, [levelRankSelect]);
+
   // 숫자 선택
   useEffect(() => {
     if (!sliderRef.current || !once) return;
@@ -196,7 +197,10 @@ export const RankingCarousel = () => {
   return (
     <div
       className={style.ranking_carousel}
-      style={{ backgroundColor: `${backgroundColorFilter(centerIndex)}` }}
+      style={{
+        backgroundColor: `${backgroundColorFilter(centerIndex)}`,
+        animation: "top_down_effect 0.5s",
+      }}
     >
       <div className={style.menu}>
         <SelectBox
@@ -210,11 +214,14 @@ export const RankingCarousel = () => {
             setValue={setlevelNumberSelect}
             value={levelNumberSelect}
           />
-        ) : (
-          <></>
-        )}
+        ) : null}
       </div>
-      <div className={style.carousel}>
+      <div
+        className={style.carousel}
+        style={
+          levelRankSelect == "-1" ? { border: "1px solid white" } : undefined
+        }
+      >
         <Slider ref={sliderRef} {...settings}>
           {levelData.map((v, i) => {
             if (i < 31) {
