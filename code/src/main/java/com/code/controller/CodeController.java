@@ -1,5 +1,6 @@
 package com.code.controller;
 
+import com.code.data.domain.ErrorCode;
 import com.code.data.dto.CommonBooleanDto;
 import com.code.data.dto.ProblemRankOverviewDto;
 import com.code.data.dto.ProblemRequestDto;
@@ -9,6 +10,8 @@ import com.code.data.dto.UserSubmitProblemDto;
 import com.code.data.dto.UserSubmitSolutionTitleDto;
 import com.code.data.dto.UserSubmitTransactionDto;
 import com.code.data.dto.UserSubmittedProblemIdListDto;
+import com.code.exception.BaseException;
+import com.code.service.EncryptionService;
 import com.code.service.KafkaProducerService;
 import com.code.service.ProblemRankService;
 import com.code.service.ProblemService;
@@ -49,6 +52,7 @@ public class CodeController {
   private final ProblemRankService problemRankService;
   private final UserService userService;
 
+  private final EncryptionService encryptionService;
   /**
    * 유저 코드 제출 (Spring -> Kafka)
    *
@@ -61,8 +65,12 @@ public class CodeController {
       @RequestBody @Valid ProblemRequestDto problemRequestDto,
       @RequestHeader("userSeq") long userSeq)
       throws JsonProcessingException {
-    problemService.checkExistUserSubmitSolution(
-        Long.parseLong(problemRequestDto.getSubmissionId())); // 이미 제출한 코드가 있는지 체크 (있다면 409)
+    try{
+      problemRequestDto.setOpenaiApiKey(encryptionService.encrypt(problemRequestDto.getOpenaiApiKey()));
+    }catch (Exception e){
+      throw new BaseException(ErrorCode.CONTROLLER_SERVLET_ERROR,"sendProblemToKafka");
+    }
+    problemService.checkExistUserSubmitSolution(Long.parseLong(problemRequestDto.getSubmissionId())); // 이미 제출한 코드가 있는지 체크 (있다면 409)
     problemRequestDto.setUserSeq(userSeq);
     kafkaProducerService.send(USER_CODE_TOPIC, problemRequestDto);
       kafkaProducerService.sendUserSubmitTransactionDto(USER_SERVICE_TOPIC, UserSubmitTransactionDto.builder()

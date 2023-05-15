@@ -30,7 +30,6 @@ public class GrassController {
     private static final Logger logger = LoggerFactory.getLogger(GrassController.class);
     @GetMapping("")
     public ResponseEntity<List<DateGrassCountDTO>> getGrassCount (@RequestHeader("userSeq") long userSeq){
-        logger.info("잔디숫잣마ㅐㄻㄴㅇㄻㄴㅇㄹ");
         return new ResponseEntity<>(grassService.getGrassCount(UserGrassCountRequestDTO.builder()
             .userSeq(userSeq)
             .build()),HttpStatus.OK);
