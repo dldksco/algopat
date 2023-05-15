@@ -19,7 +19,7 @@ function sseEventListener() {
           { commit_progress: { percentage: data.percentage, progress_info: data.progress_info } }
         );
 
-        if (state == "finish") { // 코드 분석 완료
+        if (data.state == "finish") { // 코드 분석 완료
           chrome.notifications.create('my-notification', {
             type: 'basic',
             iconUrl: `chrome-extension://${chrome.runtime.id}/assets/icon.png`,

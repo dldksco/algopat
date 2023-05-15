@@ -41,12 +41,12 @@ function startLoader() {
           const bojData = await findData();
 
           // 날짜가 같은 제출만 보내기
-          const [_, year, month, date] = bojData.submissionTime.match(/(\d{4})년\s(\d{1,2})월\s(\d{1,2})일\s(\d{1,2}):(\d{1,2}):(\d{1,2})/);
+          // const [_, year, month, date] = bojData.submissionTime.match(/(\d{4})년\s(\d{1,2})월\s(\d{1,2})일\s(\d{1,2}):(\d{1,2}):(\d{1,2})/);
 
-          const now = new Date();
-          const nowYear = now.getFullYear(); // 현재 년도
-          const nowMonth = now.getMonth() + 1; // 현재 월 (0부터 시작하므로 1을 더해줌)
-          const nowDate = now.getDate(); // 
+          // const now = new Date();
+          // const nowYear = now.getFullYear(); // 현재 년도
+          // const nowMonth = now.getMonth() + 1; // 현재 월 (0부터 시작하므로 1을 더해줌)
+          // const nowDate = now.getDate(); // 
 
           // if (!(year == nowYear && month == nowMonth && date == nowDate)) {
           //   toastThenStopLoader("제출 시간이 오늘과 동일해야 전송이 가능합니다", "같은 날짜만!")
@@ -110,7 +110,7 @@ function startLoader() {
                       title: bojData.title,
                       level: bojData.level,
                       state: false,
-                      date: new Date(),
+                      date: new Date().getTime(),
                     }
                   }, () => { });
                 } else if (res.status == 409) {

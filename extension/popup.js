@@ -169,7 +169,7 @@ function commitMode(commit_state, commit_progress, token) {
           $('#commit_state_text').after(`<p><a title="myLink" id="myCodeLink" href="${url}" target="_blank">분석 결과 보기</a></p>`);
           chrome.storage.local.set({ commit_state: { ...commit_state, state: true } }, () => { });
         } else { // 분석 진행중
-          if (!isWithin10Minutes(commit_state.date, new Date())) { //  코드 보낸지 10분 지났으면
+          if (!isWithin10Minutes(commit_state.date, new Date().getTime())) { //  코드 보낸지 10분 지났으면
             $('#commit_state_text').html(`<p>서버에서 응답을 받을 수 없습니다</p>`);
             chrome.storage.local.set({ commit_state: { ...commit_state, state: true } }, () => { });
           } else {
@@ -209,6 +209,7 @@ chrome.storage.local.get(['gpt_key'], (data) => {
 
 
 function isWithin10Minutes(date1, date2) {
+
   // 두 날짜의 차이를 밀리초 단위로 계산
   const diffInMilliseconds = Math.abs(date2 - date1);
 
