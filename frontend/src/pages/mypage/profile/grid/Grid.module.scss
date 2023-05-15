@@ -4,7 +4,6 @@
   background-color: #1d2538;
   display: flex;
   position: relative;
-  z-index: 2;
   .days {
     display: flex;
     flex-direction: column;
@@ -40,22 +39,33 @@
       .grid_cell {
         width: 11px;
         height: 11px;
-        border: 0.5px solid #ececec;
+        border: 0.5px solid #242f3c;
         border-radius: 2px;
         position: relative;
         cursor: pointer;
-        z-index: 3;
+        .cell_hover {
+          display: none;
+          color: black;
+          font-size: 0.5rem;
+          text-align: center;
+          border-radius: 5px;
+        }
       }
-
-      .grid_cell:hover::after {
-        content: "";
+      .grid_cell:hover {
+        border: 3px solid white;
+        width: 12px;
+        height: 12px;
+      }
+      .grid_cell:hover .cell_hover {
         position: absolute;
-        top: 0;
-        left: 0;
-        z-index: 4;
+        top: 14px;
+        left: -62px;
+        z-index: 5;
+        width: 130px;
+        height: 25px;
+        padding-top: 6px;
         background-color: white;
-        width: 80px;
-        height: 30px;
+        display: block;
       }
     }
   }
@@ -157,4 +167,17 @@
 }
 .description {
   text-align: right;
+}
+
+@media screen and (max-width: 768px) {
+  .grid {
+    .gridColor_container {
+      .gridColor_four {
+        display: none;
+      }
+    }
+    .days {
+      padding-right: 16px;
+    }
+  }
 }

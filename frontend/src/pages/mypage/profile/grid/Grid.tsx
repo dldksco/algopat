@@ -9,6 +9,8 @@ import style from "./Grid.module.css";
 export const Grid = () => {
   const [streakDateState, setStreakDateState] = useState<string>("");
   const [streakColorState, setStreakColorState] = useState<number>(0);
+  const [hovered, setHovered] = useState(false);
+
   const {
     isLoading: isLoadingGrid,
     error: gridError,
@@ -62,7 +64,14 @@ export const Grid = () => {
   const handleClick = (date: string, color: number) => {
     setStreakDateState(date);
     setStreakColorState(color);
-    console.log(date);
+  };
+
+  const handleMouseEnter = () => {
+    setHovered(true);
+  };
+
+  const handleMouseLeave = () => {
+    setHovered(false);
   };
 
   return (
@@ -115,7 +124,14 @@ export const Grid = () => {
                         grid[rowIndex][colIndex]
                       )
                     }
-                  />
+                    // onMouseEnter={handleMouseEnter}
+                    // onMouseLeave={handleMouseLeave}
+                  >
+                    <div className={style.cell_hover}>
+                      {gridDate[rowIndex][colIndex]}: {grid[rowIndex][colIndex]}
+                      문제 제출
+                    </div>
+                  </div>
                 );
               })
             )}
