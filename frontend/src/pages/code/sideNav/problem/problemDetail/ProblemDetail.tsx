@@ -66,7 +66,7 @@ export const ProblemDetail = ({ problemDetail, isProblemOpen }: SolveProps) => {
         >
           {stringCutter(
             `풀이 ${new Date(el.userSubmitSolutionTime).toLocaleString()}`,
-            27
+            25
           )}
         </div>
       ))}

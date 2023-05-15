@@ -21,13 +21,13 @@ export const userInfoState = atom<UserInfo>({
   },
 });
 
-export const profileState =atom <MyProfile>({
+export const profileState = atom<MyProfile>({
   key: "profileState",
   default: {
     myTier: 0,
     myBackImage: "",
   },
-})
+});
 
 export const loginUser = (setUserInfo: SetterOrUpdater<UserInfo>) => {
   const token = localStorage.getItem("access-token");

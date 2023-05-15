@@ -9,13 +9,16 @@
   .fpage {
     width: 100%;
     height: calc(100vh - 80px);
+    overflow: hidden;
 
     .content {
       float: left;
+      position: relative;
       margin-top: 15%;
       margin-left: 5%;
       flex-direction: column;
       justify-content: center;
+      z-index: 1;
       h1 {
         font-size: 4rem;
       }
@@ -48,7 +51,9 @@
       height: 90%;
       margin-left: 30%;
       width: 70%;
+      position: relative;
       background-size: cover;
+      background-position: center;
       background: linear-gradient(
           to right,
           rgba(0, 0, 0, 0.8) 0%,
@@ -85,22 +90,13 @@
 
     .move_stick {
       width: 100%;
-      height: 30%;
       overflow: hidden;
       .block {
-        // background-color: red;
-        // .row:nth-child(2n) .green .col  {
-        //   background-color: green;
-        // // }
-        // .row:nth-child(2n + 1) .white .col  {
-        //   background-color: white;
-        // }
-        position: relative;
         display: block;
-        height: auto;
+        width: 100%;
         .row {
-          position: relative;
-          height: 50px;
+          height: 40px;
+          display: block;
         }
 
         .green {
@@ -116,7 +112,7 @@
         }
 
         .col {
-          width: 100px;
+          width: 10%;
           height: 20px;
           margin: 2px;
           display: inline-block;
@@ -223,18 +219,44 @@
             font-size: 1.2rem;
           }
           p {
-            font-size: 0.65rem;
+            font-size: 0.6rem;
           }
         }
       }
       .code_image {
-        width: 40%;
+        width: 48%;
+      }
+      .move_stick {
+        height: 30%;
+        .block {
+          display: block;
+          height: 100%;
+          .row {
+            height: 35px;
+          }
+
+          .green {
+            background-color: green;
+          }
+
+          .white {
+            background-color: white;
+          }
+
+          .black {
+            background-color: transparent;
+          }
+
+          .col {
+            width: 30%;
+            height: 20px;
+            margin-bottom: 5px;
+          }
+        }
       }
     }
 
     .lpage {
-      // height: calc(100vh - 180px);
-
       .contentbox {
         .gptbox {
           width: 50%;
