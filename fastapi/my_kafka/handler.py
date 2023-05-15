@@ -4,7 +4,7 @@ from myclass.problem import ProblemData
 import json
 import logging 
 import asyncio
-from my_dto.common_dto import MessageDTO
+from pydantic import BaseModel
 
 
 # 카프카 서버 정보!!!
@@ -47,7 +47,7 @@ async def consume_problem_summary(topic : str):
 
 # Producer
 # 카프카로 메시지 전송 함수 
-async def send(topic : str, message_dto):
+async def send(topic : str, message_dto : BaseModel):
     producer = AIOKafkaProducer(
         bootstrap_servers = KAFKA_BOOTSTRAP_SERVERS,
         value_serializer = lambda m : json.dumps(m, ensure_ascii=False).encode("utf-8"),
