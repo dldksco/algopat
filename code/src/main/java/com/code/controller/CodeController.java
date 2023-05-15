@@ -1,26 +1,24 @@
 package com.code.controller;
 
 import com.code.data.dto.CommonBooleanDto;
-import com.code.data.dto.ProblemRankDetailDto;
 import com.code.data.dto.ProblemRankOverviewDto;
 import com.code.data.dto.ProblemRequestDto;
 import com.code.data.dto.ProblemResponseDto;
 import com.code.data.dto.UserServiceBackjoonRequestDto;
 import com.code.data.dto.UserSubmitProblemDto;
 import com.code.data.dto.UserSubmitSolutionTitleDto;
+import com.code.data.dto.UserSubmitTransactionDto;
 import com.code.data.dto.UserSubmittedProblemIdListDto;
 import com.code.service.KafkaProducerService;
 import com.code.service.ProblemRankService;
 import com.code.service.ProblemService;
 import com.code.service.UserService;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import java.util.List;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -42,7 +40,8 @@ public class CodeController {
   // logger 정의
   private static final Logger logger = LoggerFactory.getLogger(CodeController.class);
 
-  private final String USER_CODE_TOPIC = "usercode";
+  private final String USER_CODE_TOPIC    = "usercode";
+  private final String USER_SERVICE_TOPIC = "user-service";
 
   // Service 정의
   private final KafkaProducerService kafkaProducerService;
@@ -66,6 +65,9 @@ public class CodeController {
         Long.parseLong(problemRequestDto.getSubmissionId())); // 이미 제출한 코드가 있는지 체크 (있다면 409)
     problemRequestDto.setUserSeq(userSeq);
     kafkaProducerService.send(USER_CODE_TOPIC, problemRequestDto);
+    kafkaProducerService.sendUserSubmitTransactionDto(USER_SERVICE_TOPIC, UserSubmitTransactionDto.builder()
+            .userSeq(userSeq)
+        .build());
 
     userService.checkBackjoonId(
         UserServiceBackjoonRequestDto.builder()
@@ -74,6 +76,7 @@ public class CodeController {
             .build());
     return ResponseEntity.ok().build();
   }
+
 
   /**
    * 문제 조회

@@ -14,8 +14,8 @@ import org.springframework.util.concurrent.ListenableFutureCallback;
 @Slf4j
 public class KafkaRetryServiceImpl implements KafkaRetryService {
 
-  private static final int MAX_RETRY_COUNT = 3;
-  private static final int RETRY_DELAY_MS = 10;
+  private static final int MAX_RETRY_COUNT = 7;
+  private static final int RETRY_DELAY_MS = 150;
 
   private final KafkaTemplate<String, String> kafkaTemplate;
 
@@ -26,37 +26,35 @@ public class KafkaRetryServiceImpl implements KafkaRetryService {
     while (retryCount < MAX_RETRY_COUNT) {
       try {
         ListenableFuture<SendResult<String, String>> future = kafkaTemplate.send(topic, message);
-
-        future.addCallback(new ListenableFutureCallback<SendResult<String, String>>() {
+        future.addCallback(new ListenableFutureCallback<>() {
           @Override
           public void onSuccess(SendResult<String, String> result) {
-          log.info("send Kafka topic : "+topic+" message : "+ message+" success");
+            log.info("send Kafka topic : " + topic + " message : " + message + " success");
           }
-
           @Override
           public void onFailure(Throwable ex) {
-            log.warn("send Kafka topic : "+topic+" message : "+ message+" fail");
+            log.warn("send Kafka topic : " + topic + " message : " + message + " fail");
           }
         });
 
         break;
-      } catch (Exception e) {
+      } catch (RuntimeException e) {
+        log.warn("Kafka Retry 에러 발생");
         retryCount++;
-
         if (retryCount == MAX_RETRY_COUNT) {
           log.error("send Kafka retry fail");
           throw new BaseException(ErrorCode.KAFKA_ERROR,"sendWithRetry");
         }
-
         try {
           log.warn("retry Kafka sleep");
           Thread.sleep(RETRY_DELAY_MS);
         } catch (InterruptedException ie) {
-          Thread.currentThread().interrupt();
           log.error("Interrupt thread while retry kafka");
-
+          Thread.currentThread().interrupt();
         }
       }
     }
   }
 }
+
+
