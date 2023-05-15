@@ -26,17 +26,17 @@ public class RankController {
 
   private final ProblemRankService problemRankService;
 
-  /**
-   * 랭킹 조회
-   * @param level
-   * @param pagenumber
-   * @return
-   */
-  @GetMapping("/{level}")
-  public ResponseEntity<Page<ProblemRankOverviewDto[]>> getProblemRankOverviewDto(
-      @PathVariable("level") long level, @RequestParam(required = false, defaultValue = "0") int pagenumber) {
-    return ResponseEntity.ok(problemRankService.getProblemRankOverviews(level, pagenumber));
-  }
+//  /**
+//   * 랭킹 조회
+//   * @param level
+//   * @param pagenumber
+//   * @return
+//   */
+//  @GetMapping("/{level}")
+//  public ResponseEntity<Page<ProblemRankOverviewDto[]>> getProblemRankOverviewDto(
+//      @PathVariable("level") long level, @RequestParam(required = false, defaultValue = "0") int pagenumber) {
+//    return ResponseEntity.ok(problemRankService.getProblemRankOverviews(level, pagenumber));
+//  }
 
     /**
    * 랭킹 검색어 필터링
