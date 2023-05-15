@@ -58,9 +58,7 @@ public class TokenController {
       }else{
         log.info("start IssueAccestoken at checkRefreshTokenIssueAccessToken");
         TokenDTO tokenDTO = TokenDTO.builder().token(refreshToken).build();
-        log.info("여기지");
         TokenStatus tokenStatus = tokenService.validateToken(tokenDTO);
-        log.info("여길걸");
         if(tokenStatus==TokenStatus.VALID){
           log.info("tokenstatus is valid");
           TokenInfo tokenInfo =tokenService.getGithubIdFromToken(tokenDTO);

@@ -98,7 +98,7 @@ private static final long ACCESS_TOKEN_EXPIRATION_TIME = 1000*30; // 15 min (in 
       return TokenStatus.VALID;
     } catch (ExpiredJwtException expiredJwtException) {
       log.warn("jwt Expired");
-      return TokenStatus.EXPIRED;
+      return TokenStatus.TOKEN_NOT_FOUND;
     } catch (JwtException jwtException){
       log.error("is not valid Token",jwtException);
       log.debug("token DTO: "+ tokenDTO.toString());
