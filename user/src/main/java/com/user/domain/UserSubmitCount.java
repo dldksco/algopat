@@ -38,5 +38,6 @@ public class UserSubmitCount extends BaseEntityTime {
   private User user;
 
   @Column(name = "user_submit_count", columnDefinition = "bigint default 10")
-  private long userSubmitCount;
+  @Builder.Default
+  private long userSubmitCount=10;
 }

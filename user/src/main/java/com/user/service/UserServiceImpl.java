@@ -80,7 +80,7 @@ public class UserServiceImpl implements UserService {
 
         UserImage userImage = UserImage.builder().userImageUrl(githubUserIdInfoDTO.getUserImageUrl()).user(newUser).build();
 
-        UserSubmitCount userSubmitCount = UserSubmitCount.builder().build();
+        UserSubmitCount userSubmitCount = UserSubmitCount.builder().user(newUser).build();
         newUser.getUserStatuses().add(userStatus);
         newUser.setUserImage(userImage);
         newUser.setUserSubmitCount(userSubmitCount);
