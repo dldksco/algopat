@@ -44,7 +44,7 @@ export const Profile = () => {
       </div>
     );
   }
-
+  const image11 = "@/assets/img/defaultBackImage.gif";
   return (
     <>
       <div className={style.box}>
@@ -56,7 +56,20 @@ export const Profile = () => {
               alt=""
             />
           ) : (
-            <div style={{ width: "100%", height: "300px" }} />
+            <div
+              className={style.defaultBack}
+              style={{
+                width: "100%",
+                height: "300px",
+              }}
+            >
+              <div className={style.hoverContainer}>
+                <div className={style.hoverBack}>
+                  백준 사이트에서 문제를 제출해주세요!
+                </div>
+                <div className={style.triangle}></div>
+              </div>
+            </div>
           )}
         </div>
         <div className={style.profileAll}>
