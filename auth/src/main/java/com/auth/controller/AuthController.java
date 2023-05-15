@@ -38,7 +38,7 @@ public class AuthController {
         codeDTO.getCode()).isExtension(codeDTO.getIsExtension()).build());
     response.addHeader("Authorization",loginProcessDTO.getAccessToken());
     response.addCookie(loginProcessDTO.getCookie());
-    return new ResponseEntity<>("fd",HttpStatus.OK);
+    return new ResponseEntity<>("",HttpStatus.OK);
   }
 
 
