@@ -70,8 +70,10 @@ public class AlertController {
     if (recentResponse != null) {
       try {
         String recentResponseJson = objectMapper.writeValueAsString(recentResponse);
+        logger.info("가장 최근 로그 데이터 : " + recentResponseJson);
         userSink.tryEmitNext(recentResponseJson);
       } catch (JsonProcessingException e) {
+        logger.info("가장 최근 로그 데이터가 존재하지 않습니다");
         // 아무것도 안함
       }
     }
@@ -94,6 +96,7 @@ public class AlertController {
       MessageDto messageDto = objectMapper.readValue(message, MessageDto.class);
       logger.info("변환 완료 : {}", messageDto);
       userRecentResponse.put(messageDto.getUserSeq(), messageDto);
+      logger.info("사용자 알림 데이터 저장 완료 : {}", userRecentResponse.get(messageDto.getUserSeq()));
       emitService.emitMessageToUser(userSinks, messageDto);
     } catch (JsonProcessingException e) {
       logger.info("String -> Json 파싱 에러 발생");
