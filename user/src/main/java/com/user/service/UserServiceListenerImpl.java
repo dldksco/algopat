@@ -36,9 +36,9 @@ public class UserServiceListenerImpl implements UserServiceListener {
     String isSuccessTransaction = userTransactionDto.getIsSuccess();
     try {
       if(isSuccessTransaction.equals("NO")){
-        userService.plusUserSubmitCount(userTransactionDto.getUserSeq());
+        userService.plusUserSubmitCount(userTransactionDto);
       }else if(isSuccessTransaction.equals("YES")){
-        userService.minusUserSubmitCount(userTransactionDto.getUserSeq());
+        userService.minusUserSubmitCount(userTransactionDto);
       }
     } catch (Exception e) {
 

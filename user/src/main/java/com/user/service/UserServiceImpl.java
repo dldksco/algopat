@@ -11,6 +11,7 @@ import com.user.dto.GithubUserIdInfoDTO;
 import com.user.dto.UserCheckResponseDTO;
 import com.user.dto.UserInfo;
 import com.user.dto.UserSubmitCountDTO;
+import com.user.dto.UserTransactionDTO;
 import com.user.exception.BaseException;
 import com.user.repository.UserImageRespository;
 import com.user.repository.UserRepository;
@@ -128,8 +129,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public void plusUserSubmitCount(Long userSeq) {
-        UserSubmitCount userSubmitCount = userSubmitCountRepostiory.findByUserUserSeqWithFetchJoin(userSeq).orElseThrow(()->{
+    public void plusUserSubmitCount(UserTransactionDTO userTransactionDTO) {
+        if(!userTransactionDTO.getOpenApiKey().equals("0"))
+            return;
+        UserSubmitCount userSubmitCount = userSubmitCountRepostiory.findByUserUserSeqWithFetchJoin(
+            userTransactionDTO.getUserSeq()).orElseThrow(()->{
             log.error("error plusUserSubmitCount");
             throw new BaseException(ErrorCode.DATABASE_GET_ERROR);
         });
@@ -140,8 +144,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public void minusUserSubmitCount(Long userSeq) {
-        UserSubmitCount userSubmitCount = userSubmitCountRepostiory.findByUserUserSeqWithFetchJoin(userSeq).orElseThrow(()->{
+    public void minusUserSubmitCount(UserTransactionDTO userTransactionDTO) {
+        UserSubmitCount userSubmitCount = userSubmitCountRepostiory.findByUserUserSeqWithFetchJoin(userTransactionDTO.getUserSeq()).orElseThrow(()->{
             log.error("error minusUserSubmitCount");
             throw new BaseException(ErrorCode.DATABASE_GET_ERROR);
         });
