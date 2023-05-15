@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class EncryptionService {
-    @Value("${key}")
+    @Value("${my.encrypt.key}")
     private String SECRET_KEY;  // 16 characters long
     private static final String ALGORITHM = "AES";
 
