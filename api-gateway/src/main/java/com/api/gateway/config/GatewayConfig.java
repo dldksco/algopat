@@ -46,6 +46,9 @@ public class GatewayConfig {
       String accessToken = request.getHeaders().getFirst("Authorization");
       if (isAllowedPath) {
         log.info("isAllowdPath");
+        if(path.startsWith("/auth")){
+          return chain.filter(exchange);
+        }
         if (accessToken == null) {
           log.info("isAllowedPath and accesToken is null");
           return chain.filter(exchange);
