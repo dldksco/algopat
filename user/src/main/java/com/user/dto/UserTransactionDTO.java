@@ -15,6 +15,6 @@ public class UserTransactionDTO {
   private String isSuccess;
   private long userSeq;
 
-  private String openAiApiKey;
+  private String openaiApiKey;
 
 }
