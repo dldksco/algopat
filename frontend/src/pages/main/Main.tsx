@@ -1,15 +1,20 @@
 import { Button } from "@/components/button/Button";
-import style from "./Main.module.css";
+import { useInView } from "react-intersection-observer";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowUp } from "@fortawesome/free-solid-svg-icons";
+import { MainMoveStick } from "./MainMoveStick";
+import { TopArrow } from "@/components/toparrow/TopArrow";
+import { MainBackground } from "./MainBackground";
 import code2 from "@/assets/img/main/code2.png";
 import code3 from "@/assets/img/main/code3.png";
 import gpticon from "@/assets/img/main/gpticon.png";
 import bird from "@/assets/img/main/bird.png";
-import { MainMoveStick } from "./MainMoveStick";
-import { TopArrow } from "@/components/toparrow/TopArrow";
+import style from "./Main.module.css";
 
 export const Main = () => {
+  const [ref, inView] = useInView();
+  const [ref2, inView2] = useInView();
+
   const moveExtention = () => {
     window.location.href =
       "https://chrome.google.com/webstore/detail/algopat/aalkbigjinaihechcjpigbahgembfbac?hl=ko";
@@ -18,7 +23,10 @@ export const Main = () => {
   return (
     <div className={style.mainpage}>
       <div className={style.fpage}>
-        <div className={style.content}>
+        <div
+          className={style.content}
+          style={{ animation: "left_right_effect 0.5s" }}
+        >
           <h1 style={{ border: "none", letterSpacing: "5px" }}>ALGOPAT</h1>
           <p style={{ fontSize: "1.3rem", marginBottom: "12px" }}>
             여러분의 코딩 문제 풀이를
@@ -40,10 +48,14 @@ export const Main = () => {
             <FontAwesomeIcon icon={faArrowUp} className={style.button_arrow} />
           </div>
         </div>
-        <div className={style.code_background} />
+        <MainBackground />
       </div>
       <div className={style.cpage}>
-        <div className={style.gptcode}>
+        <div
+          className={style.gptcode}
+          style={inView ? { animation: "right_left_effect 0.5s" } : undefined}
+          ref={ref}
+        >
           <img src={code2} className={style.code_image} />
           <div className={style.gptdesc}>
             <h1>
@@ -59,8 +71,17 @@ export const Main = () => {
         </div>
       </div>
       <div className={style.cpage}>
-        <div className={style.gptcode}>
-          <img src={code3} className={style.code_image} alt="" />
+        <div
+          className={style.gptcode}
+          style={inView2 ? { animation: "left_right_effect 0.5s" } : undefined}
+          ref={ref2}
+        >
+          <img
+            src={code3}
+            className={style.code_image}
+            style={{ width: "40%", marginRight: "10px" }}
+            alt=""
+          />
           <div className={style.gptdesc}>
             <h1>
               <span style={{ color: "#7472CB" }}>리팩토링</span> 제공

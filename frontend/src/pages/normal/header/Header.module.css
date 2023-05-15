@@ -21,6 +21,10 @@
   margin-top: auto;
   margin-bottom: auto;
   cursor: pointer;
+  transition: 0.35s;
+}
+.header .logo:hover {
+  filter: opacity(0.6);
 }
 .header .menu {
   display: flex;

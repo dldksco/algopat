@@ -6,6 +6,16 @@ export const centerIndexState = atom<number>({
   default: 0,
 });
 
+export const levelRankSelectState = atom<string>({
+  key: "levelRankSelectState",
+  default: "-1",
+});
+
+export const levelNumberSelectState = atom<string>({
+  key: "levelNumberSelectState",
+  default: "0",
+});
+
 export const rankingDetailState = atom<RankingDetailParam>({
   key: "rankingDetailState",
   default: {

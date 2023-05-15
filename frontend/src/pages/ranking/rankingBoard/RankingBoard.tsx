@@ -18,6 +18,7 @@ interface RankingDatacolumn {
   problemTitle: string;
   problemSubmittedCount: string;
   userGithubId: string;
+  problemLevel: string;
   isSolved: boolean;
 }
 interface props {
@@ -25,7 +26,7 @@ interface props {
 }
 
 export const RankingBoard = ({ data }: props) => {
-  const headRow = ["#", "제목", "Master", "제출한 사람 수"];
+  const headRow = ["문제번호", "제목", "Master", "제출한 사람 수"];
   const grid = isMobile() ? "50% 50%" : "15% 50% 20% 15%";
 
   const navigate = useNavigate();
@@ -66,7 +67,7 @@ export const RankingBoard = ({ data }: props) => {
               style={{ color: content.isSolved ? "#309E61" : "" }}
             >
               <img
-                src={`https://static.solved.ac/tier_small/${rank + 1}.svg`}
+                src={`https://static.solved.ac/tier_small/${content.problemLevel}.svg`}
                 style={{ width: "1rem", height: "auto", marginRight: "10px" }}
                 alt=""
               />

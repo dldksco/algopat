@@ -28,12 +28,16 @@
 .ranking_carousel .carousel img {
   display: inline-block;
   width: 80px;
+  cursor: pointer;
+}
+.ranking_carousel .carousel img:hover {
+  transition: 0.2s;
+  filter: opacity(0.6);
 }
 .ranking_carousel .carousel .slider {
   cursor: grab;
 }
 .ranking_carousel .carousel .slider .content {
-  width: 10%;
   display: flex;
   text-align: center;
   flex-direction: column;

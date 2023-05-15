@@ -23,7 +23,7 @@ export const userInfoState = atom<UserInfo>({
   },
 });
 
-export const profileState =atom <MyProfile>({
+export const profileState = atom<MyProfile>({
   key: "profileState",
   default: {
     userBackjoonId:"NO_SUBMITTED",
@@ -31,7 +31,7 @@ export const profileState =atom <MyProfile>({
     backgroundId:"",
     backImage:"",
   },
-})
+});
 
 export const loginUser = (setUserInfo: SetterOrUpdater<UserInfo>) => {
   const token = localStorage.getItem("access-token");

@@ -67,7 +67,7 @@ export const Refactoring = ({ isModalOpen, data }: RefactoringProps) => {
             />
             {stringCutter(
               problem.problemId + ". " + problem.problemTitle,
-              isMobile() ? 10 : 15
+              isMobile() ? 15 : 21
             )}
           </div>
           <hr />

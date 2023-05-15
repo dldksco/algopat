@@ -1,7 +1,7 @@
+import axios from "axios";
 import { $ } from "@/connect/axios";
 import { PagableResponse } from "@/types/type";
 import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
-import axios from "axios";
 
 interface Solution {
   userSubmitSolutionResult: string;
@@ -68,6 +68,7 @@ export const getSolution = (solutionSeq: number, token: string) => {
       {
         headers: {
           authorization: token,
+          "Content-Type": "application/json",
         },
       }
     );
