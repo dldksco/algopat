@@ -5,14 +5,17 @@ import com.user.domain.User;
 import com.user.domain.UserImage;
 import com.user.domain.UserStatus;
 import com.user.domain.UserStatusType;
+import com.user.domain.UserSubmitCount;
 import com.user.dto.BackjoonUserDTO;
 import com.user.dto.GithubUserIdInfoDTO;
 import com.user.dto.UserCheckResponseDTO;
 import com.user.dto.UserInfo;
+import com.user.dto.UserSubmitCountDTO;
 import com.user.exception.BaseException;
 import com.user.repository.UserImageRespository;
 import com.user.repository.UserRepository;
 import com.user.repository.UserStatusRepository;
+import com.user.repository.UserSubmitCountRepostiory;
 import java.util.Optional;
 import javax.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -27,6 +30,7 @@ public class UserServiceImpl implements UserService {
     private final UserStatusRepository userStatusRepository;
     private final UserImageRespository userImageRespository;
 
+    private final UserSubmitCountRepostiory userSubmitCountRepostiory;
 
     @Override
     @Transactional
@@ -34,18 +38,23 @@ public class UserServiceImpl implements UserService {
         String githubUserId = githubUserIdInfoDTO.getUserGithubId();
         String githubUserImageUrl = githubUserIdInfoDTO.getUserImageUrl();
         Optional<User> user = userRepository.findByUserGithubId(githubUserId);
-        System.out.println("들어왔나");
         if(user.isPresent()){
-            System.out.println("들어왔나1");
             Long userSeq = user.get().getUserSeq();
-            UserStatus userStatus = userStatusRepository.findTopByUserUserSeqOrderByUserStatusCreatedAtDesc(userSeq).orElseThrow(() -> new BaseException(ErrorCode.SERVICE_SERVLET_ERROR));
-            System.out.println("들어왔나2");
-            if(!userStatus.getUserStatusStatus().equals(UserStatusType.AVAILABLE))
+            UserStatus userStatus = userStatusRepository.findTopByUserUserSeqOrderByUserStatusCreatedAtDesc(userSeq).orElseThrow(() -> {
+                log.error("can not find userStatus in checkAndJoinGithubUser");
+                throw new BaseException(ErrorCode.SERVICE_SERVLET_ERROR);
+            });
+            if(!userStatus.getUserStatusStatus().equals(UserStatusType.AVAILABLE)){
+                log.error("is UNVALID USER");
+
                 throw new BaseException(ErrorCode.UNVALID_USER);
-            System.out.println("들어왔나3");
-            UserImage  userImage = userImageRespository.findByUserUserSeqWithFetchJoin(userSeq).orElseThrow(() -> new BaseException(ErrorCode.SERVICE_SERVLET_ERROR));
-            System.out.println("userImage:"+ userImage.getUserImageUrl()+" githubuserimageurl: "+githubUserImageUrl);
-            System.out.println("user id: "+ githubUserId);
+            }
+
+            UserImage  userImage = userImageRespository.findByUserUserSeqWithFetchJoin(userSeq).orElseThrow(() -> {
+                log.error("find user image error");
+               return new BaseException(ErrorCode.SERVICE_SERVLET_ERROR);
+            });
+
             if(!userImage.getUserImageUrl().equals(githubUserImageUrl)){
                 userImage.setUserImageUrl(githubUserImageUrl);
                 userImageRespository.save(userImage);
@@ -56,14 +65,14 @@ public class UserServiceImpl implements UserService {
             return UserCheckResponseDTO.builder().userSeq(userSeq).build();
         }
         else{
-            System.out.println("들어왔나4");
-            long newUserSeq =JoinGithubUser(githubUserIdInfoDTO);
+            long newUserSeq =joinGithubUser(githubUserIdInfoDTO);
             return UserCheckResponseDTO.builder().userSeq(newUserSeq).build();
         }
     }
 
     @Override
-    public long JoinGithubUser(GithubUserIdInfoDTO githubUserIdInfoDTO) {
+    @Transactional
+    public long joinGithubUser(GithubUserIdInfoDTO githubUserIdInfoDTO) {
         User newUser = User.builder().userGithubId(githubUserIdInfoDTO.getUserGithubId()).build();
 
         UserStatus userStatus = UserStatus.builder().user(newUser).userStatusStatus(
@@ -71,20 +80,25 @@ public class UserServiceImpl implements UserService {
 
         UserImage userImage = UserImage.builder().userImageUrl(githubUserIdInfoDTO.getUserImageUrl()).user(newUser).build();
 
+        UserSubmitCount userSubmitCount = UserSubmitCount.builder().build();
         newUser.getUserStatuses().add(userStatus);
         newUser.setUserImage(userImage);
+        newUser.setUserSubmitCount(userSubmitCount);
         userRepository.save(newUser);
 
-        System.out.println("test");
 
         return newUser.getUserSeq();
     }
 
     @Override
+    @Transactional
     public void checkAndJoinBackjoonUser(BackjoonUserDTO backjoonUserDTO) {
-        User user = userRepository.findByUserSeq(backjoonUserDTO.getUserSeq()).orElseThrow(() -> new BaseException(ErrorCode.DATABASE_GET_ERROR));
-        System.out.println("드러옴!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"+ user.getUserBackjoonId());
+        User user = userRepository.findByUserSeq(backjoonUserDTO.getUserSeq()).orElseThrow(() -> {
+            log.error("can not find backjoon id");
+            throw new BaseException(ErrorCode.DATABASE_GET_ERROR);
+        });
         if(user.getUserBackjoonId().equals("NO_SUBMITTED")){
+            log.info("first SUBMIT :" + user.getUserGithubId());
             user.setUserBackjoonId(backjoonUserDTO.getUserBackjoonId());
         }
         userRepository.save(user);
@@ -94,14 +108,55 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
+    @Transactional
     public UserInfo userProfile(Long userSeq) {
-        UserImage  userImage = userImageRespository.findByUserUserSeqWithFetchJoin(userSeq).orElseThrow(() -> new BaseException(ErrorCode.SERVICE_SERVLET_ERROR));
-        User user = userRepository.findByUserSeq(userSeq).orElseThrow(()->new BaseException(ErrorCode.DATABASE_GET_ERROR));
+        UserImage  userImage = userImageRespository.findByUserUserSeqWithFetchJoin(userSeq).orElseThrow(() -> {
+            log.error("can not find user Image");
+            throw new BaseException(ErrorCode.SERVICE_SERVLET_ERROR);
+        });
+        User user = userRepository.findByUserSeq(userSeq).orElseThrow(()->{
+            log.info("can not find user");
+            throw new BaseException(ErrorCode.DATABASE_GET_ERROR);
+        });
 
         return UserInfo.builder()
             .userGithubId(user.getUserGithubId())
             .userImageUrl(userImage.getUserImageUrl())
             .userBackjoonId(user.getUserBackjoonId())
             .build();
+    }
+
+    @Override
+    @Transactional
+    public void plusUserSubmitCount(Long userSeq) {
+        UserSubmitCount userSubmitCount = userSubmitCountRepostiory.findByUserUserSeqWithFetchJoin(userSeq).orElseThrow(()->{
+            log.error("error plusUserSubmitCount");
+            throw new BaseException(ErrorCode.DATABASE_GET_ERROR);
+        });
+        Long userSubmitCountCount = userSubmitCount.getUserSubmitCount();
+        userSubmitCount.setUserSubmitCount(userSubmitCountCount+1);
+        userSubmitCountRepostiory.save(userSubmitCount);
+    }
+
+    @Override
+    @Transactional
+    public void minusUserSubmitCount(Long userSeq) {
+        UserSubmitCount userSubmitCount = userSubmitCountRepostiory.findByUserUserSeqWithFetchJoin(userSeq).orElseThrow(()->{
+            log.error("error minusUserSubmitCount");
+            throw new BaseException(ErrorCode.DATABASE_GET_ERROR);
+        });
+        Long userSubmitCountCount = userSubmitCount.getUserSubmitCount();
+        userSubmitCount.setUserSubmitCount(userSubmitCountCount-1);
+        userSubmitCountRepostiory.save(userSubmitCount);
+    }
+
+    @Override
+    @Transactional
+    public UserSubmitCountDTO findUserSubmitCound(Long userSeq) {
+        UserSubmitCount userSubmitCount = userSubmitCountRepostiory.findByUserUserSeqWithFetchJoin(userSeq).orElseThrow(()->{
+            log.error("find plusUserSubmitCount");
+            throw new BaseException(ErrorCode.DATABASE_GET_ERROR);
+        });
+        return UserSubmitCountDTO.builder().userSubmitCountCount(userSubmitCount.getUserSubmitCount()).build();
     }
 }

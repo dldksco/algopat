@@ -54,6 +54,9 @@ public class User {
   @OneToOne(mappedBy = "user", cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
   private UserImage userImage;
 
+  @OneToOne(mappedBy = "user", cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+  private UserSubmitCount userSubmitCount;
+
 
   @PrePersist
   protected void onCreate() {
