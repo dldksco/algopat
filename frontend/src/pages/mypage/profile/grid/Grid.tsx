@@ -9,8 +9,6 @@ import style from "./Grid.module.css";
 export const Grid = () => {
   const [streakDateState, setStreakDateState] = useState<string>("");
   const [streakColorState, setStreakColorState] = useState<number>(0);
-  const [hovered, setHovered] = useState(false);
-
   const {
     isLoading: isLoadingGrid,
     error: gridError,

@@ -8,8 +8,10 @@ export interface UserInfo {
 }
 
 export interface MyProfile {
-  myBackImage: string;
-  myTier: number;
+  userBackjoonId:string;
+  tier: number;
+  backgroundId: string;
+  backImage:string;
 }
 
 export const userInfoState = atom<UserInfo>({
@@ -24,8 +26,10 @@ export const userInfoState = atom<UserInfo>({
 export const profileState =atom <MyProfile>({
   key: "profileState",
   default: {
-    myTier: 0,
-    myBackImage: "",
+    userBackjoonId:"NO_SUBMITTED",
+    tier: 0,
+    backgroundId:"",
+    backImage:"",
   },
 })
 
