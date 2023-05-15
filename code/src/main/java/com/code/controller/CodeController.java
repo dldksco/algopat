@@ -67,6 +67,7 @@ public class CodeController {
     kafkaProducerService.send(USER_CODE_TOPIC, problemRequestDto);
       kafkaProducerService.sendUserSubmitTransactionDto(USER_SERVICE_TOPIC, UserSubmitTransactionDto.builder()
           .userSeq(userSeq)
+          .openaiApiKey(problemRequestDto.getOpenaiApiKey())
           .build());
 
 
