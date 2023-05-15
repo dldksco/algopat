@@ -52,7 +52,8 @@ async def send(topic : str, message_dto : BaseModel):
         bootstrap_servers = KAFKA_BOOTSTRAP_SERVERS,
         value_serializer = lambda m : json.dumps(m, ensure_ascii=False).encode("utf-8"),
         retry_backoff_ms=10,
-        retries=50
+        enable_idempotence=True,  # 중복 방지 모드 활성화
+        request_timeout_ms=500,   # 요청 만료 시간 설정 (예: 500ms)
     )
     await producer.start()
     logger.info("Send to 토픽 : " + topic)
