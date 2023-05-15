@@ -182,20 +182,20 @@ public class CodeController {
             category));
   }
 
-  @GetMapping("/submission/rank")
-  public ResponseEntity<Page<ProblemRankOverviewDto[]>> getProblemRankOverviewDto(
-      @RequestParam(required = false, value = "pagenumber", defaultValue = "0") int pagenumber,
-      @RequestParam(required = false, value = "level") Long level,
-      @RequestParam(required = false, value = "usercheck", defaultValue = "false") Boolean userCheck,
-      @RequestHeader(required = false, value = "userSeq") Long userSeq
-  ) {
-    if (userCheck) {
-      return ResponseEntity.ok(
-          problemRankService.getProblemRankOverviewsByLevelAndUser(level, userSeq, pagenumber));
-    } else {
-      return ResponseEntity.ok(
-          problemRankService.getProblemRankOverviewsByLevelAndUser(level, null, pagenumber));
-    }
-  }
+//  @GetMapping("/submission/rank")
+//  public ResponseEntity<Page<ProblemRankOverviewDto[]>> getProblemRankOverviewDto(
+//      @RequestParam(required = false, value = "pagenumber", defaultValue = "0") int pagenumber,
+//      @RequestParam(required = false, value = "level") Long level,
+//      @RequestParam(required = false, value = "usercheck", defaultValue = "false") Boolean userCheck,
+//      @RequestHeader(required = false, value = "userSeq") Long userSeq
+//  ) {
+//    if (userCheck) {
+//      return ResponseEntity.ok(
+//          problemRankService.getProblemRankOverviewsByLevelAndUser(level, userSeq, pagenumber));
+//    } else {
+//      return ResponseEntity.ok(
+//          problemRankService.getProblemRankOverviewsByLevelAndUser(level, null, pagenumber));
+//    }
+//  }
 
 }
