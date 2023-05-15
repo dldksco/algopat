@@ -53,7 +53,10 @@ export const RankingDetail = () => {
 
   return (
     <div className={style.ranking_detail}>
-      <div className={style.header}>
+      <div
+        className={style.header}
+        style={{ animation: "top_down_effect 0.5s" }}
+      >
         <div className={style.box} onClick={listClickCallback}>
           <FontAwesomeIcon icon={faAngleLeft} style={{ marginRight: "5px" }} />
           목록
@@ -73,7 +76,10 @@ export const RankingDetail = () => {
           문제풀기
         </div>
       </div>
-      <div className={style.info + " " + style.box}>
+      <div
+        className={style.info + " " + style.box}
+        style={{ border: "1px solid white", animation: "top_down_effect 0.5s" }}
+      >
         {!pageInfoLoading && (
           <>
             <div className={style.master_info}>
@@ -83,6 +89,8 @@ export const RankingDetail = () => {
                   marginBottom: "10px",
                   textAlign: "center",
                   cursor: "default",
+                  border: "1px solid gray",
+                  color: "white",
                 }}
               >
                 master
