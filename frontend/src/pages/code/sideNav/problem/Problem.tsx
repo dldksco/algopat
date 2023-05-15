@@ -24,7 +24,11 @@ export const Problem = ({ detail }: ProblemProps) => {
 
   return (
     <>
-      <div className={style.problem_list} onClick={problemClick}>
+      <div
+        className={style.problem_list}
+        onClick={problemClick}
+        style={{ animation: "left_right_effect 0.65s" }}
+      >
         <FontAwesomeIcon
           icon={faChevronUp}
           className={isProblemOpen ? undefined : style.rotate}

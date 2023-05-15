@@ -10,6 +10,7 @@ import code3 from "@/assets/img/main/code3.png";
 import gpticon from "@/assets/img/main/gpticon.png";
 import bird from "@/assets/img/main/bird.png";
 import style from "./Main.module.css";
+import { isMobile } from "./hooks/func";
 
 export const Main = () => {
   const [ref, inView] = useInView();
@@ -53,7 +54,15 @@ export const Main = () => {
       <div className={style.cpage}>
         <div
           className={style.gptcode}
-          style={inView ? { animation: "right_left_effect 0.5s" } : undefined}
+          style={
+            inView
+              ? {
+                  animation: `right_left_effect ${
+                    isMobile() ? "0.6s" : "0.8s"
+                  }`,
+                }
+              : undefined
+          }
           ref={ref}
         >
           <img src={code2} className={style.code_image} />
@@ -73,7 +82,15 @@ export const Main = () => {
       <div className={style.cpage}>
         <div
           className={style.gptcode}
-          style={inView2 ? { animation: "left_right_effect 0.5s" } : undefined}
+          style={
+            inView2
+              ? {
+                  animation: `left_right_effect ${
+                    isMobile() ? "0.6s" : "0.8s"
+                  }`,
+                }
+              : undefined
+          }
           ref={ref2}
         >
           <img
