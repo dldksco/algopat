@@ -22,10 +22,15 @@ const CodeBox = React.memo(({ type, data }: CodeBoxProps) => {
     <div className={style.info_box}>
       <div className={style.box_title}>
         <hr />
-        <div style={{ display: "flex", justifyContent: "space-between" }}>
-          <span className={style.sppan} onClick={modalOpen}>
-            {type}
-          </span>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            cursor: "pointer",
+          }}
+          onClick={modalOpen}
+        >
+          <span className={style.sppan}>{type}</span>
           <FontAwesomeIcon
             icon={faChevronUp}
             className={
@@ -33,7 +38,6 @@ const CodeBox = React.memo(({ type, data }: CodeBoxProps) => {
                 ? style.code_arrow
                 : style.code_arrow + " " + style.code_spin
             }
-            onClick={modalOpen}
           />
         </div>
         <hr />

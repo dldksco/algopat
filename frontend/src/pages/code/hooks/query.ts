@@ -56,7 +56,6 @@ export interface TotalInfo {
  */
 export const getSolution = (solutionSeq: number, token: string) => {
   const fetchSolution = async (): Promise<Solution> => {
-    console.log("솔루션 요청");
     const { data } = await $.get(
       `/code/problem/submission/solution/detail/${solutionSeq}`
     );
@@ -64,7 +63,6 @@ export const getSolution = (solutionSeq: number, token: string) => {
   };
 
   const fetchForExtension = async (): Promise<Solution> => {
-    console.log("익스텐션");
     const { data } = await axios.get(
       `https://algopat.kr/api/code/problem/submission/solution/detail/${solutionSeq}`,
       {

@@ -38,7 +38,7 @@ export const Header = () => {
   }, [userInfo]);
 
   return (
-    <div className={style.header}>
+    <div className={style.header} style={{ animation: "top_down_effect 0.5s" }}>
       <img className={style.logo} onClick={() => navigate("/")} src={logo} />
       <div
         className={isOpen ? style.menu : style.menu + " " + style.menu_false}
