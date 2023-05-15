@@ -20,7 +20,7 @@ from database.database import save_problem_origin \
                             , update_problem_meta
 from logging import getLogger
 from utils.log_decorator import time_logger
-from utils.shared_env import redis_url, open_ai_api_key
+from utils.shared_env import redis_url, open_ai_api_key, decrypt_key
 from utils.utils import parse_lang_type
 import redis_lock
 from redis import Redis
@@ -28,6 +28,9 @@ import asyncio
 from my_dto.common_dto import MessageDTO, UserServiceDTO
 from my_exception.exception import MyCustomError 
 from database.get_session import async_session
+from Crypto.Cipher import AES
+from base64 import b64encode, b64decode
+
 
 # logger 설정 
 logger = getLogger()
@@ -38,13 +41,17 @@ LOCK_TIMEOUT = 300
 
 local_open_ai_api_key = open_ai_api_key # 서버에서 들고있는 OPEN_AI_API_KEY 
 
-redis_conn = Redis.from_url(redis_url)  # Redis 연결 설정 정보 
+redis_conn = Redis.from_url(redis_url)  # Redis 연결 설정 정보
+
+SECRET_KEY = decrypt_key
+cipher = AES.new(SECRET_KEY.encode(), AES.MODE_ECB)
     
 # GPT 응답 생성 함수
 @time_logger("GPT 비즈니스 로직")
 async def processing(data : ProblemData, send_callback):
     user_seq = data.userSeq      # 회원 식별 번호 
     problem_id = data.problemId  # 문제 아이디 
+    
     logger.info("요청한 유저 : " + str(user_seq))
 
     # SSE 1 
@@ -55,13 +62,17 @@ async def processing(data : ProblemData, send_callback):
     if await filtering_input_data(data, user_seq, send_callback):
         return
     
+    
+        
     data.language = await parse_lang_type(data.language)
     local_chat_llm_0 = ChatOpenAI(temperature=0, openai_api_key=local_open_ai_api_key, request_timeout=120)
 
     if data.openai_api_key == "0" :     # 회원 OPEN_AI_API_KEY 없음 
         chat_llm_0 = local_chat_llm_0 
     else :                              # 회원 OPEN_AI_API_KEY 있음  
-        chat_llm_0 = ChatOpenAI(temperature=0, openai_api_key=data.openai_api_key, request_timeout=120)
+        decoded_data = b64decode(data.openai_api_key)
+        decrypted_api_key = cipher.decrypt(decoded_data)
+        chat_llm_0 = ChatOpenAI(temperature=0, openai_api_key=decrypted_api_key, request_timeout=120)
 
     json_chain = await json_formatter(chat_llm_0)
     
