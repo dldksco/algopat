@@ -8,23 +8,37 @@ import { SelectBox } from "@/components/selectBox/SelectBox";
 import { backgroundColorFilter } from "../hooks/func";
 import { bj_level } from "@/variable/variable";
 import { useRecoilState } from "recoil";
-import { centerIndexState } from "@/atoms/ranking.atom";
+import {
+  centerIndexState,
+  levelNumberSelectState,
+  levelRankSelectState,
+} from "@/atoms/ranking.atom";
 
 import style from "./RankingCarousel.module.css";
 import "./carousel.css";
 import { isMobile } from "@/pages/main/hooks/func";
 
-const MAX_LEGNTH = 34;
+const MAX_LEGNTH = 35;
 
 export const RankingCarousel = () => {
   const initData = Array.from({ length: MAX_LEGNTH }, (_, i) => {
     return {
-      level: i + 1,
+      level: i,
       center: false,
       left: false,
       right: false,
     };
   });
+
+  const levelRank = [
+    { value: "-1", name: "All" },
+    { value: "0", name: "Bronze" },
+    { value: "1", name: "Silver" },
+    { value: "2", name: "Gold" },
+    { value: "3", name: "Platinum" },
+    { value: "4", name: "Diamond" },
+    { value: "5", name: "Ruby" },
+  ];
 
   const levelNumber = [
     { value: "0", name: "5" },
@@ -34,19 +48,11 @@ export const RankingCarousel = () => {
     { value: "4", name: "1" },
   ];
 
-  const levelRank = [
-    { value: "0", name: "Bronze" },
-    { value: "1", name: "Silver" },
-    { value: "2", name: "Gold" },
-    { value: "3", name: "Platinum" },
-    { value: "4", name: "Diamond" },
-    { value: "5", name: "Ruby" },
-  ];
-
-  const [levelNumberSelect, setlevelNumberSelect] = useState(
-    levelNumber[0].value
+  const [levelNumberSelect, setlevelNumberSelect] = useRecoilState(
+    levelNumberSelectState
   );
-  const [levelRankSelect, setlevelRankSelect] = useState(levelRank[0].value);
+  const [levelRankSelect, setlevelRankSelect] =
+    useRecoilState(levelRankSelectState);
   const [levelData, setLevelData] = useState(initData);
   const [once, setOnce] = useState(false);
 
@@ -58,8 +64,13 @@ export const RankingCarousel = () => {
     const index = centerIndex;
 
     //selectbox 현재 위치에 맞게 수정
-    setlevelRankSelect(Math.floor(index / 5).toString());
-    setlevelNumberSelect(Math.floor(index % 5).toString());
+    if (index === 0) {
+      setlevelRankSelect("-1");
+      setlevelNumberSelect("0");
+    } else {
+      setlevelRankSelect(Math.floor((index - 1) / 5).toString());
+      setlevelNumberSelect(Math.floor((index - 1) % 5).toString());
+    }
     // left
     if (index - 1 >= 0) {
       setLevelData((prev) => {
@@ -97,10 +108,15 @@ export const RankingCarousel = () => {
     setCenterIndex(index);
     setOnce(true);
 
-    //selectbox 현재 위치에 맞게 수정
-    setlevelRankSelect(Math.floor(index / 5).toString());
-    setlevelNumberSelect(Math.floor(index % 5).toString());
+    // console.log("center ", index);
 
+    //selectbox 현재 위치에 맞게 수정
+    if (index === 0) {
+      setlevelRankSelect("-1");
+    } else {
+      setlevelRankSelect(Math.floor((index - 1) / 5).toString());
+      setlevelNumberSelect(Math.floor((index - 1) % 5).toString());
+    }
     // 초기화
     setLevelData((prev) =>
       prev.map((v) => {
@@ -161,14 +177,19 @@ export const RankingCarousel = () => {
   // 랭크 선택
   useEffect(() => {
     if (!sliderRef.current || !once) return;
-    sliderRef.current.slickGoTo(Number(levelRankSelect) * 5);
+
+    if (levelRankSelect == "-1") {
+      sliderRef.current.slickGoTo(0);
+    } else {
+      sliderRef.current.slickGoTo(Number(levelRankSelect) * 5 + 1);
+    }
   }, [levelRankSelect]);
   // 숫자 선택
   useEffect(() => {
     if (!sliderRef.current || !once) return;
 
     sliderRef.current.slickGoTo(
-      Number(levelRankSelect) * 5 + Number(levelNumberSelect)
+      Number(levelRankSelect) * 5 + 1 + Number(levelNumberSelect)
     );
   }, [levelNumberSelect]);
 
@@ -183,16 +204,20 @@ export const RankingCarousel = () => {
           setValue={setlevelRankSelect}
           value={levelRankSelect}
         />
-        <SelectBox
-          options={levelNumber}
-          setValue={setlevelNumberSelect}
-          value={levelNumberSelect}
-        />
+        {levelRankSelect != "-1" ? (
+          <SelectBox
+            options={levelNumber}
+            setValue={setlevelNumberSelect}
+            value={levelNumberSelect}
+          />
+        ) : (
+          <></>
+        )}
       </div>
       <div className={style.carousel}>
         <Slider ref={sliderRef} {...settings}>
           {levelData.map((v, i) => {
-            if (i < 30) {
+            if (i < 31) {
               return (
                 <div
                   className={

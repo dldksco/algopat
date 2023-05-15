@@ -29,13 +29,18 @@
     img {
       display: inline-block;
       width: 80px;
+      cursor: pointer;
+
+      &:hover {
+        transition: 0.2s;
+        filter: opacity(0.6);
+      }
       // transition: all 0.1s ease-in-out;
     }
 
     .slider {
       cursor: grab;
       .content {
-        width: 10%;
         display: flex;
         text-align: center;
         flex-direction: column;

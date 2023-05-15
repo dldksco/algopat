@@ -1,13 +1,15 @@
 export const backgroundColorFilter = (rank: number) => {
-  if (rank < 5) {
+  if (0 === rank) {
+    return "black";
+  } else if (1 <= rank && rank < 6) {
     return "#7A4613";
-  } else if (5 <= rank && rank < 10) {
+  } else if (6 <= rank && rank < 11) {
     return "#24415C";
-  } else if (10 <= rank && rank < 15) {
+  } else if (11 <= rank && rank < 16) {
     return "#CB8400";
-  } else if (15 <= rank && rank < 20) {
+  } else if (16 <= rank && rank < 21) {
     return "#1EC08B";
-  } else if (20 <= rank && rank < 25) {
+  } else if (21 <= rank && rank < 26) {
     return "#008CC3";
   } else {
     return "#CD004F";

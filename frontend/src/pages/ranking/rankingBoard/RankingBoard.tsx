@@ -18,6 +18,7 @@ interface RankingDatacolumn {
   problemTitle: string;
   problemSubmittedCount: string;
   userGithubId: string;
+  problemLevel: string;
   isSolved: boolean;
 }
 interface props {
@@ -66,7 +67,7 @@ export const RankingBoard = ({ data }: props) => {
               style={{ color: content.isSolved ? "#309E61" : "" }}
             >
               <img
-                src={`https://static.solved.ac/tier_small/${rank + 1}.svg`}
+                src={`https://static.solved.ac/tier_small/${content.problemLevel}.svg`}
                 style={{ width: "1rem", height: "auto", marginRight: "10px" }}
                 alt=""
               />

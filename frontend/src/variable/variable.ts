@@ -1,5 +1,5 @@
 export const bj_level = [
-  "Unrated",
+  "전체문제",
   "Bronze V",
   "Bronze IV",
   "Bronze III",
