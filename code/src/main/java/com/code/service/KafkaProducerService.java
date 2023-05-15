@@ -1,6 +1,7 @@
 package com.code.service;
 
 import com.code.data.domain.ErrorCode;
+import com.code.data.dto.UserSubmitTransactionDto;
 import com.code.exception.BaseException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -16,6 +17,13 @@ public class KafkaProducerService {
 
   private final ObjectMapper objectMapper;
 
+  private final KafkaRetryServiceImpl kafkaRetryService;
+  private final int MAX_RETRY_COUNT =3;
+
+
+
+  private final int RETRY_DELAY_MS = 10;
+
   public void send(String topic, Object object) throws JsonProcessingException {
     String jsonString = objectMapper.writeValueAsString(object);
 
@@ -28,5 +36,13 @@ public class KafkaProducerService {
 
   }
 
+  public void sendUserSubmitTransactionDto(String topic, UserSubmitTransactionDto userSubmitTransactionDto) throws JsonProcessingException {
+    String jsonString = objectMapper.writeValueAsString(userSubmitTransactionDto);
+
+    kafkaRetryService.sendWithRetry(topic, jsonString);
+  }
+
 
 }
+
+
