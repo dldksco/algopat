@@ -107,7 +107,7 @@ export const RankingCarousel = () => {
   };
 
   const changeCallback = (index: number) => {
-    console.log("center ", index);
+    // console.log("center ", index);
     setCenterIndex(index);
     setOnce(true);
 
