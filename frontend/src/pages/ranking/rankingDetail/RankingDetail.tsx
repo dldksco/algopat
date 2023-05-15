@@ -1,4 +1,4 @@
-import { addCommas } from "@/pages/code/hooks/func";
+import { addCommas, pathColor } from "@/pages/code/hooks/func";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleLeft } from "@fortawesome/free-solid-svg-icons";
 import { RankingDetailBoard } from "../rankingDetailBoard/RankingDetailBoard";
@@ -144,7 +144,15 @@ export const RankingDetail = () => {
               </div>
               <div className={style.vertical_line} />
               <div>
-                <p>{pageInfoData?.masterUserProblemRank.gptTotalScore}점</p>
+                <p
+                  style={{
+                    color: pathColor(
+                      pageInfoData?.masterUserProblemRank.gptTotalScore || 0
+                    ),
+                  }}
+                >
+                  {pageInfoData?.masterUserProblemRank.gptTotalScore}점
+                </p>
                 <p>종합점수</p>
               </div>
             </div>

@@ -1,5 +1,5 @@
 import { v4 as uuidv4 } from "uuid";
-import { addCommas } from "@/pages/code/hooks/func";
+import { addCommas, pathColor } from "@/pages/code/hooks/func";
 
 import style from "./RankingDetailBoard.module.css";
 import { SolutionColumn } from "@/types/type";
@@ -54,7 +54,13 @@ export const RankingDetailBoard = ({ data }: props) => {
                 </div>
                 <div className={style.vertical_line} />
                 <div>
-                  <p>{v.gptTotalScore}점</p>
+                  <p
+                    style={{
+                      color: pathColor(v.gptTotalScore || 0),
+                    }}
+                  >
+                    {v.gptTotalScore}점
+                  </p>
                   <p>종합점수</p>
                 </div>
               </div>
