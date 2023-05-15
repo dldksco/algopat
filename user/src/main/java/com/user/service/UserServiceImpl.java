@@ -5,14 +5,17 @@ import com.user.domain.User;
 import com.user.domain.UserImage;
 import com.user.domain.UserStatus;
 import com.user.domain.UserStatusType;
+import com.user.domain.UserSubmitCount;
 import com.user.dto.BackjoonUserDTO;
 import com.user.dto.GithubUserIdInfoDTO;
 import com.user.dto.UserCheckResponseDTO;
 import com.user.dto.UserInfo;
+import com.user.dto.UserSubmitCountDTO;
 import com.user.exception.BaseException;
 import com.user.repository.UserImageRespository;
 import com.user.repository.UserRepository;
 import com.user.repository.UserStatusRepository;
+import com.user.repository.UserSubmitCountRepostiory;
 import java.util.Optional;
 import javax.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -27,6 +30,7 @@ public class UserServiceImpl implements UserService {
     private final UserStatusRepository userStatusRepository;
     private final UserImageRespository userImageRespository;
 
+    private final UserSubmitCountRepostiory userSubmitCountRepostiory;
 
     @Override
     @Transactional
@@ -36,7 +40,10 @@ public class UserServiceImpl implements UserService {
         Optional<User> user = userRepository.findByUserGithubId(githubUserId);
         if(user.isPresent()){
             Long userSeq = user.get().getUserSeq();
-            UserStatus userStatus = userStatusRepository.findTopByUserUserSeqOrderByUserStatusCreatedAtDesc(userSeq).orElseThrow(() -> new BaseException(ErrorCode.SERVICE_SERVLET_ERROR));
+            UserStatus userStatus = userStatusRepository.findTopByUserUserSeqOrderByUserStatusCreatedAtDesc(userSeq).orElseThrow(() -> {
+                log.error("can not find userStatus in checkAndJoinGithubUser");
+                throw new BaseException(ErrorCode.SERVICE_SERVLET_ERROR);
+            });
             if(!userStatus.getUserStatusStatus().equals(UserStatusType.AVAILABLE)){
                 log.error("is UNVALID USER");
 
@@ -58,13 +65,14 @@ public class UserServiceImpl implements UserService {
             return UserCheckResponseDTO.builder().userSeq(userSeq).build();
         }
         else{
-            long newUserSeq =JoinGithubUser(githubUserIdInfoDTO);
+            long newUserSeq =joinGithubUser(githubUserIdInfoDTO);
             return UserCheckResponseDTO.builder().userSeq(newUserSeq).build();
         }
     }
 
     @Override
-    public long JoinGithubUser(GithubUserIdInfoDTO githubUserIdInfoDTO) {
+    @Transactional
+    public long joinGithubUser(GithubUserIdInfoDTO githubUserIdInfoDTO) {
         User newUser = User.builder().userGithubId(githubUserIdInfoDTO.getUserGithubId()).build();
 
         UserStatus userStatus = UserStatus.builder().user(newUser).userStatusStatus(
@@ -72,8 +80,10 @@ public class UserServiceImpl implements UserService {
 
         UserImage userImage = UserImage.builder().userImageUrl(githubUserIdInfoDTO.getUserImageUrl()).user(newUser).build();
 
+        UserSubmitCount userSubmitCount = UserSubmitCount.builder().build();
         newUser.getUserStatuses().add(userStatus);
         newUser.setUserImage(userImage);
+        newUser.setUserSubmitCount(userSubmitCount);
         userRepository.save(newUser);
 
 
@@ -81,10 +91,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public void checkAndJoinBackjoonUser(BackjoonUserDTO backjoonUserDTO) {
         User user = userRepository.findByUserSeq(backjoonUserDTO.getUserSeq()).orElseThrow(() -> {
             log.error("can not find backjoon id");
-            return new BaseException(ErrorCode.DATABASE_GET_ERROR);
+            throw new BaseException(ErrorCode.DATABASE_GET_ERROR);
         });
         if(user.getUserBackjoonId().equals("NO_SUBMITTED")){
             log.info("first SUBMIT :" + user.getUserGithubId());
@@ -97,14 +108,15 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
+    @Transactional
     public UserInfo userProfile(Long userSeq) {
         UserImage  userImage = userImageRespository.findByUserUserSeqWithFetchJoin(userSeq).orElseThrow(() -> {
             log.error("can not find user Image");
-            return new BaseException(ErrorCode.SERVICE_SERVLET_ERROR);
+            throw new BaseException(ErrorCode.SERVICE_SERVLET_ERROR);
         });
         User user = userRepository.findByUserSeq(userSeq).orElseThrow(()->{
             log.info("can not find user");
-            return new BaseException(ErrorCode.DATABASE_GET_ERROR);
+            throw new BaseException(ErrorCode.DATABASE_GET_ERROR);
         });
 
         return UserInfo.builder()
@@ -112,5 +124,39 @@ public class UserServiceImpl implements UserService {
             .userImageUrl(userImage.getUserImageUrl())
             .userBackjoonId(user.getUserBackjoonId())
             .build();
+    }
+
+    @Override
+    @Transactional
+    public void plusUserSubmitCount(Long userSeq) {
+        UserSubmitCount userSubmitCount = userSubmitCountRepostiory.findByUserUserSeqWithFetchJoin(userSeq).orElseThrow(()->{
+            log.error("error plusUserSubmitCount");
+            throw new BaseException(ErrorCode.DATABASE_GET_ERROR);
+        });
+        Long userSubmitCountCount = userSubmitCount.getUserSubmitCount();
+        userSubmitCount.setUserSubmitCount(userSubmitCountCount+1);
+        userSubmitCountRepostiory.save(userSubmitCount);
+    }
+
+    @Override
+    @Transactional
+    public void minusUserSubmitCount(Long userSeq) {
+        UserSubmitCount userSubmitCount = userSubmitCountRepostiory.findByUserUserSeqWithFetchJoin(userSeq).orElseThrow(()->{
+            log.error("error minusUserSubmitCount");
+            throw new BaseException(ErrorCode.DATABASE_GET_ERROR);
+        });
+        Long userSubmitCountCount = userSubmitCount.getUserSubmitCount();
+        userSubmitCount.setUserSubmitCount(userSubmitCountCount-1);
+        userSubmitCountRepostiory.save(userSubmitCount);
+    }
+
+    @Override
+    @Transactional
+    public UserSubmitCountDTO findUserSubmitCound(Long userSeq) {
+        UserSubmitCount userSubmitCount = userSubmitCountRepostiory.findByUserUserSeqWithFetchJoin(userSeq).orElseThrow(()->{
+            log.error("find plusUserSubmitCount");
+            throw new BaseException(ErrorCode.DATABASE_GET_ERROR);
+        });
+        return UserSubmitCountDTO.builder().userSubmitCountCount(userSubmitCount.getUserSubmitCount()).build();
     }
 }
