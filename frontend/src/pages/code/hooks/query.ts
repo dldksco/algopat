@@ -55,8 +55,8 @@ export interface TotalInfo {
  * 선택한 문제에 대한 상세한 코드 리뷰를 불러오는 함수
  */
 export const getSolution = (solutionSeq: number, token: string) => {
-  console.log(token);
   const fetchSolution = async (): Promise<Solution> => {
+    console.log("솔루션 요청");
     const { data } = await $.get(
       `/code/problem/submission/solution/detail/${solutionSeq}`
     );
@@ -64,6 +64,7 @@ export const getSolution = (solutionSeq: number, token: string) => {
   };
 
   const fetchForExtension = async (): Promise<Solution> => {
+    console.log("익스텐션");
     const { data } = await axios.get(
       `https://algopat.kr/api/code/problem/submission/solution/detail/${solutionSeq}`,
       {
@@ -78,7 +79,7 @@ export const getSolution = (solutionSeq: number, token: string) => {
 
   const { data, isLoading, isError, refetch } = useQuery(
     ["GptSolution", solutionSeq],
-    !token ? fetchForExtension : fetchSolution,
+    token ? fetchForExtension : fetchSolution,
     { enabled: !!solutionSeq }
   );
 
