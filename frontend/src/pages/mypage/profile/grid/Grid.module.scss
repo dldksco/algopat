@@ -18,7 +18,7 @@
     }
     padding-top: 34px;
     padding-left: 20px;
-    padding-right: 16px;
+    padding-right: 26px;
   }
   .grid_family {
     overflow-x: auto;
@@ -39,12 +39,34 @@
       .grid_cell {
         width: 11px;
         height: 11px;
-        border: 0.5px solid #ececec;
+        border: 0.5px solid #242f3c;
         border-radius: 2px;
+        position: relative;
         cursor: pointer;
-        .grid_cell:hover {
-          background-color: blue;
+        .cell_hover {
+          display: none;
+          color: black;
+          font-size: 0.5rem;
+          text-align: center;
+          border-radius: 5px;
+          z-index: 3;
         }
+      }
+      .grid_cell:hover {
+        border: 3px solid white;
+        width: 12px;
+        height: 12px;
+      }
+      .grid_cell:hover .cell_hover {
+        position: absolute;
+        top: 14px;
+        left: -62px;
+        width: 130px;
+        height: 25px;
+        padding-top: 6px;
+        background-color: white;
+        display: block;
+        z-index: 3;
       }
     }
   }
@@ -146,4 +168,17 @@
 }
 .description {
   text-align: right;
+}
+
+@media screen and (max-width: 768px) {
+  .grid {
+    .gridColor_container {
+      .gridColor_four {
+        display: none;
+      }
+    }
+    .days {
+      padding-right: 16px;
+    }
+  }
 }

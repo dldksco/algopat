@@ -14,9 +14,9 @@ export const months = [
     "Dec",
     "",
   ];
-export const monthsWeight = [51, 51, 51, 51, 65, 52, 52, 52, 51, 65,51, 65];
+export const monthsWeight = [51, 51, 51, 65, 51, 52, 65, 52, 51, 65,51, 65];
 export const colors = {
-    0: "#ECECEC",
+    0: "#979797",
     1: "#A8E4AA",
     2: "#82CB92",
     3: "#5CB17A",

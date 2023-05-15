@@ -37,7 +37,6 @@ export const Grid = () => {
       (7 * 24 * 60 * 60 * 1000)
   );
   const startMonth = startDate.getMonth();
-  const startDay = startDate.getDay();
   if (gridData !== undefined) {
     gridData.forEach((object) => {
       const currentDate = new Date(object.userSubmitProblemCreatedAt);
@@ -63,7 +62,6 @@ export const Grid = () => {
   const handleClick = (date: string, color: number) => {
     setStreakDateState(date);
     setStreakColorState(color);
-    console.log(date);
   };
 
   return (
@@ -116,7 +114,15 @@ export const Grid = () => {
                         grid[rowIndex][colIndex]
                       )
                     }
-                  />
+                  >
+                    <div
+                      className={style.cell_hover}
+                      style={{ left: -2 * colIndex }}
+                    >
+                      {gridDate[rowIndex][colIndex]}: {grid[rowIndex][colIndex]}
+                      문제 제출
+                    </div>
+                  </div>
                 );
               })
             )}

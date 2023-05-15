@@ -1,55 +1,43 @@
 import { Grid } from "./grid/Grid";
 import { LoadingSpinner } from "@/components/loadingspinner/LoadingSpinner";
-import { useEffect } from "react";
-import { getProfile } from "../hooks/query";
-import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
+import { useEffect, useState } from "react";
+import { getBackImage, getProfile, getTier } from "../hooks/query";
+import { useRecoilValue } from "recoil";
 import { profileState } from "@/atoms/user.atom";
-import { useRecoilState } from "recoil";
+
 import style from "./Profile.module.css";
 
 export const Profile = () => {
   const { isLoading: isLoadingProfile, data: profileData } = getProfile();
-  //const [myProfile, setMyProfile] = useRecoilState(profileState);
-
-  const getBackImage = async () => {
-    const response = await axios.get(
-      `https://solvedac-ixdn5ymk3a-du.a.run.app/backgroundShow/${tierData.backgroundId}`
-    );
-    const data = await response.data;
-    return data;
-  };
-
-  const getTier = async () => {
-    if (profileData === undefined) return;
-    const response = await axios.get(
-      `https://solvedac-ixdn5ymk3a-du.a.run.app/userShow/${profileData.userBackjoonId}`
-    );
-    const data = await response.data;
-    return data;
-  };
-
-  const {
-    isLoading: isLoadingImage,
-    data: imageData,
-    refetch: refetchImage,
-  } = useQuery(["backimageupdate"], getBackImage, { enabled: false });
+  const [isTier, setIsTier] = useState(false);
+  const [isBack, setIsBack] = useState(false);
+  const myProfile = useRecoilValue(profileState);
 
   const {
     isLoading: isLoadingTier,
     data: tierData,
     refetch: refetchTier,
-  } = useQuery(["tierupdate"], getTier, { enabled: false });
+  } = getTier(myProfile.userBackjoonId, isTier);
+  const {
+    isLoading: isLoadingImage,
+    data: imageData,
+    refetch: refetchImage,
+  } = getBackImage(myProfile.backgroundId, isBack);
 
   useEffect(() => {
-    if (profileData && profileData.userBackjoonId !== "NO_SUBMITTED") {
+    if (myProfile.backImage !== "") return;
+    if (myProfile.userBackjoonId !== "NO_SUBMITTED") {
+      setIsTier(true);
       refetchTier();
-      if (tierData) {
+      setIsTier(false);
+      if (myProfile.tier > 0) {
+        setIsBack(true);
         refetchImage();
+        setIsBack(false);
       }
     }
-  });
-  if (isLoadingProfile || isLoadingTier || isLoadingImage) {
+  }, [myProfile]);
+  if (isLoadingProfile) {
     return (
       <div>
         <LoadingSpinner />
@@ -57,25 +45,20 @@ export const Profile = () => {
     );
   }
 
-  // if (tierData && imageData && myProfile.myTier != 0) {
-  //   setMyProfile({
-  //     myBackImage: imageData.myBackImage,
-  //     myTier: tierData.myTier,
-  //   });
-  // }
-
   return (
     <>
       <div className={style.box}>
-        {imageData ? (
-          <div className={style.backgroundImage}>
+        <div className={style.backgroundImage}>
+          {myProfile.backImage !== "" ? (
             <img
-              src={imageData.backgroundImageUrl}
+              src={myProfile.backImage}
               style={{ backgroundSize: "cover" }}
               alt=""
             />
-          </div>
-        ) : null}
+          ) : (
+            <div style={{ width: "100%", height: "300px" }} />
+          )}
+        </div>
         <div className={style.profileAll}>
           <div className={style.profilecontainer}>
             <div
@@ -90,12 +73,10 @@ export const Profile = () => {
             <div className={style.profileinfo}>
               <div className={style.gitinfo}>
                 <p className={style.nickname}>
-                  {profileData !== undefined &&
-                  profileData &&
-                  profileData.userBackjoonId !== "NO_SUBMITTED" &&
-                  tierData.tier > 0 ? (
+                  {myProfile.userBackjoonId !== "NO_SUBMITTED" &&
+                  myProfile.tier > 0 ? (
                     <img
-                      src={`https://static.solved.ac/tier_small/${tierData.tier}.svg`}
+                      src={`https://static.solved.ac/tier_small/${myProfile.tier}.svg`}
                       style={{
                         marginRight: "6px",
                         width: "12px",
