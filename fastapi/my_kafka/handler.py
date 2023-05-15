@@ -20,8 +20,6 @@ logger = logging.getLogger()
 # Consumer 
 # 카프카를 통해 consume한 문제 정보를 통해 GPT 응답 생성 
 async def consume_problem_summary(topic : str):
-    logger.info("listen to 토픽 : " + topic)
-
     consumer = AIOKafkaConsumer(
         topic,
         bootstrap_servers = KAFKA_BOOTSTRAP_SERVERS,
