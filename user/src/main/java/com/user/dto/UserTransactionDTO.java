@@ -21,4 +21,11 @@ public class UserTransactionDTO {
       this.isSuccess = value;
     }
   }
+
+  @JsonAnySetter
+  public void setUserSeq(String key, long value) {
+    if ("userSeq".equalsIgnoreCase(key) || "user_seq".equalsIgnoreCase(key)) {
+      this.userSeq = value;
+    }
+  }
 }
