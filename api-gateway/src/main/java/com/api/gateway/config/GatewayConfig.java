@@ -43,17 +43,18 @@ public class GatewayConfig {
       String path = request.getURI().getPath();
       logger.info(requestURL);
       boolean isAllowedPath = ALLOWED_PATHS.stream().anyMatch(path::startsWith);
-
+      String accessToken = request.getHeaders().getFirst("Authorization");
       if (isAllowedPath) {
-        return chain.filter(exchange);
-      } else {
-
-        String accessToken = request.getHeaders().getFirst("Authorization");
+        log.info("isAllowdPath");
+        if (accessToken == null) {
+          log.info("isAllowedPath and accesToken is null");
+          return chain.filter(exchange);
+        }
+      }
 
         if (accessToken == null) {
           exchange.getResponse().setStatusCode(HttpStatus.FORBIDDEN);
           return exchange.getResponse().setComplete();
-
         }
 
         try {
@@ -62,7 +63,7 @@ public class GatewayConfig {
               .setSigningKey(getSigningKey())
               .build()
               .parseClaimsJws(accessToken);
-          System.out.println("검사완료");
+          log.info("validate accessToken");
           try{
             Long userSeq = claimsJws.getBody().get("userSeq",Long.class);
             // 헤더 추가
@@ -84,7 +85,7 @@ public class GatewayConfig {
           exchange.getResponse().setStatusCode(HttpStatus.FORBIDDEN);
           return exchange.getResponse().setComplete();
         }
-      }
+
     };
   }
 }
