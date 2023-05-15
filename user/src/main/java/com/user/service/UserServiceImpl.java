@@ -34,18 +34,20 @@ public class UserServiceImpl implements UserService {
         String githubUserId = githubUserIdInfoDTO.getUserGithubId();
         String githubUserImageUrl = githubUserIdInfoDTO.getUserImageUrl();
         Optional<User> user = userRepository.findByUserGithubId(githubUserId);
-        System.out.println("들어왔나");
         if(user.isPresent()){
-            System.out.println("들어왔나1");
             Long userSeq = user.get().getUserSeq();
             UserStatus userStatus = userStatusRepository.findTopByUserUserSeqOrderByUserStatusCreatedAtDesc(userSeq).orElseThrow(() -> new BaseException(ErrorCode.SERVICE_SERVLET_ERROR));
-            System.out.println("들어왔나2");
-            if(!userStatus.getUserStatusStatus().equals(UserStatusType.AVAILABLE))
+            if(!userStatus.getUserStatusStatus().equals(UserStatusType.AVAILABLE)){
+                log.error("is UNVALID USER");
+
                 throw new BaseException(ErrorCode.UNVALID_USER);
-            System.out.println("들어왔나3");
-            UserImage  userImage = userImageRespository.findByUserUserSeqWithFetchJoin(userSeq).orElseThrow(() -> new BaseException(ErrorCode.SERVICE_SERVLET_ERROR));
-            System.out.println("userImage:"+ userImage.getUserImageUrl()+" githubuserimageurl: "+githubUserImageUrl);
-            System.out.println("user id: "+ githubUserId);
+            }
+
+            UserImage  userImage = userImageRespository.findByUserUserSeqWithFetchJoin(userSeq).orElseThrow(() -> {
+                log.error("find user image error");
+               return new BaseException(ErrorCode.SERVICE_SERVLET_ERROR);
+            });
+
             if(!userImage.getUserImageUrl().equals(githubUserImageUrl)){
                 userImage.setUserImageUrl(githubUserImageUrl);
                 userImageRespository.save(userImage);
@@ -56,7 +58,6 @@ public class UserServiceImpl implements UserService {
             return UserCheckResponseDTO.builder().userSeq(userSeq).build();
         }
         else{
-            System.out.println("들어왔나4");
             long newUserSeq =JoinGithubUser(githubUserIdInfoDTO);
             return UserCheckResponseDTO.builder().userSeq(newUserSeq).build();
         }
@@ -75,16 +76,18 @@ public class UserServiceImpl implements UserService {
         newUser.setUserImage(userImage);
         userRepository.save(newUser);
 
-        System.out.println("test");
 
         return newUser.getUserSeq();
     }
 
     @Override
     public void checkAndJoinBackjoonUser(BackjoonUserDTO backjoonUserDTO) {
-        User user = userRepository.findByUserSeq(backjoonUserDTO.getUserSeq()).orElseThrow(() -> new BaseException(ErrorCode.DATABASE_GET_ERROR));
-        System.out.println("드러옴!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"+ user.getUserBackjoonId());
+        User user = userRepository.findByUserSeq(backjoonUserDTO.getUserSeq()).orElseThrow(() -> {
+            log.error("can not find backjoon id");
+            return new BaseException(ErrorCode.DATABASE_GET_ERROR);
+        });
         if(user.getUserBackjoonId().equals("NO_SUBMITTED")){
+            log.info("first SUBMIT :" + user.getUserGithubId());
             user.setUserBackjoonId(backjoonUserDTO.getUserBackjoonId());
         }
         userRepository.save(user);
@@ -95,8 +98,14 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserInfo userProfile(Long userSeq) {
-        UserImage  userImage = userImageRespository.findByUserUserSeqWithFetchJoin(userSeq).orElseThrow(() -> new BaseException(ErrorCode.SERVICE_SERVLET_ERROR));
-        User user = userRepository.findByUserSeq(userSeq).orElseThrow(()->new BaseException(ErrorCode.DATABASE_GET_ERROR));
+        UserImage  userImage = userImageRespository.findByUserUserSeqWithFetchJoin(userSeq).orElseThrow(() -> {
+            log.error("can not find user Image");
+            return new BaseException(ErrorCode.SERVICE_SERVLET_ERROR);
+        });
+        User user = userRepository.findByUserSeq(userSeq).orElseThrow(()->{
+            log.info("can not find user");
+            return new BaseException(ErrorCode.DATABASE_GET_ERROR);
+        });
 
         return UserInfo.builder()
             .userGithubId(user.getUserGithubId())
