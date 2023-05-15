@@ -27,7 +27,7 @@ export const SearchGroup = ({ solutionCount }: props) => {
   const sortSelectOption = [
     { value: "runtime", name: "실행시간순" },
     { value: "memory", name: "메모리순" },
-    { value: "score", name: "리팩토링순" },
+    { value: "score", name: "종합점수" },
     { value: "codeLength", name: "코드길이순" },
   ];
 

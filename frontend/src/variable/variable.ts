@@ -31,3 +31,13 @@ export const bj_level = [
   "Ruby II",
   "Ruby I",
 ];
+
+export const codeLanguage = (str: string | undefined) => {
+  if (str === undefined) return "";
+
+  if (str == "cpp") {
+    return "C++";
+  } else {
+    return str.charAt(0).toUpperCase() + str.slice(1);
+  }
+};

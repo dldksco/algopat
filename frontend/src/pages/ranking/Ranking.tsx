@@ -1,7 +1,7 @@
 import { RankingCarousel } from "./rankingCarousel/RankingCarousel";
 import { RankingBoard } from "./rankingBoard/RankingBoard";
 import { Pagenation } from "@/components/pagenation/Pagenation";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 import style from "./Ranking.module.css";
 import { getRankingList, getSolvedList } from "./hooks/query";
@@ -14,19 +14,28 @@ import { userInfoState } from "@/atoms/user.atom";
 
 export const Ranking = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const searchParams = new URLSearchParams(location.search);
-  // const page = searchParams.get("page") ? searchParams.get("page") : "1";
+  const page = searchParams.get("page") ? searchParams.get("page") : "1";
 
   const [clickState, setClickState] = useState(false);
-  const [page, setPage] = useState(1);
+  // const [page, setPage] = useState(1);
   const userInfo = useRecoilValue(userInfoState);
+  const centerIndex = useRecoilValue(centerIndexState);
+
+  // useEffect(() => {
+  //   setPage(Number(pageParam));
+  //   console.log("page ", page);
+  // }, [pageParam]);
 
   useEffect(() => {
-    setPage(searchParams.get("page") ? Number(searchParams.get("page")) : 1);
-  }, [page]);
+    // searchParams.set("page", "1");
+    // console.log(location);
+    navigate(location.pathname + "?page=1");
+  }, [centerIndex]);
 
   const level = useRecoilValue(centerIndexState);
-  const { data, isLoading } = getRankingList(level, page, clickState);
+  const { data, isLoading } = getRankingList(level, Number(page), clickState);
   const { data: solvedList } = getSolvedList();
 
   const solvedSet = new Set(solvedList?.problemIdList);
@@ -37,12 +46,12 @@ export const Ranking = () => {
 
   const allButtonClick = () => {
     setClickState(false);
-    setPage(1);
+    // setPage(1);
   };
 
   const solvedAllButtonClick = () => {
     setClickState(true);
-    setPage(1);
+    // setPage(1);
   };
 
   return (
