@@ -36,6 +36,7 @@ $.interceptors.response.use(
             text: "토큰이 만료되었습니다! 다시 로그인 해주세요!",
             confirmButtonText: "닫기",
           }).then(() => {
+            localStorage.removeItem("access-token");
             window.location.href = `https://www.algopat.kr`;
           });
         });
