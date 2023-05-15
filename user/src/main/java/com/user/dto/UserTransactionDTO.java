@@ -15,17 +15,5 @@ public class UserTransactionDTO {
   private String isSuccess;
   private long userSeq;
 
-  @JsonAnySetter
-  public void setAny(String key, String value) {
-    if ("isSuccess".equalsIgnoreCase(key) || "is_success".equalsIgnoreCase(key)) {
-      this.isSuccess = value;
-    }
-  }
 
-  @JsonAnySetter
-  public void setUserSeq(String key, long value) {
-    if ("userSeq".equalsIgnoreCase(key) || "user_seq".equalsIgnoreCase(key)) {
-      this.userSeq = value;
-    }
-  }
 }
