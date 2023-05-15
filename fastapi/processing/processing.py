@@ -27,6 +27,7 @@ from redis import Redis
 import asyncio
 from my_dto.common_dto import MessageDTO, UserServiceDTO
 from my_exception.exception import MyCustomError 
+from database.get_session import async_session
 
 # logger 설정 
 logger = getLogger()
@@ -35,34 +36,33 @@ OPEN_BRACE = '{'
 CLOSE_BRACE = '}'
 LOCK_TIMEOUT = 300
 
-local_open_ai_api_key = open_ai_api_key
+local_open_ai_api_key = open_ai_api_key # 서버에서 들고있는 OPEN_AI_API_KEY 
 
-redis_conn = Redis.from_url(redis_url)
+redis_conn = Redis.from_url(redis_url)  # Redis 연결 설정 정보 
     
 # GPT 응답 생성 함수
 @time_logger("GPT 비즈니스 로직")
 async def processing(data : ProblemData, send_callback):
-    user_seq = data.userSeq 
-    problem_id = data.problemId
+    user_seq = data.userSeq      # 회원 식별 번호 
+    problem_id = data.problemId  # 문제 아이디 
+    logger.info("요청한 유저 : " + str(user_seq))
 
-    logger.info("user_seq : " + str(user_seq))
-
-    # SSE 1
+    # SSE 1 
     message_dto = MessageDTO(progress_info="코드 분석 시작", percentage=25, state="ok", user_seq=user_seq)
     await send_callback("alert", message_dto)
 
-
+    # 지원 언어, 정답 여부 판단 
     if await filtering_input_data(data, user_seq, send_callback):
         return
+    
     data.language = await parse_lang_type(data.language)
     local_chat_llm_0 = ChatOpenAI(temperature=0, openai_api_key=local_open_ai_api_key, request_timeout=120)
-    if data.openai_api_key == "0" :
+
+    if data.openai_api_key == "0" :     # 회원 OPEN_AI_API_KEY 없음 
         chat_llm_0 = local_chat_llm_0 
-    else :
+    else :                              # 회원 OPEN_AI_API_KEY 있음  
         chat_llm_0 = ChatOpenAI(temperature=0, openai_api_key=data.openai_api_key, request_timeout=120)
-    # chat_llm_1 = ChatOpenAI(temperature=0.1, openai_api_key=data.openai_api_key)
-    # chat_llm_3 = ChatOpenAI(temperature=0.3, openai_api_key=data.openai_api_key, request_timeout=120)
-    # chat_llm_10 = ChatOpenAI(temperature=1, openai_api_key=data.openai_api_key)
+
     json_chain = await json_formatter(chat_llm_0)
     
     lock_name = f"problem_id{problem_id}"
@@ -70,7 +70,7 @@ async def processing(data : ProblemData, send_callback):
     while True:
         try:
             lock = redis_lock.Lock(redis_conn, lock_name, expire=LOCK_TIMEOUT, auto_renewal=True)
-            logger.info("동일한 문제 대기중!")
+            logger.info("동일한 문제 대기중")
             if lock.acquire(blocking=False):
                 logger.info("분산락 시작")
                 await summary_problem(problem_id, user_seq, data, local_chat_llm_0, json_chain)
@@ -86,6 +86,7 @@ async def processing(data : ProblemData, send_callback):
             await send_callback("user-service", user_service_dto)
 
             raise MyCustomError("분산락 에러 발생 - 문제 요약")
+
 
 
     
@@ -131,16 +132,13 @@ async def processing(data : ProblemData, send_callback):
 
 
 
-from database.get_session import async_session
+# 회원 문제 DB 저장 + GPT 응답 DB 저장 + 문제 메타 DB 업데이트 및 저장 
 async def main_transaction(problem_id : int, user_seq : int, data : ProblemData, result, send_callback):
     async with async_session() as session:
         try:
             user_submit_problem_data = await save_user_problem_origin(problem_id, user_seq, data.submissionTime, session)
             submission_id = await save_user_submit_solution_origin(problem_id, user_seq, user_submit_problem_data.user_submit_problem_seq, data, session)
             await save_gpt_solution(submission_id, user_seq, result, session)
-
-            ### 문제 메타데이터 DB에 메타데이터 저장 ### 
-            # await update_problem_meta(problem_id, user_seq, data, session)
 
             lock_name = f"problem_meta{problem_id}"
             ### 분산락 
@@ -172,7 +170,7 @@ async def main_transaction(problem_id : int, user_seq : int, data : ProblemData,
             raise MyCustomError("트랜잭션 처리 중 에러 발생")
 
 
-
+# 문제 정보 요약 함수 
 async def summary_problem(problem_id : int, user_seq : int, data : ProblemData, chat_llm, json_chain):
     is_gpt_problem_summary_exist = await check_gpt_problem_summary_is_exist(problem_id)
     if not is_gpt_problem_summary_exist:
