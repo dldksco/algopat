@@ -66,14 +66,6 @@ export const Grid = () => {
     setStreakColorState(color);
   };
 
-  const handleMouseEnter = () => {
-    setHovered(true);
-  };
-
-  const handleMouseLeave = () => {
-    setHovered(false);
-  };
-
   return (
     <>
       <div className={style.grid}>
@@ -124,10 +116,11 @@ export const Grid = () => {
                         grid[rowIndex][colIndex]
                       )
                     }
-                    // onMouseEnter={handleMouseEnter}
-                    // onMouseLeave={handleMouseLeave}
                   >
-                    <div className={style.cell_hover}>
+                    <div
+                      className={style.cell_hover}
+                      style={{ left: -2 * colIndex }}
+                    >
                       {gridDate[rowIndex][colIndex]}: {grid[rowIndex][colIndex]}
                       문제 제출
                     </div>

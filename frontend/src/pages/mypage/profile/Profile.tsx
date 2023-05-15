@@ -30,13 +30,19 @@ export const Profile = () => {
     isLoading: isLoadingImage,
     data: imageData,
     refetch: refetchImage,
-  } = useQuery(["backimageupdate"], getBackImage, { enabled: false });
+  } = useQuery(["backimageupdate"], getBackImage, {
+    enabled: false,
+    staleTime: 5 * 1000 * 60,
+  });
 
   const {
     isLoading: isLoadingTier,
     data: tierData,
     refetch: refetchTier,
-  } = useQuery(["tierupdate"], getTier, { enabled: false });
+  } = useQuery(["tierupdate"], getTier, {
+    enabled: false,
+    staleTime: 5 * 1000 * 60,
+  });
 
   useEffect(() => {
     if (profileData && profileData.userBackjoonId !== "NO_SUBMITTED") {
