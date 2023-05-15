@@ -48,7 +48,7 @@ async def processing(data : ProblemData, send_callback):
     await send_callback("alert", message_dto)
 
 
-    if await filtering_input_data(data, send_callback):
+    if await filtering_input_data(data, user_seq, send_callback):
         return
     data.language = await parse_lang_type(data.language)
     chat_llm_0 = ChatOpenAI(temperature=0, openai_api_key=data.openai_api_key, request_timeout=120)
@@ -186,16 +186,16 @@ async def summary_problem(problem_id : int, user_seq : int, data : ProblemData, 
         await save_problem_summary(problem_id, summary_json)
     
     
-async def filtering_input_data(data : ProblemData, send_callback):
+async def filtering_input_data(data : ProblemData, user_seq : int, send_callback):
     code_language = await parse_lang_type(data.language)
     if code_language == "unknown":
         logger.info("지원하지 않는 언어")
 
         # User 서버에게 실패 이벤트 전송  
-        user_service_dto = UserServiceDTO(is_success="NO", user_seq=data.userSeq)
+        user_service_dto = UserServiceDTO(is_success="NO", user_seq=user_seq)
         send_callback("user-service", user_service_dto)
 
-        message_dto = MessageDTO(progress_info="지원하지 않는 언어입니다.", percentage=-1, state="error", user_seq=data.userSeq)
+        message_dto = MessageDTO(progress_info="지원하지 않는 언어입니다.", percentage=-1, state="error", user_seq=user_seq)
         await send_callback("alert", message_dto)
         return True
     if data.resultCategory != "ac":
@@ -205,6 +205,6 @@ async def filtering_input_data(data : ProblemData, send_callback):
         user_service_dto = UserServiceDTO(is_success="NO", user_seq=data.userSeq)
         send_callback("user-service", user_service_dto)
 
-        message_dto = MessageDTO(progress_info="틀린 코드는 평가할 수 없습니다", percentage=-1, state="error", user_seq=data.userSeq)
+        message_dto = MessageDTO(progress_info="틀린 코드는 평가할 수 없습니다", percentage=-1, state="error", user_seq=user_seq)
         await send_callback("alert", message_dto)
         return True
