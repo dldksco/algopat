@@ -19,7 +19,7 @@ public interface UserService {
 
   public void minusUserSubmitCount(Long userSeq);
 
-  public UserSubmitCountDTO findUserSubmitCound(Long userSeq);
+  public UserSubmitCountDTO findUserSubmitCount(Long userSeq);
 
 
 }

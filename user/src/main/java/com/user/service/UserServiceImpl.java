@@ -152,9 +152,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public UserSubmitCountDTO findUserSubmitCound(Long userSeq) {
+    public UserSubmitCountDTO findUserSubmitCount(Long userSeq) {
         UserSubmitCount userSubmitCount = userSubmitCountRepostiory.findByUserUserSeqWithFetchJoin(userSeq).orElseThrow(()->{
-            log.error("find plusUserSubmitCount");
+            log.error("find UserSubmitCount");
             throw new BaseException(ErrorCode.DATABASE_GET_ERROR);
         });
         return UserSubmitCountDTO.builder().userSubmitCountCount(userSubmitCount.getUserSubmitCount()).build();
