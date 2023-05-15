@@ -37,7 +37,6 @@ export const Grid = () => {
       (7 * 24 * 60 * 60 * 1000)
   );
   const startMonth = startDate.getMonth();
-  const startDay = startDate.getDay();
   if (gridData !== undefined) {
     gridData.forEach((object) => {
       const currentDate = new Date(object.userSubmitProblemCreatedAt);

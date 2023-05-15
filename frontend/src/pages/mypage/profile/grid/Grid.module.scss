@@ -4,6 +4,7 @@
   background-color: #1d2538;
   display: flex;
   position: relative;
+  z-index: 2;
   .days {
     display: flex;
     flex-direction: column;
@@ -18,7 +19,7 @@
     }
     padding-top: 34px;
     padding-left: 20px;
-    padding-right: 16px;
+    padding-right: 46px;
   }
   .grid_family {
     overflow-x: auto;
@@ -41,10 +42,20 @@
         height: 11px;
         border: 0.5px solid #ececec;
         border-radius: 2px;
+        position: relative;
         cursor: pointer;
-        .grid_cell:hover {
-          background-color: blue;
-        }
+        z-index: 3;
+      }
+
+      .grid_cell:hover::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 4;
+        background-color: white;
+        width: 80px;
+        height: 30px;
       }
     }
   }

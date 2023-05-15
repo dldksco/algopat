@@ -3,6 +3,7 @@
   width: 100%;
   height: auto;
   position: relative;
+  z-index: 1;
 }
 .box .backgroundImage img {
   width: 100%;
@@ -34,6 +35,7 @@
   width: 80%;
   margin-left: auto;
   margin-right: auto;
+  z-index: 2;
 }
 
 @media screen and (max-width: 768px) {

@@ -4,13 +4,10 @@ import { useEffect } from "react";
 import { getProfile } from "../hooks/query";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import { profileState } from "@/atoms/user.atom";
-import { useRecoilState } from "recoil";
 import style from "./Profile.module.css";
 
 export const Profile = () => {
   const { isLoading: isLoadingProfile, data: profileData } = getProfile();
-  //const [myProfile, setMyProfile] = useRecoilState(profileState);
 
   const getBackImage = async () => {
     const response = await axios.get(
@@ -56,13 +53,6 @@ export const Profile = () => {
       </div>
     );
   }
-
-  // if (tierData && imageData && myProfile.myTier != 0) {
-  //   setMyProfile({
-  //     myBackImage: imageData.myBackImage,
-  //     myTier: tierData.myTier,
-  //   });
-  // }
 
   return (
     <>
