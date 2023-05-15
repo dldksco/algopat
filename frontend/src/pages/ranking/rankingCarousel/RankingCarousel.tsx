@@ -105,14 +105,14 @@ export const RankingCarousel = () => {
   };
 
   const changeCallback = (index: number) => {
+    console.log("center ", index);
     setCenterIndex(index);
     setOnce(true);
-
-    // console.log("center ", index);
 
     //selectbox 현재 위치에 맞게 수정
     if (index === 0) {
       setlevelRankSelect("-1");
+      setlevelNumberSelect("0");
     } else {
       setlevelRankSelect(Math.floor((index - 1) / 5).toString());
       setlevelNumberSelect(Math.floor((index - 1) % 5).toString());
@@ -180,15 +180,16 @@ export const RankingCarousel = () => {
 
     if (levelRankSelect == "-1") {
       sliderRef.current.slickGoTo(0);
+      changeCallback(0);
     } else {
       sliderRef.current.slickGoTo(Number(levelRankSelect) * 5 + 1);
+      changeCallback(Number(levelRankSelect) * 5 + 1);
     }
   }, [levelRankSelect]);
 
   // 숫자 선택
   useEffect(() => {
     if (!sliderRef.current || !once) return;
-
     sliderRef.current.slickGoTo(
       Number(levelRankSelect) * 5 + 1 + Number(levelNumberSelect)
     );
