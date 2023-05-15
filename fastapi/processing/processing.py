@@ -82,7 +82,7 @@ async def processing(data : ProblemData, send_callback):
             logger.error(f"예외 발생: {e}")
 
             # User 서버에게 실패 이벤트 전송  
-            user_service_dto = UserServiceDTO(is_success="NO", user_seq=user_seq)
+            user_service_dto = UserServiceDTO(isSuccess="NO", userSeq=user_seq)
             await send_callback("user-service", user_service_dto)
 
             raise MyCustomError("분산락 에러 발생 - 문제 요약")
@@ -164,7 +164,7 @@ async def main_transaction(problem_id : int, user_seq : int, data : ProblemData,
             logger.error(f"트랜잭션 처리 중 예외 발생 : {e}")
 
             # User 서버에게 실패 이벤트 전송  
-            user_service_dto = UserServiceDTO(is_success="NO", user_seq=user_seq)
+            user_service_dto = UserServiceDTO(isSuccess="NO", userSeq=user_seq)
             await send_callback("user-service", user_service_dto)
 
             message_dto = MessageDTO(progress_info="DB 작업 중 예외 발생", percentage=-1, state="error", user_seq=user_seq)
@@ -200,7 +200,7 @@ async def filtering_input_data(data : ProblemData, user_seq : int, send_callback
         logger.info("지원하지 않는 언어")
 
         # User 서버에게 실패 이벤트 전송  
-        user_service_dto = UserServiceDTO(is_success="NO", user_seq=user_seq)
+        user_service_dto = UserServiceDTO(isSuccess="NO", userSeq=user_seq)
         await send_callback("user-service", user_service_dto)
 
         message_dto = MessageDTO(progress_info="지원하지 않는 언어입니다.", percentage=-1, state="error", user_seq=user_seq)
@@ -210,7 +210,7 @@ async def filtering_input_data(data : ProblemData, user_seq : int, send_callback
         logger.info("오답 코드")
 
         # User 서버에게 실패 이벤트 전송  
-        user_service_dto = UserServiceDTO(is_success="NO", user_seq=data.userSeq)
+        user_service_dto = UserServiceDTO(isSuccess="NO", userSeq=data.userSeq)
         await send_callback("user-service", user_service_dto)
 
         message_dto = MessageDTO(progress_info="틀린 코드는 평가할 수 없습니다", percentage=-1, state="error", user_seq=user_seq)

@@ -9,5 +9,5 @@ class MessageDTO(BaseModel):
 
 # Fast API -> User DTO  (실패시) 
 class UserServiceDTO(BaseModel):
-    is_success  : str  # 이벤트 성공 / 실패 
-    user_seq    : int  # 유저 식별 번호 
+    isSuccess  : str  # 이벤트 성공 / 실패 
+    userSeq    : int  # 유저 식별 번호 
