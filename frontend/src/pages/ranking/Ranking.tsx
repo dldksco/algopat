@@ -7,16 +7,22 @@ import style from "./Ranking.module.css";
 import { getRankingList, getSolvedList } from "./hooks/query";
 import { useRecoilValue } from "recoil";
 import { centerIndexState } from "@/atoms/ranking.atom";
-import { useEffect } from "react";
+import { useState } from "react";
 import { LoadingSpinner } from "@/components/loadingspinner/LoadingSpinner";
+import { Button } from "@/components/button/Button";
 
 export const Ranking = () => {
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const page = searchParams.get("page") ? searchParams.get("page") : "1";
+  const [clickState, setClickState] = useState(false);
 
   const level = useRecoilValue(centerIndexState);
-  const { data, isLoading } = getRankingList(level + 1, Number(page));
+  const { data, isLoading } = getRankingList(
+    level + 1,
+    Number(page),
+    clickState
+  );
   const { data: solvedList } = getSolvedList();
 
   const solvedSet = new Set(solvedList?.problemIdList);
@@ -25,10 +31,34 @@ export const Ranking = () => {
     return { ...v, isSolved: solvedSet.has(v.problemId) };
   });
 
+  const allButtonClick = () => {
+    setClickState(false);
+  };
+
+  const solvedAllButtonClick = () => {
+    setClickState(true);
+  };
+
   return (
     <>
       <div className={style.RankingMain}>
         <RankingCarousel />
+        <div style={{ padding: "10px" }}>
+          <Button
+            style={
+              clickState
+                ? { marginRight: "5px" }
+                : { marginRight: "5px", color: "gray", borderColor: "gray" }
+            }
+            content="전체보기"
+            onClick={allButtonClick}
+          />
+          <Button
+            style={clickState ? { color: "gray", borderColor: "gray" } : {}}
+            content="내가 푼 문제 보기"
+            onClick={solvedAllButtonClick}
+          />
+        </div>
         {!isLoading ? (
           <>
             <RankingBoard data={boardData} />

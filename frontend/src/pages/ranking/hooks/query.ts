@@ -15,13 +15,20 @@ interface RankingColumn {
 }
 
 // 레벨별 문제 리스트 불러오는 쿼리
-export function getRankingList(level: number, pageNum: number) {
+export function getRankingList(
+  level: number,
+  pageNum: number,
+  usercheck: boolean
+) {
   const { data, isLoading, refetch } = useQuery(
-    ["getRankingList", level, pageNum],
+    ["getRankingList", level, pageNum, usercheck],
     async (): Promise<PagableResponse<RankingColumn>> => {
       const { data } = await $.get(
-        `/code/rank/${level}?pagenumber=${pageNum ? pageNum - 1 : ""}`
+        `/code/rank?level=${level}&usercheck=${usercheck}&pagenumber=${
+          pageNum ? pageNum - 1 : ""
+        }`
       );
+      console.log(data);
       return data;
     },
     {
