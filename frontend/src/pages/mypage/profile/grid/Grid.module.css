@@ -4,6 +4,7 @@
   background-color: #1d2538;
   display: flex;
   position: relative;
+  padding-right: 20px;
 }
 .grid .days {
   display: flex;
@@ -11,21 +12,20 @@
   align-items: end;
   padding-top: 34px;
   padding-left: 20px;
-  padding-right: 26px;
+  padding-right: 24px;
 }
 .grid .days .day {
   font-size: 10px;
   width: 11px;
   height: 11px;
   color: #898989;
-  padding: 7.8px;
+  padding: 7.7px;
   text-align: right;
 }
 .grid .grid_family {
   overflow-x: auto;
   overflow-y: hidden;
   margin-top: 22px;
-  margin-right: 30px;
 }
 .grid .grid_family .months {
   display: flex;
@@ -88,7 +88,6 @@
   width: 15px;
   border: 1px solid;
   border-radius: 2px;
-  background-color: #ececec;
   margin-right: 5px;
 }
 .grid .gridColor_container .gridColor_zero .text_zero {
@@ -103,9 +102,7 @@
 .grid .gridColor_container .gridColor_one .item_one {
   height: 15px;
   width: 15px;
-  border: 1px solid;
   border-radius: 2px;
-  background-color: #a8e4aa;
   margin-right: 5px;
 }
 .grid .gridColor_container .gridColor_one .text_one {
@@ -119,9 +116,7 @@
 .grid .gridColor_container .gridColor_two .item_two {
   height: 15px;
   width: 15px;
-  border: 1px solid;
   border-radius: 2px;
-  background-color: #82cb92;
   margin-right: 5px;
 }
 .grid .gridColor_container .gridColor_two .text_two {
@@ -135,9 +130,7 @@
 .grid .gridColor_container .gridColor_three .item_three {
   height: 15px;
   width: 15px;
-  border: 1px solid;
   border-radius: 2px;
-  background-color: #5cb17a;
   margin-right: 5px;
 }
 .grid .gridColor_container .gridColor_three .text_three {
@@ -151,9 +144,7 @@
 .grid .gridColor_container .gridColor_four .item_four {
   height: 15px;
   width: 15px;
-  border: 1px solid;
   border-radius: 2px;
-  background-color: #23794f;
   margin-right: 5px;
 }
 .grid .gridColor_container .gridColor_four .text_four {
@@ -173,7 +164,7 @@
 }
 
 @media screen and (max-width: 768px) {
-  .grid .gridColor_container .gridColor_four {
+  .grid .gridColor_container .gridColor_zero {
     display: none;
   }
   .grid .days {
