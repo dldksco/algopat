@@ -4,6 +4,7 @@ import com.user.dto.BackjoonUserDTO;
 import com.user.dto.GithubUserIdInfoDTO;
 import com.user.dto.UserCheckResponseDTO;
 import com.user.dto.UserInfo;
+import com.user.dto.UserSubmitCountDTO;
 import com.user.repository.UserRepository;
 import com.user.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -32,6 +33,11 @@ public class UserController {
     return ResponseEntity.ok().build();
   }
 
+  @GetMapping("/check/user-submit-count")
+  public ResponseEntity<UserSubmitCountDTO> checkUserSubmitCount(@RequestHeader("userSeq") long userSeq){
+    UserSubmitCountDTO userSubmitCountDTO=userService.findUserSubmitCount(userSeq);
+    return new ResponseEntity<>(userSubmitCountDTO,HttpStatus.OK);
+  }
 
   @GetMapping("/profile")
   public ResponseEntity<UserInfo> userProfile(@RequestHeader("userSeq") long userSeq) {
