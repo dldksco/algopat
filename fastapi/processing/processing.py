@@ -20,7 +20,7 @@ from database.database import save_problem_origin \
                             , update_problem_meta
 from logging import getLogger
 from utils.log_decorator import time_logger
-from utils.shared_env import redis_url
+from utils.shared_env import redis_url, open_ai_api_key
 from utils.utils import parse_lang_type
 import redis_lock
 from redis import Redis
@@ -34,6 +34,8 @@ logger = getLogger()
 OPEN_BRACE = '{'
 CLOSE_BRACE = '}'
 LOCK_TIMEOUT = 300
+
+local_open_ai_api_key = open_ai_api_key
 
 redis_conn = Redis.from_url(redis_url)
     
@@ -53,7 +55,11 @@ async def processing(data : ProblemData, send_callback):
     if await filtering_input_data(data, user_seq, send_callback):
         return
     data.language = await parse_lang_type(data.language)
-    chat_llm_0 = ChatOpenAI(temperature=0, openai_api_key=data.openai_api_key, request_timeout=120)
+    local_chat_llm_0 = ChatOpenAI(temperature=0, openai_api_key=local_open_ai_api_key, request_timeout=120)
+    if data.openai_api_key == "0" :
+        chat_llm_0 = local_chat_llm_0 
+    else :
+        chat_llm_0 = ChatOpenAI(temperature=0, openai_api_key=data.openai_api_key, request_timeout=120)
     # chat_llm_1 = ChatOpenAI(temperature=0.1, openai_api_key=data.openai_api_key)
     # chat_llm_3 = ChatOpenAI(temperature=0.3, openai_api_key=data.openai_api_key, request_timeout=120)
     # chat_llm_10 = ChatOpenAI(temperature=1, openai_api_key=data.openai_api_key)
@@ -67,7 +73,7 @@ async def processing(data : ProblemData, send_callback):
             logger.info("동일한 문제 대기중!")
             if lock.acquire(blocking=False):
                 logger.info("분산락 시작")
-                await summary_problem(problem_id, user_seq, data, chat_llm_0, json_chain)
+                await summary_problem(problem_id, user_seq, data, local_chat_llm_0, json_chain)
                 lock.release()
                 break
             else:
