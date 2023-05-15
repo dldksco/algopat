@@ -62,6 +62,8 @@ export const RankingCarousel = () => {
 
   const onInitCallback = () => {
     const index = centerIndex;
+    setCenterIndex(index);
+    setOnce(true);
 
     //selectbox 현재 위치에 맞게 수정
     if (index === 0) {
@@ -105,7 +107,7 @@ export const RankingCarousel = () => {
   };
 
   const changeCallback = (index: number) => {
-    console.log("center ", index);
+    // console.log("center ", index);
     setCenterIndex(index);
     setOnce(true);
 
