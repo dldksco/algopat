@@ -4,7 +4,7 @@ SUMMARY_CODE_COMPLEXITY_LONG_TMPL = (
     "CONSTRAINTS:\n"
     "You're a programming expert.\n"
     "Your job is to estimate the time complexity and space complexity of the user's algorithmic problem code step by step.\n"
-    "Never, ever, ever forget that this code is about competitive programming. You should approach everything you propose as if it were algorithmic code, not general program code.\n"
+    "Remember, this is algorithmic problem solving code. \n"
     "I have provide an existing result up to a certain point\n"
     "EXISTING RESULT: \n"
     "--------\n"
