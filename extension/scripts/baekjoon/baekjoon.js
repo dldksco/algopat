@@ -59,7 +59,16 @@ function startLoader() {
             const commit_state = data.commit_state;
 
             commitMode(commit_state, token).then((res) => {
-              if (res) {
+
+              if (key == "0") {
+                return fetch('https://algopat.kr/api/user/check/user-submit-count', {
+                  method: 'GET',
+                  headers: {
+                    'Content-Type': 'application/json',
+                    'authorization': token,
+                  }
+                })
+              } else if (res) {
                 return fetch("https://api.openai.com/v1/models",
                   {
                     method: 'GET',
@@ -74,10 +83,11 @@ function startLoader() {
               }
             }).then((res) => {
               if (res.status === 200) {
-                bojData.openai_api_key = key;
 
                 console.log('풀이가 맞았습니다. 전송을 시작합니다..');
                 console.log("보낼 데이터 ", bojData)
+
+                bojData.openai_api_key = key;
 
                 //fetch 요청
                 return fetch('https://algopat.kr/api/code/problem', {
@@ -87,10 +97,10 @@ function startLoader() {
                     'authorization': token,
                   },
                   body: JSON.stringify(bojData)
-                }).catch((e) => {
-                  throw new Error("")
                 })
 
+              } else if (res.status === 401) {
+                throw new Error("end_free");
               } else {
                 throw new Error("key");
               }
@@ -111,10 +121,19 @@ function startLoader() {
                       level: bojData.level,
                       state: false,
                       date: new Date().getTime(),
+                    },
+                    commit_progress:
+                    {
+                      percentage: 0,
+                      progress_info: "분석시작"
                     }
                   }, () => { });
                 } else if (res.status == 409) {
                   throw new Error("dupl");
+                } else if (res.status == 401) {
+                  throw new Error("end_free");
+                } else {
+                  throw new Error("");
                 }
 
               })
@@ -125,6 +144,8 @@ function startLoader() {
                   toastThenStopLoader("이미 제출한 코드입니다")
                 } else if (e.message == "refactoring") {
                   toastThenStopLoader("다른 코드가 리팩토링이 진행중입니다")
+                } else if (e.message == "end_free") {
+                  toastThenStopLoader("무료 api키 사용이 끝났습니다")
                 } else {
                   toastThenStopLoader("전송에 실패했습니다")
                 }
