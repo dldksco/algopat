@@ -46,8 +46,9 @@ export const Header = () => {
         <div
           className={style.for_hover}
           onClick={() => {
-            window.location.href =
-              "https://ramen-buang.notion.site/ALGOPAT-f2bdb6ca2b8241d0ac527795fe192464";
+            window.open(
+              "https://ramen-buang.notion.site/ALGOPAT-f2bdb6ca2b8241d0ac527795fe192464"
+            );
           }}
         >
           도움말
