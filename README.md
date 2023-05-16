@@ -1,6 +1,6 @@
 # [AlGoPaT](https://algopat.kr)
 
-![프로젝트 로고](./image/algopat-logo.png/)
+![프로젝트 로고](./image/algopat-logo.png/)  
 ![프로젝트 로고](./image/Logo.png/)  
 ChatGPT & LangChain을 활용한 알고리즘 소스코드 효율성 분석 플랫폼
 
