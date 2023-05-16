@@ -26,7 +26,6 @@ $('#authenticate').on('click', () => {
 $('#api_key_save').on('click', () => {
   const value = $('#api_key').val()
 
-
   fetch("https://api.openai.com/v1/models",
     {
       method: 'GET',
@@ -48,6 +47,14 @@ $('#api_key_save').on('click', () => {
 
 
 })
+
+// 무료 api 키 사용 버튼 클릭
+$('#free_api_key').on('click', () => {
+  chrome.storage.local.set({ "gpt_key": "0" }, () => { })
+  $("#save_message").html("<p style='color: green;'>무료 api 키를 사용합니다</p>")
+})
+
+
 
 /*
   활성화 버튼 클릭 시 storage에 활성 여부 데이터를 저장.
@@ -103,6 +110,25 @@ chrome.storage.local.get(['BaekjoonHub_token', 'commit_state', 'commit_progress'
     })
       .then((data) => {
         console.log(data)
+
+        // 무료 api 카운트
+        fetch('https://algopat.kr/api/user/check/user-submit-count', {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            'authorization': token,
+          }
+        }).then((res) => res.json())
+          .then((data) => {
+            if (Number(data.userSubmitCountCount) <= 0) {
+              $("#free_api_count_num").css("color", "red");
+            } else {
+              $("#free_api_count_num").css("color", "green");
+            }
+            $("#free_api_count_num").text(data.userSubmitCountCount)
+          }).catch((e) => {
+            $("#free_api_count_num").text("X")
+          })
 
         $('#commit_mode').show();
         $('#gear_icon').show();
@@ -203,8 +229,9 @@ function commitMode(commit_state, commit_progress, token) {
   gpt 키
  */
 chrome.storage.local.get(['gpt_key'], (data) => {
-  if (data?.gpt_key)
-    $('#api_key').attr('value', data.gpt_key)
+  if (data?.gpt_key == "0") {
+    $("#save_message").html("<p style='color: green;'>현재 무료 api key를 사용중입니다</p>")
+  }
 });
 
 

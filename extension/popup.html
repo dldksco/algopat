@@ -85,8 +85,19 @@
               <input type="text" id="api_key" placeholder="sk-...">
               <div class="ui button" id="api_key_save">저장</div>
             </div>
+            <div class="ui button" id="free_api_key" style="float: right; margin-top: 2px;">무료 api key 사용</div>
           </div>
           <div id="save_message" class="row">
+          </div>
+          <div class="row" style="text-align: left; font-size: 12px; border: 1px solid gray; padding: 10px;">
+            <p><strong>GPT API Key 발급 방법</strong></p> 
+            <ul>
+              <li><p><a href="https://platform.openai.com/overview" target="_blank">OpenAI platform</a> 접속</p></li>
+              <li><p>로그인 후, 우상단 마이프로필 - view API Key 선택</p></li>
+              <li><p>Create Secret Key - API Key 생성</p></li>
+              <li><p>Billing - 결제 카드 등록</p></li>
+            </ul>
+
           </div>
         </div>
       </div>
@@ -94,6 +105,10 @@
       <!-- Generate Socials -->
       <div id="socials" class="sixteen wide column">
         <a title="Home" id="welcome_URL" href="https://algopat.kr/" target="_blank"><i class="ui grey home icon"></i></a>
+      </div>
+
+      <div id="free_api_count">
+        무료 api 사용 가능 횟수 : <span id="free_api_count_num">10</span>
       </div>
 
     </div>
