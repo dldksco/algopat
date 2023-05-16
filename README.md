@@ -1,17 +1,6 @@
-# [AlGoPaT](https://algopat.kr)
+[![Algopat](./image/algopat-logo.png/ "Algopat Logo")](https://algopat.kr/ "Visit Algopat")   
+##### ChatGPT & LangChain을 활용한 알고리즘 소스코드 효율성 분석 플랫폼  
 
-![프로젝트 로고](./image/algopat-logo.png/)  
-![프로젝트 로고](./image/Logo.png/)  
-ChatGPT & LangChain을 활용한 알고리즘 소스코드 효율성 분석 플랫폼
-
-## 📆 프로젝트 기간
-
-### 23.4.10 ~ 23.5.19
-
-- 기획 및 설계 : 23.4.10 ~ 23.4.16
-- A / B 테스트 : 23.4.17 ~ 23.4.23 
-- 프로젝트 구현 : 23.4.24 ~ 23.5.14
-- 버그 수정 및 산출물 정리 : 23.5.15 ~ 23.5.19
 
 ## 💡 프로젝트 소개 (배경, 개요)
 
@@ -20,8 +9,7 @@ ChatGPT & LangChain을 활용한 알고리즘 소스코드 효율성 분석 플�
 누군가 논리적인 근거로 타당한 가이드라인을 제시해 준다면...
 ##### -> 이와 같은 많은 고민을 해결하기 위해 만든, 알고리즘 소스코드 효율성 분석 서비스입니다.  
 
-
-## ✨ 프로젝트 주요 기능
+## ✨ 프로젝트 주요 기술 
 
 1. 인증/인가
    - Github 소셜 로그인 (OAuth 2.0)
@@ -39,23 +27,37 @@ ChatGPT & LangChain을 활용한 알고리즘 소스코드 효율성 분석 플�
    - 내가 푼 문제 열람
 5. 마이페이지 
    - 잔디 (제출 일자에 따른 활동 기록)
+6. Anomaly (SAGA Pattern : Choreography)
+   - 비정상적인 예외현상 발생 시, 보상 트랜잭션 (무료 제출 횟수 +1) 
+
+## 📆 프로젝트 기간
+
+### 23.4.10 ~ 23.5.19
+
+- 기획 및 설계 : 23.4.10 ~ 23.4.16
+- A / B 테스트 : 23.4.17 ~ 23.4.23 
+- 프로젝트 구현 : 23.4.24 ~ 23.5.14
+- 버그 수정 및 산출물 정리 : 23.5.15 ~ 23.5.19
+
+
+## 📋 프로젝트 산출물
 
 
 ## 👪 개발 멤버 소개
 
 <table>
     <tr>
-        <td height="140px" align="center"> <a href="https://github.com/Gyuntak">
+        <td height="140px" align="center"> <a href="">
             <img src="./image/human5.png" width="140px" /> <br><br> 😶 김소현 <br>(Front-End) </a> <br></td>
-        <td height="140px" align="center"> <a href="https://github.com/blosson">
+        <td height="140px" align="center"> <a href="">
             <img src="./image/human3.png" width="140px" /> <br><br> 🙂 박동환 <br>(Front-End) </a> <br></td>
-        <td height="140px" align="center"> <a href="https://github.com/Byongho96">
+        <td height="140px" align="center"> <a href="">
             <img src="./image/human6.png" width="140px" /> <br><br> 😆 이연학 <br>(Front-End) </a> <br></td>
-        <td height="140px" align="center"> <a href="https://github.com/chancehee">
+        <td height="140px" align="center"> <a href="">
             <img src="./image/human2.png" width="140px" /> <br><br> 👑 이찬희 <br>(Back-End) </a> <br></td>
-        <td height="140px" align="center"> <a href="https://github.com/calicedev">
+        <td height="140px" align="center"> <a href="">
             <img src="./image/human1.png" width="140px" /> <br><br> 😁 이안채 <br>(Back-End) </a> <br></td>
-		<td height="140px" align="center"> <a href="https://github.com/holicmiku">
+		<td height="140px" align="center"> <a href="">
             <img src="./image/human4.png" width="140px" /> <br><br> 😶 최웅렬 <br>(Back-End) </a> <br></td>
     </tr>
     <tr>
@@ -69,25 +71,22 @@ ChatGPT & LangChain을 활용한 알고리즘 소스코드 효율성 분석 플�
 </table>
 
 
-
-## 프로젝트 산출물
-
 ---
 
-### 시스템 아키택쳐
+### 📋 시스템 아키택쳐
 
 ![아키텍쳐](./image/system.png)
 
 
 ---
 
-### ERD 다이어그램
+### 📋 ERD 다이어그램
 
-![ERD](./image/ERD.png)
+![ERD](./image/erd.png)
 
 ---
 
-### MockUp & Design
+### 📋 MockUp & Design
 
 ![mockup](./image/mockup1.png)
 ![mockup](./image/mockup2.png)
