@@ -26,3 +26,8 @@ export const rankingDetailState = atom<RankingDetailParam>({
     defaultvalue: "",
   },
 });
+
+export const allOrMySolveClickState = atom<boolean>({
+  key: "allOrMySolveClickState",
+  default: false,
+});

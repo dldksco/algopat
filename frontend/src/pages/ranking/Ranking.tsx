@@ -3,8 +3,8 @@ import { RankingBoard } from "./rankingBoard/RankingBoard";
 import { Pagenation } from "@/components/pagenation/Pagenation";
 import { useLocation, useNavigate } from "react-router-dom";
 import { getRankingList, getSolvedList } from "./hooks/query";
-import { useRecoilValue } from "recoil";
-import { centerIndexState } from "@/atoms/ranking.atom";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { allOrMySolveClickState, centerIndexState } from "@/atoms/ranking.atom";
 import { useEffect, useState } from "react";
 import { LoadingSpinner } from "@/components/loadingspinner/LoadingSpinner";
 import { Button } from "@/components/button/Button";
@@ -17,7 +17,7 @@ export const Ranking = () => {
   const page = searchParams.get("page") ? searchParams.get("page") : "1";
   const navigate = useNavigate();
 
-  const [clickState, setClickState] = useState(false);
+  const [clickState, setClickState] = useRecoilState(allOrMySolveClickState);
   const userInfo = useRecoilValue(userInfoState);
   const centerIndex = useRecoilValue(centerIndexState);
   const [prevCenterIndex, setPrevCenterIndex] = useState(centerIndex);
