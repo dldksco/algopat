@@ -82,22 +82,23 @@ async def processing(data : ProblemData, send_callback):
     while True:
         try:
             lock = redis_lock.Lock(redis_conn, lock_name, expire=LOCK_TIMEOUT, auto_renewal=True)
-            logger.info("동일한 문제 대기중")
             if lock.acquire(blocking=False):
                 logger.info("분산락 시작")
                 await summary_problem(problem_id, user_seq, data, local_chat_llm_0, json_chain)
                 lock.release()
                 break
             else:
+                logger.info("동일한 문제 대기중")
                 await asyncio.sleep(1)
         except Exception as e:
+            lock.release()
             logger.error(f"예외 발생: {e}")
 
             # User 서버에게 실패 이벤트 전송  
             user_service_dto = UserServiceDTO(isSuccess="NO", userSeq=user_seq)
             await send_callback("user-service", user_service_dto)
 
-            raise MyCustomError("분산락 에러 발생 - 문제 요약")
+            raise MyCustomError("에러 발생 - 문제 요약")
 
 
 
