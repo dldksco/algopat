@@ -5,14 +5,21 @@ import { getBackImage, getProfile, getTier } from "../hooks/query";
 import { useRecoilValue } from "recoil";
 import { profileState } from "@/atoms/user.atom";
 import { stringBackCutter } from "@/pages/code/hooks/func";
+import changeBackImage from "@/assets/img/mypage/changeBackImage.gif";
+import defaultBackImage from "@/assets/img/mypage/defaultBackImage.gif";
+import secondBackImage from "@/assets/img/mypage/secondBackImage.gif";
 
 import style from "./Profile.module.css";
 
 export const Profile = () => {
   const { isLoading: isLoadingProfile, data: profileData } = getProfile();
+  const [imageUrl, setImageUrl] = useState("");
+
   const [isTier, setIsTier] = useState(false);
   const [isBack, setIsBack] = useState(false);
   const myProfile = useRecoilValue(profileState);
+  let click = 0;
+  const defaultBackgroundImage = defaultBackImage;
 
   const {
     isLoading: isLoadingTier,
@@ -35,9 +42,11 @@ export const Profile = () => {
         setIsBack(true);
         refetchImage();
         setIsBack(false);
+        click = 0;
+        setImageUrl("");
       }
     }
-  }, [myProfile]);
+  }, [myProfile, imageUrl]);
   if (isLoadingProfile) {
     return (
       <div>
@@ -45,6 +54,17 @@ export const Profile = () => {
       </div>
     );
   }
+  let secondClick = 0;
+  const pandaClick = () => {
+    click++;
+    if (click > 5) {
+      setImageUrl(changeBackImage);
+      secondClick++;
+    }
+    if (click > 5 && secondClick > 1) {
+      setImageUrl(secondBackImage);
+    }
+  };
   const handleClick = () => {
     window.location.href = "https://www.acmicpc.net/";
   };
@@ -52,9 +72,7 @@ export const Profile = () => {
     <>
       <div className={style.box}>
         <div className={style.backgroundImage}>
-          {myProfile.backVideo &&
-          myProfile.backVideo !== null &&
-          stringBackCutter(myProfile.backVideo, 3) === "mp4" ? (
+          {stringBackCutter(myProfile.backVideo, 3) === "mp4" ? (
             <div
               className={style.videoDiv}
               style={{
@@ -73,20 +91,38 @@ export const Profile = () => {
                 <source src={myProfile.backVideo} />
               </video>
             </div>
-          ) : myProfile.backImage &&
-            myProfile.backImage !== null &&
-            stringBackCutter(myProfile.backImage, 3) === "png" ? (
+          ) : stringBackCutter(myProfile.backImage, 3) === "png" ? (
             <img
               src={myProfile.backImage}
               style={{ backgroundSize: "cover" }}
               alt=""
             />
-          ) : (
+          ) : imageUrl === "" ? (
             <div
               className={style.defaultBack}
+              onClick={pandaClick}
               style={{
                 width: "100%",
                 height: "300px",
+                backgroundImage: `url(${defaultBackgroundImage})`,
+                backgroundColor: "white",
+              }}
+            >
+              <div className={style.hoverContainer}>
+                <div className={style.hoverBack} onClick={handleClick}>
+                  백준 사이트에서 문제를 제출해주세요!
+                </div>
+                <div className={style.triangle}></div>
+              </div>
+            </div>
+          ) : (
+            <div
+              className={style.defaultBackImage}
+              onClick={pandaClick}
+              style={{
+                width: "100%",
+                height: "300px",
+                backgroundImage: `url(${imageUrl})`,
               }}
             >
               <div className={style.hoverContainer}>

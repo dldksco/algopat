@@ -19,10 +19,7 @@ export const ProblemDetail = ({ problemDetail, isProblemOpen }: SolveProps) => {
     nowProblemSubmissionIdState
   );
   const setIsSidenavOpen = useSetRecoilState(isCodeNavOpenState);
-  const { isLoading, data } = getSubmissionList(
-    problemDetail.problemId,
-    isProblemOpen
-  );
+  const { data } = getSubmissionList(problemDetail.problemId, isProblemOpen);
   const height = (data?.content.length as number) * 2 + 1;
 
   const handleSubmission = async (submissionId: number) => {
