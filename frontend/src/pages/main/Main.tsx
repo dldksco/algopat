@@ -5,8 +5,8 @@ import { faArrowUp } from "@fortawesome/free-solid-svg-icons";
 import { MainMoveStick } from "./MainMoveStick";
 import { TopArrow } from "@/components/toparrow/TopArrow";
 import { MainBackground } from "./MainBackground";
-import code2 from "@/assets/img/main/code2.png";
-import code3 from "@/assets/img/main/code3.png";
+import code4 from "@/assets/img/main/code4.png";
+import code5 from "@/assets/img/main/code5.png";
 import gpticon from "@/assets/img/main/gpticon.png";
 import bird from "@/assets/img/main/bird.png";
 import style from "./Main.module.css";
@@ -79,7 +79,7 @@ export const Main = () => {
             <p> GPT가 부여한 점수를 비교하고 여러분의 </p>
             <p>코드를 비교해서 완성도를 높여보세요</p>
           </div>
-          <img src={code2} className={style.code_image} />
+          <img src={code4} className={style.code_image} />
         </div>
         <div className={style.move_stick}>
           <MainMoveStick />
@@ -98,7 +98,7 @@ export const Main = () => {
           ref={ref2}
         >
           <img
-            src={code3}
+            src={code5}
             className={style.code_image}
             style={{ width: "40%", marginRight: "10px" }}
             alt=""
