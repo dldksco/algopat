@@ -19,7 +19,10 @@ export const ProblemDetail = ({ problemDetail, isProblemOpen }: SolveProps) => {
     nowProblemSubmissionIdState
   );
   const setIsSidenavOpen = useSetRecoilState(isCodeNavOpenState);
-  const { isLoading, data } = getSubmissionList(problemDetail.problemId);
+  const { isLoading, data } = getSubmissionList(
+    problemDetail.problemId,
+    isProblemOpen
+  );
   const height = (data?.content.length as number) * 2 + 1;
 
   const handleSubmission = async (submissionId: number) => {
@@ -43,10 +46,6 @@ export const ProblemDetail = ({ problemDetail, isProblemOpen }: SolveProps) => {
     }
     setIsSidenavOpen(false);
   };
-
-  if (isLoading) {
-    return <LoadingSpinner />;
-  }
 
   return (
     <div
