@@ -7,34 +7,32 @@ function sseEventListener() {
 
     if (!userSeq) return;
 
-    if (!eventSource) {
-      eventSource = new EventSource(`https://algopat.kr/api/alert/sse/${userSeq}`);
+    eventSource = new EventSource(`https://algopat.kr/api/alert/sse/${userSeq}`);
 
-      eventSource.onmessage = function (event) {
-        console.log(event)
-        const data = JSON.parse(event.data)
+    eventSource.onmessage = function (event) {
+      console.log(event)
+      const data = JSON.parse(event.data)
 
-        // 로컬 스토리지에 저장
-        chrome.storage.local.set(
-          { commit_progress: { percentage: data.percentage, progress_info: data.progress_info } }
-        );
+      // 로컬 스토리지에 저장
+      chrome.storage.local.set(
+        { commit_progress: { percentage: data.percentage, progress_info: data.progress_info } }
+      );
 
-        if (data.state == "finish") { // 코드 분석 완료
-          chrome.notifications.create('my-notification', {
-            type: 'basic',
-            iconUrl: `chrome-extension://${chrome.runtime.id}/assets/icon.png`,
-            title: `${data.progress_info}`,
-            message: `${data.progress_info}`
-          });
-        }
-
-
-      };
-
-      eventSource.onerror = function (event) {
-        console.log("SSE Error : ", event)
-        // console.log(JSON.stringify(event))
+      if (data.state == "finish") { // 코드 분석 완료
+        chrome.notifications.create('my-notification', {
+          type: 'basic',
+          iconUrl: `chrome-extension://${chrome.runtime.id}/assets/icon.png`,
+          title: `${data.progress_info}`,
+          message: `${data.progress_info}`
+        });
       }
+
+
+    };
+
+    eventSource.onerror = function (event) {
+      console.log("SSE Error : ", event)
+      // console.log(JSON.stringify(event))
     }
 
 
