@@ -92,7 +92,7 @@ function preventServiceWorkerDisable() {
   // 현재 활성 창 가져오기
   chrome.windows.getCurrent({ populate: true }, function (window) {
     if (window.id === activeWindowId) {
-      console.log("방지")
+      // console.log("background pr")
       // 현재 활성 창이 팝업 창이므로 서비스 작업자 비활성화 방지
       // chrome.windows.update(window.id, { focused: true });
     }
