@@ -7,13 +7,16 @@
 .mainpage .fpage {
   width: 100%;
   height: calc(100vh - 80px);
+  overflow: hidden;
 }
 .mainpage .fpage .content {
   float: left;
+  position: relative;
   margin-top: 15%;
   margin-left: 5%;
   flex-direction: column;
   justify-content: center;
+  z-index: 1;
 }
 .mainpage .fpage .content h1 {
   font-size: 4rem;
@@ -41,7 +44,9 @@
   height: 90%;
   margin-left: 30%;
   width: 70%;
+  position: relative;
   background-size: cover;
+  background-position: center;
   background: linear-gradient(to right, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0) 8%, rgba(0, 0, 0, 0.8) 99%), linear-gradient(to bottom, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0) 8%, rgba(0, 0, 0, 0.8) 99%), url("/assets/img/main/background_dark.png");
 }
 .mainpage .cpage {
@@ -63,9 +68,31 @@
   margin-bottom: auto;
 }
 .mainpage .cpage .move_stick {
-  background-color: red;
   width: 100%;
-  height: 30%;
+  overflow: hidden;
+}
+.mainpage .cpage .move_stick .block {
+  display: block;
+  width: 100%;
+}
+.mainpage .cpage .move_stick .block .row {
+  height: 40px;
+  display: block;
+}
+.mainpage .cpage .move_stick .block .green {
+  background-color: green;
+}
+.mainpage .cpage .move_stick .block .white {
+  background-color: white;
+}
+.mainpage .cpage .move_stick .block .black {
+  background-color: black;
+}
+.mainpage .cpage .move_stick .block .col {
+  width: 10%;
+  height: 20px;
+  margin: 2px;
+  display: inline-block;
 }
 .mainpage .cpage .code_image {
   width: 40%;
@@ -145,10 +172,34 @@
     font-size: 1.2rem;
   }
   .mainpage .cpage .gptcode .gptdesc p {
-    font-size: 0.65rem;
+    font-size: 0.6rem;
   }
   .mainpage .cpage .code_image {
-    width: 40%;
+    width: 48%;
+  }
+  .mainpage .cpage .move_stick {
+    height: 30%;
+  }
+  .mainpage .cpage .move_stick .block {
+    display: block;
+    height: 100%;
+  }
+  .mainpage .cpage .move_stick .block .row {
+    height: 35px;
+  }
+  .mainpage .cpage .move_stick .block .green {
+    background-color: green;
+  }
+  .mainpage .cpage .move_stick .block .white {
+    background-color: white;
+  }
+  .mainpage .cpage .move_stick .block .black {
+    background-color: transparent;
+  }
+  .mainpage .cpage .move_stick .block .col {
+    width: 30%;
+    height: 20px;
+    margin-bottom: 5px;
   }
   .mainpage .lpage .contentbox .gptbox {
     width: 50%;

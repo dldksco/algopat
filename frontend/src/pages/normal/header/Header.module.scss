@@ -25,6 +25,10 @@
     margin-top: auto;
     margin-bottom: auto;
     cursor: pointer;
+    transition: 0.35s;
+    &:hover {
+      filter: opacity(0.6);
+    }
   }
 
   .menu {
@@ -115,7 +119,7 @@
       background-color: black;
       border: 1px solid white;
       transition: 0.2s;
-      z-index: 1;
+      z-index: 5;
 
       :nth-child(n) {
         margin: 20px 0px;

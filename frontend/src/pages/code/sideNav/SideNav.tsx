@@ -12,118 +12,153 @@ import { faArrowDown91 } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
 import sort_tier_img from "@/assets/img/code/sort_tier.png";
 import { Button } from "@/components/button/Button";
+import { getInfinityProblemList } from "../hooks/query";
 import { Problem } from "./problem/Problem";
-import { $ } from "@/connect/axios";
-import { useInfiniteQuery } from "@tanstack/react-query";
-import { useMemo, useState } from "react";
-
+import { isCodeNavOpenState } from "@/atoms/code.atom";
+import { useSetRecoilState } from "recoil";
+import { useState } from "react";
 import style from "./SideNav.module.css";
 
-export const SideNav = ({
-  setIsSidenavOpen,
-}: {
-  setIsSidenavOpen: React.Dispatch<React.SetStateAction<boolean>>;
-}) => {
-  //const isOpen = [false, false, false, false, false];
-  const [page, setPage] = useState<number>(0);
-
-  const fetchData = async (page: number) => {
-    const response = await $.get(`/code/problem/submission/${page}`);
-    console.log(response.data, "data 확인");
-    console.log(response.data.content, "content 확인");
-    return response.data;
-  };
-  const { data, error, fetchNextPage, isFetchingNextPage, isLoading } =
-    useInfiniteQuery(["sideBar"], ({ pageParam = 0 }) => fetchData(pageParam), {
-      getNextPageParam: (lastPage) => lastPage.nextPage,
-    });
-
-  const mergedData = useMemo(() => {
-    if (!data) return [];
-    console.log(data.pages, "data.pages 확인");
-    const mergedPages = data.pages.reduce((prevPages, nextPage) => {
-      const mergedPage = prevPages.concat(nextPage.content);
-      return mergedPage;
-    }, []);
-    return mergedPages;
-  }, [data]);
-
-  const hasMorePages = page < data?.pages[0].totalPages - 1;
-  // console.log(page);
-  // console.log(data?.pages[0].totalPages, "totalpage");
-  // console.log(mergedData, "merge?");
-  // console.log(hasMorePages, "확인");
-  // console.log(data?.pages[0].totalPages, "page는 어딧지");
-  // if (isLoading) {
-  //   return <div>asdasd</div>;
-  // // }
-  // console.log(data?.pages, "data 확인 찐");
-  // console.log(data?.pages[page].content, "content 확인 찐");
-  const handleLoadMore = () => {
-    setPage((prevPage) => prevPage + 1);
-    fetchNextPage({ pageParam: page + 1 });
-    // console.log(page, "pagenum");
-  };
+export const SideNav = () => {
+  const [category, setCategory] = useState("date");
+  const [condition, setCondition] = useState("desc");
+  const setIsSidenavOpen = useSetRecoilState(isCodeNavOpenState);
   const navigate = useNavigate();
+  const { data, fetchNextPage, hasNextPage } = getInfinityProblemList(
+    category,
+    condition
+  );
+
   const xButtonClick = () => setIsSidenavOpen(false);
+  const serchClick = (str: string) => {
+    setCategory(str);
+    if (category !== str) setCondition("asc");
+    else setCondition((prev) => (prev === "asc" ? "desc" : "asc"));
+  };
+
   return (
-    <div className={style.sideNav}>
+    <div
+      className={style.sideNav}
+      style={{ animation: "left_right_effect 0.65s" }}
+    >
       <p>코드 분석</p>
       <div className={style.x_button} onClick={xButtonClick}>
         <FontAwesomeIcon icon={faCircleXmark} />
       </div>
 
       <div className={style.sort_button_group}>
-        <div className={style.sort_button}>
-          <FontAwesomeIcon icon={faClock} />
-          <FontAwesomeIcon icon={faArrowDownWideShort} />
+        <div
+          className={style.sort_button}
+          onClick={() => serchClick("date")}
+          style={
+            category === "date"
+              ? { color: "skyblue", border: "1px solid skyblue" }
+              : undefined
+          }
+        >
+          <FontAwesomeIcon icon={faClock} style={{ transition: "0.1s" }} />
+          <FontAwesomeIcon
+            icon={faArrowDownWideShort}
+            style={
+              condition === "asc" && category === "date"
+                ? { transform: "rotate(180deg)", transition: "0.2s" }
+                : { transition: "0.2s" }
+            }
+          />
         </div>
-        <div className={style.sort_button}>
-          <img src={sort_tier_img} />
-          <FontAwesomeIcon icon={faArrowDownWideShort} />
+        <div
+          className={style.sort_button}
+          onClick={() => serchClick("level")}
+          style={
+            category === "level"
+              ? { color: "skyblue", border: "1px solid skyblue" }
+              : undefined
+          }
+        >
+          <img
+            src={sort_tier_img}
+            style={
+              category === "level"
+                ? { filter: "opacity(0.7)", transition: "0.2s" }
+                : { transition: "0.2s" }
+            }
+          />
+          <FontAwesomeIcon
+            icon={faArrowDownWideShort}
+            style={
+              condition === "desc" && category === "level"
+                ? { transform: "rotate(180deg)", transition: "0.19s" }
+                : { transition: "0.19s" }
+            }
+          />
         </div>
-        <div className={style.sort_button}>
-          <FontAwesomeIcon icon={faArrowDown91} />
+        <div
+          className={style.sort_button}
+          onClick={() => serchClick("id")}
+          style={
+            category === "id"
+              ? { color: "skyblue", border: "1px solid skyblue" }
+              : undefined
+          }
+        >
+          <FontAwesomeIcon
+            icon={faArrowDown91}
+            style={
+              condition === "desc" && category === "id"
+                ? { transform: "rotate(180deg)", transition: "0.2s" }
+                : { transition: "0.2s" }
+            }
+          />
         </div>
       </div>
-      <div className={style.problem_list}>
-        {mergedData === undefined
-          ? null
-          : mergedData.map((el: Problem) => (
-              <Problem key={uuidv4()} detail={el} />
-            ))}
-        <hr />
+      <div
+        className={
+          hasNextPage
+            ? style.problem_list
+            : style.problem_list + " " + style.extra_length
+        }
+      >
+        <hr style={{ marginTop: "10px" }} />
+        {data?.pages.map((page) =>
+          page.content.map((el) => <Problem key={uuidv4()} detail={el} />)
+        )}
       </div>
-      {!isFetchingNextPage && hasMorePages ? (
+      {hasNextPage ? (
         <Button
           content="더보기"
           style={{
-            margin: "20px auto",
+            margin: "10px auto",
             backgroundColor: "#28292C",
             display: "block",
           }}
-          onClick={handleLoadMore}
+          onClick={() => fetchNextPage()}
         />
       ) : null}
       <hr />
       <div className={style.nav_header}>
-        <div className={style.nav_header_tag}>
-          <div onClick={() => navigate("/")}>
+        <div className={style.nav_header_tag} onClick={() => navigate("/")}>
+          <div>
             <FontAwesomeIcon icon={faHouse} />
           </div>
-          <span onClick={() => navigate("/")}>메인페이지</span>
+          <span>메인페이지</span>
         </div>
-        <div className={style.nav_header_tag}>
-          <div onClick={() => navigate("/ranking")}>
+        <div
+          className={style.nav_header_tag}
+          onClick={() => navigate("/ranking")}
+        >
+          <div>
             <FontAwesomeIcon icon={faTrophy} />
           </div>
-          <span onClick={() => navigate("/ranking")}>랭킹</span>
+          <span>랭킹</span>
         </div>
-        <div className={style.nav_header_tag}>
-          <div onClick={() => navigate("/mypage")}>
+        <div
+          className={style.nav_header_tag}
+          onClick={() => navigate("/mypage")}
+        >
+          <div>
             <FontAwesomeIcon icon={faUser} />
           </div>
-          <span onClick={() => navigate("/mypage")}>마이페이지</span>
+          <span>마이페이지</span>
         </div>
       </div>
     </div>

@@ -1,5 +1,5 @@
 .footer {
-  height: 270px;
+  height: 250px;
   width: 100%;
   max-width: var(--max-width);
   margin-right: auto;
@@ -16,7 +16,7 @@
   gap: 5%;
 }
 .footer .leftbox .circle {
-  margin-top: 25%;
+  margin-top: 75px;
   background-color: white;
   height: 60px;
   width: 60px;
@@ -65,7 +65,7 @@
     height: 120px;
   }
   .footer .leftbox .circle {
-    margin-top: 5%;
+    margin-top: 30px;
   }
   .footer .rightbox {
     height: 120px;

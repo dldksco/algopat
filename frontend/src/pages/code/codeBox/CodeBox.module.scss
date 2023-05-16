@@ -19,3 +19,11 @@
     margin-left: 3%;
   }
 }
+
+.sppan {
+  cursor: pointer;
+  transition: 0.2s;
+  &:hover {
+    color: gray;
+  }
+}

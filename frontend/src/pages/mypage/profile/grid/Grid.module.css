@@ -1,40 +1,173 @@
 .grid {
-  margin: 2% 2%;
-  height: 220px;
-  width: 80%;
+  height: 210px;
+  width: 100%;
   background-color: #1d2538;
   display: flex;
+  position: relative;
+  padding-right: 20px;
 }
 .grid .days {
   display: flex;
   flex-direction: column;
   align-items: end;
-  padding-top: 38px;
+  padding-top: 34px;
   padding-left: 20px;
-  padding-right: 10px;
+  padding-right: 24px;
 }
 .grid .days .day {
   font-size: 10px;
   width: 11px;
   height: 11px;
   color: #898989;
-  padding: 7.8px;
+  padding: 7.7px;
   text-align: right;
 }
-.grid .grid_container {
+.grid .grid_family {
   overflow-x: auto;
+  overflow-y: hidden;
+  margin-top: 22px;
+}
+.grid .grid_family .months {
+  display: flex;
+}
+.grid .grid_family .months .month {
+  width: 9px;
+  font-size: 8px;
+}
+.grid .grid_family .grid_container {
   max-width: 100%;
   display: grid;
-  grid-template-columns: repeat(53, 15px);
-  grid-template-rows: repeat(7, 15px);
-  padding-top: 50px;
-  padding-bottom: 50px;
-  padding-right: 50px;
+  padding-top: 10px;
 }
-.grid .grid_container .grid_cell {
+.grid .grid_family .grid_container .grid_cell {
   width: 11px;
   height: 11px;
-  border: 1px solid black;
+  border: 0.5px solid #242f3c;
   border-radius: 2px;
+  position: relative;
   cursor: pointer;
+}
+.grid .grid_family .grid_container .grid_cell .cell_hover {
+  display: none;
+  color: black;
+  font-size: 0.5rem;
+  text-align: center;
+  border-radius: 5px;
+  z-index: 3;
+}
+.grid .grid_family .grid_container .grid_cell:hover {
+  border: 3px solid white;
+  width: 12px;
+  height: 12px;
+}
+.grid .grid_family .grid_container .grid_cell:hover .cell_hover {
+  position: absolute;
+  top: 14px;
+  left: -62px;
+  width: 130px;
+  height: 25px;
+  padding-top: 6px;
+  background-color: white;
+  display: block;
+  z-index: 3;
+}
+.grid .gridColor_container {
+  position: absolute;
+  bottom: 30px;
+  right: 0px;
+  display: flex;
+  float: right;
+}
+.grid .gridColor_container .gridColor_zero {
+  display: flex;
+  align-items: center;
+  margin-right: 20px;
+}
+.grid .gridColor_container .gridColor_zero .item_zero {
+  height: 15px;
+  width: 15px;
+  border: 1px solid;
+  border-radius: 2px;
+  margin-right: 5px;
+}
+.grid .gridColor_container .gridColor_zero .text_zero {
+  font-size: 0.8rem;
+  background-color: transparent;
+}
+.grid .gridColor_container .gridColor_one {
+  display: flex;
+  align-items: center;
+  margin-right: 20px;
+}
+.grid .gridColor_container .gridColor_one .item_one {
+  height: 15px;
+  width: 15px;
+  border-radius: 2px;
+  margin-right: 5px;
+}
+.grid .gridColor_container .gridColor_one .text_one {
+  font-size: 0.8rem;
+}
+.grid .gridColor_container .gridColor_two {
+  display: flex;
+  align-items: center;
+  margin-right: 20px;
+}
+.grid .gridColor_container .gridColor_two .item_two {
+  height: 15px;
+  width: 15px;
+  border-radius: 2px;
+  margin-right: 5px;
+}
+.grid .gridColor_container .gridColor_two .text_two {
+  font-size: 0.8rem;
+}
+.grid .gridColor_container .gridColor_three {
+  display: flex;
+  align-items: center;
+  margin-right: 20px;
+}
+.grid .gridColor_container .gridColor_three .item_three {
+  height: 15px;
+  width: 15px;
+  border-radius: 2px;
+  margin-right: 5px;
+}
+.grid .gridColor_container .gridColor_three .text_three {
+  font-size: 0.8rem;
+}
+.grid .gridColor_container .gridColor_four {
+  display: flex;
+  align-items: center;
+  margin-right: 20px;
+}
+.grid .gridColor_container .gridColor_four .item_four {
+  height: 15px;
+  width: 15px;
+  border-radius: 2px;
+  margin-right: 5px;
+}
+.grid .gridColor_container .gridColor_four .text_four {
+  font-size: 0.8rem;
+}
+
+.memo {
+  margin-top: 30px;
+  width: 100%;
+}
+.memo p {
+  font-size: 1rem;
+}
+
+.description {
+  text-align: right;
+}
+
+@media screen and (max-width: 768px) {
+  .grid .gridColor_container .gridColor_zero {
+    display: none;
+  }
+  .grid .days {
+    padding-right: 16px;
+  }
 }/*# sourceMappingURL=Grid.module.css.map */

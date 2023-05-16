@@ -1,5 +1,5 @@
 export const bj_level = [
-  "Unrated",
+  "전체문제",
   "Bronze V",
   "Bronze IV",
   "Bronze III",
@@ -31,3 +31,13 @@ export const bj_level = [
   "Ruby II",
   "Ruby I",
 ];
+
+export const codeLanguage = (str: string | undefined) => {
+  if (str === undefined) return "";
+
+  if (str == "cpp") {
+    return "C++";
+  } else {
+    return str.charAt(0).toUpperCase() + str.slice(1);
+  }
+};

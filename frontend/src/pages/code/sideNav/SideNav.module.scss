@@ -2,6 +2,10 @@
   background-color: #28292c;
   color: white;
   height: 100%;
+  position: fixed;
+  width: 300px;
+  padding-right: 5px;
+  z-index: 1;
 
   .x_button {
     display: none;
@@ -18,8 +22,16 @@
       width: 60px;
       padding: 5px 10px;
       border: 1px solid white;
-      border-radius: 10px;
       cursor: pointer;
+      transition: 0.1s;
+
+      &:hover {
+        color: gray !important;
+        border: 1px solid gray !important;
+        img {
+          filter: brightness(40%);
+        }
+      }
 
       img {
         display: inline;
@@ -34,13 +46,16 @@
     font-weight: 600;
     display: inline-block;
   }
-  .problem_list{
-    height: 600px;
+  .problem_list {
+    height: 397px;
     overflow-y: auto;
+  }
+  .extra_length {
+    height: 449px;
   }
   .nav_header {
     text-align: left;
-    padding-top: 5%;
+    padding-top: 1%;
     padding-left: 10%;
     font-size: 1.2rem;
 
@@ -48,8 +63,7 @@
       position: relative;
       font-size: 1.2rem;
       margin-left: 3%;
-      margin-top: 10px;
-      transition: 0.25s;
+      margin-top: 15px;
 
       &:hover :nth-child(n) {
         color: gray;
@@ -57,6 +71,7 @@
 
       :nth-child(n) {
         cursor: pointer;
+        transition: 0.2s;
       }
       :nth-child(1) {
         position: absolute;
@@ -68,7 +83,7 @@
 
 @media screen and (max-width: 768px) {
   .sideNav {
-    height: 100%;
+    height: auto;
     border: 1px solid white;
 
     .x_button {
@@ -83,7 +98,14 @@
       }
     }
     .nav_header {
-      padding-bottom: calc(5% + 25px);
+      padding-bottom: calc(5% + 10px);
+    }
+    .problem_list {
+      height: 340px;
+      overflow-y: auto;
+    }
+    .extra_length {
+      height: 390px;
     }
   }
 }

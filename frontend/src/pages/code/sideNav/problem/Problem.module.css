@@ -4,8 +4,15 @@
   gap: 10px;
   align-items: center;
   margin-left: 5%;
+  transition: 0.2s;
   cursor: pointer;
+}
+.problem_list:hover {
+  color: rgb(216, 215, 255);
 }
 .problem_list img {
   height: 60%;
+}
+.problem_list .rotate {
+  transform: rotate(180deg);
 }/*# sourceMappingURL=Problem.module.css.map */

@@ -1,5 +1,8 @@
 import { useRecoilValue } from "recoil";
-import { nowProblemSubmissionIdState } from "@/atoms/code.atom";
+import {
+  nowProblemSubmissionIdState,
+  toekenForDetailState,
+} from "@/atoms/code.atom";
 import CodeBox from "../codeBox/CodeBox";
 import { getSolution } from "../hooks/query";
 import style from "./CodeDetail.module.css";
@@ -9,12 +12,13 @@ import { LoadingSpinner } from "@/components/loadingspinner/LoadingSpinner";
 
 export const CodeDetail = () => {
   const nowProblem = useRecoilValue(nowProblemSubmissionIdState);
+  const token = useRecoilValue(toekenForDetailState);
   const {
     refactoringData,
     timeComplexityData,
     spaceComplexityData,
     totalInfo,
-  } = getSolution(nowProblem.submissionId);
+  } = getSolution(nowProblem.submissionId, token);
 
   return (
     <div className={style.code_detail}>
@@ -47,26 +51,6 @@ export const CodeDetail = () => {
                 })}
               />
               <h3>종합 점수</h3>
-            </div>
-            <div style={{ width: "15%", textAlign: "center" }}>
-              <CircularProgressbar
-                value={refactoringData?.cleanScore || 0}
-                text={`${refactoringData?.cleanScore || 0}%`}
-                background={true}
-                styles={buildStyles({
-                  rotation: 0.25,
-                  strokeLinecap: "butt",
-                  textSize: "16px",
-                  pathTransitionDuration: 0.5,
-                  pathColor: pathColor(refactoringData?.cleanScore || 0),
-                  textColor: pathColor(refactoringData?.cleanScore || 0),
-                  trailColor: "#2d3970",
-                  backgroundColor: backgroundColor(
-                    refactoringData?.cleanScore || 0
-                  ),
-                })}
-              />
-              <h3>클린 코드</h3>
             </div>
             <div style={{ width: "15%", textAlign: "center" }}>
               <CircularProgressbar
@@ -108,6 +92,26 @@ export const CodeDetail = () => {
               />
               <h3>공간 복잡도</h3>
             </div>
+            <div style={{ width: "15%", textAlign: "center" }}>
+              <CircularProgressbar
+                value={refactoringData?.cleanScore || 0}
+                text={`${refactoringData?.cleanScore || 0}%`}
+                background={true}
+                styles={buildStyles({
+                  rotation: 0.25,
+                  strokeLinecap: "butt",
+                  textSize: "16px",
+                  pathTransitionDuration: 0.5,
+                  pathColor: pathColor(refactoringData?.cleanScore || 0),
+                  textColor: pathColor(refactoringData?.cleanScore || 0),
+                  trailColor: "#2d3970",
+                  backgroundColor: backgroundColor(
+                    refactoringData?.cleanScore || 0
+                  ),
+                })}
+              />
+              <h3>클린 코드</h3>
+            </div>
           </div>
           <hr />
           <div className={style.info_box}>
@@ -132,26 +136,6 @@ export const CodeDetail = () => {
               <h2>종합 점수</h2>
             </div>
             <div className={style.right_box}>
-              <div style={{ width: "30%" }}>
-                <div style={{ marginTop: "10px" }}>
-                  <div
-                    className={style.circle}
-                    style={{
-                      backgroundColor: `${pathColor(
-                        totalInfo?.gptTotalScore || 0
-                      )}`,
-                    }}
-                  />
-                  <span>클린 코드</span>
-                </div>
-                <h3
-                  style={{
-                    color: `${pathColor(totalInfo?.gptTotalScore || 0)}`,
-                  }}
-                >
-                  {refactoringData.cleanScore} Score
-                </h3>
-              </div>
               <div style={{ width: "30%" }}>
                 <div style={{ marginTop: "10px" }}>
                   <div
@@ -190,6 +174,26 @@ export const CodeDetail = () => {
                   }}
                 >
                   {addCommas(spaceComplexityData.solutionMemory || 0)} KB
+                </h3>
+              </div>
+              <div style={{ width: "30%" }}>
+                <div style={{ marginTop: "10px" }}>
+                  <div
+                    className={style.circle}
+                    style={{
+                      backgroundColor: `${pathColor(
+                        totalInfo?.gptTotalScore || 0
+                      )}`,
+                    }}
+                  />
+                  <span>클린 코드</span>
+                </div>
+                <h3
+                  style={{
+                    color: `${pathColor(totalInfo?.gptTotalScore || 0)}`,
+                  }}
+                >
+                  {refactoringData.cleanScore} Score
                 </h3>
               </div>
               <div style={{ width: "30%" }}>
@@ -251,9 +255,9 @@ export const CodeDetail = () => {
               </div>
             </div>
           </div>
-          <CodeBox type={"REFACTORING"} data={refactoringData} />
           <CodeBox type={"TIME COMPLEXITY"} data={timeComplexityData} />
           <CodeBox type={"SPACE COMPLEXITY"} data={spaceComplexityData} />
+          <CodeBox type={"REFACTORING"} data={refactoringData} />
         </>
       )}
     </div>
