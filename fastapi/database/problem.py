@@ -1,13 +1,12 @@
-from sqlalchemy import Column, BigInteger, String, ForeignKey, DateTime, Text, select, desc
+from sqlalchemy import Column, BigInteger, DateTime, Text, select, desc, text
 from sqlalchemy.ext.declarative import declarative_base
-from pydantic import BaseModel
 from myclass.problem import ProblemData
 import json
 from myclass.problem import UserSubmitProblem, UserSubmitSolution
 from datetime import datetime
-from fastapi import HTTPException
 from logging import getLogger
 from utils.utils import parse_problem_space_limit, parse_problem_time_limit, parse_date_format
+
 # logger 설정 
 logger = getLogger()
 
@@ -83,8 +82,12 @@ async def update_problem_meta(problem_id : int, user_seq : int, data : ProblemDa
     if problem_meta is not None:
         logger.info("문제 메타 데이터 있음")
         # 문제 메타 데이터 업데이트 
-        problem_meta.problem_submitted_count += 1
-        master_user_seq = await get_highest_total_score_user_seq(session)
+        # problem_meta.problem_submitted_count += 1
+        count = await count_rows_with_problem_id_in_user_submit_solution(problem_id, session)
+        logger.info("제출 횟수 : " + str(count))
+        problem_meta.problem_submitted_count = count
+
+        master_user_seq = await get_highest_total_score_user_seq(problem_id, session)
         logger.info("마스터 user_seq : " + str(master_user_seq))
         problem_meta.problem_master_user_seq = master_user_seq
         await session.commit()
@@ -129,17 +132,15 @@ async def insert_user_submit_problem(data : UserSubmitProblem, user_seq : int, s
         user_submit_problem_updated_at = submission_time
     )
 
-    async with session.begin():
-        session.add(user_submit_problem)
-    await session.commit()
+
+    session.add(user_submit_problem)
+    await session.flush()
     await session.refresh(user_submit_problem)
-    await session.close()
 
     return user_submit_problem
 
 async def get_user_submit_problem(problem_id : int, user_seq : int,  session):
     result = await session.execute(select(UserSubmitProblem).filter(UserSubmitProblem.problem_id == problem_id).filter(UserSubmitProblem.user_seq == user_seq))
-    await session.close()
     return result.scalar()
 
 async def update_user_submit_problem(data : UserSubmitProblem, submissionTime : datetime, session):
@@ -148,11 +149,10 @@ async def update_user_submit_problem(data : UserSubmitProblem, submissionTime : 
     
     data.user_submit_problem_updated_at = submission_time
 
-    async with session.begin():
-        session.add(data)
-    await session.commit()
+
+    session.add(data)
+    await session.flush()
     await session.refresh(data)
-    await session.close()
 
     return data
 
@@ -193,11 +193,9 @@ async def insert_user_submit_solution(data : UserSubmitSolution, user_seq : int,
         user_submit_problem_seq = data.user_submit_problem_seq
     )
 
-    async with session.begin():
-        session.add(user_submit_solution)
-    await session.commit()
+    session.add(user_submit_solution)
+    await session.flush()
     await session.refresh(user_submit_solution)
-    await session.close()
 
     return user_submit_solution.submission_id
 
@@ -206,12 +204,18 @@ async def check_user_submit_solution_is_exist(submission_id : int, session):
     user_submit_solution = result.scalar()
 
     if user_submit_solution is None:
-        await session.close()
         return False # 회원제출코드 정보 없음
     else:
-        await session.close()
         return True # 회원제출코드 정보 있음
+    
+# 문제 제출 횟수 조회 
+async def count_rows_with_problem_id_in_user_submit_solution(problem_id : int, session):
+    result = await session.execute(select(UserSubmitSolution).filter(UserSubmitSolution.problem_id == problem_id))
+    count  = len(result.scalars().all())
+    
+    logger.info("문제 푼 사람(명)수 조회 : " + str(count))
 
+    return count
 
 
 #=================================================================================
@@ -323,19 +327,18 @@ async def insert_gpt_solution(data : GPTSolution, user_seq : int, session):
         gpt_total_score = data.gpt_total_score
     )
 
-    async with session.begin():
-        session.add(gpt_solution)
-    await session.commit()
+    session.add(gpt_solution)
+    await session.flush()
     await session.refresh(gpt_solution)
-    await session.close()
 
 # ============================================================================================================
 # 랭킹 조회 
-async def get_highest_total_score_user_seq(session):
+async def get_highest_total_score_user_seq(problem_id : int, session):
     logger.info("랭킹 마스터 유저 조회")
     result = await session.execute(
         select(UserSubmitSolution.user_seq, UserSubmitSolution.submission_id)
         .join(GPTSolution, UserSubmitSolution.submission_id == GPTSolution.submission_id)
+        .where(UserSubmitSolution.problem_id == problem_id)
         .order_by(desc(GPTSolution.gpt_total_score), UserSubmitSolution.user_submit_solution_runtime, UserSubmitSolution.user_submit_solution_time)
     )
 
