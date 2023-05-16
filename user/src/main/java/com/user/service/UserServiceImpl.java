@@ -143,9 +143,7 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public void minusUserSubmitCount(UserTransactionDTO userTransactionDTO) {
-        log.info("제발이유가 뭐야 : "+ userTransactionDTO.getOpenaiApiKey());
         if (!userTransactionDTO.getOpenaiApiKey().equals("0")) {
-            log.info("들어왔어요!: "+ userTransactionDTO.getOpenaiApiKey());
             return;
         }
         UserSubmitCount userSubmitCount = userSubmitCountRepostiory.findByUserUserSeqWithFetchJoin(userTransactionDTO.getUserSeq()).orElseThrow(()->{
@@ -164,6 +162,8 @@ public class UserServiceImpl implements UserService {
             log.error("find UserSubmitCount");
             throw new BaseException(ErrorCode.DATABASE_GET_ERROR);
         });
+        if(userSubmitCount.getUserSubmitCount()<=0)
+            throw new BaseException(ErrorCode.UNVALID_USER);
         return UserSubmitCountDTO.builder().userSubmitCountCount(userSubmitCount.getUserSubmitCount()).build();
     }
 }
