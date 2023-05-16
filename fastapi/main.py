@@ -18,7 +18,8 @@ app = FastAPI()
 # health 체크 
 @app.get("/health")
 async def health_check():
-    return {"status" : "OK!!!"}
+
+    return {"status" : "OK"}
 
 # 카프카 리스너 실행 
 # DB 스키마 생성 

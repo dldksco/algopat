@@ -29,7 +29,7 @@ from my_dto.common_dto import MessageDTO, UserServiceDTO
 from my_exception.exception import MyCustomError 
 from database.get_session import async_session
 from Crypto.Cipher import AES
-from base64 import b64encode, b64decode
+from base64 import b64decode
 
 
 # logger 설정 
@@ -72,7 +72,8 @@ async def processing(data : ProblemData, send_callback):
     else :                              # 회원 OPEN_AI_API_KEY 있음  
         decoded_data = b64decode(data.openai_api_key)
         decrypted_api_key = cipher.decrypt(decoded_data)
-        chat_llm_0 = ChatOpenAI(temperature=0, openai_api_key=decrypted_api_key, request_timeout=120)
+        api_key = decrypted_api_key.decode().rstrip('\r')
+        chat_llm_0 = ChatOpenAI(temperature=0, openai_api_key=api_key, request_timeout=120)
 
     json_chain = await json_formatter(chat_llm_0)
     
