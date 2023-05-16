@@ -45,7 +45,6 @@ export const Profile = () => {
       </div>
     );
   }
-
   const handleClick = () => {
     window.location.href = "https://www.acmicpc.net/";
   };
@@ -53,7 +52,9 @@ export const Profile = () => {
     <>
       <div className={style.box}>
         <div className={style.backgroundImage}>
-          {stringBackCutter(myProfile.backVideo, 3) === "mp4" ? (
+          {myProfile.backVideo &&
+          myProfile.backVideo !== null &&
+          stringBackCutter(myProfile.backVideo, 3) === "mp4" ? (
             <div
               className={style.videoDiv}
               style={{
@@ -72,7 +73,9 @@ export const Profile = () => {
                 <source src={myProfile.backVideo} />
               </video>
             </div>
-          ) : stringBackCutter(myProfile.backImage, 3) === "png" ? (
+          ) : myProfile.backImage &&
+            myProfile.backImage !== null &&
+            stringBackCutter(myProfile.backImage, 3) === "png" ? (
             <img
               src={myProfile.backImage}
               style={{ backgroundSize: "cover" }}
