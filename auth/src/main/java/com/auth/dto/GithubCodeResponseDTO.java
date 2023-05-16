@@ -9,4 +9,7 @@ import lombok.Setter;
 @Setter
 public class GithubCodeResponseDTO {
   private String code;
+  @Builder.Default
+  private String isExtension="NO";
+
 }

@@ -17,7 +17,6 @@ public class CustomExceptionHandler{
 //    sendToLogServer(ex.getMessage(), ex.getMethodName());
     ErrorResponseDTO errorresponseDTO = ErrorResponseDTO.builder()
         .message(baseException.getMessage())
-        .methodName(baseException.getMethodName())
         .build();
     return new ResponseEntity<>(errorresponseDTO, baseException.getHttpStatus());
   }

@@ -9,7 +9,7 @@ public interface AuthService {
   public LoginProcessDTO loginProcess(GithubCodeResponseDTO githubCodeResponseDTO);
   public GithubAccessTokenResponseDTO requestGithubAccessToken(
       GithubCodeResponseDTO githubCodeResponseDTO);
-  public GithubUserResponseDTO requestGithubUserId(
+  public GithubUserResponseDTO requestGithubUserInfo(
       GithubAccessTokenResponseDTO githubAccessTokenResponseDTO);
 
   public String setGithubRedirectURL();

@@ -7,7 +7,9 @@ plugins {
 group = 'com.api'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '11'
-
+ext {
+	set('springCloudVersion', "2021.0.7")
+}
 configurations {
 	compileOnly {
 		extendsFrom annotationProcessor
@@ -29,6 +31,24 @@ dependencies {
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'io.projectreactor:reactor-test'
+
+	//feign client
+	implementation "org.springframework.cloud:spring-cloud-starter-openfeign:3.1.1"
+
+	//eureka
+	implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
+
+	//jwt
+	implementation 'io.jsonwebtoken:jjwt-api:0.11.2'
+	runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.2'
+	runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.11.2'
+	implementation 'com.auth0:java-jwt:3.18.1'
+	//zipkin
+	implementation 'org.springframework.cloud:spring-cloud-starter-sleuth:3.1.7'
+	implementation 'org.springframework.cloud:spring-cloud-starter-zipkin:2.2.8.RELEASE'
+
+
+
 }
 
 dependencyManagement {

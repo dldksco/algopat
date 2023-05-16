@@ -11,8 +11,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class UserServiceIdRequestDTO {
-  @JsonProperty("user_github_id")
+
   private String userGithubId;
+  private String userImageUrl;
 
 
 }

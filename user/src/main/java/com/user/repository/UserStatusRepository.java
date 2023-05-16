@@ -9,6 +9,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-public interface UserStatusRepository extends JpaRepository<UserStatus, UUID> {
-Optional<UserStatus> findTopByUserUserSeqOrderByCreatedAtDesc(UUID userSeq);
+public interface UserStatusRepository extends JpaRepository<UserStatus, Long> {
+Optional<UserStatus> findTopByUserUserSeqOrderByUserStatusCreatedAtDesc(Long userSeq);
 }

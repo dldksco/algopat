@@ -10,7 +10,7 @@ public enum ErrorCode {
 
   OAUTH_REQUIRE(HttpStatus.UNAUTHORIZED, "소셜 인증이 이뤄지지 않은 유저입니다. 소셜 로그인을 선행해주세요."),
   TOKEN_EXPIRED(HttpStatus.UNAUTHORIZED, "만료된 토큰입니다."),
-  UNVALID_TOKEN(HttpStatus.CONFLICT, "인증되지 않은 토큰입니다."),
+  UNVALID_TOKEN(HttpStatus.UNAUTHORIZED, "인증되지 않은 토큰입니다."),
   ACCESS_TOKEN_NULL(HttpStatus.INTERNAL_SERVER_ERROR, "access token이 존재하지 않는 요청입니다."),
   ACCESS_TOKEN_EXPIRED(HttpStatus.UNAUTHORIZED, "access token이 만료되었습니다. 재발급을 요청하세요."),
   REFRESH_TOKEN_EXPIRED(HttpStatus.CONFLICT, "refresh token이 만료되었습니다. 다시 로그인해주세요."),

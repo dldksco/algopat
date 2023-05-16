@@ -13,4 +13,9 @@ import lombok.Setter;
 @NoArgsConstructor
 public class TokenGenerateDTO {
   private String userGithubId;
+  private Long userSeq;
+  private String isExtension;
+
+
+
 }

@@ -1,7 +1,8 @@
 package com.auth.service;
 
 import com.auth.dto.GithubUserResponseDTO;
+import com.auth.dto.UserServiceIdResponseDTO;
 
 public interface UserService {
-  public void checkId(GithubUserResponseDTO gitHubUserResponseDTO);
+  public UserServiceIdResponseDTO checkId(GithubUserResponseDTO gitHubUserResponseDTO);
 }
