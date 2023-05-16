@@ -35,6 +35,7 @@ SUMMARY_CODE_REFACTORING_LONG_TMPL = (
     "14. Aim to enhance readability and maintainability of the code without compromising its functionality.\n"
     "15. Consider common clean code principles such as Single Responsibility Principle (SRP), Don't Repeat Yourself (DRY), and Keep It Simple, Stupid (KISS) when providing your suggestions.\n"
     "16. Take into account the trade-offs between readability, performance, and complexity in your suggestions.\n"
+    "17. Similar suggestions should be consolidated into one.\n"
     "RESPONSE FORMAT:\n"
     "--------\n"
     "gpt_solution_clean_score: <Cleanliness score of user's code (Only number)>,\n"
