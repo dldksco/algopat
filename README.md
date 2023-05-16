@@ -102,8 +102,8 @@
 |          | CSS3            |                    | \-        |
 |          | JavaScript(ES6) |                    | \-        |
 |          | React           | React              | 18.2.0    |
-|          | Node.js         | npm                | 16.18.0   |
-|          | IDE             | Visual Studio Code | 1.75.1    |
+|          | Node.js         | npm                | 18.14.2   |
+|          | IDE             | Visual Studio Code | 1.78.2    |
 | Server   | 서버            | AWS EC2            | \-        |
 |          | 플랫폼          | Ubuntu\AWS Liunx   | 20.04 , AWS Linux2|
 |          | CI/CD           | Docker             | 20.10.17  |
