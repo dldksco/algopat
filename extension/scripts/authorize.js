@@ -73,6 +73,8 @@ const localAuth = {
         KEY: this.KEY,
       })
 
+      alert("로그인이 성공했습니다. 제출 전 extension을 한번 실행해 주세요")
+
       setTimeout(() => {
         window.close();
       }, 500);
@@ -82,35 +84,6 @@ const localAuth = {
     })
   },
 
-  /**
-   * Finish
-   *
-   * @param token The OAuth2 token given to the application from the provider.
-   */
-  finish(token) {
-    /* Get username */
-    // To validate user, load user object from GitHub.
-    const AUTHENTICATION_URL = 'https://api.github.com/user';
-
-    const xhr = new XMLHttpRequest();
-    xhr.addEventListener('readystatechange', function () {
-      if (xhr.readyState === 4) {
-        if (xhr.status === 200) {
-          const username = JSON.parse(xhr.responseText).login;
-          chrome.runtime.sendMessage({
-            closeWebPage: true,
-            isSuccess: true,
-            token,
-            username,
-            KEY: this.KEY,
-          });
-        }
-      }
-    });
-    xhr.open('GET', AUTHENTICATION_URL, true);
-    xhr.setRequestHeader('Authorization', `token ${token}`);
-    xhr.send();
-  },
 };
 
 localAuth.init(); // load params.

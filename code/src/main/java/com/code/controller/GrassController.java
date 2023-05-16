@@ -1,14 +1,15 @@
 package com.code.controller;
 
 import com.code.data.dto.DateGrassCountDTO;
-import com.code.data.dto.DateGrassInfo;
+import com.code.data.dto.DateGrassInfoDTO;
 import com.code.data.dto.UserGrassCountRequestDTO;
 import com.code.service.GrassService;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -25,6 +26,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/grass")
 public class GrassController {
     private final GrassService grassService;
+
+    private static final Logger logger = LoggerFactory.getLogger(GrassController.class);
     @GetMapping("")
     public ResponseEntity<List<DateGrassCountDTO>> getGrassCount (@RequestHeader("userSeq") long userSeq){
         return new ResponseEntity<>(grassService.getGrassCount(UserGrassCountRequestDTO.builder()
@@ -33,7 +36,7 @@ public class GrassController {
     }
 
     @GetMapping("/{targetDate}")
-    public Page<DateGrassInfo> getDateGrassInfo(@RequestHeader("userSeq") long userSeq, @PathVariable("targetDate") String targetDate) {
+    public Page<DateGrassInfoDTO> getDateGrassInfo(@RequestHeader("userSeq") long userSeq, @PathVariable("targetDate") String targetDate) {
         LocalDate targetLocalDate = LocalDate.parse(targetDate, DateTimeFormatter.BASIC_ISO_DATE);
         Pageable pageable = PageRequest.of(0, 5);
         return grassService.findDateGrassInfo(userSeq, targetLocalDate, pageable);

@@ -1,39 +1,143 @@
 .box {
-  padding: 4%;
+  padding-top: 4%;
   width: 100%;
   height: auto;
+  position: relative;
 }
-.box .profiletitle {
-  font-size: 1.36em;
-  font-weight: 600;
+.box .backgroundImage {
+  height: 300px;
+  width: 100%;
 }
-.box .profileimage {
+.box .backgroundImage img {
   background-size: cover;
-  margin-top: 4%;
+  width: 100%;
+  height: 100%;
+}
+.box .backgroundImage .defaultBack {
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: 80%;
+  height: 300px;
+  width: 100%;
+  cursor: pointer;
+  position: relative;
+}
+.box .backgroundImage .defaultBack .hoverContainer {
+  display: none;
+}
+.box .backgroundImage .defaultBackImage {
+  background-color: white;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: 85%;
+  height: 300px;
+  width: 100%;
+  cursor: pointer;
+  position: relative;
+}
+.box .backgroundImage .defaultBackImage .hoverContainer {
+  position: relative;
+  top: 20%;
+  right: 38%;
+}
+.box .backgroundImage .defaultBackImage .hoverContainer .hoverBack {
+  height: 80px;
+  width: 300px;
+  background-color: skyblue;
+  position: absolute;
+  top: 28%;
+  right: 1%;
+  color: white;
+  font-weight: 700;
+  font-size: 1rem;
+  text-align: center;
+  border-radius: 5px;
+  padding-top: 30px;
+}
+.box .backgroundImage .defaultBackImage .hoverContainer .triangle {
+  position: absolute;
+  right: 2%;
+  top: 56px;
+  width: 0;
+  height: 0;
+  border-left: 15px solid transparent;
+  border-right: 15px solid transparent;
+  border-bottom: 30px solid skyblue;
+  transform: rotate(30deg);
+}
+.box .backgroundImage .defaultBack:hover .hoverContainer {
+  display: block;
+  position: relative;
+  top: 20%;
+  right: 38%;
+}
+.box .backgroundImage .defaultBack:hover .hoverContainer .hoverBack {
+  height: 80px;
+  width: 300px;
+  background-color: skyblue;
+  position: absolute;
+  top: 28%;
+  right: 1%;
+  color: white;
+  font-weight: 700;
+  font-size: 1rem;
+  text-align: center;
+  border-radius: 5px;
+  padding-top: 30px;
+}
+.box .backgroundImage .defaultBack:hover .hoverContainer .triangle {
+  position: absolute;
+  right: 2%;
+  top: 56px;
+  width: 0;
+  height: 0;
+  border-left: 15px solid transparent;
+  border-right: 15px solid transparent;
+  border-bottom: 30px solid skyblue;
+  transform: rotate(30deg);
+}
+.box .profileAll {
+  position: absolute;
+  top: 250px;
+  left: 10%;
+}
+.box .profileAll .profilecontainer .profileimage {
+  background-size: cover;
   width: 150px;
   height: 150px;
   border-radius: 100%;
   box-shadow: 3px 3px 3px 3px black;
 }
-.box .profileinfo {
+.box .profileAll .profilecontainer .profileinfo {
   display: flex;
   justify-content: space-between;
   align-items: end;
 }
-.box .profileinfo .gitinfo p {
+.box .profileAll .profilecontainer .profileinfo .gitinfo p {
   font-size: 1.3rem;
 }
-.box .setting {
-  font-size: 1.1rem;
-  font-weight: 600;
-}
-.box .setting .renew {
-  cursor: pointer;
+.box .grid {
+  margin-top: 150px;
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 @media screen and (max-width: 768px) {
   .box {
     width: 100%;
     overflow-x: auto;
+  }
+  .box .backgroundImage .defaultBack {
+    background-position: 80%;
+  }
+  .box .backgroundImage .defaultBack:hover .hoverContainer {
+    display: none;
+  }
+  .box .backgroundImage .defaultBackImage {
+    background-position: 80%;
+  }
+  .box .backgroundImage .defaultBackImage .hoverContainer {
+    display: none;
   }
 }/*# sourceMappingURL=Profile.module.css.map */

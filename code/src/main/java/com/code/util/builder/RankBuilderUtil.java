@@ -3,6 +3,8 @@ package com.code.util.builder;
 import com.code.data.dto.ProblemRankDetailDto;
 import com.code.data.dto.ProblemSimpInfoDto;
 import com.code.data.dto.RankPageDto;
+import com.code.data.dto.UserSubmittedProblemIdListDto;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -16,5 +18,10 @@ public class RankBuilderUtil {
         .masterUserProblemRank(masterUserProblemRank)
         .solutionCount(count)
         .build();
+  }
+
+    public UserSubmittedProblemIdListDto userSubmittedProblemIdListDto(List<Long> list) {
+    return UserSubmittedProblemIdListDto.builder()
+        .problemIdList(list).build();
   }
 }

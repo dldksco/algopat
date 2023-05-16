@@ -1,3 +1,5 @@
+import { $ } from "@/connect/axios";
+
 /**
  *
  * 너무 긴 문자열 앞부분만 보여주기
@@ -8,13 +10,23 @@
 export const stringCutter = (str: string, num: number) =>
   str.slice(0, num) + (str.length > num ? "..." : "");
 
+  export const stringBackCutter = (str: string, num: number) =>
+  {
+    if(str === null) return null;
+    return str.slice(-num);
+  }
 /**
  *
  * 천의 자리마다 컴마 찍기
  * @returns
  */
-export const addCommas = (num: string | number) =>
-  num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+export const addCommas = (num: string | number | undefined) => {
+  if (typeof num == "undefined") {
+    return "";
+  } else {
+    return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  }
+};
 
 /**
  *
@@ -63,4 +75,16 @@ export const estimate = (score: number, state: string) => {
   } else if (score <= 100) {
     return `낮은 ${state} 복잡도`;
   }
+};
+
+/**
+ * 해당 문제가 GPT 처리 중인지 아닌지 check
+ */
+export const getCheckNowGptWork = async (
+  submissionId: number
+): Promise<boolean> => {
+  const response = await $.get(
+    `/code/problem/submission/solution/exist/${submissionId}`
+  );
+  return response.data.data;
 };

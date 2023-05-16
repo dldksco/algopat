@@ -1,11 +1,17 @@
 @charset "UTF-8";
 .ranking_detail {
   margin-top: 10%;
+  margin-bottom: 5%;
 }
 .ranking_detail .box {
   border: 1px solid var(--font-color);
-  padding: 20px;
+  padding: 15px 18px;
   cursor: pointer;
+  transition: 0.3s;
+}
+.ranking_detail .box:hover {
+  color: gray;
+  border: 1px solid gray;
 }
 .ranking_detail .header {
   font-size: 1.5rem;

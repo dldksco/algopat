@@ -13,4 +13,12 @@
 .box_title span {
   font-size: 1.2rem;
   margin-left: 3%;
+}
+
+.sppan {
+  cursor: pointer;
+  transition: 0.2s;
+}
+.sppan:hover {
+  color: gray;
 }/*# sourceMappingURL=CodeBox.module.css.map */

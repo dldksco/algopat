@@ -1,13 +1,17 @@
 package com.code.controller;
 
+import com.code.data.domain.ErrorCode;
 import com.code.data.dto.CommonBooleanDto;
-import com.code.data.dto.ProblemRankDetailDto;
 import com.code.data.dto.ProblemRankOverviewDto;
 import com.code.data.dto.ProblemRequestDto;
 import com.code.data.dto.ProblemResponseDto;
 import com.code.data.dto.UserServiceBackjoonRequestDto;
 import com.code.data.dto.UserSubmitProblemDto;
 import com.code.data.dto.UserSubmitSolutionTitleDto;
+import com.code.data.dto.UserSubmitTransactionDto;
+import com.code.data.dto.UserSubmittedProblemIdListDto;
+import com.code.exception.BaseException;
+import com.code.service.EncryptionService;
 import com.code.service.KafkaProducerService;
 import com.code.service.ProblemRankService;
 import com.code.service.ProblemService;
@@ -18,6 +22,7 @@ import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -38,26 +43,41 @@ public class CodeController {
   // logger 정의
   private static final Logger logger = LoggerFactory.getLogger(CodeController.class);
 
-  private final String USER_CODE_TOPIC = "usercode";
+  private final String USER_CODE_TOPIC    = "usercode";
+  private final String USER_SERVICE_TOPIC = "user-service";
 
   // Service 정의
   private final KafkaProducerService kafkaProducerService;
   private final ProblemService problemService;
+  private final ProblemRankService problemRankService;
   private final UserService userService;
 
+  private final EncryptionService encryptionService;
   /**
    * 유저 코드 제출 (Spring -> Kafka)
+   *
    * @param problemRequestDto
    * @return
    * @throws JsonProcessingException
    */
   @PostMapping("")
-  public ResponseEntity<Void> sendProblemToKafka(@RequestBody @Valid ProblemRequestDto problemRequestDto,
+  public ResponseEntity<Void> sendProblemToKafka(
+      @RequestBody @Valid ProblemRequestDto problemRequestDto,
       @RequestHeader("userSeq") long userSeq)
       throws JsonProcessingException {
+    try{
+      problemRequestDto.setOpenaiApiKey(encryptionService.encrypt(problemRequestDto.getOpenaiApiKey()));
+    }catch (Exception e){
+      throw new BaseException(ErrorCode.CONTROLLER_SERVLET_ERROR,"sendProblemToKafka");
+    }
     problemService.checkExistUserSubmitSolution(Long.parseLong(problemRequestDto.getSubmissionId())); // 이미 제출한 코드가 있는지 체크 (있다면 409)
     problemRequestDto.setUserSeq(userSeq);
     kafkaProducerService.send(USER_CODE_TOPIC, problemRequestDto);
+      kafkaProducerService.sendUserSubmitTransactionDto(USER_SERVICE_TOPIC, UserSubmitTransactionDto.builder()
+          .userSeq(userSeq)
+          .openaiApiKey(problemRequestDto.getOpenaiApiKey())
+          .build());
+
 
     userService.checkBackjoonId(
         UserServiceBackjoonRequestDto.builder()
@@ -67,8 +87,10 @@ public class CodeController {
     return ResponseEntity.ok().build();
   }
 
+
   /**
    * 문제 조회
+   *
    * @param problemId
    * @return
    */
@@ -80,6 +102,7 @@ public class CodeController {
 
   /**
    * 푼 문제 목록 조회
+   *
    * @param pageNumber
    * @param userSeq
    * @return
@@ -88,13 +111,14 @@ public class CodeController {
   public ResponseEntity<Page<UserSubmitProblemDto>> getUserSubmitProblemDto(
       @PathVariable("pageNumber") int pageNumber,
       @RequestHeader(value = "userSeq", defaultValue = "-1") long userSeq
-      ) {
+  ) {
     logger.info("헤더에서 userSeq 꺼냄 : {}", userSeq);
     return ResponseEntity.ok(problemService.getUserSubmitProblemDtoPage(pageNumber, userSeq));
   }
 
   /**
    * 푼 문제 -> 제출 목록 조회
+   *
    * @param pageNumber
    * @param problemId
    * @param userSeq
@@ -112,6 +136,7 @@ public class CodeController {
 
   /**
    * 제출 문제 상세 조회
+   *
    * @param submissionId
    * @return
    */
@@ -122,9 +147,8 @@ public class CodeController {
   }
 
   /**
-   * GPT 응답 존재 여부
-   * false : GPT 응답 생성중
-   * true  : GPT 응답 생성 완료
+   * GPT 응답 존재 여부 false : GPT 응답 생성중 true  : GPT 응답 생성 완료
+   *
    * @param submissionId
    * @return
    */
@@ -134,4 +158,57 @@ public class CodeController {
   ) {
     return ResponseEntity.ok(problemService.isExistGptSolution(submissionId));
   }
+
+  @GetMapping("/submission/list")
+  public ResponseEntity<UserSubmittedProblemIdListDto> getUserSubmissionProblemSeqList(
+      @RequestHeader("userSeq") long userSeq) {
+    return ResponseEntity.ok(problemRankService.findProblemIdsByUserSeq(userSeq));
+  }
+
+  /**
+   * 회원 푼 문제 정렬 조회
+   *
+   * @param pageNumber
+   * @param category
+   * @param condition
+   * @return
+   */
+  @GetMapping("/submission/sort/{pageNumber}")
+  public ResponseEntity<?> getUserSubmitProblemDtoOrderByCondition(
+      @PathVariable(value = "pageNumber") int pageNumber,
+      @RequestParam(value = "category", defaultValue = "date") String category,
+      @RequestParam(value = "condition", defaultValue = "desc") String condition,
+      @RequestHeader(value = "userSeq") long userSeq
+  ) {
+
+    Direction direction = "ASC".equalsIgnoreCase(condition) ? Direction.ASC : Direction.DESC;
+    if (category.equalsIgnoreCase("date")) {
+      category = "userSubmitProblemUpdatedAt";
+    } else if (category.equalsIgnoreCase("id")) {
+      category = "problemId";
+    } else if (category.equalsIgnoreCase("level")) {
+      category = "p.problemLevel";
+    }
+
+    return ResponseEntity.ok(
+        problemService.getUserSubmitProblemDtoFilterConditionPage(pageNumber, userSeq, direction,
+            category));
+  }
+
+//  @GetMapping("/submission/rank")
+//  public ResponseEntity<Page<ProblemRankOverviewDto[]>> getProblemRankOverviewDto(
+//      @RequestParam(required = false, value = "pagenumber", defaultValue = "0") int pagenumber,
+//      @RequestParam(required = false, value = "level") Long level,
+//      @RequestParam(required = false, value = "usercheck", defaultValue = "false") Boolean userCheck,
+//      @RequestHeader(required = false, value = "userSeq") Long userSeq
+//  ) {
+//    if (userCheck) {
+//      return ResponseEntity.ok(
+//          problemRankService.getProblemRankOverviewsByLevelAndUser(level, userSeq, pagenumber));
+//    } else {
+//      return ResponseEntity.ok(
+//          problemRankService.getProblemRankOverviewsByLevelAndUser(level, null, pagenumber));
+//    }
+//  }
+
 }

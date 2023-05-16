@@ -28,9 +28,16 @@
 .ranking_carousel .carousel img {
   display: inline-block;
   width: 80px;
+  cursor: pointer;
+}
+.ranking_carousel .carousel img:hover {
+  transition: 0.2s;
+  filter: opacity(0.6);
+}
+.ranking_carousel .carousel .slider {
+  cursor: grab;
 }
 .ranking_carousel .carousel .slider .content {
-  width: 10%;
   display: flex;
   text-align: center;
   flex-direction: column;
@@ -71,7 +78,7 @@
   .ranking_carousel .carousel {
     margin-top: 2%;
     margin-bottom: 1%;
-    height: 200px;
+    height: 100px;
     width: 75%;
     background-color: black;
     border-radius: 20px;
@@ -79,7 +86,7 @@
   }
   .ranking_carousel .carousel img {
     display: inline-block;
-    width: 80px;
+    width: 30px;
   }
   .ranking_carousel .carousel .slider .content {
     width: 10%;
@@ -90,10 +97,10 @@
     align-items: center;
   }
   .ranking_carousel .carousel .slider .center_side img {
-    width: 100px;
+    width: 40px;
   }
   .ranking_carousel .carousel .slider .center img {
-    width: 120px;
+    width: 50px;
   }
   .ranking_carousel .carousel p {
     margin: 0;

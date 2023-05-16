@@ -20,7 +20,6 @@
   .carousel {
     margin-top: 2%;
     margin-bottom: 1%;
-
     height: 200px;
     width: 75%;
     background-color: black;
@@ -29,12 +28,18 @@
     img {
       display: inline-block;
       width: 80px;
+      cursor: pointer;
+
+      &:hover {
+        transition: 0.2s;
+        filter: opacity(0.6);
+      }
       // transition: all 0.1s ease-in-out;
     }
 
     .slider {
+      cursor: grab;
       .content {
-        width: 10%;
         display: flex;
         text-align: center;
         flex-direction: column;
@@ -45,12 +50,14 @@
       .center_side {
         img {
           width: 100px;
+          // transition: width 0.5s ease-in-out;
         }
       }
 
       .center {
         img {
           width: 120px;
+          // transition: width 0.5s ease-in-out;
         }
       }
     }
@@ -88,14 +95,14 @@
       margin-top: 2%;
       margin-bottom: 1%;
 
-      height: 200px;
+      height: 100px;
       width: 75%;
       background-color: black;
       border-radius: 20px;
       padding-top: 1%;
       img {
         display: inline-block;
-        width: 80px;
+        width: 30px;
         // transition: all 0.1s ease-in-out;
       }
 
@@ -111,13 +118,13 @@
 
         .center_side {
           img {
-            width: 100px;
+            width: 40px;
           }
         }
 
         .center {
           img {
-            width: 120px;
+            width: 50px;
           }
         }
       }

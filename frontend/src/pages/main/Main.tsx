@@ -1,13 +1,22 @@
 import { Button } from "@/components/button/Button";
-import style from "./Main.module.css";
+import { useInView } from "react-intersection-observer";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowUp } from "@fortawesome/free-solid-svg-icons";
-import code2 from "@/assets/img/main/code2.png";
-import code3 from "@/assets/img/main/code3.png";
+import { MainMoveStick } from "./MainMoveStick";
+import { TopArrow } from "@/components/toparrow/TopArrow";
+import { MainBackground } from "./MainBackground";
+import code4 from "@/assets/img/main/code4.png";
+import code5 from "@/assets/img/main/code5.png";
 import gpticon from "@/assets/img/main/gpticon.png";
 import bird from "@/assets/img/main/bird.png";
+import style from "./Main.module.css";
 
 export const Main = () => {
+  const [ref, inView] = useInView();
+  const [ref1, inView1] = useInView();
+  const [ref2, inView2] = useInView();
+  const [ref3, inView3] = useInView();
+
   const moveExtention = () => {
     window.location.href =
       "https://chrome.google.com/webstore/detail/algopat/aalkbigjinaihechcjpigbahgembfbac?hl=ko";
@@ -16,7 +25,17 @@ export const Main = () => {
   return (
     <div className={style.mainpage}>
       <div className={style.fpage}>
-        <div className={style.content}>
+        <div
+          className={style.content}
+          style={
+            inView
+              ? {
+                  animation: `left_right_effect 0.5s`,
+                }
+              : undefined
+          }
+          ref={ref}
+        >
           <h1 style={{ border: "none", letterSpacing: "5px" }}>ALGOPAT</h1>
           <p style={{ fontSize: "1.3rem", marginBottom: "12px" }}>
             여러분의 코딩 문제 풀이를
@@ -38,11 +57,20 @@ export const Main = () => {
             <FontAwesomeIcon icon={faArrowUp} className={style.button_arrow} />
           </div>
         </div>
-        <div className={style.code_background} />
+        <MainBackground />
       </div>
       <div className={style.cpage}>
-        <div className={style.gptcode}>
-          <img src={code2} className={style.code_image} />
+        <div
+          className={style.gptcode}
+          style={
+            inView1
+              ? {
+                  animation: `right_left_effect 0.8s`,
+                }
+              : undefined
+          }
+          ref={ref1}
+        >
           <div className={style.gptdesc}>
             <h1>
               <span style={{ color: "#7472CB" }}>수치화</span>된 분석
@@ -51,12 +79,30 @@ export const Main = () => {
             <p> GPT가 부여한 점수를 비교하고 여러분의 </p>
             <p>코드를 비교해서 완성도를 높여보세요</p>
           </div>
+          <img src={code4} className={style.code_image} />
         </div>
-        <div className={style.move_stick}></div>
+        <div className={style.move_stick}>
+          <MainMoveStick />
+        </div>
       </div>
       <div className={style.cpage}>
-        <div className={style.gptcode}>
-          <img src={code3} className={style.code_image} alt="" />
+        <div
+          className={style.gptcode}
+          style={
+            inView2
+              ? {
+                  animation: `left_right_effect 0.8s`,
+                }
+              : undefined
+          }
+          ref={ref2}
+        >
+          <img
+            src={code5}
+            className={style.code_image}
+            style={{ width: "40%", marginRight: "10px" }}
+            alt=""
+          />
           <div className={style.gptdesc}>
             <h1>
               <span style={{ color: "#7472CB" }}>리팩토링</span> 제공
@@ -70,8 +116,17 @@ export const Main = () => {
         </div>
       </div>
       <div className={style.lpage}>
-        <h1>Main Tech.</h1>
-        <div className={style.contentbox}>
+        <h1 ref={ref3}>Main Tech.</h1>
+        <div
+          className={style.contentbox}
+          style={
+            inView3
+              ? {
+                  animation: `down_top_effect 1.3s`,
+                }
+              : undefined
+          }
+        >
           <div
             className={style.gptbox}
             style={{
@@ -106,6 +161,7 @@ export const Main = () => {
             border: "1px solid black",
             fontSize: "1.3rem",
             fontWeight: "700",
+            borderRadius: "10px",
             padding: "20px 60px",
             margin: "50px 0 100px",
             color: "black",
@@ -113,6 +169,7 @@ export const Main = () => {
           onClick={moveExtention}
         />
       </div>
+      <TopArrow />
     </div>
   );
 };

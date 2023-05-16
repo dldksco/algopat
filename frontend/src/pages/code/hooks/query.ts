@@ -1,5 +1,7 @@
+import axios from "axios";
 import { $ } from "@/connect/axios";
-import { useQuery } from "@tanstack/react-query";
+import { PagableResponse } from "@/types/type";
+import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 
 interface Solution {
   userSubmitSolutionResult: string;
@@ -49,7 +51,10 @@ export interface TotalInfo {
   solutionMemory: number | undefined;
 }
 
-export const getSolution = (solutionSeq: number) => {
+/**
+ * 선택한 문제에 대한 상세한 코드 리뷰를 불러오는 함수
+ */
+export const getSolution = (solutionSeq: number, token: string) => {
   const fetchSolution = async (): Promise<Solution> => {
     const { data } = await $.get(
       `/code/problem/submission/solution/detail/${solutionSeq}`
@@ -57,9 +62,22 @@ export const getSolution = (solutionSeq: number) => {
     return data;
   };
 
+  const fetchForExtension = async (): Promise<Solution> => {
+    const { data } = await axios.get(
+      `https://algopat.kr/api/code/problem/submission/solution/detail/${solutionSeq}`,
+      {
+        headers: {
+          authorization: token,
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    return data;
+  };
+
   const { data, isLoading, isError, refetch } = useQuery(
     ["GptSolution", solutionSeq],
-    fetchSolution,
+    token ? fetchForExtension : fetchSolution,
     { enabled: !!solutionSeq }
   );
 
@@ -104,3 +122,75 @@ export const getSolution = (solutionSeq: number) => {
     refetch,
   };
 };
+
+/******************************/
+
+export interface ProblemInfo {
+  problemId: number;
+  problemLevel: number;
+  problemTitle: string;
+}
+
+/**
+ * 제출한 문제들의 Infinity Query를 불러오는 함수
+ */
+export const getInfinityProblemList = (category: string, condition: string) => {
+  const fetchData = async (
+    page: number,
+    category: string,
+    condition: string
+  ): Promise<PagableResponse<ProblemInfo>> => {
+    const response = await $.get(
+      `/code/problem/submission/sort/${page}?category=${category}&condition=${condition}`
+    ).then((res) => res.data);
+    return response;
+  };
+
+  const { data, fetchNextPage, isFetchingNextPage, hasNextPage } =
+    useInfiniteQuery(
+      ["infinityProblemList", category, condition],
+      ({ pageParam = 0 }) => fetchData(pageParam, category, condition),
+      {
+        getNextPageParam: (lastPage) => {
+          if (lastPage.last) return undefined;
+          else return lastPage.number + 1;
+        },
+      }
+    );
+
+  return { data, fetchNextPage, isFetchingNextPage, hasNextPage };
+};
+
+/******************************/
+
+export interface Solve {
+  submissionId: number;
+  userSubmitSolutionTime: string;
+}
+
+/**
+ * 특정 문제에 대한 제출 리스트를 불러오는 함수
+ */
+export const getSubmissionList = (
+  problemId: number,
+  isProblemOpen: boolean
+) => {
+  const fetchSubmission = async (): Promise<PagableResponse<Solve>> => {
+    const response = await $.get(
+      `/code/problem/submission/solution/${problemId}/0`
+    ).then((res) => res.data);
+    return response;
+  };
+
+  const { data, isLoading } = useQuery(
+    ["problemDetail", problemId],
+    fetchSubmission,
+    {
+      enabled: !!isProblemOpen,
+    }
+  );
+
+  return { data, isLoading };
+};
+
+/******************************/

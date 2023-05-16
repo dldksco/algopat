@@ -21,6 +21,10 @@
   margin-top: auto;
   margin-bottom: auto;
   cursor: pointer;
+  transition: 0.35s;
+}
+.header .logo:hover {
+  filter: opacity(0.6);
 }
 .header .menu {
   display: flex;
@@ -28,7 +32,7 @@
   justify-content: space-around;
   align-items: center;
   font-size: 1.5rem;
-  width: 35%;
+  width: 38%;
 }
 .header .menu :nth-child(n) {
   cursor: pointer;
@@ -68,7 +72,7 @@
 
 @media screen and (max-width: 1200px) {
   .header .menu {
-    width: 36%;
+    width: 45%;
     min-width: 260px;
     font-size: 1.1rem;
   }
@@ -97,7 +101,7 @@
     background-color: black;
     border: 1px solid white;
     transition: 0.2s;
-    z-index: 1;
+    z-index: 5;
   }
   .header .menu :nth-child(n) {
     margin: 20px 0px;

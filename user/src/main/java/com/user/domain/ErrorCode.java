@@ -44,7 +44,8 @@ public enum ErrorCode {
   FILE_DELETE_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "파일 로컬 삭제 과정에서 에러가 발생했습니다."),
 
   S3_CLIENT_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "유효하지 않은 S3 클라이언트입니다."),
-
+  //  4. 카프카 관련 에러
+  KAFKA_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "카프카 에러가 발생했습니다."),
 
   // 핸들링되지 않은 에러
   SERVICE_SERVLET_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "서비스단에서 에러가 발생했습니다."),

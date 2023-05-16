@@ -1,10 +1,9 @@
-import style from "./RankingBoard.module.css";
 import { useNavigate } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
-import { useRecoilValue } from "recoil";
-import { centerIndexState } from "@/atoms/ranking.atom";
-import { Pagenation } from "@/components/pagenation/Pagenation";
 import { isMobile } from "@/pages/main/hooks/func";
+
+import style from "./RankingBoard.module.css";
+import { addCommas, stringCutter } from "@/pages/code/hooks/func";
 
 /** headRow : 맨 첫번째 row에 무엇을 넣을 것인가? 제목 내용 등등등 / 안 넣으면 생성X
  *  grid : 각각의 내용들에 어느정도의 width를 할당할 것인가? 데이터 예시 ex) "40% 30% 30%"
@@ -12,35 +11,22 @@ import { isMobile } from "@/pages/main/hooks/func";
  *  url : 클릭시 이동할 url
  */
 
-export const RankingBoard = () => {
-  const headRow = ["#", "제목", "Master", "제출한 사람 수"];
-  const grid = isMobile() ? "50% 50%" : "15% 60% 15% 10%";
-  const data = [
-    {
-      number: "17470",
-      title: "배열 돌리기 5",
-      master: "김싸피",
-      count: "23,111",
-      isSolved: false,
-    },
-    {
-      number: "17470",
-      title: "배열 돌리기 5",
-      master: "김싸피",
-      count: "23,111",
-      isSolved: true,
-    },
-    {
-      number: "17470",
-      title: "배열 돌리기 5",
-      master: "김싸피",
-      count: "23,111",
-      isSolved: false,
-    },
-  ];
+interface RankingDatacolumn {
+  problemId: number;
+  problemTitle: string;
+  problemSubmittedCount: string;
+  userGithubId: string;
+  problemLevel: string;
+  isSolved: boolean;
+}
+interface props {
+  data?: RankingDatacolumn[];
+}
 
+export const RankingBoard = ({ data }: props) => {
+  const headRow = ["문제번호", "제목", "Master", "제출한 사람 수"];
+  const grid = isMobile() ? "50% 50%" : "15% 50% 20% 15%";
   const navigate = useNavigate();
-  const rank = useRecoilValue(centerIndexState);
 
   return (
     <>
@@ -70,28 +56,25 @@ export const RankingBoard = () => {
             key={uuidv4()}
             className={style.content_container}
             style={{ gridTemplateColumns: grid }}
-            onClick={() => navigate(`/ranking/${content.number}`)}
+            onClick={() => navigate(`/ranking/${content.problemId}`)}
           >
             <div
               className={style.row_number}
               style={{ color: content.isSolved ? "#309E61" : "" }}
             >
               <img
-                src={`https://static.solved.ac/tier_small/${
-                  content.isSolved ? rank + 1 : 0
-                }.svg`}
+                src={`https://static.solved.ac/tier_small/${content.problemLevel}.svg`}
                 style={{ width: "1rem", height: "auto", marginRight: "10px" }}
                 alt=""
               />
-              {content.number}
+              {content.problemId}
             </div>
-            <div>{content.title}</div>
-            <div>{content.master}</div>
-            <div>{content.count}</div>
+            <div>{stringCutter(content.problemTitle, 20)}</div>
+            <div>{content.userGithubId}</div>
+            <div>{addCommas(content.problemSubmittedCount)}</div>
           </div>
         );
       })}
-      <Pagenation first={true} last={true} />
     </>
   );
 };
