@@ -37,11 +37,28 @@
 <img src="https://img.shields.io/badge/Jenkins-D24939?style=for-the-badge&logo=Jenkins&logoColor=white" style="height : auto; margin-left : 10px; margin-right : 10px;"/>
 <img src="https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=Docker&logoColor=white" style="height : auto; margin-left : 10px; margin-right : 10px;"/>
 <img src="https://img.shields.io/badge/Nginx-009639?style=for-the-badge&logo=NGINX&logoColor=white" style="height : auto; margin-left : 10px; margin-right : 10px;"/>
+<img src="https://img.shields.io/badge/Grafana-F46800?style=for-the-badge&logo=Grafana&logoColor=white" style="height : auto; margin-left : 10px; margin-right : 10px;"/>
+<img src="https://img.shields.io/badge/prometheus-E6522C?style=for-the-badge&logo=prometheus&logoColor=white" style="height : auto; margin-left : 10px; margin-right : 10px;"/>
+
 <br>
+
+<img src="https://img.shields.io/badge/Apache Kafka-231F20?style=for-the-badge&logo=Apache Kafka&logoColor=white" style="height : auto; margin-left : 10px; margin-right : 10px;"/>
+<img src="https://img.shields.io/badge/Redis-DC382D?style=for-the-badge&logo=Redis&logoColor=white" style="height : auto; margin-left : 10px; margin-right : 10px;"/>
+<img src="https://img.shields.io/badge/MariaDB-003545?style=for-the-badge&logo=MariaDB&logoColor=white" style="height : auto; margin-left : 10px; margin-right : 10px;"/>
+<img src="https://img.shields.io/badge/elasticsearch-005571?style=for-the-badge&logo=elasticsearch&logoColor=white" style="height : auto; margin-left : 10px; margin-right : 10px;"/>
+<img src="https://img.shields.io/badge/kibana-005571?style=for-the-badge&logo=Kibana&logoColor=white" style="height : auto; margin-left : 10px; margin-right : 10px;"/>
+<img src="https://img.shields.io/badge/Logstash-005571?style=for-the-badge&logo=Logstash&logoColor=white" style="height : auto; margin-left : 10px; margin-right : 10px;"/>
+<img src="https://img.shields.io/badge/Beats-005571?style=for-the-badge&logo=Beats&logoColor=white" style="height : auto; margin-left : 10px; margin-right : 10px;"/>
+
+<br>
+
 <img src="https://img.shields.io/badge/Java-FF7800?style=for-the-badge&logo=Java&logoColor=white" style="height : auto; margin-left : 10px; margin-right : 10px;"/>
 <img src="https://img.shields.io/badge/Spring Boot-6DB33F?style=for-the-badge&logo=Spring Boot&logoColor=white" style="height : auto; margin-left : 10px; margin-right : 10px;"/>
+<img src="https://img.shields.io/badge/WebFlux-6DB33F?style=for-the-badge&logo=WebFlux&logoColor=white" style="height : auto; margin-left : 10px; margin-right : 10px;"/>
+<img src="https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=Python&logoColor=white" style="height : auto; margin-left : 10px; margin-right : 10px;"/>
+<img src="https://img.shields.io/badge/FastAPI-009688?style=for-the-badge&logo=FastAPI&logoColor=white" style="height : auto; margin-left : 10px; margin-right : 10px;"/>
 <img src="https://img.shields.io/badge/Gradle-02303A?style=for-the-badge&logo=Gradle&logoColor=white" style="height : auto; margin-left : 10px; margin-right : 10px;"/>
-<img src="https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=MySQL&logoColor=white" style="height : auto; margin-left : 10px; margin-right : 10px;"/>
+
 <br>
 
 <img src="https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=HTML5&logoColor=white" style="height : auto; margin-left : 10px; margin-right : 10px;"/>
@@ -52,9 +69,11 @@
 <img src="https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=React&logoColor=white" style="height : auto; margin-left : 10px; margin-right : 10px;"/>
 
 <br>
+
 <img src="https://img.shields.io/badge/Jira-0052CC?style=for-the-badge&logo=Jira&logoColor=white" style="height : auto; margin-left : 10px; margin-right : 10px;"/>
 <img src="https://img.shields.io/badge/GitLab-FCA121?style=for-the-badge&logo=GitLab&logoColor=white" style="height : auto; margin-left : 10px; margin-right : 10px;"/> 
 <img src="https://img.shields.io/badge/Mattermost-0058CC?style=for-the-badge&logo=Mattermost&logoColor=white" style="height : auto; margin-left : 10px; margin-right : 10px;"/>
+<img src="https://img.shields.io/badge/Notion-000000?style=for-the-badge&logo=Notion&logoColor=white" style="height : auto; margin-left : 10px; margin-right : 10px;"/>
 <br/>
 
   <br/>
@@ -62,25 +81,22 @@
 
 | 구분     | 기술스택        | 상세내용           | 버전      |
 | -------- | --------------- | ------------------ | --------- |
-| 공통     | 형상관리        | Gitlab             | \-        |
-|          | 이슈관리        | Jira               | \-        |
+| 공통     | 형상관리        | Gitlab              | \-        |
+|          | 이슈관리        | Jira                | \-        |
 |          | 커뮤니케이션    | Mattermost, Notion | \-        |
-| BackEnd  | DB              | MySQL              | 8.0.31    |
-|          |                 | Mybatis            | 2.3.0     |
-|          | Java            | Zulu               | 1.8.0_202 |
-|          | Spring          | Spring             | 5.3.24    |
-|          |                 | Spring Boot        | 2.7.8     |
+| BackEnd  | DB              | MariaDB            |     |
+|          |                 | JPA                |      |
+|          | Java            | Zulu               |  |
+|          | Spring          | Spring             |     |
+|          |                 | Spring Boot        |      |
 |          | IDE             | IntelliJ           | 2022.3.1  |
-|          | Build           | Gradle             | 7.6       |
+|          | Build           | Gradle             |        |
 |          | API Docs        | Postman            |           |
 | FrontEnd | HTML5           |                    | \-        |
 |          | CSS3            |                    | \-        |
 |          | JavaScript(ES6) |                    | \-        |
 |          | React           | React              | 18.2.0    |
 |          | Node.js         | npm                | 16.18.0   |
-|          | Openvidu        | Openvidu           | 2.25.0    |
-|          | Sockjs          | Sockjs             | 1.6.1     |
-|          | Stompjs         | Stompjs            | 2.3.3     |
 |          | IDE             | Visual Studio Code | 1.75.1    |
 | Server   | 서버            | AWS EC2            | \-        |
 |          | 플랫폼          | Ubuntu\AWS Liunx   | 20.04 , AWS Linux2|
