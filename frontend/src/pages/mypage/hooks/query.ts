@@ -76,7 +76,7 @@ export const getBackImage = (backgroundId: string, enabled: boolean) =>{
     ["backimageupdate"], async():Promise<backImageResponse>=>{
       const {data} = await axios.get(`https://solvedac-ixdn5ymk3a-du.a.run.app/backgroundShow/${backgroundId}`)
       setProfileState((prev)=>{
-        const updateState = {...prev, backImage: data.backgroundImageUrl}
+        const updateState = {...prev, backImage: data.backgroundImageUrl, backVideo: data.backgroundVideoUrl}
         return updateState;
       })
       return data;

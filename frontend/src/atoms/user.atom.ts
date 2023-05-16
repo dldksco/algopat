@@ -12,6 +12,7 @@ export interface MyProfile {
   tier: number;
   backgroundId: string;
   backImage:string;
+  backVideo: string;
 }
 
 export const userInfoState = atom<UserInfo>({
@@ -30,6 +31,7 @@ export const profileState = atom<MyProfile>({
     tier: 0,
     backgroundId:"",
     backImage:"",
+    backVideo: "",
   },
 });
 
