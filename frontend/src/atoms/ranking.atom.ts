@@ -23,7 +23,7 @@ export const rankingDetailState = atom<RankingDetailParam>({
     pagenumber: 1,
     languagefilter: "",
     sortcriteria: "",
-    defaultvalue: "",
+    searchText: "",
   },
 });
 
