@@ -46,5 +46,5 @@ export interface RankingDetailParam {
   pagenumber: number;
   languagefilter: string;
   sortcriteria: string;
-  defaultvalue: string;
+  searchText: string;
 }
