@@ -85,7 +85,7 @@ function startLoader() {
               if (res.status === 200) {
 
                 console.log('풀이가 맞았습니다. 전송을 시작합니다..');
-                console.log("보낼 데이터 ", bojData)
+                // console.log("보낼 데이터 ", bojData)
 
                 bojData.openai_api_key = key;
 

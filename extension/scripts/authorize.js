@@ -64,7 +64,7 @@ const localAuth = {
       body: JSON.stringify(data)
     }).then((res) => {
       const accessToken = res.headers.get("authorization");
-      console.log(accessToken)
+      // console.log(accessToken)
       if (!accessToken) throw new Error("");
       chrome.runtime.sendMessage({
         closeWebPage: true,
