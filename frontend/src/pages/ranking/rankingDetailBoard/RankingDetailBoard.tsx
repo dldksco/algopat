@@ -20,7 +20,6 @@ export const RankingDetailBoard = ({ data }: props) => {
                 <div className={style.user_info}>
                   <div
                     style={{
-                      // backgroundColor: "white",
                       backgroundImage: `url(${v.userImageUrl})`,
                       backgroundSize: "2rem 2rem",
                       width: "2rem",
@@ -30,7 +29,16 @@ export const RankingDetailBoard = ({ data }: props) => {
                   />
                   <div>{v.userGithubId}</div>
                 </div>
-                <div>제출일 : {v.userSubmitSolutionTime}</div>
+                <div>
+                  제출일 :{" "}
+                  {v.userSubmitSolutionTime.replace(
+                    /^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2})$/,
+                    (_, y, m, d, hh, mm, ss) =>
+                      `${y}-${m}-${d} ${hh >= 12 ? "오후" : "오전"} ${
+                        hh > 12 ? hh - 12 : hh
+                      }:${mm}:${ss}`
+                  )}
+                </div>
               </div>
               <div className={style.info_list}>
                 <div>

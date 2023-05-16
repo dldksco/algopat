@@ -1,5 +1,5 @@
 [![Algopat](./image/algopat-logo.png/ "Algopat Logo")](https://algopat.kr/ "Visit Algopat")   
-##### ChatGPT & LangChain을 활용한 알고리즘 소스코드 효율성 분석 플랫폼  
+### ChatGPT & LangChain을 활용한 알고리즘 소스코드 효율성 분석 서비스  
 
 
 ## 💡 프로젝트 소개 (배경, 개요)
@@ -7,17 +7,17 @@
 알고리즘 문제를 풀다 보면 효율성 측면에서 소홀한 경우가 많습니다.  
 내가 작성한 코드가 시간, 공간 측면으로 효율적인지 코드의 구조와 변수명은 적합한지 알기 어렵습니다.  
 누군가 논리적인 근거로 타당한 가이드라인을 제시해 준다면...
-##### -> 이와 같은 많은 고민을 해결하기 위해 만든, 알고리즘 소스코드 효율성 분석 서비스입니다.  
+#### -> 이와 같은 많은 고민을 해결하기 위해 만든, 알고리즘 소스코드 효율성 분석 서비스입니다.  
 
 ## ✨ 프로젝트 주요 기술 
 
 1. 인증/인가
    - Github 소셜 로그인 (OAuth 2.0)
    - JWT (AccessToken, RefreshToken)
-   - API Gateway, Eureka  
+   - Spring Cloud Gateway, Eureka  
 2. 크롬 익스텐션
    - Crawling (문제, 회원 제출 코드)
-   - SSE (실시간 알림)  
+   - WebFlux를 이용한 SSE (실시간 알림)  
 3. 알고리즘 소스 코드 분석 
    - 시간 복잡도 (Big O)
    - 공간 복잡도 (Big O)
@@ -63,7 +63,7 @@
 <img src="https://img.shields.io/badge/Gradle-02303A?style=for-the-badge&logo=Gradle&logoColor=white" style="height : auto; margin-left : 10px; margin-right : 10px;"/>
 
 <br>
-#
+
 <img src="https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=HTML5&logoColor=white" style="height : auto; margin-left : 10px; margin-right : 10px;"/>
 <img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=JavaScript&logoColor=white" style="height : auto; margin-left : 10px; margin-right : 10px;"/>
 <img src="https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=TypeScript&logoColor=white" style="height : auto; margin-left : 10px; margin-right : 10px;"/>
@@ -102,8 +102,8 @@
 |          | CSS3            |                    | \-        |
 |          | JavaScript(ES6) |                    | \-        |
 |          | React           | React              | 18.2.0    |
-|          | Node.js         | npm                | 16.18.0   |
-|          | IDE             | Visual Studio Code | 1.75.1    |
+|          | Node.js         | npm                | 18.14.2   |
+|          | IDE             | Visual Studio Code | 1.78.2    |
 | Server   | 서버            | AWS EC2            | \-        |
 |          | 플랫폼          | Ubuntu\AWS Liunx   | 20.04 , AWS Linux2|
 |          | CI/CD           | Docker             | 20.10.17  |
@@ -122,7 +122,19 @@
 - 버그 수정 및 산출물 정리 : 23.5.15 ~ 23.5.19
 
 
-## 📋 프로젝트 산출물
+## 📋 상세 페이지  
+
+### 메인 페이지  
+![detail1](./image/detail1.png)  
+### 코드 분석 결과 페이지  
+![detail2](./image/detail2.png)  
+### 랭킹 페이지  
+![detail3](./image/detail3.png)  
+### 랭킹 상세 페이지  
+![detail4](./image/detail4.png)  
+### 마이페이지  
+![detail5](./image/detail5.png)  
+
 
 
 ## 👪 개발 멤버 소개
@@ -165,13 +177,6 @@
 ### 📋 ERD 다이어그램
 
 ![ERD](./image/erd.png)
-
----
-
-### 📋 MockUp & Design
-
-![mockup](./image/mockup1.png)
-![mockup](./image/mockup2.png)
 
 ---
 
