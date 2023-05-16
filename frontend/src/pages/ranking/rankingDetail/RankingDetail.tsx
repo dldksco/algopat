@@ -1,18 +1,16 @@
 import { addCommas, pathColor } from "@/pages/code/hooks/func";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useEffect } from "react";
 import { faAngleLeft } from "@fortawesome/free-solid-svg-icons";
 import { RankingDetailBoard } from "../rankingDetailBoard/RankingDetailBoard";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
-
-import style from "./RankingDetail.module.css";
 import { getRankPageInfo, getRankingDetail } from "../hooks/query";
 import { Pagenation } from "@/components/pagenation/Pagenation";
 import { SearchGroup } from "../rankingDetailBoard/searchGroup/SearchGroup";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilState } from "recoil";
 import { rankingDetailState } from "@/atoms/ranking.atom";
-import { RankingDetailParam } from "@/types/type";
-import { useEffect } from "react";
 import { codeLanguage } from "@/variable/variable";
+import style from "./RankingDetail.module.css";
 
 export const RankingDetail = () => {
   const navigate = useNavigate();
@@ -47,7 +45,7 @@ export const RankingDetail = () => {
     Number(problemId)
   );
 
-  const listClickCallback = () => navigate("/ranking");
+  const listClickCallback = () => navigate(-1);
   const problemSolveClickCallback = (problemId: string) =>
     (window.location.href = `https://www.acmicpc.net/problem/${problemId}`);
 
