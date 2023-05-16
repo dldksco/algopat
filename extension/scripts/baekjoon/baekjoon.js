@@ -41,17 +41,17 @@ function startLoader() {
           const bojData = await findData();
 
           // 날짜가 같은 제출만 보내기
-          const [_, year, month, date] = bojData.submissionTime.match(/(\d{4})년\s(\d{1,2})월\s(\d{1,2})일\s(\d{1,2}):(\d{1,2}):(\d{1,2})/);
+          // const [_, year, month, date] = bojData.submissionTime.match(/(\d{4})년\s(\d{1,2})월\s(\d{1,2})일\s(\d{1,2}):(\d{1,2}):(\d{1,2})/);
 
-          const now = new Date();
-          const nowYear = now.getFullYear(); // 현재 년도
-          const nowMonth = now.getMonth() + 1; // 현재 월 (0부터 시작하므로 1을 더해줌)
-          const nowDate = now.getDate(); // 
+          // const now = new Date();
+          // const nowYear = now.getFullYear(); // 현재 년도
+          // const nowMonth = now.getMonth() + 1; // 현재 월 (0부터 시작하므로 1을 더해줌)
+          // const nowDate = now.getDate(); // 
 
-          if (!(year == nowYear && month == nowMonth && date == nowDate)) {
-            toastThenStopLoader("제출 시간이 오늘과 동일해야 전송이 가능합니다", "같은 날짜만!")
-            return;
-          }
+          // if (!(year == nowYear && month == nowMonth && date == nowDate)) {
+          //   toastThenStopLoader("제출 시간이 오늘과 동일해야 전송이 가능합니다", "같은 날짜만!")
+          //   return;
+          // }
 
           chrome.storage.local.get(['BaekjoonHub_token', 'gpt_key', 'commit_state'], (data) => {
             const token = data.BaekjoonHub_token;
@@ -59,7 +59,16 @@ function startLoader() {
             const commit_state = data.commit_state;
 
             commitMode(commit_state, token).then((res) => {
-              if (res) {
+
+              if (key == "0") {
+                return fetch('https://algopat.kr/api/user/check/user-submit-count', {
+                  method: 'GET',
+                  headers: {
+                    'Content-Type': 'application/json',
+                    'authorization': token,
+                  }
+                })
+              } else if (res) {
                 return fetch("https://api.openai.com/v1/models",
                   {
                     method: 'GET',
@@ -74,10 +83,11 @@ function startLoader() {
               }
             }).then((res) => {
               if (res.status === 200) {
-                bojData.openai_api_key = key;
 
                 console.log('풀이가 맞았습니다. 전송을 시작합니다..');
                 console.log("보낼 데이터 ", bojData)
+
+                bojData.openai_api_key = key;
 
                 //fetch 요청
                 return fetch('https://algopat.kr/api/code/problem', {
@@ -87,10 +97,10 @@ function startLoader() {
                     'authorization': token,
                   },
                   body: JSON.stringify(bojData)
-                }).catch((e) => {
-                  throw new Error("")
                 })
 
+              } else if (res.status === 401) {
+                throw new Error("end_free");
               } else {
                 throw new Error("key");
               }
@@ -108,11 +118,22 @@ function startLoader() {
                       submissionId: bojData.submissionId,
                       problemId: bojData.problemId,
                       title: bojData.title,
-                      state: false
+                      level: bojData.level,
+                      state: false,
+                      date: new Date().getTime(),
+                    },
+                    commit_progress:
+                    {
+                      percentage: 0,
+                      progress_info: "분석시작"
                     }
                   }, () => { });
                 } else if (res.status == 409) {
                   throw new Error("dupl");
+                } else if (res.status == 401) {
+                  throw new Error("end_free");
+                } else {
+                  throw new Error("");
                 }
 
               })
@@ -123,6 +144,8 @@ function startLoader() {
                   toastThenStopLoader("이미 제출한 코드입니다")
                 } else if (e.message == "refactoring") {
                   toastThenStopLoader("다른 코드가 리팩토링이 진행중입니다")
+                } else if (e.message == "end_free") {
+                  toastThenStopLoader("무료 api키 사용이 끝났습니다")
                 } else {
                   toastThenStopLoader("전송에 실패했습니다")
                 }

@@ -1,6 +1,51 @@
+let eventSource;
+
+function sseEventListener() {
+  chrome.storage.local.get('userSeq', (data) => {
+
+    const userSeq = data.userSeq;
+
+    if (!userSeq) return;
+
+    if (!eventSource) {
+      eventSource = new EventSource(`https://algopat.kr/api/alert/sse/${userSeq}`);
+
+      eventSource.onmessage = function (event) {
+        console.log(event)
+        const data = JSON.parse(event.data)
+
+        // 로컬 스토리지에 저장
+        chrome.storage.local.set(
+          { commit_progress: { percentage: data.percentage, progress_info: data.progress_info } }
+        );
+
+        if (data.state == "finish") { // 코드 분석 완료
+          chrome.notifications.create('my-notification', {
+            type: 'basic',
+            iconUrl: `chrome-extension://${chrome.runtime.id}/assets/icon.png`,
+            title: `${data.progress_info}`,
+            message: `${data.progress_info}`
+          });
+        }
+
+
+      };
+
+      eventSource.onerror = function (event) {
+        console.log("SSE Error : ", event)
+        // console.log(JSON.stringify(event))
+      }
+    }
+
+
+  });
+}
+
 function handleMessage(request) {
-  console.log("receive")
-  if (request && request.closeWebPage === true && request.isSuccess === true) {
+  // console.log("receive ", request)
+  if (request && request.sseEvent === true) {
+    sseEventListener();
+  } else if (request && request.closeWebPage === true && request.isSuccess === true) {
     /* Set username */
     // chrome.storage.local.set(
     //   { BaekjoonHub_username: request.username } /* , () => {
@@ -10,9 +55,7 @@ function handleMessage(request) {
 
     /* Set token */
     chrome.storage.local.set(
-      { BaekjoonHub_token: request.token } /* ]], () => {
-      window.localStorage[request.KEY] = request.token;
-    } */,
+      { BaekjoonHub_token: request.token }
     );
 
     /* Close pipe */
@@ -35,30 +78,36 @@ function handleMessage(request) {
   }
 }
 
+
+// 현재 활성 창 ID 저장
+var activeWindowId = null;
+
+// 활성 창 변경 감지
+chrome.windows.onFocusChanged.addListener(function (windowId) {
+  if (windowId !== chrome.windows.WINDOW_ID_NONE) {
+    activeWindowId = windowId;
+  }
+});
+
+// 서비스 작업자 비활성화 방지
+function preventServiceWorkerDisable() {
+  // 현재 활성 창 가져오기
+  chrome.windows.getCurrent({ populate: true }, function (window) {
+    if (window.id === activeWindowId) {
+      console.log("방지")
+      // 현재 활성 창이 팝업 창이므로 서비스 작업자 비활성화 방지
+      // chrome.windows.update(window.id, { focused: true });
+    }
+  });
+}
+
+// 주기적으로 서비스 작업자 비활성화 방지 실행
+setInterval(preventServiceWorkerDisable, 10000);
+
+
+console.log("background start")
 chrome.runtime.onMessage.addListener(handleMessage);
 
-chrome.storage.local.get('userSeq', (data) => {
-
-  const userSeq = data.userSeq;
-
-  if (!userSeq) return;
-
-  let eventSource = new EventSource(`https://algopat.kr/api/alert/sse/${userSeq}`);
-
-  eventSource.onmessage = function (event) {
-    console.log(event)
-    chrome.notifications.create('my-notification', {
-      type: 'basic',
-      iconUrl: `chrome-extension://${chrome.runtime.id}/assets/icon.png`,
-      title: '분석완료',
-      message: '코드리펙토링이 완료되었습니다'
-    });
-  };
-
-  eventSource.onerror = function (event) {
-    console.log("SSE Error : ", event)
-  }
-
-});
+sseEventListener();
 
 
