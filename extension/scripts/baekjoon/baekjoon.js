@@ -60,24 +60,26 @@ function startLoader() {
 
             commitMode(commit_state, token).then((res) => {
 
-              if (key == "0") {
-                return fetch('https://algopat.kr/api/user/check/user-submit-count', {
-                  method: 'GET',
-                  headers: {
-                    'Content-Type': 'application/json',
-                    'authorization': token,
-                  }
-                })
-              } else if (res) {
-                return fetch("https://api.openai.com/v1/models",
-                  {
+              if (res) {
+                if (key == "0") {
+                  return fetch('https://algopat.kr/api/user/check/user-submit-count', {
                     method: 'GET',
                     headers: {
                       'Content-Type': 'application/json',
-                      'Authorization': `Bearer ${key}`,
-                    },
-
+                      'authorization': token,
+                    }
                   })
+                } else {
+                  return fetch("https://api.openai.com/v1/models",
+                    {
+                      method: 'GET',
+                      headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${key}`,
+                      },
+
+                    })
+                }
               } else {
                 throw new Error("refactoring")
               }
@@ -143,7 +145,7 @@ function startLoader() {
                 } else if (e.message == "dupl") {
                   toastThenStopLoader("이미 제출한 코드입니다")
                 } else if (e.message == "refactoring") {
-                  toastThenStopLoader("다른 코드가 리팩토링이 진행중입니다")
+                  toastThenStopLoader("리팩토링이 진행중입니다")
                 } else if (e.message == "end_free") {
                   toastThenStopLoader("무료 api키 사용이 끝났습니다")
                 } else {
