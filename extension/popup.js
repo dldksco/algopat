@@ -38,6 +38,10 @@ $('#api_key_save').on('click', () => {
       if (res.status === 200) {
         chrome.storage.local.set({ "gpt_key": value }, () => { })
         $("#save_message").html("<p style='color: green;'>저장되었습니다</p>")
+        $("#free_api_count").text("");
+        setTimeout(() => {
+          window.close();
+        }, 500);
       } else {
         $("#save_message").html("<p style='color: red;'>유효하지 않은 키입니다</p>")
       }
@@ -52,6 +56,9 @@ $('#api_key_save').on('click', () => {
 $('#free_api_key').on('click', () => {
   chrome.storage.local.set({ "gpt_key": "0" }, () => { })
   $("#save_message").html("<p style='color: green;'>무료 api 키를 사용합니다</p>")
+  setTimeout(() => {
+    window.close();
+  }, 500);
 })
 
 
@@ -82,10 +89,11 @@ $('#gear_icon').on('click', () => {
 /*
   깃허브 auth 로그인
  */
-chrome.storage.local.get(['BaekjoonHub_token', 'commit_state', 'commit_progress'], (data) => {
+chrome.storage.local.get(['BaekjoonHub_token', 'commit_state', 'commit_progress', 'gpt_key'], (data) => {
   const token = data.BaekjoonHub_token;
   const commit_state = data.commit_state;
   const commit_progress = data.commit_progress;
+  const gpt_key = data.gpt_key;
   // console.log(token)
   if (token === null || token === undefined) {
     action = true;
@@ -109,26 +117,35 @@ chrome.storage.local.get(['BaekjoonHub_token', 'commit_state', 'commit_progress'
       }
     })
       .then((data) => {
-        console.log(data)
+        // console.log(data)
 
         // 무료 api 카운트
-        fetch('https://algopat.kr/api/user/check/user-submit-count', {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-            'authorization': token,
-          }
-        }).then((res) => res.json())
-          .then((data) => {
-            if (Number(data.userSubmitCountCount) <= 0) {
-              $("#free_api_count_num").css("color", "red");
-            } else {
-              $("#free_api_count_num").css("color", "green");
+        if (gpt_key == "0") {
+          fetch('https://algopat.kr/api/user/check/user-submit-count', {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+              'authorization': token,
             }
-            $("#free_api_count_num").text(data.userSubmitCountCount)
-          }).catch((e) => {
-            $("#free_api_count_num").text("X")
+          }).then((res) => {
+            if (res.status == 200) {
+              return res.json()
+            } else {
+              throw new Error("error")
+            }
           })
+            .then((data) => {
+              // console.log(data)
+              $("#free_api_count").css("display", "block");
+              $("#free_api_count_num").css("color", "green");
+              $("#free_api_count_num").text(data.userSubmitCountCount)
+            }).catch((e) => {
+              $("#free_api_count").css("display", "block");
+              $("#free_api_count").css("color", "red");
+              $("#free_api_count").text("사용 가능한 무료 횟수가 끝났습니다")
+            })
+        }
+
 
         $('#commit_mode').show();
         $('#gear_icon').show();
@@ -167,7 +184,7 @@ chrome.storage.local.get('bjhEnable', (data4) => {
   코드 리팩토링 상태
  */
 function commitMode(commit_state, commit_progress, token) {
-  console.log("commit_state : ", commit_state)
+  // console.log("commit_state : ", commit_state)
   if (commit_state && commit_state.submissionId && !commit_state.state) { // 코드 분석 진행중
 
     fetch(`https://algopat.kr/api/code/problem/submission/solution/exist/${commit_state.submissionId}`, {

@@ -61,9 +61,13 @@ function startLoader() {
             commitMode(commit_state, token).then((res) => {
 
               if (key == "0") {
-                return {
-                  status: 200
-                }
+                return fetch('https://algopat.kr/api/user/check/user-submit-count', {
+                  method: 'GET',
+                  headers: {
+                    'Content-Type': 'application/json',
+                    'authorization': token,
+                  }
+                })
               } else if (res) {
                 return fetch("https://api.openai.com/v1/models",
                   {
