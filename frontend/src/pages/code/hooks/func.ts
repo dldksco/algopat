@@ -11,7 +11,10 @@ export const stringCutter = (str: string, num: number) =>
   str.slice(0, num) + (str.length > num ? "..." : "");
 
   export const stringBackCutter = (str: string, num: number) =>
-  str.slice(-num);
+  {
+    if(str === null) return null;
+    return str.slice(-num);
+  }
 /**
  *
  * 천의 자리마다 컴마 찍기
