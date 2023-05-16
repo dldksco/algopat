@@ -171,7 +171,10 @@ export interface Solve {
 /**
  * 특정 문제에 대한 제출 리스트를 불러오는 함수
  */
-export const getSubmissionList = (problemId: number) => {
+export const getSubmissionList = (
+  problemId: number,
+  isProblemOpen: boolean
+) => {
   const fetchSubmission = async (): Promise<PagableResponse<Solve>> => {
     const response = await $.get(
       `/code/problem/submission/solution/${problemId}/0`
@@ -181,7 +184,10 @@ export const getSubmissionList = (problemId: number) => {
 
   const { data, isLoading } = useQuery(
     ["problemDetail", problemId],
-    fetchSubmission
+    fetchSubmission,
+    {
+      enabled: !!isProblemOpen,
+    }
   );
 
   return { data, isLoading };
