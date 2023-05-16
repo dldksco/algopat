@@ -1,0 +1,129 @@
+.ranking_detail {
+  margin-top: 10%;
+  margin-bottom: 5%;
+  .box {
+    border: 1px solid var(--font-color);
+    padding: 15px 18px;
+    cursor: pointer;
+    transition: 0.3s;
+    &:hover {
+      color: gray;
+      border: 1px solid gray;
+    }
+  }
+  .header {
+    font-size: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .title {
+      display: flex;
+      align-items: center;
+    }
+  }
+
+  .user_info {
+    display: flex;
+    gap: 15px;
+    padding: 5px;
+    align-items: center;
+  }
+
+  .info {
+    margin-top: 70px;
+    font-size: 1.3rem;
+    flex-wrap: wrap;
+    display: flex;
+    justify-content: space-between;
+    cursor: default;
+
+    .info_list {
+      display: flex;
+      gap: 40px;
+      align-items: center;
+      text-align: center;
+      padding-right: 30px;
+
+      .box {
+        padding: 20px;
+      }
+    }
+
+    .vertical_line {
+      border-left: 1px solid var(--font-color);
+      height: 80px; /* 선의 길이를 조정할 수 있습니다. */
+    }
+    .box {
+      padding: 11px;
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .ranking_detail {
+    margin-top: 10%;
+    .box {
+      border: 1px solid var(--font-color);
+      padding: 20px;
+      cursor: pointer;
+    }
+    .header {
+      font-size: 1.2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      // flex-direction: column;
+      gap: 20px;
+      position: relative;
+
+      .title {
+        position: absolute;
+        top: 90px;
+        display: flex;
+        align-items: center;
+      }
+    }
+
+    .user_info {
+      display: flex;
+      gap: 15px;
+      padding: 5px;
+      align-items: center;
+    }
+
+    .info {
+      margin-top: 70px;
+      font-size: 0.8rem;
+      flex-wrap: wrap;
+      display: flex;
+      justify-content: space-between;
+      cursor: default;
+
+      overflow-x: scroll;
+
+      .info_list {
+        display: flex;
+        gap: 40px;
+        align-items: center;
+        text-align: center;
+        padding-right: 30px;
+
+        p {
+          width: 100px;
+        }
+        .box {
+          padding: 20px;
+        }
+      }
+
+      .vertical_line {
+        border-left: 1px solid var(--font-color);
+        height: 80px; /* 선의 길이를 조정할 수 있습니다. */
+      }
+      .box {
+        padding: 11px;
+      }
+    }
+  }
+}

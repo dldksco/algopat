@@ -1,0 +1,142 @@
+.ranking_carousel {
+  border: 2px solid var(--font-color);
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  padding-bottom: 1%;
+
+  .menu {
+    padding-left: 2%;
+    width: 20%;
+    display: flex;
+    gap: 10px;
+    flex-direction: column;
+
+    select {
+      width: 60%;
+      height: 10%;
+    }
+  }
+  .carousel {
+    margin-top: 2%;
+    margin-bottom: 1%;
+    height: 200px;
+    width: 75%;
+    background-color: black;
+    border-radius: 20px;
+    padding-top: 1%;
+    img {
+      display: inline-block;
+      width: 80px;
+      cursor: pointer;
+
+      &:hover {
+        transition: 0.2s;
+        filter: opacity(0.6);
+      }
+      // transition: all 0.1s ease-in-out;
+    }
+
+    .slider {
+      cursor: grab;
+      .content {
+        display: flex;
+        text-align: center;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .center_side {
+        img {
+          width: 100px;
+          // transition: width 0.5s ease-in-out;
+        }
+      }
+
+      .center {
+        img {
+          width: 120px;
+          // transition: width 0.5s ease-in-out;
+        }
+      }
+    }
+
+    p {
+      margin: 0;
+    }
+
+    .post_buttom {
+      display: flex;
+      justify-content: space-around;
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .ranking_carousel {
+    border: 2px solid var(--font-color);
+    border-radius: 20px;
+    display: flex;
+    padding: 3%;
+    flex-direction: column;
+    // align-items: baseline;
+
+    .menu {
+      display: flex;
+      flex-direction: row;
+      padding-right: 100px;
+      select {
+        width: 200px;
+        height: 10%;
+      }
+    }
+    .carousel {
+      margin-top: 2%;
+      margin-bottom: 1%;
+
+      height: 100px;
+      width: 75%;
+      background-color: black;
+      border-radius: 20px;
+      padding-top: 1%;
+      img {
+        display: inline-block;
+        width: 30px;
+        // transition: all 0.1s ease-in-out;
+      }
+
+      .slider {
+        .content {
+          width: 10%;
+          display: flex;
+          text-align: center;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+        }
+
+        .center_side {
+          img {
+            width: 40px;
+          }
+        }
+
+        .center {
+          img {
+            width: 50px;
+          }
+        }
+      }
+
+      p {
+        margin: 0;
+      }
+
+      .post_buttom {
+        display: flex;
+        justify-content: space-around;
+      }
+    }
+  }
+}

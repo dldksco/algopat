@@ -1,0 +1,19 @@
+.detail_list {
+  overflow: hidden;
+  transition: 0.2s;
+
+  .submission_list {
+    padding-left: 18%;
+    padding-right: 8%;
+    height: 2rem;
+    padding-top: 2%;
+    color: gray;
+    width: 100%;
+    transition: 0.2s;
+    cursor: pointer;
+
+    &:hover {
+      color: rgb(192, 192, 192);
+    }
+  }
+}

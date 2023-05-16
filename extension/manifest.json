@@ -1,0 +1,104 @@
+{
+  "manifest_version": 3,
+  "name": "ALGOPAT",
+  "description": "Refactor the algorithm code",
+  "homepage_url": "https://algopat.kr/",
+  "version": "1.5.0",
+  "author": "A706",
+  "action": {
+    "default_icon": "assets/thumb.png",
+    "default_popup": "popup.html"
+  },
+  "icons": {
+    "16": "assets/thumb.png",
+    "48": "assets/thumb.png",
+    "128": "assets/thumb.png"
+  },
+  "background": {
+    "service_worker": "scripts/background.js"
+  },
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "ruleset",
+        "enabled": true,
+        "path": "rules.json"
+      }
+    ]
+  },
+  "permissions": [
+    "unlimitedStorage",
+    "storage",
+    "declarativeNetRequest",
+    "declarativeNetRequestWithHostAccess",
+    "notifications"
+  ],
+  "host_permissions": [
+    "https://www.acmicpc.net/",
+    "https://algopat.kr/",
+    "https://api.openai.com/"
+  ],
+  "web_accessible_resources": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "resources": [
+        "library/jquery-3.3.1.min.js",
+        "library/semantic.min.js",
+        "popup.html",
+        "popup.js"
+      ],
+      "css": [
+        "css/baekjoon/inject.css"
+      ]
+    }
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "https://www.acmicpc.net/*"
+      ],
+      "css": [
+        "css/toast.css",
+        "css/baekjoon/inject.css"
+      ],
+      "js": [
+        "library/sha1.min.js",
+        "library/jszip.min.js",
+        "library/FileSaver.min.js",
+        "scripts/toast.js",
+        "scripts/util.js",
+        "scripts/authorize.js",
+        "scripts/storage.js",
+        "scripts/enable.js",
+        "scripts/baekjoon/variables.js",
+        "scripts/baekjoon/storage.js",
+        "scripts/baekjoon/parsing.js",
+        "scripts/baekjoon/util.js",
+        "scripts/baekjoon/uploadfunctions.js",
+        "scripts/baekjoon/baekjoon.js"
+      ],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": [
+        "https://github.com/*"
+      ],
+      "js": [
+        "scripts/util.js",
+        "scripts/authorize.js"
+      ],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": [
+        "https://algopat.kr/*"
+      ],
+      "js": [
+        "scripts/authorize.js"
+      ],
+      "run_at": "document_idle"
+    }
+  ]
+}

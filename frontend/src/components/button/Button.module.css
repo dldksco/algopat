@@ -1,0 +1,14 @@
+.button {
+  border: 1.5px solid var(--font-color);
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: var(--background-color);
+  transition: 0.25s;
+  font-size: 1rem;
+  cursor: pointer;
+}
+.button:hover {
+  color: gray !important;
+  border: 1.5px solid rgb(196, 196, 196);
+  opacity: 0.9;
+}/*# sourceMappingURL=Button.module.css.map */

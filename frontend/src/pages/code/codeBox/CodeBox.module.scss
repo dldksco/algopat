@@ -1,0 +1,29 @@
+.box_title {
+  .code_arrow {
+    font-size: 1.2rem;
+    margin-right: 3%;
+    transition: 0.2s;
+    cursor: pointer;
+
+    &:hover {
+      color: gray;
+    }
+  }
+
+  .code_spin {
+    transform: rotate(180deg);
+  }
+
+  span {
+    font-size: 1.2rem;
+    margin-left: 3%;
+  }
+}
+
+.sppan {
+  cursor: pointer;
+  transition: 0.2s;
+  &:hover {
+    color: gray;
+  }
+}

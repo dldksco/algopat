@@ -1,0 +1,21 @@
+.problem_list {
+  height: 2rem;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin-left: 5%;
+  transition: 0.2s;
+  cursor: pointer;
+
+  &:hover {
+    color: rgb(216, 215, 255);
+  }
+
+  img {
+    height: 60%;
+  }
+
+  .rotate {
+    transform: rotate(180deg);
+  }
+}

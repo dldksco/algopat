@@ -1,0 +1,78 @@
+@keyframes list_animation {
+  0% {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+.problem_family {
+  animation-name: list_animation;
+  animation-duration: 1s;
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+.problem_family .problem_container {
+  display: flex;
+  align-items: center;
+  width: 400px;
+  cursor: pointer;
+}
+.problem_family .problem_container .problemLevel {
+  height: 10px;
+  width: 10px;
+  margin-right: 10px;
+  align-self: flex-start;
+}
+.problem_family .problem_container .problemId {
+  margin-right: 10px;
+}
+.problem_family .problem_container .problemName {
+  margin-right: 10px;
+}
+.problem_family .button_container {
+  display: flex;
+  align-items: center;
+  position: absolute;
+  right: 20px;
+}
+.problem_family .button_container .codeNavigate {
+  color: #1d2538;
+  padding-top: 3px;
+  font-weight: 800;
+  text-align: center;
+  border: 1px solid white;
+  margin-left: 10px;
+  margin-right: 10px;
+  width: 80px;
+  height: 30px;
+  background-color: rgb(255, 255, 255);
+  border-radius: 5px;
+  cursor: pointer;
+}
+.problem_family .button_container .problemNavigate {
+  color: #1d2538;
+  padding-top: 3px;
+  font-weight: 800;
+  text-align: center;
+  border: 1px solid white;
+  width: 120px;
+  margin-left: 10px;
+  margin-right: 20px;
+  background-color: white;
+  border-radius: 5px;
+  height: 30px;
+  cursor: pointer;
+}
+
+@media screen and (max-width: 640px) {
+  .problem_family {
+    width: 100%;
+  }
+  .problem_family .button_container {
+    display: none;
+  }
+}/*# sourceMappingURL=ProblemItem.module.css.map */

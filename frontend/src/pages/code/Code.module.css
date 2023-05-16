@@ -1,0 +1,46 @@
+.code {
+  display: flex;
+  background-color: var(--code-background-color);
+}
+.code .leftTab {
+  width: 300px;
+}
+.code .rightTab {
+  min-height: 100vh;
+  width: calc(100vw - 300px);
+  display: flex;
+  justify-content: center;
+  position: relative;
+}
+.code .rightTab .hamberger {
+  display: none;
+}
+
+@media screen and (max-width: 768px) {
+  .code {
+    display: block;
+    position: relative;
+  }
+  .code .leftTab {
+    width: 300px;
+    position: absolute;
+    left: -310px;
+    transition: 0.25s;
+    z-index: 1;
+  }
+  .code .mobileon {
+    left: 0px;
+  }
+  .code .rightTab {
+    width: 100%;
+  }
+  .code .rightTab .hamberger {
+    color: rgba(255, 255, 255, 0.8);
+    display: block;
+    position: fixed;
+    font-size: 1.7rem;
+    top: 10px;
+    left: 10px;
+    cursor: pointer;
+  }
+}/*# sourceMappingURL=Code.module.css.map */

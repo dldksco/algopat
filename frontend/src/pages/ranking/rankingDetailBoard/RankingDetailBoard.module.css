@@ -1,0 +1,104 @@
+@charset "UTF-8";
+.content_container {
+  margin-bottom: 80px;
+  width: 100%;
+  display: grid;
+  text-align: left;
+  align-items: center;
+  font-size: 1rem;
+  color: var(--font-color);
+  padding: 0 3%;
+}
+.content_container .row_number {
+  display: flex;
+  align-items: center;
+}
+.content_container .info {
+  margin-top: 10px;
+  flex-wrap: wrap;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+  border-bottom: 1px solid var(--font-color);
+}
+.content_container .info .user_info {
+  display: flex;
+  gap: 15px;
+  padding: 5px;
+  align-items: center;
+}
+.content_container .info .master_info {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.content_container .info .info_list {
+  display: flex;
+  gap: 40px;
+  align-items: center;
+  text-align: center;
+}
+.content_container .info .info_list .box {
+  padding: 20px;
+}
+.content_container .info .vertical_line {
+  border-left: 1px solid var(--font-color);
+  height: 80px; /* 선의 길이를 조정할 수 있습니다. */
+}
+
+@media screen and (max-width: 768px) {
+  .content_container {
+    margin-bottom: 80px;
+    width: 100%;
+    display: grid;
+    text-align: left;
+    align-items: center;
+    font-size: 1rem;
+    color: var(--font-color);
+    padding: 0 3%;
+  }
+  .content_container .row_number {
+    display: flex;
+    align-items: center;
+  }
+  .content_container .info {
+    margin-top: 10px;
+    flex-wrap: wrap;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    border-bottom: 1px solid var(--font-color);
+    gap: 20px;
+    overflow-x: scroll;
+  }
+  .content_container .info .user_info {
+    display: flex;
+    gap: 15px;
+    padding: 5px;
+    align-items: center;
+  }
+  .content_container .info .master_info {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .content_container .info .info_list {
+    display: flex;
+    gap: 40px;
+    align-items: center;
+    text-align: center;
+    overflow-x: scroll;
+  }
+  .content_container .info .info_list p {
+    width: 100px;
+  }
+  .content_container .info .info_list .box {
+    padding: 20px;
+  }
+  .content_container .info .vertical_line {
+    border-left: 1px solid var(--font-color);
+    height: 80px; /* 선의 길이를 조정할 수 있습니다. */
+  }
+}/*# sourceMappingURL=RankingDetailBoard.module.css.map */
