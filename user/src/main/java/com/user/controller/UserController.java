@@ -8,6 +8,7 @@ import com.user.dto.UserSubmitCountDTO;
 import com.user.repository.UserRepository;
 import com.user.service.UserService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
+@Slf4j
 public class UserController {
   private final UserService userService;
   @PostMapping("/check/github-id")
@@ -36,6 +38,7 @@ public class UserController {
   @GetMapping("/check/user-submit-count")
   public ResponseEntity<UserSubmitCountDTO> checkUserSubmitCount(@RequestHeader("userSeq") long userSeq){
     UserSubmitCountDTO userSubmitCountDTO=userService.findUserSubmitCount(userSeq);
+    log.info("userSubmitCountDTO.getUserSubmitCountCount()");
     return new ResponseEntity<>(userSubmitCountDTO,HttpStatus.OK);
   }
 
