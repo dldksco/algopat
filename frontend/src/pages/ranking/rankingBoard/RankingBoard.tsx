@@ -1,7 +1,5 @@
 import { useNavigate } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
-import { useRecoilValue } from "recoil";
-import { centerIndexState } from "@/atoms/ranking.atom";
 import { isMobile } from "@/pages/main/hooks/func";
 
 import style from "./RankingBoard.module.css";
@@ -28,9 +26,7 @@ interface props {
 export const RankingBoard = ({ data }: props) => {
   const headRow = ["문제번호", "제목", "Master", "제출한 사람 수"];
   const grid = isMobile() ? "50% 50%" : "15% 50% 20% 15%";
-
   const navigate = useNavigate();
-  const rank = useRecoilValue(centerIndexState);
 
   return (
     <>

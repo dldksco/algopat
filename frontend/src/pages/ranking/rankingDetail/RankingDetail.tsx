@@ -1,18 +1,16 @@
 import { addCommas, pathColor } from "@/pages/code/hooks/func";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useEffect } from "react";
 import { faAngleLeft } from "@fortawesome/free-solid-svg-icons";
 import { RankingDetailBoard } from "../rankingDetailBoard/RankingDetailBoard";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
-
-import style from "./RankingDetail.module.css";
 import { getRankPageInfo, getRankingDetail } from "../hooks/query";
 import { Pagenation } from "@/components/pagenation/Pagenation";
 import { SearchGroup } from "../rankingDetailBoard/searchGroup/SearchGroup";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilState } from "recoil";
 import { rankingDetailState } from "@/atoms/ranking.atom";
-import { RankingDetailParam } from "@/types/type";
-import { useEffect } from "react";
 import { codeLanguage } from "@/variable/variable";
+import style from "./RankingDetail.module.css";
 
 export const RankingDetail = () => {
   const navigate = useNavigate();
@@ -47,13 +45,16 @@ export const RankingDetail = () => {
     Number(problemId)
   );
 
-  const listClickCallback = () => navigate("/ranking");
+  const listClickCallback = () => navigate(-1);
   const problemSolveClickCallback = (problemId: string) =>
     (window.location.href = `https://www.acmicpc.net/problem/${problemId}`);
 
   return (
     <div className={style.ranking_detail}>
-      <div className={style.header}>
+      <div
+        className={style.header}
+        style={{ animation: "top_down_effect 0.5s" }}
+      >
         <div className={style.box} onClick={listClickCallback}>
           <FontAwesomeIcon icon={faAngleLeft} style={{ marginRight: "5px" }} />
           목록
@@ -73,7 +74,10 @@ export const RankingDetail = () => {
           문제풀기
         </div>
       </div>
-      <div className={style.info + " " + style.box}>
+      <div
+        className={style.info + " " + style.box}
+        style={{ border: "1px solid white", animation: "top_down_effect 0.5s" }}
+      >
         {!pageInfoLoading && (
           <>
             <div className={style.master_info}>
@@ -83,6 +87,8 @@ export const RankingDetail = () => {
                   marginBottom: "10px",
                   textAlign: "center",
                   cursor: "default",
+                  border: "1px solid gray",
+                  color: "white",
                 }}
               >
                 master

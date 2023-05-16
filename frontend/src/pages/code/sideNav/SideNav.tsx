@@ -21,7 +21,7 @@ import style from "./SideNav.module.css";
 
 export const SideNav = () => {
   const [category, setCategory] = useState("date");
-  const [condition, setCondition] = useState("asc");
+  const [condition, setCondition] = useState("desc");
   const setIsSidenavOpen = useSetRecoilState(isCodeNavOpenState);
   const navigate = useNavigate();
   const { data, fetchNextPage, hasNextPage } = getInfinityProblemList(
@@ -37,7 +37,10 @@ export const SideNav = () => {
   };
 
   return (
-    <div className={style.sideNav}>
+    <div
+      className={style.sideNav}
+      style={{ animation: "left_right_effect 0.65s" }}
+    >
       <p>코드 분석</p>
       <div className={style.x_button} onClick={xButtonClick}>
         <FontAwesomeIcon icon={faCircleXmark} />
@@ -57,7 +60,7 @@ export const SideNav = () => {
           <FontAwesomeIcon
             icon={faArrowDownWideShort}
             style={
-              condition === "desc" && category === "date"
+              condition === "asc" && category === "date"
                 ? { transform: "rotate(180deg)", transition: "0.2s" }
                 : { transition: "0.2s" }
             }

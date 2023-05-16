@@ -1,5 +1,6 @@
 .code {
   display: flex;
+  background-color: var(--code-background-color);
 
   .leftTab {
     width: 300px;
@@ -10,8 +11,6 @@
     width: calc(100vw - 300px);
     display: flex;
     justify-content: center;
-
-    background-color: var(--code-background-color);
     position: relative;
 
     .hamberger {
