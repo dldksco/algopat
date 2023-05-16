@@ -5,6 +5,9 @@ import { getBackImage, getProfile, getTier } from "../hooks/query";
 import { useRecoilValue } from "recoil";
 import { profileState } from "@/atoms/user.atom";
 import { stringBackCutter } from "@/pages/code/hooks/func";
+import changeBackImage from "@/assets/img/mypage/changeBackImage.gif";
+import defaultBackImage from "@/assets/img/mypage/defaultBackImage.gif";
+import secondBackImage from "@/assets/img/mypage/secondBackImage.gif";
 
 import style from "./Profile.module.css";
 
@@ -16,7 +19,7 @@ export const Profile = () => {
   const [isBack, setIsBack] = useState(false);
   const myProfile = useRecoilValue(profileState);
   let click = 0;
-  const defaultBackgroundImage = "./src/assets/img/mypage/defaultBackImage.gif";
+  const defaultBackgroundImage = defaultBackImage;
 
   const {
     isLoading: isLoadingTier,
@@ -30,7 +33,6 @@ export const Profile = () => {
   } = getBackImage(myProfile.backgroundId, isBack);
 
   useEffect(() => {
-    console.log(imageUrl, "change");
     if (myProfile.backImage !== "") return;
     if (myProfile.userBackjoonId !== "NO_SUBMITTED") {
       setIsTier(true);
@@ -55,14 +57,12 @@ export const Profile = () => {
   let secondClick = 0;
   const pandaClick = () => {
     click++;
-    console.log(click);
     if (click > 5) {
-      setImageUrl("./src/assets/img/mypage/changeBackImage.gif");
-      console.log(imageUrl, "changeBackImage");
+      setImageUrl(changeBackImage);
       secondClick++;
     }
     if (click > 5 && secondClick > 1) {
-      setImageUrl("./src/assets/img/mypage/secondBackImage.gif");
+      setImageUrl(secondBackImage);
     }
   };
   const handleClick = () => {
