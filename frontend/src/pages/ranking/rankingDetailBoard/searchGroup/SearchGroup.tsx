@@ -1,6 +1,6 @@
 import { SelectBox } from "@/components/selectBox/SelectBox";
 import { Input } from "@/components/input/Input";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
@@ -45,10 +45,14 @@ export const SearchGroup = ({ solutionCount }: props) => {
         ...prev,
         languagefilter: lagnSelect,
         sortcriteria: sortSelect,
-        defaultvalue: searchInput,
+        searchText: searchInput,
       };
     });
   };
+
+  useEffect(() => {
+    clickEvent();
+  }, [lagnSelect, sortSelect]);
 
   return (
     <>
@@ -72,6 +76,7 @@ export const SearchGroup = ({ solutionCount }: props) => {
               style={{ borderRadius: 0 }}
               setInput={setSearchInput}
               input={searchInput}
+              placeholder="사용자 이름"
             />
             <div className={style.search_button} onClick={clickEvent}>
               <FontAwesomeIcon icon={faSearch} />

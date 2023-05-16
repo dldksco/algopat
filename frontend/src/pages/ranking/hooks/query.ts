@@ -38,8 +38,9 @@ export function getRankingList(
 }
 
 // 문제 번호로 사용자 풀이 조회 (검색, 필터링, 정렬 기능 지원)
+// searchText
 export function getRankingDetail(param: RankingDetailParam) {
-  const { problemId, pagenumber, languagefilter, sortcriteria, defaultvalue } =
+  const { problemId, pagenumber, languagefilter, sortcriteria, searchText } =
     param;
   const { data, isLoading, refetch } = useQuery(
     [
@@ -48,7 +49,7 @@ export function getRankingDetail(param: RankingDetailParam) {
       pagenumber,
       languagefilter,
       sortcriteria,
-      defaultvalue,
+      searchText,
     ],
     async (): Promise<PagableResponse<SolutionColumn>> => {
       let url = `/code/rank/solutions/${problemId}?pagenumber=${
@@ -61,8 +62,8 @@ export function getRankingDetail(param: RankingDetailParam) {
       if (sortcriteria) {
         url += `&sortcriteria=${sortcriteria}`;
       }
-      if (defaultvalue) {
-        url += `&defaultvalue=${defaultvalue}`;
+      if (searchText) {
+        url += `&searchtext=${searchText}`;
       }
 
       const { data } = await $.get(url);
