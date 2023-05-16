@@ -30,6 +30,66 @@
 6. Anomaly (SAGA Pattern : Choreography)
    - 비정상적인 예외현상 발생 시, 보상 트랜잭션 (무료 제출 횟수 +1) 
 
+## 🛠️ 기술 스택
+
+<div align=center>
+<img src="https://img.shields.io/badge/Ubuntu-E95420?style=for-the-badge&logo=Ubuntu&logoColor=white" style="height : auto; margin-left : 10px; margin-right : 10px;"/>
+<img src="https://img.shields.io/badge/Jenkins-D24939?style=for-the-badge&logo=Jenkins&logoColor=white" style="height : auto; margin-left : 10px; margin-right : 10px;"/>
+<img src="https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=Docker&logoColor=white" style="height : auto; margin-left : 10px; margin-right : 10px;"/>
+<img src="https://img.shields.io/badge/Nginx-009639?style=for-the-badge&logo=NGINX&logoColor=white" style="height : auto; margin-left : 10px; margin-right : 10px;"/>
+<br>
+<img src="https://img.shields.io/badge/Java-FF7800?style=for-the-badge&logo=Java&logoColor=white" style="height : auto; margin-left : 10px; margin-right : 10px;"/>
+<img src="https://img.shields.io/badge/Spring Boot-6DB33F?style=for-the-badge&logo=Spring Boot&logoColor=white" style="height : auto; margin-left : 10px; margin-right : 10px;"/>
+<img src="https://img.shields.io/badge/Gradle-02303A?style=for-the-badge&logo=Gradle&logoColor=white" style="height : auto; margin-left : 10px; margin-right : 10px;"/>
+<img src="https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=MySQL&logoColor=white" style="height : auto; margin-left : 10px; margin-right : 10px;"/>
+<br>
+
+<img src="https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=HTML5&logoColor=white" style="height : auto; margin-left : 10px; margin-right : 10px;"/>
+<img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=JavaScript&logoColor=white" style="height : auto; margin-left : 10px; margin-right : 10px;"/>
+<img src="https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=TypeScript&logoColor=white" style="height : auto; margin-left : 10px; margin-right : 10px;"/>
+<img src="https://img.shields.io/badge/Sass-CC6699?style=for-the-badge&logo=Sass&logoColor=white" style="height : auto; margin-left : 10px; margin-right : 10px;"/>
+<img src="https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=CSS3&logoColor=white" style="height : auto; margin-left : 10px; margin-right : 10px;"/>
+<img src="https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=React&logoColor=white" style="height : auto; margin-left : 10px; margin-right : 10px;"/>
+
+<br>
+<img src="https://img.shields.io/badge/Jira-0052CC?style=for-the-badge&logo=Jira&logoColor=white" style="height : auto; margin-left : 10px; margin-right : 10px;"/>
+<img src="https://img.shields.io/badge/GitLab-FCA121?style=for-the-badge&logo=GitLab&logoColor=white" style="height : auto; margin-left : 10px; margin-right : 10px;"/> 
+<img src="https://img.shields.io/badge/Mattermost-0058CC?style=for-the-badge&logo=Mattermost&logoColor=white" style="height : auto; margin-left : 10px; margin-right : 10px;"/>
+<br/>
+
+  <br/>
+<details><summary> <b> 상세 기술스택 및 버전</b> </summary>
+
+| 구분     | 기술스택        | 상세내용           | 버전      |
+| -------- | --------------- | ------------------ | --------- |
+| 공통     | 형상관리        | Gitlab             | \-        |
+|          | 이슈관리        | Jira               | \-        |
+|          | 커뮤니케이션    | Mattermost, Notion | \-        |
+| BackEnd  | DB              | MySQL              | 8.0.31    |
+|          |                 | Mybatis            | 2.3.0     |
+|          | Java            | Zulu               | 1.8.0_202 |
+|          | Spring          | Spring             | 5.3.24    |
+|          |                 | Spring Boot        | 2.7.8     |
+|          | IDE             | IntelliJ           | 2022.3.1  |
+|          | Build           | Gradle             | 7.6       |
+|          | API Docs        | Postman            |           |
+| FrontEnd | HTML5           |                    | \-        |
+|          | CSS3            |                    | \-        |
+|          | JavaScript(ES6) |                    | \-        |
+|          | React           | React              | 18.2.0    |
+|          | Node.js         | npm                | 16.18.0   |
+|          | Openvidu        | Openvidu           | 2.25.0    |
+|          | Sockjs          | Sockjs             | 1.6.1     |
+|          | Stompjs         | Stompjs            | 2.3.3     |
+|          | IDE             | Visual Studio Code | 1.75.1    |
+| Server   | 서버            | AWS EC2            | \-        |
+|          | 플랫폼          | Ubuntu\AWS Liunx   | 20.04 , AWS Linux2|
+|          | CI/CD           | Docker             | 20.10.17  |
+|          |                 | Jenkins            | jenkins/jenkins:lts|  
+
+</details>
+</div>
+
 ## 📆 프로젝트 기간
 
 ### 23.4.10 ~ 23.5.19
