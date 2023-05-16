@@ -47,8 +47,30 @@ public class ProblemService {
     return problemBuilderUtil.problemToProblemResponseDto(problem);
   }
 
+  // Todo : 아래 2개의 메소드 하나로 합치기
+
+  /**
+   * 푼 문제 조회
+   * @param page
+   * @param userSeq
+   * @return
+   */
   public Page<UserSubmitProblemDto> getUserSubmitProblemDtoPage(int page, long userSeq) {
     PageRequest pagable = PageRequest.of(page, 10, Sort.by(Direction.DESC, "userSubmitProblemUpdatedAt"));
+    Page<UserSubmitProblemDto> userSubmitProblemDtoPage = userSubmitProblemRepository.findUserSubmitProblemDtoByUserSeq(userSeq, pagable);
+    return userSubmitProblemDtoPage;
+  }
+
+  /**
+   * 푼 문제 검색어로 조회
+   * @param page
+   * @param userSeq
+   * @param direction
+   * @param category
+   * @return
+   */
+  public Page<UserSubmitProblemDto> getUserSubmitProblemDtoFilterConditionPage(int page, long userSeq, Direction direction, String category) {
+    PageRequest pagable = PageRequest.of(page, 10, Sort.by(direction, category));
     Page<UserSubmitProblemDto> userSubmitProblemDtoPage = userSubmitProblemRepository.findUserSubmitProblemDtoByUserSeq(userSeq, pagable);
     return userSubmitProblemDtoPage;
   }
@@ -83,6 +105,5 @@ public class ProblemService {
         .data(optionalGptSolution.isPresent())
         .build();
   }
-
 
 }
