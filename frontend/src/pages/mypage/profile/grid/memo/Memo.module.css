@@ -1,11 +1,11 @@
 .memo_container {
-  background-color: #1d2538;
+  background-color: #383b41;
   height: auto;
   width: 100%;
   padding-top: 20px;
   padding-left: 20px;
   padding-bottom: 30px;
-  margin-top: 20px;
+  margin-top: 0px;
 }
 .memo_container .problem_item {
   margin-top: 20px;

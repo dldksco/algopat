@@ -4,8 +4,8 @@ import { useState } from "react";
 import { getGrid } from "../../hooks/query";
 import { v4 as uuidv4 } from "uuid";
 import { colors, days, months, monthsWeight } from "../../hooks/gridtype";
-import style from "./Grid.module.css";
 import { colorIndexFunc } from "../../hooks/func";
+import style from "./Grid.module.css";
 
 export const Grid = () => {
   const [streakDateState, setStreakDateState] = useState<string>("");
@@ -29,7 +29,7 @@ export const Grid = () => {
   if (gridData !== undefined && gridData.length > 0) {
     const col = gridData.length / 7;
     column = Math.floor(col) < col ? Math.floor(col) + 1 : Math.floor(col);
-    startDate = new Date(gridData[0].userSubmitProblemCreatedAt);
+    startDate = new Date(gridData[0].userSubmitSolutionTime);
   }
   const grid = Array.from({ length: 7 }, () => Array(column).fill(-1));
   const gridDate = Array.from({ length: 7 }, () => Array(column).fill(-1));
@@ -41,7 +41,7 @@ export const Grid = () => {
   const startMonth = startDate.getMonth();
   if (gridData !== undefined) {
     gridData.forEach((object) => {
-      const currentDate = new Date(object.userSubmitProblemCreatedAt);
+      const currentDate = new Date(object.userSubmitSolutionTime);
       let week =
         Math.floor(
           (currentDate.getTime() - new Date(startYear, 0, 1).getTime()) /
@@ -51,7 +51,7 @@ export const Grid = () => {
       if (day == 6) week = week - 1;
       if (object.solvedCount > maxCount) maxCount = object.solvedCount;
       grid[day][week] = object.solvedCount;
-      gridDate[day][week] = object.userSubmitProblemCreatedAt;
+      gridDate[day][week] = object.userSubmitSolutionTime;
     });
   }
 

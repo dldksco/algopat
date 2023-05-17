@@ -144,22 +144,20 @@ export const Profile = () => {
                     ? `url(${profileData.userImageUrl})`
                     : undefined,
               }}
-            ></div>
+            >
+              <div className={style.profileTier}>
+                {myProfile.userBackjoonId !== "NO_SUBMITTED" &&
+                myProfile.tier > 0 ? (
+                  <img
+                    src={`https://static.solved.ac/tier_small/${myProfile.tier}.svg`}
+                    alt="solved AC 연동"
+                  />
+                ) : null}
+              </div>
+            </div>
             <div className={style.profileinfo}>
               <div className={style.gitinfo}>
                 <p className={style.nickname}>
-                  {myProfile.userBackjoonId !== "NO_SUBMITTED" &&
-                  myProfile.tier > 0 ? (
-                    <img
-                      src={`https://static.solved.ac/tier_small/${myProfile.tier}.svg`}
-                      style={{
-                        marginRight: "6px",
-                        width: "12px",
-                        height: "auto",
-                      }}
-                      alt="solved AC 연동"
-                    />
-                  ) : null}
                   {profileData !== undefined ? profileData.userGithubId : null}
                 </p>
               </div>
