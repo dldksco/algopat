@@ -23,6 +23,7 @@ export const Grid = () => {
       </div>
     );
   }
+  console.log(gridData, "grid 내놔");
   let column = 53;
   let startDate = new Date("2022-02-13");
   let maxCount = 1;
