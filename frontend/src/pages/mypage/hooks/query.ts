@@ -6,7 +6,7 @@ import { useSetRecoilState } from "recoil";
 import { profileState } from "@/atoms/user.atom";
 
 interface StreakData {
-  userSubmitProblemCreatedAt: string;
+  userSubmitSolutionTime: string;
   solvedCount: number;
 }
 export interface problemByDate {

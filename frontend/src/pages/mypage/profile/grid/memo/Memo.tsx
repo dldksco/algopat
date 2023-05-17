@@ -20,13 +20,6 @@ export const Memo = (props: dateData) => {
   }
   return (
     <>
-      <div
-        style={{
-          backgroundColor: "white",
-          height: "10px",
-          marginBottom: "0px",
-        }}
-      ></div>
       <div className={style.memo_container}>
         {data === undefined
           ? null
