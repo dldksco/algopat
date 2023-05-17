@@ -222,7 +222,10 @@ export const getProblemInfo = (problemId: number) => {
 
   const { data, isLoading } = useQuery(
     ["getProblemInfo", problemId],
-    fetchSubmission
+    fetchSubmission,
+    {
+      enabled: problemId == 0 ? false : true,
+    }
   );
 
   return { data, isLoading };

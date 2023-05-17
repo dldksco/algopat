@@ -15,6 +15,7 @@
 }
 .sideNav .sort_button_group {
   background-color: #2d3956;
+  height: 45px;
   border-radius: 5px;
   padding: 2px;
   padding-top: 7px;
@@ -112,6 +113,6 @@
     overflow-y: auto;
   }
   .sideNav .extra_length {
-    height: 390px;
+    height: 320px;
   }
 }/*# sourceMappingURL=SideNav.module.css.map */
