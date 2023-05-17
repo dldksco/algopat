@@ -27,6 +27,7 @@ const CodeBox = React.memo(({ type, data }: CodeBoxProps) => {
             display: "flex",
             justifyContent: "space-between",
             cursor: "pointer",
+            margin: "12px 0px",
           }}
           onClick={modalOpen}
         >

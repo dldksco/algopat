@@ -57,7 +57,6 @@ export const RankingCarousel = () => {
   const [once, setOnce] = useState(false);
 
   const [centerIndex, setCenterIndex] = useRecoilState(centerIndexState);
-  // const [centerIndex, setCenterIndex] = useState(0);
   const sliderRef = useRef<Slider>(null);
 
   const onInitCallback = () => {
@@ -170,9 +169,7 @@ export const RankingCarousel = () => {
     centerPadding: "80px",
     afterChange: changeCallback,
     swipeToSlide: true,
-    // beforeChange: changeCallback,
     onInit: onInitCallback,
-    // onReInit: onInitCallback,
   };
 
   // 셀렉트 박스 선택에 따라 슬라이드 이동
