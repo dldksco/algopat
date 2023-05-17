@@ -5,7 +5,7 @@ import json
 from myclass.problem import UserSubmitProblem, UserSubmitSolution
 from datetime import datetime
 from logging import getLogger
-from utils.utils import parse_problem_space_limit, parse_problem_time_limit, parse_date_format
+from utils.utils import parse_date_format
 
 # logger 설정 
 logger = getLogger()
@@ -25,8 +25,8 @@ class Problem(Base):
     problem_output = Column(Text)
     problem_tag = Column(Text)
     problem_limit = Column(Text)
-    problem_time_limit = Column(BigInteger)
-    problem_space_limit = Column(BigInteger)
+    problem_time_limit = Column(Text)
+    problem_space_limit = Column(Text)
 
 
 async def insert_problem(data : ProblemData, session): 
@@ -40,8 +40,8 @@ async def insert_problem(data : ProblemData, session):
         problem_output = data.problem_output,
         problem_tag = json.dumps(data.problem_tags, ensure_ascii = False),
         problem_limit = json.dumps(data.problem_limit, ensure_ascii=False),
-        problem_time_limit = parse_problem_time_limit(data.problem_info_time_limit),
-        problem_space_limit = parse_problem_space_limit(data.problem_info_space_limit)
+        problem_time_limit = data.problem_info_time_limit,
+        problem_space_limit = data.problem_info_space_limit
     )
 
     # DB에 Problem 객체 추가
