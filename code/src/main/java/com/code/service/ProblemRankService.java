@@ -17,6 +17,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -62,7 +63,7 @@ public class ProblemRankService {
     Page<ProblemRankOverviewDto[]> problemRankOverviewDtos = problemRepository.findProblemsByLevelAndUserWithDetails(
             problemLevel,
             userSeq,
-            PageRequest.of(pageNumber, 10, Sort.Direction.ASC, "p.problemLevel"))
+            PageRequest.of(pageNumber, 10, Sort.Direction.ASC, "pm.problemSubmittedCount"))
         .orElseThrow(RuntimeException::new);
     return problemRankOverviewDtos;
   }

@@ -37,7 +37,7 @@ public interface ProblemRepository extends JpaRepository<Problem, Long> {
           "JOIN UserSubmitProblem usp ON p.problemId = usp.problemId " +
           "WHERE (:level IS NULL OR p.problemLevel = :level) " +
           "AND (:userSeq IS NULL OR usp.userSeq = :userSeq) " +
-          "GROUP BY p.problemId")
+          "GROUP BY p.problemId order by p.problemLevel asc")
   Optional<Page<ProblemRankOverviewDto[]>> findProblemsByLevelAndUserWithDetails(
       @Param("level") Long level, @Param("userSeq") Long userSeq, Pageable pageable);
 }

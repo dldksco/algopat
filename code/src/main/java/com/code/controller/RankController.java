@@ -43,9 +43,10 @@ public class RankController {
   public ResponseEntity<Page<ProblemRankOverviewDto[]>> getProblemRankOverviewDto(
       @RequestParam(required = false, value = "pagenumber", defaultValue = "0") int pagenumber,
       @RequestParam(required = false, value = "level") Long level,
-      @RequestParam(required = false, value = "usercheck", defaultValue = "false") Boolean userCheck,
-      @RequestHeader(required = false, value = "userSeq") Long userSeq
+      @RequestParam(required = false, value = "usercheck", defaultValue = "false") Boolean userCheck
+      //, @RequestHeader(required = false, value = "userSeq"**) Long userSeq
   ) {
+    Long userSeq = 7L;
     if (userCheck) {
       return ResponseEntity.ok(
           problemRankService.getProblemRankOverviewsByLevelAndUser(level, userSeq, pagenumber));
