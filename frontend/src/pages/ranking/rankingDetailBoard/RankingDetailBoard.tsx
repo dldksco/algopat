@@ -29,7 +29,7 @@ export const RankingDetailBoard = ({ data }: props) => {
                   />
                   <div>{v.userGithubId}</div>
                 </div>
-                <div>
+                <div className={style.submit_date}>
                   제출일 :{" "}
                   {v.userSubmitSolutionTime.replace(
                     /^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2})$/,

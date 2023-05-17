@@ -34,38 +34,24 @@
 
 @media screen and (max-width: 768px) {
   .header_container {
+    padding: 0px 5px 10px 20px;
     width: 100%;
     text-align: left;
     font-style: bold;
-    font-size: 1.2rem;
+    font-size: 0.9rem;
     border-bottom: 4px solid var(--font-color);
     color: var(--font-color);
     display: flex;
-    justify-content: space-between;
     padding-top: 0px;
-
     height: auto;
-    margin-top: 0;
-
-    flex-direction: column;
-
+    margin-top: 10px;
     .search_group {
-      font-size: 0.9rem;
-      display: flex;
-      gap: 10px;
-      flex-direction: column;
-  
-      .search_button {
-        margin-left: -8px;
-        padding: 10px;
-        display: flex;
-        align-items: center;
-        border: 1px solid var(--font-color);
-        cursor: pointer;
+      width: 200px;
+      font-size: 0.7rem;
+      .search {
+        width: 200px;
+        display: none;
       }
     }
   }
-  
-
-
 }

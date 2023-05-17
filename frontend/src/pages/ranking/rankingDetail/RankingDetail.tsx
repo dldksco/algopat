@@ -1,7 +1,7 @@
 import { addCommas, pathColor } from "@/pages/code/hooks/func";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useEffect } from "react";
-import { faAngleLeft } from "@fortawesome/free-solid-svg-icons";
+import { useEffect, useState } from "react";
+import { faAngleLeft, faSearch } from "@fortawesome/free-solid-svg-icons";
 import { RankingDetailBoard } from "../rankingDetailBoard/RankingDetailBoard";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { getRankPageInfo, getRankingDetail } from "../hooks/query";
@@ -11,6 +11,7 @@ import { useRecoilState } from "recoil";
 import { rankingDetailState } from "@/atoms/ranking.atom";
 import { codeLanguage } from "@/variable/variable";
 import style from "./RankingDetail.module.css";
+import { Input } from "@/components/input/Input";
 
 export const RankingDetail = () => {
   const navigate = useNavigate();
@@ -19,13 +20,23 @@ export const RankingDetail = () => {
 
   const searchParams = new URLSearchParams(location.search);
   const page = searchParams.get("page") ? Number(searchParams.get("page")) : 1;
-
   const [rankingdetailParam, setRankingdetailParam] =
     useRecoilState(rankingDetailState);
 
   const { data } = getRankingDetail(rankingdetailParam);
+  const [searchInput, setSearchInput] = useState("");
 
+  const clickEvent = () => {
+    // console.log(lagnSelect, sortSelect, searchInput);
+    setRankingdetailParam((prev) => {
+      return {
+        ...prev,
+        searchText: searchInput,
+      };
+    });
+  };
   useEffect(() => {
+    clickEvent();
     setRankingdetailParam({
       problemId: Number(problemId),
       pagenumber: page,
@@ -167,6 +178,19 @@ export const RankingDetail = () => {
       </div>
       <SearchGroup solutionCount={pageInfoData?.solutionCount ?? 0} />
       <RankingDetailBoard data={data?.content} />
+      <div className={style.search_container}>
+        <div className={style.search}>
+          <Input
+            style={{ borderRadius: 0 }}
+            setInput={setSearchInput}
+            input={searchInput}
+            placeholder="사용자 이름"
+          />
+          <div className={style.search_button} onClick={clickEvent}>
+            <FontAwesomeIcon icon={faSearch} />
+          </div>
+        </div>
+      </div>
       <Pagenation
         number={data?.number}
         first={data?.first}
