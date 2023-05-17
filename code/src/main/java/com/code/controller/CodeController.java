@@ -72,7 +72,7 @@ public class CodeController {
     }
     int a= 0;
     if(a==0)
-    throw new BaseException(ErrorCode.EXIST_RESOURCE_ERROR,"hi");
+    throw new BaseException(ErrorCode.EXIST_RESOURCE_ERROR,"h");
     problemService.checkExistUserSubmitSolution(Long.parseLong(problemRequestDto.getSubmissionId())); // 이미 제출한 코드가 있는지 체크 (있다면 409)
     problemRequestDto.setUserSeq(userSeq);
     kafkaProducerService.send(USER_CODE_TOPIC, problemRequestDto);
