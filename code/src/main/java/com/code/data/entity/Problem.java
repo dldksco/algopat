@@ -46,8 +46,8 @@ public class Problem {
   private String problemLimit;
 
   @Column(name = "problem_time_limit")
-  private long problemTimeLimit;
+  private String problemTimeLimit;
 
   @Column(name = "problem_space_limit")
-  private long problemSpaceLimit;
+  private String problemSpaceLimit;
 }
