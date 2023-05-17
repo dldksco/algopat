@@ -144,15 +144,15 @@
         <td height="140px" align="center"> <a href="">
             <img src="./image/human7.png" width="140px" /> <br><br> 😶 김소현 <br>(Front-End) </a> <br></td>
         <td height="140px" align="center"> <a href="">
-            <img src="./image/human8.png" width="140px" /> <br><br> 🙂 박동환 <br>(Front-End) </a> <br></td>
+            <img src="./image/human9.png" width="140px" /> <br><br> 🙂 박동환 <br>(Front-End) </a> <br></td>
         <td height="140px" align="center"> <a href="">
-            <img src="./image/human6.png" width="140px" /> <br><br> 😆 이연학 <br>(Front-End) </a> <br></td>
+            <img src="./image/human20.png" width="140px" /> <br><br> 😆 이연학 <br>(Front-End) </a> <br></td>
         <td height="140px" align="center"> <a href="">
-            <img src="./image/human2.png" width="140px" /> <br><br> 👑 이찬희 <br>(Back-End) </a> <br></td>
+            <img src="./image/human10.png" width="140px" /> <br><br> 👑 이찬희 <br>(Back-End) </a> <br></td>
         <td height="140px" align="center"> <a href="">
-            <img src="./image/human1.png" width="140px" /> <br><br> 😁 이안채 <br>(Back-End) </a> <br></td>
+            <img src="./image/human21.png" width="140px" /> <br><br> 😁 이안채 <br>(Back-End) </a> <br></td>
 		<td height="140px" align="center"> <a href="">
-            <img src="./image/human4.png" width="140px" /> <br><br> 😶 최웅렬 <br>(Back-End) </a> <br></td>
+            <img src="./image/human11.png" width="140px" /> <br><br> 😶 최웅렬 <br>(Back-End) </a> <br></td>
     </tr>
     <tr>
         <td align="center">React<br/>Chrome Extension<br/></td>
