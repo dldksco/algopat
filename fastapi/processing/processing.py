@@ -55,7 +55,7 @@ async def processing(data : ProblemData, send_callback):
         
         logger.info("요청한 유저 : " + str(user_seq))
 
-        # SSE 1 
+        ### SSE 1 
         message_dto = MessageDTO(progress_info="코드 분석 시작", percentage=20, state="ok", user_seq=user_seq)
         await send_callback("alert", message_dto)
 
@@ -101,10 +101,6 @@ async def processing(data : ProblemData, send_callback):
 
                 raise MyCustomError("에러 발생 - 문제 요약")
 
-
-        # SSE 1.1
-        message_dto = MessageDTO(progress_info="문제 정보 분석중", percentage=40, state="ok", user_seq=user_seq)
-        await send_callback("alert", message_dto)
         
         # DB에서 문제 요약 정보 조회 
         gpt_problem_summary = await get_gpt_problem_summary(problem_id)
@@ -112,13 +108,20 @@ async def processing(data : ProblemData, send_callback):
         logger.info("코드 요약 시작")
         
         summary_code_complexity_coroutine = summary_code_complexity(chat_llm_0, data, gpt_problem_summary)
-        summary_code_refactor_coroutine = summary_code_refactor(chat_llm_0, data, gpt_problem_summary)
-        summary_code_complexity_result, summary_code_refactor_result = await gather(summary_code_complexity_coroutine, summary_code_refactor_coroutine)
 
         ### SSE 2
-        logger.info("코드 요약 완료")
+        message_dto = MessageDTO(progress_info="문제 정보 분석중", percentage=40, state="ok", user_seq=user_seq)
+        await send_callback("alert", message_dto)
+
+        summary_code_refactor_coroutine = summary_code_refactor(chat_llm_0, data, gpt_problem_summary)
+
+        ### SSE 3
         message_dto = MessageDTO(progress_info="코드 요약중", percentage=60, state="ok", user_seq=user_seq)
         await send_callback("alert", message_dto)
+
+        summary_code_complexity_result, summary_code_refactor_result = await gather(summary_code_complexity_coroutine, summary_code_refactor_coroutine)
+
+        logger.info("코드 요약 완료")
         
         logger.info("코드 요약 json 타입으로 변환 시작")
         summary_code_text = f"{OPEN_BRACE}{summary_code_complexity_result}\n {summary_code_refactor_result}\n total_score: 0\n{CLOSE_BRACE}"
@@ -127,6 +130,11 @@ async def processing(data : ProblemData, send_callback):
         logger.info("코드 요약 json 타입으로 변환 완료")
 
         logger.info("데이터 번역 작업 시작")
+
+        ### SSE 4
+        message_dto = MessageDTO(progress_info="데이터 번역중", percentage=80, state="ok", user_seq=user_seq)
+        await send_callback("alert", message_dto)
+        
         result = await translate_texts(chat_llm_0, summary_code_json)
         logger.info("데이터 번역 작업 완료")
 
@@ -136,16 +144,13 @@ async def processing(data : ProblemData, send_callback):
         else :
             result.total_score = 0
 
-        ### SSE 3
-        message_dto = MessageDTO(progress_info="데이터 번역중", percentage=80, state="ok", user_seq=user_seq)
-        await send_callback("alert", message_dto)
         
         ### DB 접근 ###
         logger.info("메인 트랜잭션 시작")
         await main_transaction(problem_id, user_seq, data, result, send_callback)
         logger.info("메인 트랜잭션 종료")
 
-        ### SSE 4
+        ### SSE 5
         message_dto = MessageDTO(progress_info="코드 분석 완료", percentage=100, state="finish", user_seq=user_seq)
         await send_callback("alert", message_dto)
     except Exception as e:
