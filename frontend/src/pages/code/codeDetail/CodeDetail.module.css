@@ -2,6 +2,10 @@
   width: 100%;
   padding: 2% 8%;
 }
+.code_detail span {
+  font-size: 1rem;
+  color: hsla(0, 0%, 100%, 0.7);
+}
 .code_detail h3 {
   font-weight: 500;
   color: hsl(0, 0%, 90%);
@@ -38,6 +42,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
 }
 .code_detail .info_box .total_score .score_board {
   display: flex;
@@ -48,9 +53,6 @@
   margin: 10px 2px;
   opacity: 0.8;
 }
-.code_detail .info_box span {
-  color: hsla(0, 0%, 100%, 0.7);
-}
 .code_detail .info_box .right_box {
   width: 30%;
   height: 80%;
@@ -59,7 +61,7 @@
   display: flex;
   flex-wrap: wrap;
 }
-.code_detail .info_box .right_box .right_box_box {
+.code_detail .info_box .right_box .result_box {
   background-color: #2d3956;
   box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
   padding: 20px;
@@ -67,6 +69,28 @@
   display: flex;
   flex-wrap: wrap;
   gap: 50px;
+}
+.code_detail .info_box .right_box .problem_box {
+  background-color: #2d3956;
+  box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
+  padding: 20px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.code_detail .info_box .right_box .problem_box .problem_tag {
+  margin-top: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+.code_detail .info_box .right_box .problem_box .problem_tag .item {
+  font-size: 1rem;
+  border-radius: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom: 1px solid gray;
 }
 .code_detail .info_box .right_box .problem_list {
   height: 20px;
@@ -93,9 +117,6 @@
   .code_detail .info_box .right_box .circle {
     height: 0.5rem;
     width: 0.5rem;
-  }
-  .code_detail .info_box .right_box span {
-    font-size: 0.65rem;
   }
   .code_detail .info_box .right_box h3 {
     font-size: 0.7rem;
@@ -146,9 +167,6 @@
     display: inline-block;
     border-radius: 100%;
     margin-right: 5px;
-  }
-  .code_detail .info_box .right_box span {
-    font-size: 0.5rem;
   }
   .code_detail .info_box .right_box h3 {
     margin: 10px 2px;

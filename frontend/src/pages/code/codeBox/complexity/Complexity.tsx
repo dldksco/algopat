@@ -48,7 +48,7 @@ export const Complexity = ({ isModalOpen, data, title }: ComplexityProps) => {
         </div>
         <div className={style.right_box}>
           <h3>{title} :</h3>
-          <h3>{complexityData.complexity}</h3>
+          <h3 style={{ fontStyle: "italic" }}>{complexityData.complexity}</h3>
           <div style={{ marginTop: "40px" }}>
             <div
               className={style.circle}

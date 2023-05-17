@@ -3,24 +3,29 @@ import {
   nowProblemSubmissionIdState,
   toekenForDetailState,
 } from "@/atoms/code.atom";
-import CodeBox from "../codeBox/CodeBox";
-import { getSolution } from "../hooks/query";
-import style from "./CodeDetail.module.css";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
+import { v4 as uuidv4 } from "uuid";
+import { LoadingSpinner } from "@/components/loadingspinner/LoadingSpinner";
+import { CSSProperties } from "react";
+import { isMobile } from "@/pages/main/hooks/func";
+
+import CodeBox from "../codeBox/CodeBox";
+import { getProblemInfo, getSolution } from "../hooks/query";
 import {
   addCommas,
   backgroundColor,
   pathColor,
   stringCutter,
 } from "../hooks/func";
-import { LoadingSpinner } from "@/components/loadingspinner/LoadingSpinner";
-import { CSSProperties } from "react";
-import { isMobile } from "@/pages/main/hooks/func";
+
+import style from "./CodeDetail.module.css";
 
 export const CodeDetail = () => {
   const nowProblem = useRecoilValue(nowProblemSubmissionIdState);
   const token = useRecoilValue(toekenForDetailState);
   const problem = useRecoilValue(nowProblemSubmissionIdState);
+
+  const { data: problemInfo } = getProblemInfo(problem.problemId);
 
   const {
     refactoringData,
@@ -206,7 +211,7 @@ export const CodeDetail = () => {
             </div>
             <div className={style.right_box}>
               <span>Problem</span>
-              <div className={style.right_box_box}>
+              <div className={style.problem_box}>
                 <div className={style.problem_list}>
                   <img
                     src={`https://static.solved.ac/tier_small/${problem.problemLevel}.svg`}
@@ -217,9 +222,17 @@ export const CodeDetail = () => {
                     isMobile() ? 15 : 21
                   )}
                 </div>
+
+                <div className={style.problem_tag}>
+                  {problemInfo?.problemTagList.map((v) => (
+                    <span className={style.item} key={uuidv4()}>
+                      #{v}
+                    </span>
+                  ))}
+                </div>
               </div>
               <span>Result</span>
-              <div id={style.data} className={style.right_box_box}>
+              <div id={style.data} className={style.result_box}>
                 <div>
                   <div>
                     <div
@@ -283,123 +296,6 @@ export const CodeDetail = () => {
                 </div>
               </div>
             </div>
-
-            {/* <div className={style.right_box}>
-              <div style={{ width: "30%" }}>
-                <div style={{ marginTop: "10px" }}>
-                  <div
-                    className={style.circle}
-                    style={{
-                      backgroundColor: `${pathColor(
-                        timeComplexityData.score || 0
-                      )}`,
-                    }}
-                  />
-                  <span>시간 복잡도</span>
-                </div>
-                <h3
-                  style={{
-                    color: `${pathColor(timeComplexityData.score || 0)}`,
-                  }}
-                >
-                  {addCommas(timeComplexityData.solutionRuntime || 0)} ms
-                </h3>
-              </div>
-              <div style={{ width: "30%" }}>
-                <div style={{ marginTop: "10px" }}>
-                  <div
-                    className={style.circle}
-                    style={{
-                      backgroundColor: `${pathColor(
-                        spaceComplexityData.score || 0
-                      )}`,
-                    }}
-                  />
-                  <span>공간 복잡도</span>
-                </div>
-                <h3
-                  style={{
-                    color: `${pathColor(spaceComplexityData.score || 0)}`,
-                  }}
-                >
-                  {addCommas(spaceComplexityData.solutionMemory || 0)} KB
-                </h3>
-              </div>
-              <div style={{ width: "30%" }}>
-                <div style={{ marginTop: "10px" }}>
-                  <div
-                    className={style.circle}
-                    style={{
-                      backgroundColor: `${pathColor(
-                        totalInfo?.gptTotalScore || 0
-                      )}`,
-                    }}
-                  />
-                  <span>클린 코드</span>
-                </div>
-                <h3
-                  style={{
-                    color: `${pathColor(totalInfo?.gptTotalScore || 0)}`,
-                  }}
-                >
-                  {refactoringData.cleanScore} Score
-                </h3>
-              </div>
-              <div style={{ width: "30%" }}>
-                <div style={{ marginTop: "10px" }}>
-                  <div
-                    className={style.circle}
-                    style={{
-                      backgroundColor: `${pathColor(10)}`,
-                    }}
-                  />
-                  <span>낮은 점수</span>
-                </div>
-                <h3
-                  style={{
-                    color: `${pathColor(10)}`,
-                  }}
-                >
-                  0 ~ 39
-                </h3>
-              </div>
-              <div style={{ width: "30%" }}>
-                <div style={{ marginTop: "10px" }}>
-                  <div
-                    className={style.circle}
-                    style={{
-                      backgroundColor: `${pathColor(50)}`,
-                    }}
-                  />
-                  <span>중간 점수</span>
-                </div>
-                <h3
-                  style={{
-                    color: `${pathColor(50)}`,
-                  }}
-                >
-                  40 ~ 79
-                </h3>
-              </div>
-              <div style={{ width: "30%" }}>
-                <div style={{ marginTop: "10px" }}>
-                  <div
-                    className={style.circle}
-                    style={{
-                      backgroundColor: `${pathColor(100)}`,
-                    }}
-                  />
-                  <span>높은 점수</span>
-                </div>
-                <h3
-                  style={{
-                    color: `${pathColor(100)}`,
-                  }}
-                >
-                  80 ~ 100
-                </h3>
-              </div>
-            </div> */}
           </div>
           <CodeBox type={"TIME COMPLEXITY"} data={timeComplexityData} />
           <CodeBox type={"SPACE COMPLEXITY"} data={spaceComplexityData} />

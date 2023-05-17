@@ -194,3 +194,38 @@ export const getSubmissionList = (
 };
 
 /******************************/
+
+/**
+ * 문제 정보 조회
+ */
+
+interface Problem {
+  problemId: string;
+  problemTitle: string;
+  problemLevel: string;
+  problemDesc: string;
+  problemInput: string;
+  problemOutput: string;
+  problemTagList: string[];
+  problemLimit: number;
+  problemTimeLimit: number;
+  problemSpaceLimit: number;
+}
+
+export const getProblemInfo = (problemId: number) => {
+  const fetchSubmission = async (): Promise<Problem> => {
+    const response = await $.get(`/code/problem?problemId=${problemId}`).then(
+      (res) => res.data
+    );
+    return response;
+  };
+
+  const { data, isLoading } = useQuery(
+    ["getProblemInfo", problemId],
+    fetchSubmission
+  );
+
+  return { data, isLoading };
+};
+
+/******************************/
