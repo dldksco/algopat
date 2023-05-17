@@ -1,7 +1,6 @@
 [![Algopat](./image/algopat-logo.png/ "Algopat Logo")](https://algopat.kr/ "Visit Algopat")   
 ### ChatGPT & LangChain을 활용한 알고리즘 소스코드 효율성 분석 서비스  
 
-
 ## 💡 프로젝트 소개 (배경, 개요)
 
 알고리즘 문제를 풀다 보면 효율성 측면에서 소홀한 경우가 많습니다.  
@@ -13,22 +12,28 @@
 
 1. 인증/인가
    - Github 소셜 로그인 (OAuth 2.0)
+   - Spring Security 
    - JWT (AccessToken, RefreshToken)
    - Spring Cloud Gateway, Eureka  
 2. 크롬 익스텐션
    - Crawling (문제, 회원 제출 코드)
-   - WebFlux를 이용한 SSE (실시간 알림)  
+   - WebFlux를 이용한 SSE (실시간 알림, 진행상황에 대한 progress bar UI 제공)  
 3. 알고리즘 소스 코드 분석 
-   - 시간 복잡도 (Big O)
-   - 공간 복잡도 (Big O)
-   - 리팩토링 가이드 
+   - LangChain + ChatGPT 라이브러리를 활용한 코드 분석 
+        - 시간 복잡도 (Big O)
+        - 공간 복잡도 (Big O)
+        - 리팩토링 가이드 
+    - 비용 절감 및 응답 시간 최적화를 위한 캐싱 적용 (문제 정보)
+    - DB 동시성 문제를 해결하기 위한 Redis를 이용한 분산락 구현 
+    - MSA 구조에서 Kafka Clustering을 통한 안정성 부여 
 4. 랭킹 
-   - 3가지 기준을 통한 순위 (시간 복잡도, 공간 복잡도, 제출 시간)  
-   - 내가 푼 문제 열람
+   - 3가지 기준을 통한 순위 제공 (총 점수, 시간 복잡도, 제출 시간 기준으로 순위 집계)  
+   - 내가 푼 문제 통계 기록 열람 가능 
 5. 마이페이지 
-   - 잔디 (제출 일자에 따른 활동 기록)
+   - 잔디 (제출 일자에 따른 활동 기록, 총 제출 횟수에 따른 비례식 적용)
 6. Anomaly (SAGA Pattern : Choreography)
-   - 비정상적인 예외현상 발생 시, 보상 트랜잭션 (무료 제출 횟수 +1) 
+   - 비정상적인 예외현상 발생 시, 보상 트랜잭션 적용 (무료 제출 횟수 +1)
+   - Kafka 전송 실패를 고려한 Retry 설정 적용 (50번, 10ms) 
 
 ## 🛠️ 기술 스택
 
@@ -123,7 +128,9 @@
 
 
 ## 📋 상세 페이지  
-
+### 크롬 익스텐션
+<img src="./image/detail_extension1.png" height="500px" width="500px" /> 
+<img src="./image/detail_extension2.png" height="500px" width="500px" /> <br>
 ### 메인 페이지  
 ![detail1](./image/detail1.png)  
 ### 코드 분석 결과 페이지  
