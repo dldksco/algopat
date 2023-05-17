@@ -25,6 +25,7 @@ async def health_check():
 # DB 스키마 생성 
 @app.on_event("startup")
 async def startup_event():
+
     logger.info("서버 시작")
     await create_tables()
     create_task(consume_problem_summary("usercode")) # Topic : usercode
