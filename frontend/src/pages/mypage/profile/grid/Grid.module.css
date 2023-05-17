@@ -161,24 +161,20 @@
   font-size: 0.8rem;
 }
 
-.memo {
+.memo_description {
   margin-top: 40px;
   width: 100%;
   height: 36px;
-  background-color: #354979;
+  background-color: #ececec;
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;
 }
-.memo p {
+.memo_description p {
   padding-left: 16px;
   padding-top: 8px;
   font-size: 1rem;
-  font-weight: 500;
-  color: white;
-}
-
-.description {
-  text-align: right;
+  font-weight: 600;
+  color: rgb(0, 0, 0);
 }
 
 @media screen and (max-width: 768px) {

@@ -2,6 +2,7 @@
   width: 100%;
   height: auto;
   position: relative;
+  padding-bottom: 20px;
 }
 .box .backgroundImage {
   height: 300px;

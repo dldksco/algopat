@@ -140,11 +140,11 @@ export const Grid = () => {
             className={style.gridColor_one}
             style={{ display: maxCount >= 4 ? "flex" : "none" }}
           >
-            <div className={style.item_one}></div>
             <div
-              className={style.text_one}
+              className={style.item_one}
               style={{ backgroundColor: `${colors[1]}` }}
-            >
+            ></div>
+            <div className={style.text_one}>
               1{Math.floor(maxCount / 4) > 1 ? "~" : null}
               {Math.floor(maxCount / 4) > 1 ? Math.floor(maxCount / 4) : null}
             </div>
@@ -153,11 +153,11 @@ export const Grid = () => {
             className={style.gridColor_two}
             style={{ display: maxCount >= 3 ? "flex" : "none" }}
           >
-            <div className={style.item_two}></div>
             <div
-              className={style.text_two}
-              style={{ backgroundColor: `${colors[2]}` }}
-            >
+              className={style.item_two}
+              style={{ backgroundColor: `${colors[3]}` }}
+            ></div>
+            <div className={style.text_two}>
               {Math.floor(maxCount / 4) + 1}
               {Math.floor(maxCount / 2) - Math.floor(maxCount / 4) > 1
                 ? "~"
@@ -176,7 +176,7 @@ export const Grid = () => {
               style={{ backgroundColor: `${colors[3]}` }}
             ></div>
             <div className={style.text_three}>
-              {Math.floor(maxCount / 2)}
+              {Math.floor(maxCount / 2) + 1}
               {Math.floor((maxCount / 4) * 3) - Math.floor(maxCount / 2) > 1
                 ? "~"
                 : null}
@@ -198,14 +198,29 @@ export const Grid = () => {
           </div>
         </div>
       </div>
-      <div className={style.memo}>
-        {streakColorState === 0 ? null : (
+      {streakColorState === 0 ? null : (
+        <div className={style.memo_description}>
           <p>{streakDateState} 내가 푼 문제 목록</p>
-        )}
-        {streakColorState === 0 ? null : (
-          <Memo date={streakDateState} thenum={streakColorState}></Memo>
-        )}
-      </div>
+        </div>
+      )}
+      {streakColorState === 0 ? null : (
+        <div className={style.memo_box}>
+          {streakColorState === 0 ? null : (
+            <Memo date={streakDateState} thenum={streakColorState}></Memo>
+          )}
+        </div>
+      )}
+      {streakColorState === 0 ? null : (
+        <div
+          style={{
+            textAlign: "right",
+            marginTop: "20px",
+            marginBottom: "10px",
+          }}
+        >
+          * 최근 5개의 문제만 표시됩니다.
+        </div>
+      )}
     </>
   );
 };
