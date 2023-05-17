@@ -1,29 +1,34 @@
-.box_title {
-  .code_arrow {
-    font-size: 1.2rem;
-    margin-right: 3%;
-    transition: 0.2s;
-    cursor: pointer;
+.info_box {
+  .box_title {
+    .code_arrow {
+      font-size: 1.2rem;
+      margin-right: 3%;
+      transition: 0.2s;
+      cursor: pointer;
+      color: hsl(0, 0%, 80%);
 
-    &:hover {
-      color: gray;
+      &:hover {
+        color: white;
+      }
+    }
+
+    .code_spin {
+      transform: rotate(180deg);
+    }
+
+    span {
+      font-size: 1.2rem;
+      margin-left: 3%;
     }
   }
 
-  .code_spin {
-    transform: rotate(180deg);
-  }
+  .sppan {
+    cursor: pointer;
+    transition: 0.2s;
+    color: hsl(0, 0%, 95%);
 
-  span {
-    font-size: 1.2rem;
-    margin-left: 3%;
-  }
-}
-
-.sppan {
-  cursor: pointer;
-  transition: 0.2s;
-  &:hover {
-    color: gray;
+    &:hover {
+      color: white;
+    }
   }
 }

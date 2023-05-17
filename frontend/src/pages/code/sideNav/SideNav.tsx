@@ -29,6 +29,10 @@ export const SideNav = () => {
     condition
   );
 
+  const buttonClickStyle = {
+    color: "skyblue",
+    borderBottom: "3px solid skyblue",
+  };
   const xButtonClick = () => setIsSidenavOpen(false);
   const serchClick = (str: string) => {
     setCategory(str);
@@ -41,20 +45,12 @@ export const SideNav = () => {
       className={style.sideNav}
       style={{ animation: "left_right_effect 0.65s" }}
     >
-      <p>코드 분석</p>
-      <div className={style.x_button} onClick={xButtonClick}>
-        <FontAwesomeIcon icon={faCircleXmark} />
-      </div>
-
+      <p>분석 결과</p>
       <div className={style.sort_button_group}>
         <div
           className={style.sort_button}
           onClick={() => serchClick("date")}
-          style={
-            category === "date"
-              ? { color: "skyblue", border: "1px solid skyblue" }
-              : undefined
-          }
+          style={category === "date" ? buttonClickStyle : undefined}
         >
           <FontAwesomeIcon icon={faClock} style={{ transition: "0.1s" }} />
           <FontAwesomeIcon
@@ -69,11 +65,7 @@ export const SideNav = () => {
         <div
           className={style.sort_button}
           onClick={() => serchClick("level")}
-          style={
-            category === "level"
-              ? { color: "skyblue", border: "1px solid skyblue" }
-              : undefined
-          }
+          style={category === "level" ? buttonClickStyle : undefined}
         >
           <img
             src={sort_tier_img}
@@ -95,11 +87,7 @@ export const SideNav = () => {
         <div
           className={style.sort_button}
           onClick={() => serchClick("id")}
-          style={
-            category === "id"
-              ? { color: "skyblue", border: "1px solid skyblue" }
-              : undefined
-          }
+          style={category === "id" ? buttonClickStyle : undefined}
         >
           <FontAwesomeIcon
             icon={faArrowDown91}
@@ -111,6 +99,10 @@ export const SideNav = () => {
           />
         </div>
       </div>
+      <div className={style.x_button} onClick={xButtonClick}>
+        <FontAwesomeIcon icon={faCircleXmark} />
+      </div>
+
       <div
         className={
           hasNextPage
@@ -118,11 +110,11 @@ export const SideNav = () => {
             : style.problem_list + " " + style.extra_length
         }
       >
-        <hr style={{ marginTop: "10px" }} />
         {data?.pages.map((page) =>
           page.content.map((el) => <Problem key={uuidv4()} detail={el} />)
         )}
       </div>
+
       {hasNextPage ? (
         <Button
           content="더보기"
@@ -134,8 +126,10 @@ export const SideNav = () => {
           onClick={() => fetchNextPage()}
         />
       ) : null}
-      <hr />
+
+      <hr color="gray" style={{ marginTop: "30px", width: "80%" }} />
       <div className={style.nav_header}>
+        <div className={style.header_title}>메뉴</div>
         <div className={style.nav_header_tag} onClick={() => navigate("/")}>
           <div>
             <FontAwesomeIcon icon={faHouse} />

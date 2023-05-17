@@ -36,7 +36,6 @@ export const Problem = ({ detail }: ProblemProps) => {
         />
         {detail.problemId}. {stringCutter(detail.problemTitle, 10)}
       </div>
-      <hr />
       <ProblemDetail problemDetail={detail} isProblemOpen={isProblemOpen} />
     </>
   );

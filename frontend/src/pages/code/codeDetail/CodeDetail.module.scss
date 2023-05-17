@@ -2,6 +2,11 @@
   width: 100%;
   padding: 2% 8%;
 
+  h3 {
+    font-weight: 500;
+    color: hsl(0, 0%, 90%);
+  }
+
   .algopat {
     font-size: 3rem;
     color: gray;
@@ -22,22 +27,78 @@
     margin-top: 40px;
     min-height: 180px;
 
+    .circle {
+      position: relative;
+      top: 1px;
+      height: 0.8rem;
+      width: 0.8rem;
+      display: inline-block;
+      border-radius: 100%;
+      margin-right: 5px;
+    }
+
+    .total_score {
+      width: 320px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      .score_board {
+        display: flex;
+        justify-content: space-around;
+        gap: 30px;
+
+        p {
+          margin: 10px 2px;
+          opacity: 0.8;
+        }
+      }
+    }
+
+    span {
+      color: hsla(0, 0%, 100%, 0.7);
+    }
+
     .right_box {
-      width: 60%;
-      border-radius: 10px;
-      padding: 0px 10px;
+      width: 30%;
+      height: 80%;
+      flex-direction: column;
+      gap: 20px;
       display: flex;
       flex-wrap: wrap;
 
-      .circle {
-        position: relative;
-        top: 1px;
-        height: 0.8rem;
-        width: 0.8rem;
-        display: inline-block;
-        border-radius: 100%;
-        margin-right: 5px;
+      .right_box_box {
+        background-color: #2d3956;
+        box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
+        padding: 20px;
+        border-radius: 10px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 50px;
       }
+
+      .problem_list {
+        height: 20px;
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        margin-left: 2px;
+
+        img {
+          height: 100%;
+          margin-top: 3px;
+        }
+      }
+
+      // .circle {
+      //   position: relative;
+      //   top: 1px;
+      //   height: 0.8rem;
+      //   width: 0.8rem;
+      //   display: inline-block;
+      //   border-radius: 100%;
+      //   margin-right: 5px;
+      // }
 
       h3 {
         margin: 10px 2px;

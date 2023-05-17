@@ -1,24 +1,25 @@
-.box_title .code_arrow {
+.info_box .box_title .code_arrow {
   font-size: 1.2rem;
   margin-right: 3%;
   transition: 0.2s;
   cursor: pointer;
+  color: hsl(0, 0%, 80%);
 }
-.box_title .code_arrow:hover {
-  color: gray;
+.info_box .box_title .code_arrow:hover {
+  color: white;
 }
-.box_title .code_spin {
+.info_box .box_title .code_spin {
   transform: rotate(180deg);
 }
-.box_title span {
+.info_box .box_title span {
   font-size: 1.2rem;
   margin-left: 3%;
 }
-
-.sppan {
+.info_box .sppan {
   cursor: pointer;
   transition: 0.2s;
+  color: hsl(0, 0%, 95%);
 }
-.sppan:hover {
-  color: gray;
+.info_box .sppan:hover {
+  color: white;
 }/*# sourceMappingURL=CodeBox.module.css.map */

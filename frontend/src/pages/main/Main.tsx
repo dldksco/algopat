@@ -149,9 +149,8 @@ export const Main = () => {
           >
             <img src={gpticon} alt="" />
             <h1>CHAT GPT</h1>
-            <p>긴 프롬프트를 연이은 단락으로</p>
-            <p>만들어, GPT가 맥락을 파악하여</p>
-            <p>코드를 이해할 수 있도록 하는 기술</p>
+            <p>OpenAI가 개발한 프로토타입</p>
+            <p>대화형 인공지능 챗봇</p>
           </div>
         </div>
         <Button
