@@ -49,98 +49,110 @@ cipher = AES.new(SECRET_KEY.encode(), AES.MODE_ECB)
 # GPT 응답 생성 함수
 @time_logger("GPT 비즈니스 로직")
 async def processing(data : ProblemData, send_callback):
-    user_seq = data.userSeq      # 회원 식별 번호 
-    problem_id = data.problemId  # 문제 아이디 
-    
-    logger.info("요청한 유저 : " + str(user_seq))
-
-    # SSE 1 
-    message_dto = MessageDTO(progress_info="코드 분석 시작", percentage=25, state="ok", user_seq=user_seq)
-    await send_callback("alert", message_dto)
-
-    # 지원 언어, 정답 여부 판단 
-    if await filtering_input_data(data, user_seq, send_callback):
-        return
-    
-    
+    try : 
+        user_seq = data.userSeq      # 회원 식별 번호 
+        problem_id = data.problemId  # 문제 아이디 
         
-    data.language = await parse_lang_type(data.language)
-    local_chat_llm_0 = ChatOpenAI(temperature=0, openai_api_key=local_open_ai_api_key, request_timeout=120)
+        logger.info("요청한 유저 : " + str(user_seq))
 
-    if data.openai_api_key == "0" :     # 회원 OPEN_AI_API_KEY 없음 
-        chat_llm_0 = local_chat_llm_0 
-    else :                              # 회원 OPEN_AI_API_KEY 있음  
-        decoded_data = b64decode(data.openai_api_key)
-        decrypted_api_key = cipher.decrypt(decoded_data)
-        api_key = decrypted_api_key.decode().rstrip('\r')
-        chat_llm_0 = ChatOpenAI(temperature=0, openai_api_key=api_key, request_timeout=120)
+        # SSE 1 
+        message_dto = MessageDTO(progress_info="코드 분석 시작", percentage=25, state="ok", user_seq=user_seq)
+        await send_callback("alert", message_dto)
 
-    json_chain = await json_formatter(chat_llm_0)
-    
-    lock_name = f"problem_id{problem_id}"
-    ### 분산락 
-    while True:
-        try:
-            lock = redis_lock.Lock(redis_conn, lock_name, expire=LOCK_TIMEOUT, auto_renewal=True)
-            if lock.acquire(blocking=False):
-                logger.info("분산락 시작")
-                await summary_problem(problem_id, user_seq, data, local_chat_llm_0, json_chain)
+        # 지원 언어, 정답 여부 판단 
+        if await filtering_input_data(data, user_seq, send_callback):
+            return
+        
+        
+            
+        data.language = await parse_lang_type(data.language)
+        local_chat_llm_0 = ChatOpenAI(temperature=0, openai_api_key=local_open_ai_api_key, request_timeout=120)
+
+        if data.openai_api_key == "0" :     # 회원 OPEN_AI_API_KEY 없음 
+            chat_llm_0 = local_chat_llm_0 
+        else :                              # 회원 OPEN_AI_API_KEY 있음  
+            decoded_data = b64decode(data.openai_api_key)
+            decrypted_api_key = cipher.decrypt(decoded_data)
+            api_key = decrypted_api_key.decode().rstrip('\r')
+            chat_llm_0 = ChatOpenAI(temperature=0, openai_api_key=api_key, request_timeout=120)
+
+        json_chain = await json_formatter(chat_llm_0)
+        
+        lock_name = f"problem_id{problem_id}"
+        ### 분산락 
+        while True:
+            try:
+                lock = redis_lock.Lock(redis_conn, lock_name, expire=LOCK_TIMEOUT, auto_renewal=True)
+                if lock.acquire(blocking=False):
+                    logger.info("분산락 시작")
+                    await summary_problem(problem_id, user_seq, data, local_chat_llm_0, json_chain)
+                    lock.release()
+                    break
+                else:
+                    logger.info("동일한 문제 대기중")
+                    await asyncio.sleep(1)
+            except Exception as e:
                 lock.release()
-                break
-            else:
-                logger.info("동일한 문제 대기중")
-                await asyncio.sleep(1)
-        except Exception as e:
-            lock.release()
-            logger.error(f"예외 발생: {e}")
+                logger.error(f"예외 발생: {e}")
 
-            # User 서버에게 실패 이벤트 전송  
-            user_service_dto = UserServiceDTO(isSuccess="NO", userSeq=user_seq)
-            await send_callback("user-service", user_service_dto)
+                # User 서버에게 실패 이벤트 전송  
+                user_service_dto = UserServiceDTO(isSuccess="NO", userSeq=user_seq)
+                await send_callback("user-service", user_service_dto)
 
-            raise MyCustomError("에러 발생 - 문제 요약")
+                raise MyCustomError("에러 발생 - 문제 요약")
 
 
+        # SSE 1.1
+        message_dto = MessageDTO(progress_info="문제 정보 검토 완료", percentage=40, state="ok", user_seq=user_seq)
+        await send_callback("alert", message_dto)
+        
+        # DB에서 문제 요약 정보 조회 
+        gpt_problem_summary = await get_gpt_problem_summary(problem_id)
 
-    
-    # DB에서 문제 요약 정보 조회 
-    gpt_problem_summary = await get_gpt_problem_summary(problem_id)
+        logger.info("코드 요약 시작")
+        
+        summary_code_complexity_coroutine = summary_code_complexity(chat_llm_0, data, gpt_problem_summary)
+        summary_code_refactor_coroutine = summary_code_refactor(chat_llm_0, data, gpt_problem_summary)
+        summary_code_complexity_result, summary_code_refactor_result = await gather(summary_code_complexity_coroutine, summary_code_refactor_coroutine)
 
-    logger.info("코드 요약 시작")
-    
-    summary_code_complexity_coroutine = summary_code_complexity(chat_llm_0, data, gpt_problem_summary)
-    summary_code_refactor_coroutine = summary_code_refactor(chat_llm_0, data, gpt_problem_summary)
-    summary_code_complexity_result, summary_code_refactor_result = await gather(summary_code_complexity_coroutine, summary_code_refactor_coroutine)
+        ### SSE 2
+        logger.info("코드 요약 완료")
+        message_dto = MessageDTO(progress_info="코드 요약 완료", percentage=60, state="ok", user_seq=user_seq)
+        await send_callback("alert", message_dto)
+        
+        logger.info("코드 요약 json 타입으로 변환 시작")
+        summary_code_text = f"{OPEN_BRACE}{summary_code_complexity_result}\n {summary_code_refactor_result}\n total_score: 0\n{CLOSE_BRACE}"
+        preprocessed_summary_code = await json_chain.arun(data = summary_code_text)
+        summary_code_json = await parse_summary_code(chat_llm_0, preprocessed_summary_code)
+        logger.info("코드 요약 json 타입으로 변환 완료")
 
-    ### SSE 2
-    logger.info("코드 요약 완료")
-    message_dto = MessageDTO(progress_info="코드 요약 완료", percentage=50, state="ok", user_seq=user_seq)
-    await send_callback("alert", message_dto)
-    
-    logger.info("코드 요약 json 타입으로 변환 시작")
-    summary_code_text = f"{OPEN_BRACE}{summary_code_complexity_result}\n {summary_code_refactor_result}\n total_score: 0\n{CLOSE_BRACE}"
-    preprocessed_summary_code = await json_chain.arun(data = summary_code_text)
-    summary_code_json = await parse_summary_code(chat_llm_0, preprocessed_summary_code)
-    logger.info("코드 요약 json 타입으로 변환 완료")
+        logger.info("데이터 번역 작업 시작")
+        result = await translate_texts(chat_llm_0, summary_code_json)
+        logger.info("데이터 번역 작업 완료")
 
-    logger.info("데이터 번역 작업 시작")
-    result = await translate_texts(chat_llm_0, summary_code_json)
-    logger.info("데이터 번역 작업 완료")
+        
+        if result.gpt_solution_space_score is not None and  result.gpt_solution_time_score is not None and result.gpt_solution_clean_score is not None : 
+            result.total_score = (result.gpt_solution_time_score + result.gpt_solution_space_score + result.gpt_solution_clean_score) // 3
+        else :
+            result.total_score = 0
 
-    result.total_score = (result.gpt_solution_time_score + result.gpt_solution_space_score + result.gpt_solution_clean_score) // 3
+        ### SSE 3
+        message_dto = MessageDTO(progress_info="데이터 번역 완료", percentage=75, state="ok", user_seq=user_seq)
+        await send_callback("alert", message_dto)
+        
+        ### DB 접근 ###
+        logger.info("메인 트랜잭션 시작")
+        await main_transaction(problem_id, user_seq, data, result, send_callback)
+        logger.info("메인 트랜잭션 종료")
 
-    ### SSE 3
-    message_dto = MessageDTO(progress_info="데이터 번역 완료", percentage=75, state="ok", user_seq=user_seq)
-    await send_callback("alert", message_dto)
-    
-    ### DB 접근 ###
-    logger.info("메인 트랜잭션 시작")
-    await main_transaction(problem_id, user_seq, data, result, send_callback)
-    logger.info("메인 트랜잭션 종료")
+        ### SSE 4
+        message_dto = MessageDTO(progress_info="코드 분석 완료", percentage=100, state="finish", user_seq=user_seq)
+        await send_callback("alert", message_dto)
+    except Exception as e:
+        logger.error(f"서버 에러 발생: {e}")
 
-    ### SSE 4
-    message_dto = MessageDTO(progress_info="코드 분석 완료", percentage=100, state="finish", user_seq=user_seq)
-    await send_callback("alert", message_dto)
+        message_dto = MessageDTO(progress_info="서버 예외 발생", percentage=-1, state="error", user_seq=user_seq)
+        await send_callback("alert", message_dto)
 
 
 
