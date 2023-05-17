@@ -50,23 +50,32 @@
       margin-right: 10px;
       width: 80px;
       height: 30px;
-      background-color: #ececec;
+      background-color: whitesmoke;
       border-radius: 5px;
-
       cursor: pointer;
+    }
+    .codeNavigate:hover {
+      background-color: #383b41;
+      color: whitesmoke;
+      border: 1.5px solid whitesmoke;
     }
     .problemNavigate {
       color: black;
-      padding-top: 4px;
+      padding-top: 5px;
       font-weight: 600;
       text-align: center;
       width: 120px;
       margin-left: 10px;
       margin-right: 20px;
-      background-color: #ececec;
+      background-color: #5a5a5e;
       border-radius: 5px;
-      height: 30px;
+      height: 31px;
       cursor: pointer;
+    }
+    .problemNavigate:hover {
+      background-color: #383b41;
+      color: white;
+      border: 1.5px solid #ececec;
     }
   }
 }
