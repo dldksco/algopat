@@ -23,8 +23,8 @@ public class ProblemResponseDto {
 
   String problemLimit;
 
-  long problemTimeLimit;
+  String problemTimeLimit;
 
-  long problemSpaceLimit;
+  String problemSpaceLimit;
 
 }
