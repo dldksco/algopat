@@ -57,12 +57,7 @@ public interface UserSubmitProblemRepository extends JpaRepository<UserSubmitPro
       "JOIN GptSolution gs ON uss.submissionId = gs.submissionId " +
       "WHERE uss.submissionId = :submissionId")
   Optional<UserSubmissionSolutionDetailDto> findUserSubmitSolutionDetailBySubmissionId(long submissionId);
-  @Query("SELECT new com.code.data.dto.DateGrassCountDTO(CAST(FUNCTION('DATE', usp.userSubmitProblemCreatedAt) AS LocalDate), COUNT(usp.userSubmitProblemCreatedAt)) " +
-      "FROM UserSubmitProblem usp " +
-      "WHERE usp.userSeq = :userSeq " +
-      "AND usp.userSubmitProblemCreatedAt BETWEEN :todayMinusYear AND :today " +
-      "GROUP BY FUNCTION('DATE', usp.userSubmitProblemCreatedAt)")
-  List<DateGrassCountDTO> findDateGrossCountByUserSeq(@Param("userSeq") Long userSeq, @Param("today") LocalDateTime today, @Param("todayMinusYear") LocalDateTime todayMinusYear);
+
 
   @Query("SELECT new com.code.data.dto.DateGrassInfoDTO(uss.submissionId, uss.problemId, p.problemTitle, p.problemLevel) " +
       "FROM UserSubmitSolution uss " +
