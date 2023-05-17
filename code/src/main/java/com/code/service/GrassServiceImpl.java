@@ -4,6 +4,7 @@ import com.code.data.dto.DateGrassCountDTO;
 import com.code.data.dto.DateGrassInfoDTO;
 import com.code.data.dto.UserGrassCountRequestDTO;
 import com.code.data.repository.UserSubmitProblemRepository;
+import com.code.data.repository.UserSubmitSolutionRepository;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
@@ -20,16 +21,16 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class GrassServiceImpl implements GrassService {
   private final UserSubmitProblemRepository userSubmitProblemRepository;
-
+  private final UserSubmitSolutionRepository userSubmitSolutionRepository;
   @Override
   public List<DateGrassCountDTO> getGrassCount(UserGrassCountRequestDTO userGrassCountRequestDTO) {
     LocalDateTime today = getTodayDate().plusDays(1L);
     LocalDateTime todayMinusYear = today.minusMonths(12).withDayOfMonth(1);
-    List<DateGrassCountDTO> dateGrossLists = userSubmitProblemRepository.findDateGrossCountByUserSeq(userGrassCountRequestDTO.getUserSeq(), today, todayMinusYear);
+    List<DateGrassCountDTO> dateGrossLists = userSubmitSolutionRepository.findDateGrossCountByUserSeq(userGrassCountRequestDTO.getUserSeq(), today, todayMinusYear);
 
     List<LocalDate> allDates = generateAllDatesBetween(todayMinusYear.toLocalDate(), today.toLocalDate());
     Map<LocalDate, Long> solvedCountByDate = dateGrossLists.stream().collect(
-        Collectors.toMap(DateGrassCountDTO::getUserSubmitProblemCreatedAt, DateGrassCountDTO::getSolvedCount));
+        Collectors.toMap(DateGrassCountDTO::getUserSubmitSolutionTime, DateGrassCountDTO::getSolvedCount));
 
     List<DateGrassCountDTO> result = new ArrayList<>();
     for (LocalDate date : allDates) {

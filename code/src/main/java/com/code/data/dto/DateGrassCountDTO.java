@@ -14,7 +14,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class DateGrassCountDTO {
-  private LocalDate userSubmitProblemCreatedAt;
+  private LocalDate userSubmitSolutionTime;
   private long solvedCount;
 
 
