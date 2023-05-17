@@ -3,9 +3,10 @@
   margin-right: 3%;
   transition: 0.2s;
   cursor: pointer;
+  color: hsl(0, 0%, 80%);
 }
 .info_box .box_title .code_arrow:hover {
-  color: gray;
+  color: white;
 }
 .info_box .box_title .code_spin {
   transform: rotate(180deg);
@@ -17,7 +18,8 @@
 .info_box .sppan {
   cursor: pointer;
   transition: 0.2s;
+  color: hsl(0, 0%, 95%);
 }
 .info_box .sppan:hover {
-  color: gray;
+  color: white;
 }/*# sourceMappingURL=CodeBox.module.css.map */

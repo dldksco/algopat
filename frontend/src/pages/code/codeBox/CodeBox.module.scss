@@ -5,9 +5,10 @@
       margin-right: 3%;
       transition: 0.2s;
       cursor: pointer;
+      color: hsl(0, 0%, 80%);
 
       &:hover {
-        color: gray;
+        color: white;
       }
     }
 
@@ -24,8 +25,10 @@
   .sppan {
     cursor: pointer;
     transition: 0.2s;
+    color: hsl(0, 0%, 95%);
+
     &:hover {
-      color: gray;
+      color: white;
     }
   }
 }

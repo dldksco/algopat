@@ -21,7 +21,7 @@ const CodeBox = React.memo(({ type, data }: CodeBoxProps) => {
   return (
     <div className={style.info_box}>
       <div className={style.box_title}>
-        <hr />
+        <hr color="gray" />
         <div
           style={{
             display: "flex",
@@ -41,7 +41,7 @@ const CodeBox = React.memo(({ type, data }: CodeBoxProps) => {
             }
           />
         </div>
-        <hr />
+        <hr color="gray" />
       </div>
       {type === "REFACTORING" ? (
         <Refactoring isModalOpen={isModalOpen} data={data} />
