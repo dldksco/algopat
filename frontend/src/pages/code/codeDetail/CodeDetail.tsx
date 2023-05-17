@@ -113,7 +113,7 @@ export const CodeDetail = () => {
               <h3>클린 코드</h3>
             </div>
           </div>
-          <hr />
+          <hr color="gray" />
           <div className={style.info_box}>
             <div style={{ width: "120px", textAlign: "center" }}>
               <CircularProgressbar
@@ -197,7 +197,7 @@ export const CodeDetail = () => {
                 </h3>
               </div>
               <div style={{ width: "30%" }}>
-                <hr />
+                {/* <hr /> */}
                 <div style={{ marginTop: "10px" }}>
                   <div
                     className={style.circle}

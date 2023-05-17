@@ -1,24 +1,23 @@
-.box_title .code_arrow {
+.info_box .box_title .code_arrow {
   font-size: 1.2rem;
   margin-right: 3%;
   transition: 0.2s;
   cursor: pointer;
 }
-.box_title .code_arrow:hover {
+.info_box .box_title .code_arrow:hover {
   color: gray;
 }
-.box_title .code_spin {
+.info_box .box_title .code_spin {
   transform: rotate(180deg);
 }
-.box_title span {
+.info_box .box_title span {
   font-size: 1.2rem;
   margin-left: 3%;
 }
-
-.sppan {
+.info_box .sppan {
   cursor: pointer;
   transition: 0.2s;
 }
-.sppan:hover {
+.info_box .sppan:hover {
   color: gray;
 }/*# sourceMappingURL=CodeBox.module.css.map */

@@ -2,6 +2,9 @@
   width: 100%;
   padding: 2% 8%;
 }
+.code_detail .score_board {
+  display: flex;
+}
 .code_detail .algopat {
   font-size: 3rem;
   color: gray;
@@ -19,6 +22,9 @@
   margin-bottom: 20px;
   margin-top: 40px;
   min-height: 180px;
+}
+.code_detail .info_box span {
+  color: hsla(0, 0%, 100%, 0.7);
 }
 .code_detail .info_box .right_box {
   width: 60%;

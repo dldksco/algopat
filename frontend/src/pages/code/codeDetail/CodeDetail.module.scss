@@ -2,6 +2,10 @@
   width: 100%;
   padding: 2% 8%;
 
+  .score_board {
+    display: flex;
+  }
+
   .algopat {
     font-size: 3rem;
     color: gray;
@@ -21,6 +25,10 @@
     margin-bottom: 20px;
     margin-top: 40px;
     min-height: 180px;
+
+    span {
+      color: hsla(0, 0%, 100%, 0.7);
+    }
 
     .right_box {
       width: 60%;
