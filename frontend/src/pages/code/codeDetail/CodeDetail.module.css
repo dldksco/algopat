@@ -48,14 +48,14 @@
     font-size: 1.2rem;
   }
   .code_detail .info_box .right_box .circle {
-    height: 0.6rem;
-    width: 0.6rem;
+    height: 0.5rem;
+    width: 0.5rem;
   }
   .code_detail .info_box .right_box span {
-    font-size: 0.8rem;
+    font-size: 0.65rem;
   }
   .code_detail .info_box .right_box h3 {
-    font-size: 0.9rem;
+    font-size: 0.7rem;
   }
 }
 @media screen and (max-width: 768px) {

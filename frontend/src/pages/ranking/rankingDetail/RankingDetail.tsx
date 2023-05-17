@@ -29,7 +29,7 @@ export const RankingDetail = () => {
     setRankingdetailParam({
       problemId: Number(problemId),
       pagenumber: page,
-      defaultvalue: "",
+      searchText: "",
       languagefilter: "",
       sortcriteria: "",
     });
