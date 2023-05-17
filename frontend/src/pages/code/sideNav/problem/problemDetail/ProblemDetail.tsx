@@ -56,7 +56,7 @@ export const ProblemDetail = ({ problemDetail, isProblemOpen }: SolveProps) => {
           onClick={() => handleSubmission(el.submissionId)}
           style={
             nowSubmission.submissionId === el.submissionId
-              ? { color: "green" }
+              ? { color: "skyblue", borderLeft: "4px solid skyblue" }
               : undefined
           }
         >
@@ -66,7 +66,6 @@ export const ProblemDetail = ({ problemDetail, isProblemOpen }: SolveProps) => {
           )}
         </div>
       ))}
-      <hr />
     </div>
   );
 };

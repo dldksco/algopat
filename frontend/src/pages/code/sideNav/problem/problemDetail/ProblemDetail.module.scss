@@ -1,12 +1,15 @@
 .detail_list {
   overflow: hidden;
   transition: 0.2s;
-
+  // background-color: red;
+  // height: 100%;
+  height: auto;
   .submission_list {
-    padding-left: 18%;
-    padding-right: 8%;
-    height: 2rem;
-    padding-top: 2%;
+    margin-left: 50px;
+    margin-bottom: 6px;
+    padding-left: 10px;
+    height: 1.8rem;
+    padding-top: 6px;
     color: gray;
     width: 100%;
     transition: 0.2s;

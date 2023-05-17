@@ -6,11 +6,22 @@
   width: 300px;
   padding-right: 5px;
   z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-content: center;
 }
 .sideNav .x_button {
   display: none;
 }
 .sideNav .sort_button_group {
+  background-color: #2d3956;
+  border-radius: 5px;
+  padding: 2px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  margin-right: 10px;
+  margin-left: 10px;
+  margin-bottom: 20px;
   display: flex;
   justify-content: space-around;
 }
@@ -20,13 +31,11 @@
   align-items: baseline;
   width: 60px;
   padding: 5px 10px;
-  border: 1px solid white;
-  cursor: pointer;
   transition: 0.1s;
+  cursor: pointer;
 }
 .sideNav .sort_button_group .sort_button:hover {
   color: gray !important;
-  border: 1px solid gray !important;
 }
 .sideNav .sort_button_group .sort_button:hover img {
   filter: brightness(40%);
@@ -51,25 +60,30 @@
 .sideNav .nav_header {
   text-align: left;
   padding-top: 1%;
-  padding-left: 10%;
+  padding-left: 8%;
   font-size: 1.2rem;
+}
+.sideNav .nav_header .header_title {
+  font-weight: 600;
+  margin-bottom: 30px;
+  margin-top: 20px;
 }
 .sideNav .nav_header .nav_header_tag {
   position: relative;
   font-size: 1.2rem;
-  margin-left: 3%;
   margin-top: 15px;
+  display: flex;
 }
 .sideNav .nav_header .nav_header_tag:hover :nth-child(n) {
-  color: gray;
+  color: skyblue;
 }
 .sideNav .nav_header .nav_header_tag :nth-child(n) {
   cursor: pointer;
   transition: 0.2s;
 }
 .sideNav .nav_header .nav_header_tag :nth-child(1) {
-  position: absolute;
-  left: -10%;
+  width: 20px;
+  margin-right: 10px;
 }
 
 @media screen and (max-width: 768px) {
