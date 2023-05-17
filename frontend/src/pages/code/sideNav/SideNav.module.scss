@@ -18,8 +18,8 @@
     background-color: #2d3956;
     border-radius: 5px;
     padding: 2px;
-    padding-top: 5px;
-    padding-bottom: 5px;
+    padding-top: 7px;
+    padding-bottom: 7px;
     margin-right: 10px;
     margin-left: 10px;
     margin-bottom: 20px;
@@ -104,6 +104,9 @@
     border: 1px solid white;
 
     .x_button {
+      position: absolute;
+      right: 20px;
+      top: 20px;
       display: inline-block;
       font-size: 1.2rem;
       margin-left: 140px;
