@@ -11,10 +11,10 @@
 ## ✨ 프로젝트 주요 기술 
 
 1. 인증/인가
-   - Github 소셜 로그인 (OAuth 2.0)
+   - Spring Cloud Gateway, Eureka를 이용한 Client-side Discovery pattern 구현
+   - 각 서비스의 호출을 위해 JWT 이용
    - Spring Security 
-   - JWT (AccessToken, RefreshToken)
-   - Spring Cloud Gateway, Eureka  
+   - OAuth 2.0  
 2. 크롬 익스텐션
    - Crawling (문제, 회원 제출 코드)
    - WebFlux를 이용한 SSE (실시간 알림, 진행상황에 대한 progress bar UI 제공)  
@@ -26,7 +26,7 @@
     - 사용자 경험 개선을 위한 무료 OPEN AI API KEY 체험 횟수 10회 제공
     - 비용 절감 및 응답 시간 최적화를 위한 캐싱 적용 (문제 정보)
     - DB 동시성 문제를 해결하기 위한 Redis를 이용한 분산락 구현 
-    - MSA 구조에서 Kafka Clustering을 통한 안정성 부여 
+    - Kafka를 통한 로드밸런싱으로 분산 환경에서 시스템 안정성 향상 
 4. 랭킹 
    - 3가지 기준을 통한 순위 제공 (총 점수, 시간 복잡도, 제출 시간 기준으로 순위 집계)  
    - 내가 푼 문제 통계 기록 열람 가능 
@@ -35,7 +35,12 @@
 6. Anomaly (SAGA Pattern : Choreography)
    - 비정상적인 예외현상 발생 시, 보상 트랜잭션 적용 (무료 제출 횟수 +1)
    - Kafka 전송 실패를 고려한 Retry 설정 적용 (50번, 10ms) 
-7. MSA 구조에서 원활한 디버깅을 위한 Logging 및 Monitoring 환경 구축 
+7. MSA 구조에서 원활한 디버깅을 위한 Logging 및 Monitoring 환경 구축
+    - Zipkin을 이용한 마이크로서비스 환경에서의 추적 시스템 구축 및 시각화
+    - 각 서비스에서 발생하는 로그 메세지를 손쉽게 확인할 수 있는 환경 구축 및 시각화
+        - FileBeats를 통해 도커 컨테이너의 필요한 로그 선별
+        - 선별된 로그 Logstash를 통해 파싱한 후 Elasticsearch에 저장
+        - 저장된 로그 데이터를 Kibana에서 시각화를 통해 더 쉽게 로그를 확인할 수 있는 환경을 구축했습니다.
 
 ## 🛠️ 기술 스택
 
