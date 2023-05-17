@@ -142,7 +142,7 @@
 <table>
     <tr>
         <td height="140px" align="center"> <a href="">
-            <img src="./image/human5.png" width="140px" /> <br><br> 😶 김소현 <br>(Front-End) </a> <br></td>
+            <img src="./image/human7.png" width="140px" /> <br><br> 😶 김소현 <br>(Front-End) </a> <br></td>
         <td height="140px" align="center"> <a href="">
             <img src="./image/human3.png" width="140px" /> <br><br> 🙂 박동환 <br>(Front-End) </a> <br></td>
         <td height="140px" align="center"> <a href="">
