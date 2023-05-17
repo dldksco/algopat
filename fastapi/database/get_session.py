@@ -22,6 +22,7 @@ async def get_session() -> AsyncSession:
         
 
 async def create_tables():
+    
     async with engine.begin() as conn:
         await conn.run_sync(Base.metadata.create_all, tables=[Problem.__table__], checkfirst=True)
         await conn.run_sync(Base.metadata.create_all, tables=[ProblemMeta.__table__], checkfirst=True)
