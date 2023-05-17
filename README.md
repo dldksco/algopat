@@ -1,6 +1,6 @@
-[![Algopat](./image/algopat-logo.png/ "Algopat Logo")](https://algopat.kr/ "Visit Algopat")   
-### ChatGPT & LangChain을 활용한 알고리즘 소스코드 효율성 분석 서비스  
-
+👉👉 [![Algopat](./image/algopat-logo.png/ "Algopat Logo")](https://algopat.kr/ "Visit Algopat")   
+## 🤖ChatGPT & LangChain을 활용한 알고리즘 소스코드 효율성 분석 서비스🤖  
+  
 ## 💡 프로젝트 소개 (배경, 개요)
 
 알고리즘 문제를 풀다 보면 효율성 측면에서 소홀한 경우가 많습니다.  
@@ -193,3 +193,18 @@
 
 ---
 
+## 👥 협업 관리  
+
+<table>
+    <tr>
+        <td  align="center">
+            <img src="./image/notion1.png" /> <br> <br>노션 <br>
+        </td>
+        <td align="center">
+            <img src="./image/jira1.png" /> <br> <br>지라 <br>
+        </td>
+        <td align="center">
+            <img src="./image/gitlab1.png" /> <br> <br>깃랩 이슈 <br>
+        </td>
+    </tr>
+</table>
