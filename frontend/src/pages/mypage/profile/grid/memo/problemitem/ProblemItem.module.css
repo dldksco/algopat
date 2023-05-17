@@ -8,6 +8,14 @@
     opacity: 1;
   }
 }
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
 .problem_family {
   animation-name: list_animation;
   animation-duration: 1s;
@@ -55,6 +63,7 @@
   background-color: whitesmoke;
   border-radius: 5px;
   cursor: pointer;
+  transition: 0.2s;
 }
 .problem_family .button_container .codeNavigate:hover {
   background-color: #383b41;
@@ -63,6 +72,7 @@
 }
 .problem_family .button_container .problemNavigate {
   color: black;
+  transition: 0.2s;
   padding-top: 5px;
   font-weight: 600;
   text-align: center;
