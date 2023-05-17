@@ -56,7 +56,7 @@ async def processing(data : ProblemData, send_callback):
         logger.info("요청한 유저 : " + str(user_seq))
 
         # SSE 1 
-        message_dto = MessageDTO(progress_info="코드 분석 시작", percentage=25, state="ok", user_seq=user_seq)
+        message_dto = MessageDTO(progress_info="코드 분석 시작", percentage=20, state="ok", user_seq=user_seq)
         await send_callback("alert", message_dto)
 
         # 지원 언어, 정답 여부 판단 
@@ -103,7 +103,7 @@ async def processing(data : ProblemData, send_callback):
 
 
         # SSE 1.1
-        message_dto = MessageDTO(progress_info="문제 정보 검토 완료", percentage=40, state="ok", user_seq=user_seq)
+        message_dto = MessageDTO(progress_info="문제 정보 분석중", percentage=40, state="ok", user_seq=user_seq)
         await send_callback("alert", message_dto)
         
         # DB에서 문제 요약 정보 조회 
@@ -117,7 +117,7 @@ async def processing(data : ProblemData, send_callback):
 
         ### SSE 2
         logger.info("코드 요약 완료")
-        message_dto = MessageDTO(progress_info="코드 요약 완료", percentage=60, state="ok", user_seq=user_seq)
+        message_dto = MessageDTO(progress_info="코드 요약중", percentage=60, state="ok", user_seq=user_seq)
         await send_callback("alert", message_dto)
         
         logger.info("코드 요약 json 타입으로 변환 시작")
@@ -137,7 +137,7 @@ async def processing(data : ProblemData, send_callback):
             result.total_score = 0
 
         ### SSE 3
-        message_dto = MessageDTO(progress_info="데이터 번역 완료", percentage=75, state="ok", user_seq=user_seq)
+        message_dto = MessageDTO(progress_info="데이터 번역중", percentage=80, state="ok", user_seq=user_seq)
         await send_callback("alert", message_dto)
         
         ### DB 접근 ###
