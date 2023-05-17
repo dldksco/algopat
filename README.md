@@ -23,6 +23,7 @@
         - 시간 복잡도 (Big O)
         - 공간 복잡도 (Big O)
         - 리팩토링 가이드 
+    - 사용자 경험 개선을 위한 무료 OPEN AI API KEY 체험 횟수 10회 제공
     - 비용 절감 및 응답 시간 최적화를 위한 캐싱 적용 (문제 정보)
     - DB 동시성 문제를 해결하기 위한 Redis를 이용한 분산락 구현 
     - MSA 구조에서 Kafka Clustering을 통한 안정성 부여 
@@ -34,6 +35,7 @@
 6. Anomaly (SAGA Pattern : Choreography)
    - 비정상적인 예외현상 발생 시, 보상 트랜잭션 적용 (무료 제출 횟수 +1)
    - Kafka 전송 실패를 고려한 Retry 설정 적용 (50번, 10ms) 
+7. MSA 구조에서 원활한 디버깅을 위한 Logging 및 Monitoring 환경 구축 
 
 ## 🛠️ 기술 스택
 
@@ -129,8 +131,7 @@
 
 ## 📋 상세 페이지  
 ### 크롬 익스텐션
-<img src="./image/detail_extension1.png" height="500px" width="500px" /> 
-<img src="./image/detail_extension2.png" height="500px" width="500px" /> <br>
+<img src="./image/detail_extension1.png" height="400px" width="400px" /> <img src="./image/detail_extension2.png" height="400px" width="400px" /> <br>
 ### 메인 페이지  
 ![detail1](./image/detail1.png)  
 ### 코드 분석 결과 페이지  
