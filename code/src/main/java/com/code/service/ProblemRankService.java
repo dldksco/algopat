@@ -62,7 +62,7 @@ public class ProblemRankService {
     Page<ProblemRankOverviewDto[]> problemRankOverviewDtos = problemRepository.findProblemsByLevelAndUserWithDetails(
             problemLevel,
             userSeq,
-            PageRequest.of(pageNumber, 10, Sort.Direction.DESC, "pm.problemSubmittedCount"))
+            PageRequest.of(pageNumber, 10, Sort.Direction.ASC, "p.problemLevel"))
         .orElseThrow(RuntimeException::new);
     return problemRankOverviewDtos;
   }
