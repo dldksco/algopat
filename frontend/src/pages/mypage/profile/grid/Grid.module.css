@@ -22,6 +22,14 @@
   padding: 7.7px;
   text-align: right;
 }
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
 .grid .grid_family {
   overflow-x: auto;
   overflow-y: hidden;
@@ -35,6 +43,8 @@
   font-size: 8px;
 }
 .grid .grid_family .grid_container {
+  opacity: 0;
+  animation: fadeIn 2s forwards;
   max-width: 100%;
   display: grid;
   padding-top: 10px;

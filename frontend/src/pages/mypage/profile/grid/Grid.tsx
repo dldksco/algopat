@@ -4,8 +4,8 @@ import { useState } from "react";
 import { getGrid } from "../../hooks/query";
 import { v4 as uuidv4 } from "uuid";
 import { colors, days, months, monthsWeight } from "../../hooks/gridtype";
-import style from "./Grid.module.css";
 import { colorIndexFunc } from "../../hooks/func";
+import style from "./Grid.module.css";
 
 export const Grid = () => {
   const [streakDateState, setStreakDateState] = useState<string>("");
