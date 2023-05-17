@@ -25,6 +25,7 @@
     background-color: black;
     border-radius: 20px;
     padding-top: 1%;
+
     img {
       display: inline-block;
       width: 80px;
@@ -69,6 +70,74 @@
     .post_buttom {
       display: flex;
       justify-content: space-around;
+    }
+  }
+}
+
+@media screen and (max-width: 1050px) {
+  .ranking_carousel {
+    border: 2px solid var(--font-color);
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    padding-bottom: 1%;
+
+    .menu {
+      padding-left: 2%;
+      width: 20%;
+      display: flex;
+      gap: 10px;
+      flex-direction: column;
+
+      select {
+        width: 60%;
+        height: 10%;
+      }
+    }
+    .carousel {
+      margin-top: 2%;
+      margin-bottom: 1%;
+      height: 135px;
+      width: 74%;
+      background-color: black;
+      border-radius: 20px;
+      padding-top: 1%;
+      img {
+        display: inline-block;
+        width: 62px;
+        cursor: pointer;
+
+        &:hover {
+          transition: 0.2s;
+          filter: opacity(0.6);
+        }
+        // transition: all 0.1s ease-in-out;
+      }
+
+      .slider {
+        .center_side {
+          img {
+            width: 62px;
+            // transition: width 0.5s ease-in-out;
+          }
+        }
+
+        .center {
+          img {
+            width: 72px;
+            // transition: width 0.5s ease-in-out;
+          }
+        }
+      }
+
+      p {
+        margin: 0;
+      }
+
+      .post_buttom {
+        display: flex;
+        justify-content: space-around;
+      }
     }
   }
 }
