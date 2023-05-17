@@ -37,7 +37,13 @@
   justify-content: space-between;
   cursor: default;
 }
+.ranking_detail .info .box {
+  border: 1px solid white;
+  animation: top_down_effect 0.5s;
+}
 .ranking_detail .info .info_list {
+  margin-left: auto;
+  margin-right: auto;
   display: flex;
   gap: 40px;
   align-items: center;
@@ -54,46 +60,47 @@
 .ranking_detail .info .box {
   padding: 11px;
 }
+.ranking_detail .search_container {
+  display: none;
+}
 
 @media screen and (max-width: 768px) {
   .ranking_detail {
-    margin-top: 10%;
+    margin-top: 3%;
   }
   .ranking_detail .box {
-    border: 1px solid var(--font-color);
-    padding: 20px;
     cursor: pointer;
   }
   .ranking_detail .header {
-    font-size: 1.2rem;
+    font-size: 1rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 20px;
+    gap: 10px;
     position: relative;
   }
-  .ranking_detail .header .title {
-    position: absolute;
-    top: 90px;
+  .ranking_detail .master_info {
     display: flex;
-    align-items: center;
+    gap: 15px;
+    margin-bottom: 10px;
   }
-  .ranking_detail .user_info {
-    display: flex;
+  .ranking_detail .master_info .box {
+    margin-top: 10px;
+  }
+  .ranking_detail .master_info .user_info {
     gap: 15px;
     padding: 5px;
     align-items: center;
   }
   .ranking_detail .info {
-    margin-top: 70px;
-    font-size: 0.8rem;
-    flex-wrap: wrap;
+    margin-top: 10px;
+    font-size: 1rem;
     display: flex;
     justify-content: space-between;
     cursor: default;
-    overflow-x: scroll;
   }
   .ranking_detail .info .info_list {
+    overflow-x: scroll;
     display: flex;
     gap: 40px;
     align-items: center;
@@ -112,5 +119,20 @@
   }
   .ranking_detail .info .box {
     padding: 11px;
+  }
+  .ranking_detail .search_container {
+    display: block;
+  }
+  .ranking_detail .search_container .search {
+    display: flex;
+    justify-content: center;
+  }
+  .ranking_detail .search_container .search .search_button {
+    margin-left: 2px;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    border: 1px solid var(--font-color);
+    cursor: pointer;
   }
 }/*# sourceMappingURL=RankingDetail.module.css.map */

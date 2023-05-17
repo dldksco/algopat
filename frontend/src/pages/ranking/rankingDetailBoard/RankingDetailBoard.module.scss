@@ -39,7 +39,8 @@
       gap: 40px;
       align-items: center;
       text-align: center;
-
+      margin-left: auto;
+      margin-right: auto;
       .box {
         padding: 20px;
       }
@@ -119,7 +120,7 @@
 
 @media screen and (max-width: 768px) {
   .content_container {
-    margin-bottom: 80px;
+    margin-bottom: 30px;
     width: 100%;
     display: grid;
     text-align: left;
