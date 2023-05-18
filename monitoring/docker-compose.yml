@@ -1,0 +1,77 @@
+version: '3.9'
+services:
+  prometheus:
+    image: prom/prometheus
+    container_name: prometheus_container
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/usr/share/prometheus/console_libraries'
+      - '--web.console.templates=/usr/share/prometheus/consoles'
+    ports:
+      - '19999:9090'
+    networks:
+      - monitor-net
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+  grafana:
+    image: grafana/grafana
+    depends_on:
+      - prometheus
+      - loki
+    ports:
+      - '13333:3000'
+    networks:
+      - monitor-net
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    volumes:
+      - grafana-data:/var/lib/grafana
+  cadvisor:
+    image: google/cadvisor
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:rw
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+    ports:
+      - '18888:8080'
+    networks:
+      - monitor-net
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+  loki:
+    image: grafana/loki:latest
+    ports:
+      - "3100:3100"
+    command: -config.file=/etc/loki/local-config.yaml
+    volumes:
+      - ./loki-config.yaml:/etc/loki/local-config.yaml
+      - ./loki-data:/data
+      - ./loki-wal:/wal
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    networks:
+      - monitor-net
+    user: "1000:1000"
+  promtail:
+    image: grafana/promtail:latest
+    volumes:
+      - /home/ubuntu/logs:/var/log
+      - ./promtail-config.yaml:/etc/promtail/promtail-config.yaml
+    command: -config.file=/etc/promtail/promtail-config.yaml
+    depends_on:
+      - loki
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    networks:
+      - monitor-net
+networks:
+  monitor-net:
+
+volumes:
+  loki-data:
+  loki-wal:
+  grafana-data:
