@@ -11,6 +11,11 @@
   overflow: hidden;
   box-shadow: 0 4px 6px 0 hsla(0, 0%, 0%, 0.2);
 
+  p,
+  span {
+    color: hsla(0, 0%, 100%, 0.8);
+  }
+
   .text_box {
     padding-left: 30px;
     padding-top: 5px;
@@ -28,11 +33,40 @@
     margin-top: 15px;
     min-height: 180px;
 
+    .percentage {
+      width: 30%;
+      max-width: 120px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
     .right_box {
       width: 60%;
       background-color: #28292c;
       border-radius: 10px;
-      padding: 0px 10px;
+      padding: 23px;
+
+      display: grid;
+      grid-template-rows: repeat(2, 90px);
+      grid-template-columns: repeat(2, 1fr);
+      align-items: center;
+      grid-template-areas:
+        "comlexity limit"
+        "complexity_result .";
+
+      .comlexity {
+        grid-area: comlexity;
+      }
+
+      .complexity_result {
+        grid-area: complexity_result;
+      }
+
+      .limit {
+        grid-area: limit;
+      }
 
       .circle {
         position: relative;
@@ -44,9 +78,9 @@
         margin-right: 5px;
       }
 
-      h3 {
-        margin: 10px 2px;
-      }
+      // h3 {
+      //   margin: 10px 2px;
+      // }
     }
   }
 }

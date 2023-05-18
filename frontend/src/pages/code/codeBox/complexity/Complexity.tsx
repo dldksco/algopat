@@ -9,6 +9,8 @@ import {
 import "react-circular-progressbar/dist/styles.css";
 import style from "./Complexity.module.css";
 import { filteredNewLine } from "../refactoring/Refactoring";
+import { useRecoilValue } from "recoil";
+import { problemInfoState } from "@/atoms/code.atom";
 
 interface ComplexityProps {
   isModalOpen: boolean;
@@ -18,6 +20,7 @@ interface ComplexityProps {
 
 export const Complexity = ({ isModalOpen, data, title }: ComplexityProps) => {
   const complexityData = data as ComplexityData;
+  const problemInfo = useRecoilValue(problemInfoState);
 
   return (
     <div
@@ -28,7 +31,10 @@ export const Complexity = ({ isModalOpen, data, title }: ComplexityProps) => {
       }
     >
       <div className={style.info_box}>
-        <div style={{ width: "30%", maxWidth: "120px", textAlign: "center" }}>
+        <div
+          className={style.percentage}
+          style={{ width: "30%", maxWidth: "120px", textAlign: "center" }}
+        >
           <CircularProgressbar
             value={complexityData?.score || 0}
             text={`${complexityData?.score || 0}%`}
@@ -47,9 +53,29 @@ export const Complexity = ({ isModalOpen, data, title }: ComplexityProps) => {
           <h2>{title}</h2>
         </div>
         <div className={style.right_box}>
-          <h3>{title} :</h3>
-          <h3>{complexityData.complexity}</h3>
-          <div style={{ marginTop: "40px" }}>
+          {/* <h3>시간제한 :{problemInfo.problemTimeLimit}</h3> */}
+          <div className={style.comlexity}>
+            <p>{title} </p>
+            <p
+              style={{
+                marginTop: "5px",
+                fontSize: "1.4rem",
+                fontWeight: "700",
+              }}
+            >
+              {complexityData.complexity}
+            </p>
+          </div>
+
+          <span className={style.limit}>
+            <p>{complexityData.solutionMemory ? "메모리 제한" : "시간 제한"}</p>
+            <p>
+              {complexityData.solutionMemory
+                ? problemInfo.problemSpaceLimit
+                : problemInfo.problemTimeLimit}
+            </p>
+          </span>
+          <div className={style.complexity_result}>
             <div
               className={style.circle}
               style={{
@@ -62,12 +88,12 @@ export const Complexity = ({ isModalOpen, data, title }: ComplexityProps) => {
                 complexityData.solutionMemory ? "공간" : "시간"
               )}
             </span>
+            <h3 style={{ color: `${pathColor(complexityData?.score || 0)}` }}>
+              {complexityData.solutionMemory
+                ? addCommas(complexityData.solutionMemory) + " KB"
+                : addCommas(complexityData.solutionRuntime || 0) + " ms"}
+            </h3>
           </div>
-          <h3 style={{ color: `${pathColor(complexityData?.score || 0)}` }}>
-            {complexityData.solutionMemory
-              ? addCommas(complexityData.solutionMemory) + " KB"
-              : addCommas(complexityData.solutionRuntime || 0) + " ms"}
-          </h3>
         </div>
       </div>
       <div className={style.text_box}>
