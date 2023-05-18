@@ -73,11 +73,21 @@
   }
   .ranking_detail .header {
     font-size: 1rem;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 10px;
     position: relative;
+    display: grid;
+    justify-items: center;
+    grid-template-rows: repeat(2, 60px);
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-areas: "list . solve" "title title title";
+  }
+  .ranking_detail .header .title {
+    grid-area: title;
+  }
+  .ranking_detail .header #list {
+    grid-area: list;
+  }
+  .ranking_detail .header #solve {
+    grid-area: solve;
   }
   .ranking_detail .master_info {
     display: flex;
