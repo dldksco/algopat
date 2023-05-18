@@ -1,44 +1,42 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronUp } from "@fortawesome/free-solid-svg-icons";
 import { stringCutter } from "../../hooks/func";
-import { problemOpenState } from "@/atoms/code.atom";
-
-import style from "./Problem.module.css";
 import { ProblemDetail } from "./problemDetail/ProblemDetail";
-import { useRecoilState } from "recoil";
+import { ProblemInfo } from "../../hooks/query";
+import { useState } from "react";
+import { nowProblemSubmissionIdState } from "@/atoms/code.atom";
+import { useRecoilValue } from "recoil";
+import style from "./Problem.module.css";
 
 export interface ProblemProps {
-  detail: Problem;
-}
-
-export interface Problem {
-  problemLevel: number;
-  problemId: number;
-  problemTitle: string;
+  detail: ProblemInfo;
 }
 
 export const Problem = ({ detail }: ProblemProps) => {
-  const [isProblemOpen, setIsProblemOpen] = useRecoilState(problemOpenState);
-  // 이벤트는 코드 내에
+  const nowSubmission = useRecoilValue(nowProblemSubmissionIdState);
+  const [isProblemOpen, setIsProblemOpen] = useState(
+    detail.problemId === nowSubmission.problemId ? true : false
+  );
+
   const problemClick = () => {
     setIsProblemOpen((prev) => !prev);
   };
 
   return (
     <>
-      <hr />
       <div className={style.problem_list} onClick={problemClick}>
         <FontAwesomeIcon
           icon={faChevronUp}
-          className={isProblemOpen ? undefined : "fa-rotate-180"}
+          className={isProblemOpen ? undefined : style.rotate}
+          style={{ transition: "0.2s" }}
         />
         <img
           src={`https://static.solved.ac/tier_small/${detail.problemLevel}.svg`}
           alt={detail.problemTitle}
         />
-        {detail.problemId}. {stringCutter(detail.problemTitle, 8)}
+        {detail.problemId}. {stringCutter(detail.problemTitle, 10)}
       </div>
-      {isProblemOpen ? <ProblemDetail problemDetail={detail} /> : null}
+      <ProblemDetail problemDetail={detail} isProblemOpen={isProblemOpen} />
     </>
   );
 };

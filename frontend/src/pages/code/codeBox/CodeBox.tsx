@@ -21,9 +21,17 @@ const CodeBox = React.memo(({ type, data }: CodeBoxProps) => {
   return (
     <div className={style.info_box}>
       <div className={style.box_title}>
-        <hr />
-        <div style={{ display: "flex", justifyContent: "space-between" }}>
-          <span>{type}</span>
+        <hr color="gray" />
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            cursor: "pointer",
+            margin: "12px 0px",
+          }}
+          onClick={modalOpen}
+        >
+          <span className={style.sppan}>{type}</span>
           <FontAwesomeIcon
             icon={faChevronUp}
             className={
@@ -31,10 +39,9 @@ const CodeBox = React.memo(({ type, data }: CodeBoxProps) => {
                 ? style.code_arrow
                 : style.code_arrow + " " + style.code_spin
             }
-            onClick={modalOpen}
           />
         </div>
-        <hr />
+        <hr color="gray" />
       </div>
       {type === "REFACTORING" ? (
         <Refactoring isModalOpen={isModalOpen} data={data} />

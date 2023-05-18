@@ -1,7 +1,5 @@
 import { useNavigate } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
-import { useRecoilValue } from "recoil";
-import { centerIndexState } from "@/atoms/ranking.atom";
 import { isMobile } from "@/pages/main/hooks/func";
 
 import style from "./RankingBoard.module.css";
@@ -14,10 +12,11 @@ import { addCommas, stringCutter } from "@/pages/code/hooks/func";
  */
 
 interface RankingDatacolumn {
-  problemId: string;
+  problemId: number;
   problemTitle: string;
   problemSubmittedCount: string;
   userGithubId: string;
+  problemLevel: string;
   isSolved: boolean;
 }
 interface props {
@@ -25,11 +24,9 @@ interface props {
 }
 
 export const RankingBoard = ({ data }: props) => {
-  const headRow = ["#", "제목", "Master", "제출한 사람 수"];
+  const headRow = ["문제번호", "제목", "Master", "제출한 사람 수"];
   const grid = isMobile() ? "50% 50%" : "15% 50% 20% 15%";
-
   const navigate = useNavigate();
-  const rank = useRecoilValue(centerIndexState);
 
   return (
     <>
@@ -66,9 +63,7 @@ export const RankingBoard = ({ data }: props) => {
               style={{ color: content.isSolved ? "#309E61" : "" }}
             >
               <img
-                src={`https://static.solved.ac/tier_small/${
-                  content.isSolved ? rank + 1 : 0
-                }.svg`}
+                src={`https://static.solved.ac/tier_small/${content.problemLevel}.svg`}
                 style={{ width: "1rem", height: "auto", marginRight: "10px" }}
                 alt=""
               />

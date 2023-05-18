@@ -77,6 +77,22 @@ html {
 
 body {
   margin: 0;
+
+  ::-webkit-scrollbar {
+    width: 5px;
+    height: 7px;
+  }
+  ::-webkit-scrollbar-track {
+    background-color: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background-color: rgb(177, 177, 177);
+  }
+  ::-webkit-scrollbar-button {
+    width: 0;
+    height: 1.8%;
+  }
 }
 
 /**

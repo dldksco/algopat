@@ -1,67 +1,47 @@
-import { PagableResponse } from "@/types/type";
+import {
+  PagableResponse,
+  RankingDetailParam,
+  SolutionColumn,
+} from "@/types/type";
 import { useQuery } from "@tanstack/react-query";
 import { $ } from "@/connect/axios";
 
 interface RankingColumn {
-  problemId: string;
+  problemId: number;
   problemTitle: string;
   problemLevel: string;
   problemSubmittedCount: string;
   userGithubId: string;
 }
 
-interface ProblemInfo {
-  problemId: string;
-  problemTitle: string;
-  problemLevel: string;
-  problemDesc: string;
-  problemInput: string;
-  problemOutput: string;
-  problemTag: string[];
-  problemLimit: string;
-  problemTimeLimit: string;
-  problemSpaceLimit: string;
-}
-
 // 레벨별 문제 리스트 불러오는 쿼리
-export function getRankingList(level: number, pageNum: number) {
+export function getRankingList(
+  level: number,
+  pageNum: number,
+  usercheck: boolean
+) {
   const { data, isLoading, refetch } = useQuery(
-    ["getRankingList", level, pageNum],
+    ["getRankingList", level, pageNum, usercheck],
     async (): Promise<PagableResponse<RankingColumn>> => {
       const { data } = await $.get(
-        `/code/rank/${level}?pagenumber=${pageNum ? pageNum - 1 : ""}`
+        `/code/rank?level=${
+          level > 0 ? level : ""
+        }&usercheck=${usercheck}&pagenumber=${pageNum ? pageNum - 1 : ""}`
       );
       return data;
     },
     {
-      staleTime: 5 * 60 * 1000,
+      staleTime: 1 * 60 * 1000,
     }
   );
   return { data, isLoading, refetch };
 }
 
-// export function getProblemInfo(problemId: string) {
-//   const { data, isLoading, refetch } = useQuery(
-//     ["getProblemInfo", problemId],
-//     async (): Promise<PagableResponse<ProblemInfo>> => {
-//       const { data } = await $.get(`/code/problem?problemid=${problemId}`);
-//       return data;
-//     },
-//     {
-//       staleTime: 5 * 60 * 1000,
-//     }
-//   );
-//   return { data, isLoading, refetch };
-// }
-
-// 문제 번호로 랭킹 리스트 불러오는 쿼리
-export function getRankingDetail(
-  problemId: string,
-  pagenumber: string,
-  languagefilter?: string,
-  sortcriteria?: string,
-  defaultvalue?: string
-) {
+// 문제 번호로 사용자 풀이 조회 (검색, 필터링, 정렬 기능 지원)
+// searchText
+export function getRankingDetail(param: RankingDetailParam) {
+  const { problemId, pagenumber, languagefilter, sortcriteria, searchText } =
+    param;
   const { data, isLoading, refetch } = useQuery(
     [
       "getRankingDetail",
@@ -69,17 +49,90 @@ export function getRankingDetail(
       pagenumber,
       languagefilter,
       sortcriteria,
-      defaultvalue,
+      searchText,
     ],
-    async (): Promise<PagableResponse<ProblemInfo>> => {
-      const { data } = await $.get(
-        `/code/rank/solutions/${problemId}?pagenumber=${pagenumber}&languagefilter=${languagefilter}&sortcriteria=&${sortcriteria}defaultvalue=${defaultvalue}`
-      );
+    async (): Promise<PagableResponse<SolutionColumn>> => {
+      let url = `/code/rank/solutions/${problemId}?pagenumber=${
+        pagenumber - 1
+      }`;
+
+      if (languagefilter) {
+        url += `&languagefilter=${languagefilter}`;
+      }
+      if (sortcriteria) {
+        url += `&sortcriteria=${sortcriteria}`;
+      }
+      if (searchText) {
+        url += `&searchtext=${searchText}`;
+      }
+
+      const { data } = await $.get(url);
       return data;
     },
     {
-      staleTime: 5 * 60 * 1000,
+      staleTime: 1 * 60 * 1000,
     }
   );
   return { data, isLoading, refetch };
+}
+
+interface IMasterUserProblemRank {
+  gptSolutionSeq: number;
+  userGithubId: string;
+  userImageUrl: string;
+  userSubmitSolutionLanguage: string;
+  userSubmitSolutionRuntime: number;
+  userSubmitSolutionMemory: number;
+  userSubmitSolutionCodeLength: number;
+  gptTotalScore: number;
+  userSubmitSolutionTime: string;
+}
+
+interface IProblemSimpInfo {
+  problemLevel: number;
+  problemTitle: string;
+}
+
+interface IProblemSolution {
+  masterUserProblemRank: IMasterUserProblemRank;
+  problemSimpInfo: IProblemSimpInfo;
+  solutionCount: number;
+}
+
+// 문제 번호로 랭킹 페이지 정보 전체 조회
+export function getRankPageInfo(problemId: number) {
+  const { data, isLoading } = useQuery(
+    ["getRankPageInfo", problemId],
+    async (): Promise<IProblemSolution> => {
+      const { data } = await $.get(`/code/rank/pageinfo/${problemId}`);
+      return data;
+    },
+    {
+      staleTime: 1 * 60 * 1000,
+    }
+  );
+  return { data, isLoading };
+}
+
+// 사용자 Seq로 푼 문제 리스트 조회
+
+interface SolvedList {
+  problemIdList: number[];
+}
+export function getSolvedList() {
+  const { data, isLoading } = useQuery(
+    ["getSolvedList"],
+    async (): Promise<SolvedList> => {
+      if (localStorage.getItem("access-token")) {
+        const { data, status } = await $.get(`/code/problem/submission/list`);
+        return data;
+      } else {
+        return { problemIdList: [] };
+      }
+    },
+    {
+      staleTime: 1 * 60 * 1000,
+    }
+  );
+  return { data, isLoading };
 }

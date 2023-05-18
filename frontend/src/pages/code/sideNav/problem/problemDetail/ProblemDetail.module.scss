@@ -1,23 +1,22 @@
-.submission_list {
-  padding-left: 18%;
-  padding-right: 8%;
-  height: 2rem;
-  padding-top: 4%;
-  color: gray;
-  width: 100%;
-  border-top: 1px solid white;
-  cursor: pointer;
-  &:hover .trash_icon {
-    visibility: visible;
-  }
-
-  .trash_icon {
-    float: right;
-    visibility: hidden;
+.detail_list {
+  overflow: hidden;
+  transition: 0.2s;
+  // background-color: red;
+  // height: 100%;
+  height: auto;
+  .submission_list {
+    margin-left: 50px;
+    margin-bottom: 6px;
+    padding-left: 10px;
+    height: 1.8rem;
+    padding-top: 6px;
+    color: gray;
+    width: 100%;
+    transition: 0.2s;
     cursor: pointer;
 
     &:hover {
-      visibility: visible;
+      color: rgb(192, 192, 192);
     }
   }
 }

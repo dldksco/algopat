@@ -2,11 +2,27 @@
   background-color: #28292c;
   color: white;
   height: 100%;
+  position: fixed;
+  width: 300px;
+  padding-right: 5px;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-content: center;
 }
 .sideNav .x_button {
   display: none;
 }
 .sideNav .sort_button_group {
+  background-color: #2d3956;
+  height: 45px;
+  border-radius: 5px;
+  padding: 2px;
+  padding-top: 7px;
+  padding-bottom: 7px;
+  margin-right: 10px;
+  margin-left: 10px;
+  margin-bottom: 20px;
   display: flex;
   justify-content: space-around;
 }
@@ -16,9 +32,14 @@
   align-items: baseline;
   width: 60px;
   padding: 5px 10px;
-  border: 1px solid white;
-  border-radius: 10px;
+  transition: 0.1s;
   cursor: pointer;
+}
+.sideNav .sort_button_group .sort_button:hover {
+  color: gray !important;
+}
+.sideNav .sort_button_group .sort_button:hover img {
+  filter: brightness(40%);
 }
 .sideNav .sort_button_group .sort_button img {
   display: inline;
@@ -31,39 +52,50 @@
   display: inline-block;
 }
 .sideNav .problem_list {
-  height: 600px;
+  height: 397px;
   overflow-y: auto;
+}
+.sideNav .extra_length {
+  height: 449px;
 }
 .sideNav .nav_header {
   text-align: left;
-  padding-top: 5%;
-  padding-left: 10%;
+  padding-top: 1%;
+  padding-left: 8%;
   font-size: 1.2rem;
+}
+.sideNav .nav_header .header_title {
+  font-weight: 600;
+  margin-bottom: 30px;
+  margin-top: 20px;
 }
 .sideNav .nav_header .nav_header_tag {
   position: relative;
   font-size: 1.2rem;
-  margin-left: 3%;
-  margin-top: 10px;
-  transition: 0.25s;
+  margin-top: 15px;
+  display: flex;
 }
 .sideNav .nav_header .nav_header_tag:hover :nth-child(n) {
-  color: gray;
+  color: skyblue;
 }
 .sideNav .nav_header .nav_header_tag :nth-child(n) {
   cursor: pointer;
+  transition: 0.2s;
 }
 .sideNav .nav_header .nav_header_tag :nth-child(1) {
-  position: absolute;
-  left: -10%;
+  width: 20px;
+  margin-right: 10px;
 }
 
 @media screen and (max-width: 768px) {
   .sideNav {
-    height: 100%;
+    height: auto;
     border: 1px solid white;
   }
   .sideNav .x_button {
+    position: absolute;
+    right: 20px;
+    top: 20px;
     display: inline-block;
     font-size: 1.2rem;
     margin-left: 140px;
@@ -74,6 +106,13 @@
     color: gray;
   }
   .sideNav .nav_header {
-    padding-bottom: calc(5% + 25px);
+    padding-bottom: calc(5% + 10px);
+  }
+  .sideNav .problem_list {
+    height: 340px;
+    overflow-y: auto;
+  }
+  .sideNav .extra_length {
+    height: 275px;
   }
 }/*# sourceMappingURL=SideNav.module.css.map */

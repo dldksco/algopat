@@ -70,19 +70,33 @@ export const Complexity = ({ isModalOpen, data, title }: ComplexityProps) => {
           </h3>
         </div>
       </div>
-      <p>{complexityData.complexityReason}</p>
-      <h3 style={{ marginTop: "50px", color: "rgba(0, 255, 0, 0.8)" }}>
-        좋은 점
-      </h3>
-      <p>{complexityData.complexityGoodPoint}</p>
-      <h3 style={{ marginTop: "30px", color: "rgba(255, 0, 0, 0.8)" }}>
-        나쁜 점
-      </h3>
-      <p>{complexityData.complexityBadPoint}</p>
-      <h3 style={{ marginTop: "30px", color: "rgba(130, 180, 180, 0.8)" }}>
-        개선 의견
-      </h3>
-      {filteredNewLine(complexityData.complexitySuggestion)}
+      <div className={style.text_box}>
+        <p>{complexityData.complexityReason}</p>
+      </div>
+      <div
+        className={style.text_box}
+        style={{ backgroundColor: "HSLA(120, 100%, 50%, 0.15)" }}
+      >
+        <h3 style={{ marginTop: "20px", color: "rgba(0, 255, 0, 0.8)" }}>
+          좋은 점
+        </h3>
+        <p>{complexityData.complexityGoodPoint}</p>
+      </div>
+
+      <div
+        className={style.text_box}
+        style={{ backgroundColor: "hsla(0, 100%, 50%, 0.15)" }}
+      >
+        <h3 style={{ marginTop: "20px", color: "red" }}>나쁜 점</h3>
+        <p>{complexityData.complexityBadPoint}</p>
+      </div>
+
+      <div className={style.text_box}>
+        <h3 style={{ marginTop: "20px", color: "rgba(130, 180, 180, 0.8)" }}>
+          개선 의견
+        </h3>
+        {filteredNewLine(complexityData.complexitySuggestion)}
+      </div>
     </div>
   );
 };

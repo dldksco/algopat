@@ -1,21 +1,19 @@
-.submission_list {
-  padding-left: 18%;
-  padding-right: 8%;
-  height: 2rem;
-  padding-top: 4%;
+.detail_list {
+  overflow: hidden;
+  transition: 0.2s;
+  height: auto;
+}
+.detail_list .submission_list {
+  margin-left: 50px;
+  margin-bottom: 6px;
+  padding-left: 10px;
+  height: 1.8rem;
+  padding-top: 6px;
   color: gray;
   width: 100%;
-  border-top: 1px solid white;
+  transition: 0.2s;
   cursor: pointer;
 }
-.submission_list:hover .trash_icon {
-  visibility: visible;
-}
-.submission_list .trash_icon {
-  float: right;
-  visibility: hidden;
-  cursor: pointer;
-}
-.submission_list .trash_icon:hover {
-  visibility: visible;
+.detail_list .submission_list:hover {
+  color: rgb(192, 192, 192);
 }/*# sourceMappingURL=ProblemDetail.module.css.map */

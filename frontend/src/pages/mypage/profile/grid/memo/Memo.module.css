@@ -1,0 +1,11 @@
+.memo_container {
+  width: 100%;
+  border: 1px solid #ececec;
+  padding-top: 10px;
+  padding-left: 20px;
+  padding-bottom: 30px;
+}
+.memo_container .problem_item {
+  margin-top: 20px;
+  margin-left: 20px;
+}/*# sourceMappingURL=Memo.module.css.map */

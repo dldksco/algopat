@@ -1,9 +1,15 @@
 .ranking_detail {
   margin-top: 10%;
+  margin-bottom: 5%;
   .box {
     border: 1px solid var(--font-color);
-    padding: 20px;
+    padding: 15px 18px;
     cursor: pointer;
+    transition: 0.3s;
+    &:hover {
+      color: gray;
+      border: 1px solid gray;
+    }
   }
   .header {
     font-size: 1.5rem;
@@ -31,14 +37,18 @@
     display: flex;
     justify-content: space-between;
     cursor: default;
-
+    .box {
+      border: 1px solid white;
+      animation: top_down_effect 0.5s;
+    }
     .info_list {
+      margin-left: auto;
+      margin-right: auto;
       display: flex;
       gap: 40px;
       align-items: center;
       text-align: center;
       padding-right: 30px;
-
       .box {
         padding: 20px;
       }
@@ -52,51 +62,66 @@
       padding: 11px;
     }
   }
+  .search_container {
+    display: none;
+  }
 }
 
 @media screen and (max-width: 768px) {
   .ranking_detail {
-    margin-top: 10%;
+    margin-top: 3%;
     .box {
-      border: 1px solid var(--font-color);
-      padding: 20px;
       cursor: pointer;
     }
     .header {
-      font-size: 1.2rem;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      // flex-direction: column;
-      gap: 20px;
+      font-size: 1rem;
       position: relative;
+      display: grid;
+      justify-items: center;
+      grid-template-rows: repeat(2, 60px);
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-areas:
+        "list . solve"
+        "title title title";
 
       .title {
-        position: absolute;
-        top: 90px;
-        display: flex;
+        grid-area: title;
+      }
+
+      #list {
+        grid-area: list;
+      }
+
+      #solve {
+        grid-area: solve;
+      }
+    }
+    .master_info {
+      display: flex;
+      gap: 15px;
+      margin-bottom: 10px;
+      .box {
+        margin-top: 10px;
+      }
+      .user_info {
+        gap: 15px;
+        padding: 5px;
         align-items: center;
       }
     }
 
-    .user_info {
-      display: flex;
-      gap: 15px;
-      padding: 5px;
-      align-items: center;
-    }
-
     .info {
-      margin-top: 70px;
-      font-size: 0.8rem;
-      flex-wrap: wrap;
+      .box {
+      }
+      margin-top: 10px;
+      font-size: 1rem;
       display: flex;
       justify-content: space-between;
       cursor: default;
 
-      overflow-x: scroll;
-
       .info_list {
+        overflow-x: scroll;
+
         display: flex;
         gap: 40px;
         align-items: center;
@@ -117,6 +142,21 @@
       }
       .box {
         padding: 11px;
+      }
+    }
+    .search_container {
+      display: block;
+      .search {
+        display: flex;
+        justify-content: center;
+        .search_button {
+          margin-left: 2px;
+          padding: 10px;
+          display: flex;
+          align-items: center;
+          border: 1px solid var(--font-color);
+          cursor: pointer;
+        }
       }
     }
   }
