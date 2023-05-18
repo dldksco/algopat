@@ -102,11 +102,9 @@
 | 공통     | 형상관리        | Gitlab              | \-        |
 |          | 이슈관리        | Jira                | \-        |
 |          | 커뮤니케이션    | Mattermost, Notion | \-        |
-| BackEnd  | DB              | MariaDB            |     |
-|          |                 | JPA                |      |
+| BackEnd  |                 | JPA                |      |
 |          | Java            | Zulu               |  |
-|          | Spring          | Spring             |     |
-|          |                 | Spring Boot        |      |
+|          |                 | Spring Boot        | 2.7.11     |
 |          | IDE             | IntelliJ           | 2022.3.1  |
 |          | Build           | Gradle             |        |
 |          | API Docs        | Postman            |           |
@@ -119,8 +117,14 @@
 | Server   | 서버            | AWS EC2            | \-        |
 |          | 플랫폼          | Ubuntu\AWS Liunx   | 20.04 , AWS Linux2|
 |          | CI/CD           | Docker             | 20.10.17  |
-|          |                 | Jenkins            | jenkins/jenkins:lts|  
-
+|          |                 | Jenkins            | jenkins/jenkins:lts|
+|DATA      | DB              | MariaDB            | 10    |  
+|          |                 |Elasticsearch       |7.17.9|
+|          |                 |Kibana       |7.17.9|
+|          |                 |Logstash       |7.17.9|
+|          |                 |Filebeat       |7.17.9|
+|          |                 |Kafka         |3.4|
+|          |                 |Redis|7.0.7|
 </details>
 </div>
 
