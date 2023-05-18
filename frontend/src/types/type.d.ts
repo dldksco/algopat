@@ -48,3 +48,16 @@ export interface RankingDetailParam {
   sortcriteria: string;
   searchText: string;
 }
+
+export interface Problem {
+  problemId: string;
+  problemTitle: string;
+  problemLevel: string;
+  problemDesc: string;
+  problemInput: string;
+  problemOutput: string;
+  problemTagList: string[];
+  problemLimit: string;
+  problemTimeLimit: string;
+  problemSpaceLimit: string;
+}

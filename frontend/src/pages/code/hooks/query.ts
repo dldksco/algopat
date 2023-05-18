@@ -1,6 +1,6 @@
 import axios from "axios";
 import { $ } from "@/connect/axios";
-import { PagableResponse } from "@/types/type";
+import { PagableResponse, Problem } from "@/types/type";
 import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 
 interface Solution {
@@ -198,19 +198,6 @@ export const getSubmissionList = (
 /**
  * 문제 정보 조회
  */
-
-interface Problem {
-  problemId: string;
-  problemTitle: string;
-  problemLevel: string;
-  problemDesc: string;
-  problemInput: string;
-  problemOutput: string;
-  problemTagList: string[];
-  problemLimit: number;
-  problemTimeLimit: number;
-  problemSpaceLimit: number;
-}
 
 export const getProblemInfo = (problemId: number) => {
   const fetchSubmission = async (): Promise<Problem> => {

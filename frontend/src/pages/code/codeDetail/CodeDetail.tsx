@@ -1,12 +1,13 @@
-import { useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import {
   nowProblemSubmissionIdState,
+  problemInfoState,
   toekenForDetailState,
 } from "@/atoms/code.atom";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import { v4 as uuidv4 } from "uuid";
 import { LoadingSpinner } from "@/components/loadingspinner/LoadingSpinner";
-import { CSSProperties } from "react";
+import { CSSProperties, useEffect } from "react";
 import { isMobile } from "@/pages/main/hooks/func";
 
 import CodeBox from "../codeBox/CodeBox";
@@ -25,7 +26,14 @@ export const CodeDetail = () => {
   const token = useRecoilValue(toekenForDetailState);
   const problem = useRecoilValue(nowProblemSubmissionIdState);
 
-  const { data: problemInfo } = getProblemInfo(problem.problemId);
+  const { data: problemInfodata } = getProblemInfo(problem.problemId);
+  const [problemInfo, setProblemInfo] = useRecoilState(problemInfoState);
+
+  useEffect(() => {
+    if (typeof problemInfodata !== "undefined") {
+      setProblemInfo(problemInfodata);
+    }
+  }, [problemInfodata]);
 
   const {
     refactoringData,
