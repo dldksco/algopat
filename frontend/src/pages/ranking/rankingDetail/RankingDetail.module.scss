@@ -75,12 +75,26 @@
     }
     .header {
       font-size: 1rem;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      // flex-direction: column;
-      gap: 10px;
       position: relative;
+      display: grid;
+      justify-items: center;
+      grid-template-rows: repeat(2, 60px);
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-areas:
+        "list . solve"
+        "title title title";
+
+      .title {
+        grid-area: title;
+      }
+
+      #list {
+        grid-area: list;
+      }
+
+      #solve {
+        grid-area: solve;
+      }
     }
     .master_info {
       display: flex;

@@ -1,4 +1,4 @@
-import { addCommas, pathColor } from "@/pages/code/hooks/func";
+import { addCommas, pathColor, stringCutter } from "@/pages/code/hooks/func";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState } from "react";
 import { faAngleLeft, faSearch } from "@fortawesome/free-solid-svg-icons";
@@ -12,6 +12,7 @@ import { rankingDetailState } from "@/atoms/ranking.atom";
 import { codeLanguage } from "@/variable/variable";
 import style from "./RankingDetail.module.css";
 import { Input } from "@/components/input/Input";
+import { isMobile } from "@/pages/main/hooks/func";
 
 export const RankingDetail = () => {
   const navigate = useNavigate();
@@ -66,7 +67,7 @@ export const RankingDetail = () => {
         className={style.header}
         style={{ animation: "top_down_effect 0.5s" }}
       >
-        <div className={style.box} onClick={listClickCallback}>
+        <div id={style.list} className={style.box} onClick={listClickCallback}>
           <FontAwesomeIcon icon={faAngleLeft} style={{ marginRight: "5px" }} />
           목록
         </div>
@@ -79,6 +80,7 @@ export const RankingDetail = () => {
           <span>{`${problemId}. ${pageInfoData?.problemSimpInfo.problemTitle}`}</span>
         </div>
         <div
+          id={style.solve}
           className={style.box}
           onClick={() => problemSolveClickCallback(problemId ? problemId : "0")}
         >
