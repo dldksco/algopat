@@ -1,5 +1,4 @@
 .box_content {
-  background-color: #2d3956;
   margin: 20px 0 40px;
   padding: 2% 2%;
   transition: 0.25s;
@@ -11,12 +10,28 @@
   overflow: hidden;
   box-shadow: 0 4px 6px 0 hsla(0, 0%, 0%, 0.2);
 }
+.box_content .text_box {
+  padding-left: 40px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  margin-bottom: 30px;
+  border-left: 6px solid gray;
+  background-color: hsla(0, 0%, 0%, 0.2);
+}
+.box_content .text_box p {
+  color: hsl(0, 0%, 90%);
+}
 .box_content .info_box {
   width: 100%;
   display: flex;
   justify-content: space-evenly;
   margin-bottom: 20px;
   margin-top: 15px;
+}
+.box_content .info_box .info {
+  display: flex;
+  gap: 5px;
+  flex-direction: column;
 }
 .box_content .info_box hr {
   margin: 10px 0px;

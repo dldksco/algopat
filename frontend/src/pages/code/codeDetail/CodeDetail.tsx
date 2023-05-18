@@ -43,6 +43,10 @@ export const CodeDetail = () => {
   } = getSolution(nowProblem.submissionId, token);
   const circleStyle: CSSProperties = { width: "9%", textAlign: "center" };
 
+  const beakjunLinckClick = () => {
+    window.location.href = `https://www.acmicpc.net/problem/${problem.problemId}`;
+  };
+
   return (
     <div className={style.code_detail}>
       {!nowProblem.submissionId ? (
@@ -220,7 +224,7 @@ export const CodeDetail = () => {
             <div className={style.right_box}>
               <span>Problem</span>
               <div className={style.problem_box}>
-                <div className={style.problem_list}>
+                <div className={style.problem_list} onClick={beakjunLinckClick}>
                   <img
                     src={`https://static.solved.ac/tier_small/${problem.problemLevel}.svg`}
                     alt={problem.problemTitle}

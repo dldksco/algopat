@@ -7,6 +7,7 @@ import { nowProblemSubmissionIdState } from "@/atoms/code.atom";
 import { useRecoilValue } from "recoil";
 import { isMobile } from "@/pages/main/hooks/func";
 import style from "./Refactoring.module.css";
+import { codeLanguage } from "@/variable/variable";
 
 interface RefactoringProps {
   isModalOpen: boolean;
@@ -57,9 +58,9 @@ export const Refactoring = ({ isModalOpen, data }: RefactoringProps) => {
           />
           <h2>클린 코드</h2>
         </div>
-        <div style={{ width: "40%" }}>
+        <div className={style.info} style={{ width: "40%" }}>
           INFO
-          <hr style={{ marginTop: "5px" }} />
+          <hr />
           <div className={style.problem_list}>
             <img
               src={`https://static.solved.ac/tier_small/${problem.problemLevel}.svg`}
@@ -72,7 +73,7 @@ export const Refactoring = ({ isModalOpen, data }: RefactoringProps) => {
           </div>
           <hr />
           <div className={style.problem_list}>
-            {refactorData?.language} /{" "}
+            {codeLanguage(refactorData?.language)} /
             <span className={style.clicklink} onClick={beakjun}>
               코드 링크
             </span>
@@ -80,10 +81,10 @@ export const Refactoring = ({ isModalOpen, data }: RefactoringProps) => {
           <hr />
         </div>
       </div>
-      <div style={{ marginLeft: "2%" }}>
+      <div style={{ marginBottom: "3%" }}>
         <Editor
           width="98%"
-          height="300px"
+          height="370px"
           language={refactorData?.language}
           value={refactorData?.submitCode}
           theme="vs-dark"
@@ -96,7 +97,9 @@ export const Refactoring = ({ isModalOpen, data }: RefactoringProps) => {
         />
       </div>
       <br />
-      {filteredNewLine(refactorData?.refactoringSuggestion)}
+      <div className={style.text_box}>
+        <p>{filteredNewLine(refactorData?.refactoringSuggestion)}</p>
+      </div>
     </div>
   );
 };
