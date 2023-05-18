@@ -41,35 +41,31 @@ export const RankingDetailBoard = ({ data }: props) => {
                 </div>
               </div>
               <div className={style.info_list}>
-                <div>
-                  <p>{codeLanguage(v.userSubmitSolutionLanguage)}</p>
-                  <p>언어</p>
+                <div className={style.vertical_line}>
+                  <div>{codeLanguage(v.userSubmitSolutionLanguage)}</div>
+                  <div>언어</div>
                 </div>
-                <div className={style.vertical_line} />
-                <div>
-                  <p>{addCommas(v.userSubmitSolutionRuntime)}ms</p>
-                  <p>실행시간</p>
+                <div className={style.vertical_line}>
+                  <div>{addCommas(v.userSubmitSolutionRuntime)}ms</div>
+                  <div>실행시간</div>
                 </div>
-                <div className={style.vertical_line} />
-                <div>
-                  <p>{addCommas(v.userSubmitSolutionMemory)}KB</p>
-                  <p>메모리</p>
+                <div className={style.vertical_line}>
+                  <div>{addCommas(v.userSubmitSolutionMemory)}KB</div>
+                  <div>메모리</div>
                 </div>
-                <div className={style.vertical_line} />
-                <div>
-                  <p>{addCommas(v.userSubmitSolutionCodeLength)}</p>
-                  <p>코드길이</p>
+                <div className={style.vertical_line}>
+                  <div>{addCommas(v.userSubmitSolutionCodeLength)}</div>
+                  <div>코드길이</div>
                 </div>
-                <div className={style.vertical_line} />
-                <div>
-                  <p
+                <div className={style.vertical_line_right}>
+                  <div
                     style={{
                       color: pathColor(v.gptTotalScore || 0),
                     }}
                   >
                     {v.gptTotalScore}점
-                  </p>
-                  <p>종합점수</p>
+                  </div>
+                  <div>종합점수</div>
                 </div>
               </div>
             </div>

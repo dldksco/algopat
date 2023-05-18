@@ -35,18 +35,28 @@
 }
 .content_container .info .info_list {
   display: flex;
-  gap: 40px;
   align-items: center;
   text-align: center;
-  margin-left: auto;
-  margin-right: auto;
+  margin-top: 16px;
 }
-.content_container .info .info_list .box {
-  padding: 20px;
-}
-.content_container .info .vertical_line {
-  border-left: 1px solid var(--font-color);
+.content_container .info .info_list .vertical_line {
+  border-right: 1px solid var(--font-color);
   height: 80px; /* 선의 길이를 조정할 수 있습니다. */
+  width: 130px;
+}
+.content_container .info .info_list .vertical_line div {
+  width: 100%;
+  margin-top: 15px;
+  border: 0px;
+}
+.content_container .info .info_list .vertical_line_right {
+  height: 80px; /* 선의 길이를 조정할 수 있습니다. */
+  width: 130px;
+}
+.content_container .info .info_list .vertical_line_right div {
+  width: 100%;
+  margin-top: 15px;
+  border: 0px;
 }
 
 @media screen and (max-width: 1050px) {
@@ -87,21 +97,14 @@
     gap: 10px;
   }
   .content_container .info .info_list {
-    display: flex;
-    gap: 40px;
-    align-items: center;
-    text-align: center;
-    overflow-x: scroll;
+    margin-left: auto;
+    margin-right: auto;
   }
-  .content_container .info .info_list p {
-    width: 70px;
+  .content_container .info .info_list .vertical_line {
+    width: 170px;
   }
-  .content_container .info .info_list .box {
-    padding: 20px;
-  }
-  .content_container .info .vertical_line {
-    border-left: 1px solid var(--font-color);
-    height: 80px; /* 선의 길이를 조정할 수 있습니다. */
+  .content_container .info .info_list .vertical_line_right {
+    width: 170px;
   }
 }
 @media screen and (max-width: 768px) {
@@ -121,13 +124,8 @@
   }
   .content_container .info {
     margin-top: 10px;
-    flex-wrap: wrap;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
     padding: 15px;
     border-bottom: 1px solid var(--font-color);
-    gap: 20px;
     overflow-x: scroll;
   }
   .content_container .info .user_info {
@@ -142,20 +140,13 @@
     gap: 10px;
   }
   .content_container .info .info_list {
-    display: flex;
-    gap: 40px;
-    align-items: center;
-    text-align: center;
-    overflow-x: scroll;
+    margin-left: auto;
+    margin-right: auto;
   }
-  .content_container .info .info_list p {
-    width: 100px;
+  .content_container .info .info_list .vertical_line {
+    width: 130px;
   }
-  .content_container .info .info_list .box {
-    padding: 20px;
-  }
-  .content_container .info .vertical_line {
-    border-left: 1px solid var(--font-color);
-    height: 80px; /* 선의 길이를 조정할 수 있습니다. */
+  .content_container .info .info_list .vertical_line_right {
+    width: 130px;
   }
 }/*# sourceMappingURL=RankingDetailBoard.module.css.map */
