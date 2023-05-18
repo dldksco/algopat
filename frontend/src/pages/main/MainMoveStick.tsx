@@ -21,29 +21,6 @@ export const MainMoveStick = () => {
 
   return (
     <div className={style.block}>
-      <div className={style.row} style={move_style_right}>
-        <div className={style.white + " " + style.col + " " + style._3} />
-        <div className={style.black + " " + style.col + " " + style._3} />
-        <div className={style.white + " " + style.col + " " + style._1} />
-        <div className={style.black + " " + style.col + " " + style._3} />
-      </div>
-      {/* <div className={style.row} style={move_style_left}>
-        <div className={style.green + " " + style.col + " " + style._3} />
-        <div className={style.black + " " + style.col + " " + style._3} />
-        <div className={style.green + " " + style.col + " " + style._3} />
-        <div className={style.black + " " + style.col + " " + style._3} />
-        <div className={style.white + " " + style.col + " " + style._2} />
-        <div className={style.black + " " + style.col + " " + style._1} />
-        <div className={style.green + " " + style.col + " " + style._1} />
-      </div> */}
-      {/* <div className={style.row}>
-        <div className={style.moving_block} style={move_style_right}>
-          <div className={style.black + " " + style.col + " " + style._2} />
-          <div className={style.white + " " + style.col + " " + style._1} />
-          <div className={style.black + " " + style.col + " " + style._1} />
-          <div className={style.white + " " + style.col + " " + style._1} />
-        </div>
-      </div>
       <div className={style.row}>
         <div
           style={{
