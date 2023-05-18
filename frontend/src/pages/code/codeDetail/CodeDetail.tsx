@@ -20,6 +20,7 @@ import {
 } from "../hooks/func";
 
 import style from "./CodeDetail.module.css";
+import { algo_tag } from "@/variable/variable";
 
 export const CodeDetail = () => {
   const nowProblem = useRecoilValue(nowProblemSubmissionIdState);
@@ -42,6 +43,15 @@ export const CodeDetail = () => {
     totalInfo,
   } = getSolution(nowProblem.submissionId, token);
   const circleStyle: CSSProperties = { width: "9%", textAlign: "center" };
+
+  const beakjunLinckClick = () => {
+    window.location.href = `https://www.acmicpc.net/problem/${problem.problemId}`;
+  };
+
+  const tagClick = (num: any) => {
+    if (Number(num))
+      window.open(`https://www.acmicpc.net/problem/tag/${num}`, "_blank");
+  };
 
   return (
     <div className={style.code_detail}>
@@ -220,7 +230,7 @@ export const CodeDetail = () => {
             <div className={style.right_box}>
               <span>Problem</span>
               <div className={style.problem_box}>
-                <div className={style.problem_list}>
+                <div className={style.problem_list} onClick={beakjunLinckClick}>
                   <img
                     src={`https://static.solved.ac/tier_small/${problem.problemLevel}.svg`}
                     alt={problem.problemTitle}
@@ -233,7 +243,13 @@ export const CodeDetail = () => {
 
                 <div className={style.problem_tag}>
                   {problemInfo?.problemTagList.map((v) => (
-                    <span className={style.item} key={uuidv4()}>
+                    <span
+                      className={style.item}
+                      key={uuidv4()}
+                      onClick={() => {
+                        tagClick(algo_tag[v]);
+                      }}
+                    >
                       #{v}
                     </span>
                   ))}
