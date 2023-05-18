@@ -10,6 +10,10 @@
   overflow: hidden;
   box-shadow: 0 4px 6px 0 hsla(0, 0%, 0%, 0.2);
 }
+.box_content p,
+.box_content span {
+  color: hsla(0, 0%, 100%, 0.8);
+}
 .box_content .text_box {
   padding-left: 30px;
   padding-top: 5px;
@@ -26,11 +30,33 @@
   margin-top: 15px;
   min-height: 180px;
 }
+.box_content .info_box .percentage {
+  width: 30%;
+  max-width: 120px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
 .box_content .info_box .right_box {
   width: 60%;
   background-color: #28292c;
   border-radius: 10px;
-  padding: 0px 10px;
+  padding: 23px;
+  display: grid;
+  grid-template-rows: repeat(2, 90px);
+  grid-template-columns: repeat(2, 1fr);
+  align-items: center;
+  grid-template-areas: "comlexity limit" "complexity_result .";
+}
+.box_content .info_box .right_box .comlexity {
+  grid-area: comlexity;
+}
+.box_content .info_box .right_box .complexity_result {
+  grid-area: complexity_result;
+}
+.box_content .info_box .right_box .limit {
+  grid-area: limit;
 }
 .box_content .info_box .right_box .circle {
   position: relative;
@@ -40,9 +66,6 @@
   display: inline-block;
   border-radius: 100%;
   margin-right: 5px;
-}
-.box_content .info_box .right_box h3 {
-  margin: 10px 2px;
 }
 
 .not_open {
