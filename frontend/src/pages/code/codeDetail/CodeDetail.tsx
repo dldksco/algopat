@@ -20,6 +20,7 @@ import {
 } from "../hooks/func";
 
 import style from "./CodeDetail.module.css";
+import { algo_tag } from "@/variable/variable";
 
 export const CodeDetail = () => {
   const nowProblem = useRecoilValue(nowProblemSubmissionIdState);
@@ -45,6 +46,11 @@ export const CodeDetail = () => {
 
   const beakjunLinckClick = () => {
     window.location.href = `https://www.acmicpc.net/problem/${problem.problemId}`;
+  };
+
+  const tagClick = (num: any) => {
+    if (Number(num))
+      window.open(`https://www.acmicpc.net/problem/tag/${num}`, "_blank");
   };
 
   return (
@@ -237,7 +243,13 @@ export const CodeDetail = () => {
 
                 <div className={style.problem_tag}>
                   {problemInfo?.problemTagList.map((v) => (
-                    <span className={style.item} key={uuidv4()}>
+                    <span
+                      className={style.item}
+                      key={uuidv4()}
+                      onClick={() => {
+                        tagClick(algo_tag[v]);
+                      }}
+                    >
                       #{v}
                     </span>
                   ))}

@@ -98,7 +98,7 @@ export const Refactoring = ({ isModalOpen, data }: RefactoringProps) => {
       </div>
       <br />
       <div className={style.text_box}>
-        <p>{filteredNewLine(refactorData?.refactoringSuggestion)}</p>
+        {filteredNewLine(refactorData?.refactoringSuggestion)}
       </div>
     </div>
   );
