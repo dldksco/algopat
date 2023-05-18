@@ -63,7 +63,6 @@ async def processing(data : ProblemData, send_callback):
         if await filtering_input_data(data, user_seq, send_callback):
             return
         
-        
             
         data.language = await parse_lang_type(data.language)
         local_chat_llm_0 = ChatOpenAI(temperature=0, openai_api_key=local_open_ai_api_key, request_timeout=120)
@@ -85,7 +84,7 @@ async def processing(data : ProblemData, send_callback):
                 lock = redis_lock.Lock(redis_conn, lock_name, expire=LOCK_TIMEOUT, auto_renewal=True)
                 if lock.acquire(blocking=False):
                     logger.info("분산락 시작")
-                    await summary_problem(problem_id, user_seq, data, local_chat_llm_0, json_chain)
+                    await summary_problem(problem_id, data, local_chat_llm_0, json_chain)
                     lock.release()
                     break
                 else:
@@ -115,11 +114,12 @@ async def processing(data : ProblemData, send_callback):
 
         summary_code_refactor_coroutine = summary_code_refactor(chat_llm_0, data, gpt_problem_summary)
 
+
+        summary_code_complexity_result, summary_code_refactor_result = await gather(summary_code_complexity_coroutine, summary_code_refactor_coroutine)
+
         ### SSE 3
         message_dto = MessageDTO(progress_info="코드 요약중", percentage=60, state="ok", user_seq=user_seq)
         await send_callback("alert", message_dto)
-
-        summary_code_complexity_result, summary_code_refactor_result = await gather(summary_code_complexity_coroutine, summary_code_refactor_coroutine)
 
         logger.info("코드 요약 완료")
         
@@ -201,7 +201,7 @@ async def main_transaction(problem_id : int, user_seq : int, data : ProblemData,
 
 
 # 문제 정보 요약 함수 
-async def summary_problem(problem_id : int, user_seq : int, data : ProblemData, chat_llm, json_chain):
+async def summary_problem(problem_id : int, data : ProblemData, chat_llm, json_chain):
     is_gpt_problem_summary_exist = await check_gpt_problem_summary_is_exist(problem_id)
     if not is_gpt_problem_summary_exist:
         ### 문제 DB에 문제 저장 ### 

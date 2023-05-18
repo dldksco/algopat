@@ -6,6 +6,7 @@ from myclass.problem import UserSubmitProblem, UserSubmitSolution
 from datetime import datetime
 from logging import getLogger
 from utils.utils import parse_date_format
+import re
 
 # logger 설정 
 logger = getLogger()
@@ -35,7 +36,8 @@ async def insert_problem(data : ProblemData, session):
         problem_id = data.problemId,
         problem_title = data.title,
         problem_level = data.level,
-        problem_desc = data.problem_description,
+        # problem_desc = data.problem_description,
+        problem_desc = re.sub('<img[^>]*>', '', data.problem_description),
         problem_input = data.problem_input,
         problem_output = data.problem_output,
         problem_tag = json.dumps(data.problem_tags, ensure_ascii = False),
