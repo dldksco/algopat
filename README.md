@@ -138,15 +138,15 @@
 ### 크롬 익스텐션
 <img src="./image/detail_extension1.png" height="400px" width="400px" /> <img src="./image/detail_extension2.png" height="400px" width="400px" /> <br>
 ### 메인 페이지  
-![detail1](./image/detail1.png)  
+![detail1](./image/detail1.gif)  
 ### 코드 분석 결과 페이지  
-![detail2](./image/detail2.png)  
+![detail2](./image/detail2.gif)  
 ### 랭킹 페이지  
-![detail3](./image/detail3.png)  
+![detail3](./image/detail3.gif)  
 ### 랭킹 상세 페이지  
 ![detail4](./image/detail4.png)  
 ### 마이페이지  
-![detail5](./image/detail5.png)  
+![detail5](./image/detail5.gif)  
 
 
 
