@@ -1,0 +1,21 @@
+filebeat.inputs:
+- type: container
+  enabled: true
+  include_lines: ['^[0-9]{4}-[0-9]{2}-[0-9]{2}']
+  paths:
+    - '/var/lib/docker/containers/*/*.log'
+  processors:
+    - add_docker_metadata: ~
+  json.keys_under_root: true
+  json.message_key: log
+  json.ignore_decoding_error: true
+  close_eof: false
+setup.kibana:
+  host: "<your-kibana-host>:<your-kibana-port>"
+  protocol: "http"
+  username: "<your-elasticsearch-id>"
+  password: "<your-elasticsearch-pwd>"
+setup.dashboards.enabled: true
+
+output.logstash:
+  hosts: ["<your-logstash-host>:<your-logstash-port>"]

@@ -1,0 +1,8 @@
+http.host: "0.0.0.0"
+path.config: /usr/share/logstash/pipeline/logstash.conf
+xpack.monitoring.enabled: true
+xpack.monitoring.elasticsearch.hosts: ["http://algopat-elasticsearch:9200"]
+xpack.monitoring.elasticsearch.username: "<your-elasticsearch-id>"
+xpack.monitoring.elasticsearch.password: "<your-elasticsearch-pwd>"
+pipeline.ecs_compatibility: disabled
+

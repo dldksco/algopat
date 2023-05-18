@@ -1,0 +1,41 @@
+server:
+  port: 28083
+  http:
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+kafka:
+  bootstrap-servers : host.docker.internal:9092, host.docker.internal:9093, host.docker.internal:9094
+  topic : alert
+  group-id : group-alert
+spring:
+  kafka:
+    consumer:
+      bootstrap-servers: ${kafka.bootstrap-servers}
+      group-id: ${kafka.group-id}
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      auto-offset-reset: latest
+      auto-commit-interval: 1000 # 오프셋 커밋 간격 설정
+      max-poll-records: 10 # 컨슈머가 한 번에 가져올 수 있는 레코드의 최대 개수 설정
+  application:
+    name: alert
+  zipkin:
+    base-url: http://host.docker.internal:9411
+  sleuth:
+    sampler:
+      probability: 1.0
+logging:
+  level:
+    root: info
+
+eureka:
+  instance:
+    instance-id: alert
+
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://<your-eureka-server>/eureka/

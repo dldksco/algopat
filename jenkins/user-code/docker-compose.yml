@@ -1,0 +1,20 @@
+version: '3.9'
+services:
+  algopat-user-code:
+    container_name: algopat-user-code
+    build:
+      dockerfile: Dockerfile
+      context: ./code
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mariadb://host.docker.internal:3306/algopat?serverTimezone=UTC&useUniCode=yes&characterEncoding=UTF-8
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: ssafya706!
+    ports:
+      - "28080:28080"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    networks:
+      - algopat
+networks:
+  algopat:
+    external: true

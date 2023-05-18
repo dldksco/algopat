@@ -1,0 +1,16 @@
+version: '3.9'
+services:
+  algopat-api-gateway:
+    container_name: algopat-api-gateway
+    build:
+      dockerfile: Dockerfile
+      context: ./api-gateway
+    ports:
+      - "28000:28000"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    networks:
+      - algopat
+networks:
+  algopat:
+    external: true

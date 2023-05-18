@@ -1,0 +1,49 @@
+server:
+  port: 28080
+
+spring:
+  application:
+    name: code
+  zipkin:
+    base-url: http://host.docker.internal:9411
+  sleuth:
+    sampler:
+      probability: 1.0
+
+  kafka:
+    bootstrap-servers: host.docker.internal:9092, host.docker.internal:9093, host.docker.internal:9094
+    listener:
+      ack-mode: MANUAL
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+  datasource:
+    url: jdbc:mariadb://algopat.kr:3306/algopat?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Seoul&useSSL=false
+    username: <your-id>
+    password: <your-password>
+    driver-class-name: org.mariadb.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MariaDBDialect
+
+
+
+eureka:
+  instance:
+    instance-id: code
+
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://<your-eureka>/eureka/
+
+my:
+  encrypt:
+    key: <your-encrpt-key>
+logging:
+  level:
+    org.apache.kafka.clients: ERROR

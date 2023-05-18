@@ -1,0 +1,17 @@
+version: '3.9'
+services: 
+  algopat-frontend:
+    container_name: algopat-frontend
+    build:
+      dockerfile: Dockerfile
+      context: ./frontend
+    ports:
+      - "3000:3000"
+    restart: always
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    networks:
+      - algopat
+networks:
+  algopat:
+    external: true

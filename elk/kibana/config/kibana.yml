@@ -1,0 +1,6 @@
+server.name: kibana
+server.host: "0.0.0.0"
+elasticsearch.hosts: [ "http://algopat-elasticsearch:9200" ]
+elasticsearch.username: "<your-elasticsearch-id>"
+elasticsearch.password: "<your-elasticsearch-pwd>"
+xpack.monitoring.enabled: true

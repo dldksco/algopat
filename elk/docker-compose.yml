@@ -1,0 +1,41 @@
+version: '3.8'
+
+services:
+  algopat-elasticsearch:
+    build: ./elasticsearch
+    container_name: algopat-elasticsearch
+    ports:
+      -  "9200:9200"
+      -  "9300:9300"
+    environment:
+      - "ES_JAVA_OPTS=-Xms8g -Xmx8g"
+    volumes:
+      - esdata:/usr/share/elasticsearch/data
+    networks:
+      - algopat
+
+  algopat-logstash:
+    build: ./logstash
+    container_name: algopat-logstash
+    ports:
+      - "5044:5044"
+    networks:
+      - algopat
+    depends_on:
+      - algopat-elasticsearch
+
+  algopat-kibana:
+    build: ./kibana
+    container_name: algopat-kibana
+    ports:
+      - "5601:5601"
+    networks:
+      - algopat
+    depends_on:
+      - algopat-elasticsearch
+
+networks:
+  algopat:
+
+volumes:
+  esdata:

@@ -1,0 +1,16 @@
+version: '3.9'
+services:
+  algopat-eureka:
+    container_name: algopat-eureka
+    build:
+      dockerfile: Dockerfile
+      context: ./eureka
+    ports:
+      - "28761:28761"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    networks:
+      - algopat
+networks:
+  algopat:
+    external: true

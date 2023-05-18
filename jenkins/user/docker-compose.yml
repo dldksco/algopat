@@ -1,0 +1,16 @@
+version: '3.9'
+services:
+  algopat-user:
+    container_name: algopat-user
+    build:
+      dockerfile: Dockerfile
+      context: ./user
+    ports:
+      - "28081:28081"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    networks:
+      - algopat
+networks:
+  algopat:
+    external: true

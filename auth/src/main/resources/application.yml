@@ -1,0 +1,28 @@
+server:
+  port: 28082
+  servlet:
+    context-path: /auth
+client-id: <your-github-client-id>
+client-secret: <your-github-client-secret>
+redirect-uri: <your-github-redirect-uri>
+secret-key: <your-token-key>
+
+spring:
+  application:
+    name: auth
+  zipkin:
+    base-url: http://host.docker.internal:9411
+  sleuth:
+    sampler:
+      probability: 1.0
+eureka:
+  instance:
+    instance-id: auth
+
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://<your-eureka>/eureka/
+
+

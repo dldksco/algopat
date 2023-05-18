@@ -1,0 +1,14 @@
+cluster.name: algopat
+network.host: 0.0.0.0
+
+http.cors.enabled: true
+http.cors.allow-origin: "*"
+http.cors.allow-headers: Authorization,X-Requested-With,Content-Length,Content-Type
+
+
+#Elastic search secure setting
+discovery.type: single-node
+
+xpack.license.self_generated.type: trial
+xpack.security.enabled: true
+xpack.monitoring.collection.enabled: true

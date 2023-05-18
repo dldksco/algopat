@@ -1,0 +1,20 @@
+services:
+  zipkin:
+    container_name: zipkin-log
+    image: openzipkin/zipkin
+    environment:
+      - STORAGE_TYPE=mysql
+      - MYSQL_HOST=<your-host>
+      - MYSQL_TCP_PORT=<your-port>
+      - MYSQL_DB=zipkin
+      - MYSQL_USER=<your-mysql-id>
+      - MYSQL_PASS=<your-mysql-pwd>
+    ports:
+      - "9411:9411"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    networks:
+      - algopat
+networks:
+  algopat:
+    external: true

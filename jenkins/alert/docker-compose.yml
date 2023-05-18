@@ -1,0 +1,16 @@
+version: '3.9'
+services:
+  algopat-alert:
+    container_name: algopat-alert
+    build:
+      dockerfile: Dockerfile
+      context: ./alert
+    ports:
+      - "28083:28083"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    networks:
+      - algopat
+networks:
+  algopat:
+    external: true

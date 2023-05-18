@@ -1,0 +1,48 @@
+server:
+  port: 28000
+
+
+eureka:
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      defaultZone: http://defaultZone: http://<your-eureka-server>/eureka/
+  instance:
+    instance-id: gateway
+
+spring:
+  application:
+    name: gateway
+  zipkin:
+    base-url: http://host.docker.internal:9411
+  sleuth:
+    sampler:
+      probability: 1.0
+
+  cloud:
+    gateway:
+      routes:
+        - id: code
+          uri: lb://CODE
+          predicates:
+            - Path=/code/**
+          filters:
+            - RewritePath=/code/(?<segment>.*), /$\{segment}
+        - id: auth
+          uri: lb://AUTH
+          predicates:
+            - Path=/auth/**
+        - id: user
+          uri: lb://USER
+          predicates:
+            - Path=/user/**
+        - id: alert
+          uri: lb://ALERT
+          predicates:
+            - Path=/alert/**
+          filters:
+            - RewritePath=/alert/(?<segment>.*), /$\{segment}
+
+
+secret-key: <your-token-secret-key>

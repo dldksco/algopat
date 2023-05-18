@@ -1,0 +1,21 @@
+version: '3.9'
+
+services:
+  jenkins:
+    image: jenkins/jenkins:lts-jdk11
+    container_name: jenkins
+    user: "0:0"
+    ports:
+      - "9090:8080"
+      - "50000:50000"
+    volumes:
+      - /var/jenkins:/var/jenkins_home
+      - /var/run/docker.sock:/var/run/docker.sock
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    networks:
+      - algopat
+
+networks:
+  algopat:
+    external: true

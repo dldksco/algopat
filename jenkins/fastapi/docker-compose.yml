@@ -1,0 +1,80 @@
+version: '3.9'
+services:
+  fastapi-lang1:
+    container_name: fastapi1
+    build:
+      dockerfile: Dockerfile
+      context: ./fastapi
+    ports:
+      - "8000:8000"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    networks:
+      - algopat
+    volumes:
+      - /home/ubuntu/logs:/logs
+    environment:
+      CONTAINER_NAME: "fastapi1"
+  fastapi-lang2:
+    container_name: fastapi2
+    build:
+      dockerfile: Dockerfile
+      context: ./fastapi
+    ports:
+      - "8001:8000"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    networks:
+      - algopat
+    volumes:
+      - /home/ubuntu/logs:/logs
+    environment:
+      CONTAINER_NAME: "fastapi2"
+  fastapi-lang3:
+    container_name: fastapi3
+    build:
+      dockerfile: Dockerfile
+      context: ./fastapi
+    ports:
+      - "8002:8000"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    networks:
+      - algopat
+    volumes:
+      - /home/ubuntu/logs:/logs
+    environment:
+      CONTAINER_NAME: "fastapi3"
+  fastapi-lang4:
+    container_name: fastapi4
+    build:
+      dockerfile: Dockerfile
+      context: ./fastapi
+    ports:
+      - "8003:8000"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    networks:
+      - algopat
+    volumes:
+      - /home/ubuntu/logs:/logs
+    environment:
+      CONTAINER_NAME: "fastapi4"
+  fastapi-lang5:
+    container_name: fastapi5
+    build:
+      dockerfile: Dockerfile
+      context: ./fastapi
+    ports:
+      - "8004:8000"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    networks:
+      - algopat
+    volumes:
+      - /home/ubuntu/logs:/logs
+    environment:
+      CONTAINER_NAME: "fastapi5"
+networks:
+  algopat:
+    external: true

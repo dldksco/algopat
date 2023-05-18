@@ -1,0 +1,52 @@
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+  datasource:
+    driverClassName: org.mariadb.jdbc.Driver
+    url: jdbc:mariadb://algopat-database:3306/algopat?serverTimezone=UTC&characterEncoding=utf8mb4&useSSL=false&useUnicode=true
+    username: <your-id>
+    password: <your-password>
+  application:
+    name: user
+  zipkin:
+    base-url: http://host.docker.internal:9411
+  sleuth:
+    sampler:
+      probability: 1.0
+  kafka:
+    clusters:
+      name: algopat
+     # bootstrap-servers: localhost:9092, localhost:9093, localhost:9094
+      bootstrap-servers: host.docker.internal:9092, host.docker.internal:9093, host.docker.internal:9094
+  consumer:
+    group-id: usercode
+    auto-offset-reset: latest
+    key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+    value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+  listener:
+    ack-mode: MANUAL
+  producer:
+    key-serializer: org.apache.kafka.common.serialization.StringSerializer
+    value-serializer: org.apache.kafka.common.serialization.StringSerializer
+
+eureka:
+  instance:
+    instance-id: user
+
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://<your-eureka>/eureka/
+
+
+logging:
+  level:
+    org.apache.kafka.clients: ERROR
+server:
+  port: 28081
+  servlet:
+    context-path: /user

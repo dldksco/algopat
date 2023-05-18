@@ -1,0 +1,16 @@
+version: '3.9'
+services:
+  algopat-auth:
+    container_name: algopat-auth
+    build:
+      dockerfile: Dockerfile
+      context: ./auth
+    ports:
+      - "28082:28082"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    networks:
+      - algopat
+networks:
+  algopat:
+    external: true

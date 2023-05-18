@@ -1,0 +1,21 @@
+server:
+  port: 28761
+
+spring:
+  application:
+    name: discoveryservice # ??? ID
+  security:
+    user:
+      name: <your-id>
+      password: <your-password>
+  zipkin:
+    base-url: http://host.docker.internal:9411
+  sleuth:
+    sampler:
+      probability: 1.0
+eureka:
+  client:
+    register-with-eureka: false # default : true
+    fetch-registry: false # default : true
+    service-url:
+      defaultZone: http://<your-eureka>/eureka/
