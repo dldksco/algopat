@@ -139,8 +139,9 @@ async def processing(data : ProblemData, send_callback):
         logger.info("데이터 번역 작업 완료")
 
         
-        if result.gpt_solution_space_score is not None and  result.gpt_solution_time_score is not None and result.gpt_solution_clean_score is not None : 
-            result.total_score = (result.gpt_solution_time_score + result.gpt_solution_space_score + result.gpt_solution_clean_score) // 3
+        if (result.gpt_solution_space_score is not None) and (result.gpt_solution_time_score is not None) and (result.gpt_solution_clean_score is not None) : 
+            score_sum = result.gpt_solution_time_score + result.gpt_solution_space_score + result.gpt_solution_clean_score
+            result.total_score = score_sum // 3
         else :
             result.total_score = 0
 
