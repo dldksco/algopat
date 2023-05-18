@@ -36,19 +36,28 @@
 
     .info_list {
       display: flex;
-      gap: 40px;
       align-items: center;
       text-align: center;
-      margin-left: auto;
-      margin-right: auto;
-      .box {
-        padding: 20px;
+      margin-top: 16px;
+      .vertical_line {
+        border-right: 1px solid var(--font-color);
+        height: 80px; /* 선의 길이를 조정할 수 있습니다. */
+        width: 130px;
+        div {
+          width: 100%;
+          margin-top: 15px;
+          border: 0px;
+        }
       }
-    }
-
-    .vertical_line {
-      border-left: 1px solid var(--font-color);
-      height: 80px; /* 선의 길이를 조정할 수 있습니다. */
+      .vertical_line_right {
+        height: 80px; /* 선의 길이를 조정할 수 있습니다. */
+        width: 130px;
+        div {
+          width: 100%;
+          margin-top: 15px;
+          border: 0px;
+        }
+      }
     }
   }
 }
@@ -95,24 +104,14 @@
       }
 
       .info_list {
-        display: flex;
-        gap: 40px;
-        align-items: center;
-        text-align: center;
-        overflow-x: scroll;
-
-        p {
-          width: 70px;
+        margin-left: auto;
+        margin-right: auto;
+        .vertical_line {
+          width: 170px;
         }
-
-        .box {
-          padding: 20px;
+        .vertical_line_right {
+          width: 170px;
         }
-      }
-
-      .vertical_line {
-        border-left: 1px solid var(--font-color);
-        height: 80px; /* 선의 길이를 조정할 수 있습니다. */
       }
     }
   }
@@ -136,16 +135,9 @@
 
     .info {
       margin-top: 10px;
-      flex-wrap: wrap;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
       padding: 15px;
       border-bottom: 1px solid var(--font-color);
-
-      gap: 20px;
       overflow-x: scroll;
-
       .user_info {
         display: flex;
         gap: 15px;
@@ -158,26 +150,15 @@
         flex-direction: column;
         gap: 10px;
       }
-
       .info_list {
-        display: flex;
-        gap: 40px;
-        align-items: center;
-        text-align: center;
-        overflow-x: scroll;
-
-        p {
-          width: 100px;
+        margin-left: auto;
+        margin-right: auto;
+        .vertical_line {
+          width: 130px;
         }
-
-        .box {
-          padding: 20px;
+        .vertical_line_right {
+          width: 130px;
         }
-      }
-
-      .vertical_line {
-        border-left: 1px solid var(--font-color);
-        height: 80px; /* 선의 길이를 조정할 수 있습니다. */
       }
     }
   }
