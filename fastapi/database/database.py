@@ -95,18 +95,18 @@ async def save_gpt_solution(submission_id : int, user_seq : int,  result, sessio
         user_seq = user_seq,
         gpt_solution_time_complexity = result.gpt_solution_time_complexity,
         gpt_solution_time_complexity_reason = result.gpt_solution_time_complexity_reason,
-        gpt_solution_time_score = result.gpt_solution_time_score,
         gpt_solution_time_complexity_good_point = result.gpt_solution_time_complexity_good_point,
         gpt_solution_time_complexity_bad_point = result.gpt_solution_time_complexity_bad_point,
         gpt_improving_time_complexity_suggestion = result.gpt_improving_time_complexity_suggestion,
+        gpt_solution_time_score = result.gpt_solution_time_score,
         gpt_solution_space_complexity = result.gpt_solution_space_complexity,
+        gpt_improving_space_complexity_suggestion = result.gpt_improving_space_complexity_suggestion,
         gpt_solution_space_complexity_reason = result.gpt_solution_space_complexity_reason,
-        gpt_solution_space_score = result.gpt_solution_space_score,
         gpt_solution_space_complexity_good_point = result.gpt_solution_space_complexity_good_point,
         gpt_solution_space_complexity_bad_point = result.gpt_solution_space_complexity_bad_point,
-        gpt_improving_space_complexity_suggestion = result.gpt_improving_space_complexity_suggestion,
-        gpt_solution_clean_score = result.gpt_solution_clean_score,
+        gpt_solution_space_score = result.gpt_solution_space_score,
         gpt_solution_refactoring_suggestion = result.gpt_solution_refactoring_suggestion,
+        gpt_solution_clean_score = result.gpt_solution_clean_score,
         gpt_total_score = result.total_score
     )
     logger.info("GPT평가 DB 저장")
