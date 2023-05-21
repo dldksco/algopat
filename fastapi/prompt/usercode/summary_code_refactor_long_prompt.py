@@ -38,8 +38,8 @@ SUMMARY_CODE_REFACTORING_LONG_TMPL = (
     "13. Balance your suggestions between improving readability, performance, and reducing complexity.\n"
     "RESPONSE FORMAT:\n"
     "--------\n"
-    "gpt_solution_clean_score: <Cleanliness score of user's code (Only number)>,\n"
     "gpt_solution_refactoring_suggestion: <Suggestions for refactoring the user's code (numbered list, replace commas with spaces, be as detailed as possible)>,\n"
+    "gpt_solution_clean_score: <Cleanliness score of user's code (Only number)>,\n"
     "--------\n"
 )
 
