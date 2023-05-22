@@ -236,6 +236,23 @@ class GPTProblemSummary(Base):
     problem_time_limit = Column(Text)
     problem_space_limit = Column(Text)
 
+    def __repr__(self):
+        return f"""GPTProblemSummary(
+            gpt_problem_summary_seq={self.gpt_problem_summary_seq},
+            problem_id={self.problem_id},
+            gpt_problem_summary_description={self.gpt_problem_summary_description},
+            gpt_problem_summary_input={self.gpt_problem_summary_input},
+            gpt_problem_summary_output={self.gpt_problem_summary_output},
+            gpt_problem_summary_constraints={self.gpt_problem_summary_constraints},
+            gpt_time_complexity={self.gpt_time_complexity},
+            gpt_time_complexity_reason={self.gpt_time_complexity_reason},
+            gpt_space_complexity={self.gpt_space_complexity},
+            gpt_space_complexity_reason={self.gpt_space_complexity_reason},
+            problem_algorithm_type={self.problem_algorithm_type},
+            problem_time_limit={self.problem_time_limit},
+            problem_space_limit={self.problem_space_limit}
+        )"""
+
 
 async def insert_gpt_problem_summary(data, session):
     gpt_problem_summary = GPTProblemSummary(
