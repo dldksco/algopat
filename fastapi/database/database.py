@@ -106,3 +106,4 @@ async def save_gpt_solution(submission_id : int, user_seq : int,  result, sessio
     )
     logger.info("GPT평가 DB 저장")
     await db_problem.insert_gpt_solution(GPTSolutionData, user_seq, session)
+    
