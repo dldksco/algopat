@@ -8,4 +8,4 @@ def setup_logging():
         handlers=[logging.StreamHandler()]
     )
 
-    logging.getLogger("openai").setLevel(logging.WARNING)
+    logging.getLogger("openai").setLevel(logging.ERROR)

@@ -37,7 +37,6 @@ async def translate_texts(chat_llm : ChatOpenAI, data : UsercodeSummary):
         gpt_improving_space_complexity_suggestion_translator,
         gpt_solution_refactoring_suggestion_translator
     )
-    logger.info(data)
     return data
 
 async def translate_single_text(chat_llm : ChatOpenAI, text: str):

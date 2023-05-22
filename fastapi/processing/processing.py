@@ -88,7 +88,7 @@ async def processing(data : ProblemData, send_callback):
                     lock.release()
                     break
                 else:
-                    logger.info("동일한 문제 대기중")
+                    logger.warn("동일한 문제 대기중")
                     await asyncio.sleep(1)
             except Exception as e:
                 lock.release()
@@ -106,8 +106,6 @@ async def processing(data : ProblemData, send_callback):
 
         logger.info("문제 요약 정보")
         logger.info(gpt_problem_summary)
-
-        logger.info("코드 요약 시작")
         
         summary_code_complexity_coroutine = summary_code_complexity(chat_llm_0, data, gpt_problem_summary)
 
