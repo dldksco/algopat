@@ -13,6 +13,7 @@
 .box_content p,
 .box_content span {
   color: hsla(0, 0%, 100%, 0.8);
+  line-height: 1.7rem;
 }
 .box_content .text_box {
   padding-left: 30px;
