@@ -62,6 +62,7 @@ def time_logger(custom_text):
             end_time = time.perf_counter()
             elapsed_time = end_time - start_time
             logger.info(f"{custom_text} 종료  (elapsed time: {elapsed_time:.6f} seconds)")
+            logger.info('----------------------------------------------------------------------------------------------------')
             return result
         return wrapper
     return decorator

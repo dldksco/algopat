@@ -86,11 +86,9 @@ async def update_problem_meta(problem_id : int, user_seq : int, data : ProblemDa
         # 문제 메타 데이터 업데이트 
         # problem_meta.problem_submitted_count += 1
         count = await count_rows_with_problem_id_in_user_submit_solution(problem_id, session)
-        logger.info("제출 횟수 : " + str(count))
         problem_meta.problem_submitted_count = count
 
         master_user_seq = await get_highest_total_score_user_seq(problem_id, session)
-        logger.info("마스터 user_seq : " + str(master_user_seq))
         problem_meta.problem_master_user_seq = master_user_seq
         await session.commit()
         await session.refresh(problem_meta)
@@ -146,7 +144,6 @@ async def get_user_submit_problem(problem_id : int, user_seq : int,  session):
     return result.scalar()
 
 async def update_user_submit_problem(data : UserSubmitProblem, submissionTime : datetime, session):
-    logger.info("제출 날짜 업데이트")
     submission_time = await parse_date_format(submissionTime)
     
     data.user_submit_problem_updated_at = submission_time
@@ -214,8 +211,6 @@ async def check_user_submit_solution_is_exist(submission_id : int, session):
 async def count_rows_with_problem_id_in_user_submit_solution(problem_id : int, session):
     result = await session.execute(select(UserSubmitSolution).filter(UserSubmitSolution.problem_id == problem_id))
     count  = len(result.scalars().all())
-    
-    logger.info("문제 푼 사람(명)수 조회 : " + str(count))
 
     return count
 
@@ -336,7 +331,6 @@ async def insert_gpt_solution(data : GPTSolution, user_seq : int, session):
 # ============================================================================================================
 # 랭킹 조회 
 async def get_highest_total_score_user_seq(problem_id : int, session):
-    logger.info("랭킹 마스터 유저 조회")
     result = await session.execute(
         select(UserSubmitSolution.user_seq, UserSubmitSolution.submission_id)
         .join(GPTSolution, UserSubmitSolution.submission_id == GPTSolution.submission_id)

@@ -10,7 +10,6 @@ from datetime import datetime
 logger = getLogger()
 
 async def save_problem_origin(problem_id : int, data : ProblemData):
-    logger.info("문제 존재 여부 확인")
     async with get_session() as session:
         if await db_problem.check_problem_is_exist(problem_id, session) == False:
             logger.info("문제 DB 저장")
@@ -21,7 +20,6 @@ async def update_problem_meta(problem_id : int, user_seq : int, data : ProblemDa
     await db_problem.update_problem_meta(problem_id, user_seq, data, session)
 
 async def save_problem_summary(problem_id : int, summary_json):
-    logger.info("GPT 문제 요약 존재 여부 확인")
     async with get_session() as session:
         if await db_problem.check_gpt_problem_summary_is_exist(problem_id, session) == False:
             logger.info("GPT 문제 요약 DB 저장")
@@ -30,7 +28,6 @@ async def save_problem_summary(problem_id : int, summary_json):
             await db_problem.insert_gpt_problem_summary(summary_json, session)
 
 async def save_user_problem_origin(problem_id : int, user_seq : int, submissionTime : datetime, session):
-    logger.info("회원 푼 문제 불러오기")
     userSubmitProblemData = await db_problem.get_user_submit_problem(problem_id, user_seq, session)   
     if userSubmitProblemData is None:    
         userSubmitProblemData = UserSubmitProblem(
@@ -55,7 +52,6 @@ async def get_gpt_problem_summary(problem_id : int):
         return await db_problem.get_gpt_problem_summary(problem_id, session)
 
 async def save_user_submit_solution_origin(problem_id : int, user_seq : int, user_submit_problem_seq : int, data : ProblemData, session):
-    logger.info("회원 제출 코드 DB 접근")
     
     # origin_date_format = "%Y년 %m월 %d일 %H:%M:%S"
     # date_format = "%Y-%m-%d %H:%M:%S"
@@ -88,7 +84,6 @@ async def save_user_submit_solution_origin(problem_id : int, user_seq : int, use
 
 
 async def save_gpt_solution(submission_id : int, user_seq : int,  result, session):
-    logger.info("GPT평가 DB 접근")
 
     GPTSolutionData = GPTSolution(
         submission_id = submission_id,
