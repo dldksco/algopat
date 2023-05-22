@@ -25,7 +25,12 @@ import org.springframework.web.bind.annotation.RestController;
 public class TokenController {
   private final TokenService tokenService;
 
-
+  /**
+   * 토큰 파싱을 통해, 토큰에 담겨있는 정보를 리턴해줍니다.
+   * @author Lee an chae
+   * @param headers
+   * @return
+   */
   @GetMapping("/parse")
   public ResponseEntity<TokenInfo> parseToken(@RequestHeader HttpHeaders headers){
     try{
@@ -40,12 +45,17 @@ public class TokenController {
   }
 
 
-
+  /**
+   * refreshtoken이 유효한지 검사 후, accessToken을 재발급해줍니다.
+   * @author Lee an chae
+   * @param request
+   * @return
+   */
   @GetMapping("/accesstoken")
   public ResponseEntity<?> checkRefreshTokenIssueAccessToken(HttpServletRequest request) {
     Cookie[] cookies = request.getCookies();
     String refreshToken = null;
-
+    //cookie에 refreshtoken이 담겨있는지 확인합니다.
     if (cookies != null) {
       for (Cookie cookie : cookies) {
         if (cookie.getName().equals("refreshToken")) {
@@ -53,17 +63,18 @@ public class TokenController {
           break;
         }
       }
-      System.out.println("리프레쉬토큰:"+ refreshToken);
+
+    //담겨있지 않으면 Error를 발생
       if (refreshToken == null) {
         return new ResponseEntity<>(TokenStatus.TOKEN_NOT_FOUND.getMessage(),TokenStatus.TOKEN_NOT_FOUND.getStatus());
       }else{
         TokenDTO tokenDTO = TokenDTO.builder().token(refreshToken).build();
         TokenStatus tokenStatus = tokenService.validateToken(tokenDTO);
         if(tokenStatus==TokenStatus.VALID){
+          //리프레쉬 토큰이 타당하다면 header에 accestoken을 담아줍니다.
           TokenInfo tokenInfo =tokenService.getGithubIdFromToken(tokenDTO);
 
           tokenDTO.setToken(tokenService.generateAccessToken(TokenGenerateDTO.builder().userGithubId(tokenInfo.getUserGithubId()).userSeq(tokenInfo.getUserSeq()).isExtension("NO").build()).getToken());
-          System.out.println("ㅇㅇㅇㅇㅇㅇㅇㅇ");
           HttpHeaders headers = new HttpHeaders();
           headers.add("Authorization", tokenDTO.getToken());
           return new ResponseEntity<>(TokenStatus.ISSUED_ACCESS_TOKEN,headers,TokenStatus.ISSUED_ACCESS_TOKEN.getStatus());

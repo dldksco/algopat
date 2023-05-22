@@ -27,6 +27,11 @@ public class KafkaConfig {
   @Value("${spring.kafka.clusters.bootstrap-servers}")
   private String bootstrapServers;
 
+  /**
+   * 카프카 컨슈머세팅
+   * @author Lee an chae
+   * @return
+   */
   @Bean
   public Map<String, Object> consumerConfigs() {
     Map<String, Object> props = new HashMap<>();
@@ -44,6 +49,11 @@ public class KafkaConfig {
     return new DefaultKafkaConsumerFactory<>(consumerConfigs());
   }
 
+  /**
+   * 컨슘에 실패한 메세지들을 DLT에 이동시킵니다.
+   * @author Lee an chae
+   * @return
+   */
   @Bean
   public ConcurrentKafkaListenerContainerFactory<String, String> kafkaListenerContainerFactory() {
     ConcurrentKafkaListenerContainerFactory<String, String> factory = new ConcurrentKafkaListenerContainerFactory<>();
@@ -62,6 +72,11 @@ public class KafkaConfig {
     return factory;
   }
 
+  /**
+   * producer 세팅
+   * @author Lee an chae
+   * @return
+   */
   @Bean
   public ProducerFactory<String, String> producerFactory() {
     Map<String, Object> configProps = new HashMap<>();

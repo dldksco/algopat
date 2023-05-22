@@ -38,19 +38,25 @@ private static final long ACCESS_TOKEN_EXPIRATION_TIME = 3000; // 1 day (in mill
     byte[] keyBytes = Decoders.BASE64.decode(SECRET_KEY);
     return Keys.hmacShaKeyFor(keyBytes);
   }
+
+  /**
+   * accesstoken을 생성해줍니다.
+   * @author Lee an chae
+   * @param tokenGenerateDTO
+   * @return
+   */
   @Override
   public TokenDTO generateAccessToken(TokenGenerateDTO tokenGenerateDTO) {
     String isExtension= tokenGenerateDTO.getIsExtension();
     long tokenExpiredTime=0;
+    //익스텐션용 토큰인지, accesstoken인지 판별해줍니다.
     if(isExtension.equals("YES")){
       tokenExpiredTime=EXTENSION_TOKEN_EXPIRATION_TIME;
-      System.out.println("익스텐션");
     }
     else {
       tokenExpiredTime=ACCESS_TOKEN_EXPIRATION_TIME;
-      System.out.println("엑세스토큰");
     }
-
+    //토큰 생성
      String token = Jwts.builder()
         .claim("userGithubId",tokenGenerateDTO.getUserGithubId())
          .claim("userSeq",tokenGenerateDTO.getUserSeq())
@@ -60,8 +66,16 @@ private static final long ACCESS_TOKEN_EXPIRATION_TIME = 3000; // 1 day (in mill
         .compact();
      return TokenDTO.builder().token(token).build();
   }
+
+  /**
+   * 리프레쉬 토큰 생성
+   * @author Lee an chae
+   * @param tokenGenerateDTO
+   * @return
+   */
   @Override
   public TokenDTO generateRefreshToken(TokenGenerateDTO tokenGenerateDTO) {
+    //refresh 토큰을 발급해줍니다.
     String token = Jwts.builder()
         .claim("userGithubId",tokenGenerateDTO.getUserGithubId())
         .claim("userSeq",tokenGenerateDTO.getUserSeq())
@@ -72,9 +86,17 @@ private static final long ACCESS_TOKEN_EXPIRATION_TIME = 3000; // 1 day (in mill
 //    refreshTokenRepository.save(RefreshToken.builder().refreshToken(token).userGithubId(tokenGenerateDTO.getUserGithubId()).build());
     return TokenDTO.builder().token(token).build();
   }
+
+  /**
+   * 토큰이 유효한지 확인해줍니다.
+   * @author Lee an chae
+   * @param tokenDTO
+   * @return
+   *
+   */
   @Override
   public TokenStatus validateToken(TokenDTO tokenDTO) {
-
+    //토큰 타당한지 유효성검사
     try {
       Jwts.parserBuilder()
           .setSigningKey(getSigningKey())
@@ -82,25 +104,30 @@ private static final long ACCESS_TOKEN_EXPIRATION_TIME = 3000; // 1 day (in mill
           .parseClaimsJws(tokenDTO.getToken());
       return TokenStatus.VALID;
     } catch (ExpiredJwtException expiredJwtException) {
-
+    //만료된 토큰
       return TokenStatus.EXPIRED;
     } catch (JwtException jwtException){
+    //이외 다른 에러
       return TokenStatus.INVALID;
     }
   }
+
+  /**
+   * AccessToken을 이용해 githubid, userSeq를 추출합니다.
+   * @param tokenDTO
+   * @return
+   */
   @Override
   public TokenInfo getGithubIdFromToken(TokenDTO tokenDTO){
     String jwt = tokenDTO.getToken();
-    System.out.println("getgituhㅇㅁㄴㅇㅁㄴㅇ"+jwt);
     try{
+
       Jws<Claims> jws = Jwts.parserBuilder()
           .setSigningKey(getSigningKey())
           .build()
           .parseClaimsJws(jwt);
       String userGithubId =jws.getBody().get("userGithubId", String.class);
-      System.out.println(userGithubId+"깃허브용");
       long userSeq = jws.getBody().get("userSeq", Long.class);
-      System.out.println("유저시크요"+userSeq);
       return TokenInfo.builder().userGithubId(userGithubId).userSeq(userSeq).build();
     }catch (JwtException e){
       throw new BaseException(ErrorCode.UNVALID_TOKEN);
@@ -113,6 +140,12 @@ private static final long ACCESS_TOKEN_EXPIRATION_TIME = 3000; // 1 day (in mill
     return null;
   }
 
+  /**
+   * token에서 유저 정보를 parsing합니다.
+   * @author Lee an chae
+   * @param token
+   * @return
+   */
   @Override
   public TokenInfo parseToken(String token) {
     Jws<Claims> claimsJws = Jwts.parserBuilder()
@@ -126,6 +159,12 @@ private static final long ACCESS_TOKEN_EXPIRATION_TIME = 3000; // 1 day (in mill
         .build();
   }
 
+  /**
+   * 쿠키에 refreshtoken을 넣어줍니다.
+   * @author Lee an chae
+   * @param tokenDTO
+   * @return
+   */
   @Override
   public Cookie createRefreshTokenCookie(TokenDTO tokenDTO) {
     Cookie refreshTokenCookie = new Cookie("refreshToken", tokenDTO.getToken());

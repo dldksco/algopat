@@ -12,6 +12,13 @@ import org.springframework.stereotype.Component;
 @Component
 public class LoggingAspect {
 
+  /**
+   * 각 메소드들의 시작과 끝에 로그를 달아줍니다.
+   * @author Lee an chae
+   * @param joinPoint
+   * @return
+   * @throws Throwable
+   */
   @Around("execution(* com.user.controller..*.*(..)) || execution(* com.user.service..*.*(..))")
   public Object logAround(ProceedingJoinPoint joinPoint) throws Throwable {
 

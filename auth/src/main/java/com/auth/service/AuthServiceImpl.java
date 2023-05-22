@@ -37,19 +37,24 @@ public class AuthServiceImpl implements AuthService {
   @Value("${redirect-uri}")
   private String redirectURI;
 
-  //헤더에 엑세스토큰담는 작업해야함
+  /**
+   * 로그인 과정을 진행합니다.
+   * @author Lee an chae
+   * @param githubCodeResponseDTO
+   * @return
+   */
   @Override
   public LoginProcessDTO loginProcess(GithubCodeResponseDTO githubCodeResponseDTO) {
     LoginProcessDTO loginProcessDTO = new LoginProcessDTO();
-
+    //깃허브로부터 AccessToken을 받아옵니다.
     GithubAccessTokenResponseDTO githubAccessTokenResponseDTO = requestGithubAccessToken(
         githubCodeResponseDTO);
-
+    //깃허브로부터 받아온 Accestoken을 이용해 깃허브에 다시 github user 정보를 요청합니다.
     GithubUserResponseDTO githubUserResponseDTO = requestGithubUserInfo(
         githubAccessTokenResponseDTO);
-
+    //깃허브로부터 받아온 github user 정보를 통해 우리 서비스에 등록되어있는지 확인합니다.
     UserServiceIdResponseDTO userServiceIdResponseDTO = userService.checkId(githubUserResponseDTO);
-
+    //Accestoken을 생성 후 담아줍니다.
     TokenDTO accessToken = tokenService.generateAccessToken(
         TokenGenerateDTO.builder()
             .userGithubId(githubUserResponseDTO.getUserGithubId())
@@ -61,16 +66,23 @@ public class AuthServiceImpl implements AuthService {
     TokenDTO refreshToken = tokenService.generateRefreshToken(
         TokenGenerateDTO.builder().userGithubId(githubUserResponseDTO.getUserGithubId()).userSeq(
             userServiceIdResponseDTO.getUserSeq()).build());
-
+    //refreshtoken을 생성 후 담아줍니다.
     Cookie cookie = tokenService.createRefreshTokenCookie(refreshToken);
     loginProcessDTO.setCookie(cookie);
 
     return loginProcessDTO;
   }
 
+  /**
+   * github로부터 Accestoken을 요청합니다
+   * @author Lee an chae
+   * @param githubCodeResponseDTO
+   * @return
+   */
   @Override
   public GithubAccessTokenResponseDTO requestGithubAccessToken(
       GithubCodeResponseDTO githubCodeResponseDTO) {
+    //깃허브로에 요청을 하기 위한 세팅
     String url = "https://github.com/login/oauth/access_token";
     String code = githubCodeResponseDTO.getCode();
     HttpHeaders headers = new HttpHeaders();
@@ -81,24 +93,32 @@ public class AuthServiceImpl implements AuthService {
     body.add("client_secret", clientSecret);
     body.add("code", code);
     HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(body, headers);
+
+    //rest template을 통해 github에 요청 후 필요 정보를 받아옵니다.
     GithubAccessTokenResponseDTO githubAccessTokenResponse = restTemplate.postForObject(url,
         request, GithubAccessTokenResponseDTO.class);
-    System.out.println("githubaccess :" + githubAccessTokenResponse.getGitHubaAccessToken());
     return githubAccessTokenResponse;
   }
 
+
+  /**
+   * 깃허브 엑세스 토큰을 이용하여 깃허브 유저 정보를 받아옵니다.
+   * @param githubAccessTokenResponseDTO
+   * @return
+   */
   @Override
   public GithubUserResponseDTO requestGithubUserInfo(
       GithubAccessTokenResponseDTO githubAccessTokenResponseDTO) {
+    //깃허브 유저 정보를 받아오기 위한 세팅 시작
     String githubaAccessToken = githubAccessTokenResponseDTO.getGitHubaAccessToken();
     String url = "https://api.github.com/user";
-    System.out.println("method" + githubaAccessToken);
     HttpHeaders headers = new HttpHeaders();
     headers.setAccept(Collections.singletonList(MediaType.valueOf("application/vnd.github+json")));
     headers.set("Authorization", "Bearer " + githubaAccessToken);
 
     HttpEntity<String> request = new HttpEntity<>(headers);
 
+    //Resttemplate을 이용해 github에서 유저 정보를 받아옵니다.
     ResponseEntity<GithubUserResponseDTO> response = restTemplate.exchange(
         url,
         HttpMethod.GET,
@@ -106,11 +126,14 @@ public class AuthServiceImpl implements AuthService {
         GithubUserResponseDTO.class
     );
     GithubUserResponseDTO githubUserResponseDTO = response.getBody();
-    System.out.println("id" + githubUserResponseDTO.getUserGithubId());
-    System.out.println("url " + githubUserResponseDTO.getUserImageUrl());
     return githubUserResponseDTO;
   }
 
+  /**
+   * github redirect URL을 세팅해줍니다.
+   * @author Lee an chae
+   * @return
+   */
   @Override
   public String setGithubRedirectURL() {
     String githubRedirectBaseURL = "https://github.com/login/oauth/authorize";

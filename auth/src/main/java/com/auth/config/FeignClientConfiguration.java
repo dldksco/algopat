@@ -18,6 +18,11 @@ public class FeignClientConfiguration {
 //    return feignClientInterceptor;
 //  }
 
+  /**
+   * Feign Client Error처리를 위해 CustomErrorDecoder를 등록합니다
+   * @author Lee an chae
+   * @return
+   */
   @Bean
   public ErrorDecoder errorDecoder() {
     return new CustomErrorDecoder();
