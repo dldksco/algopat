@@ -32,12 +32,15 @@ async def consume_problem_summary(topic : str):
     await consumer.start()
     try:
         async for msg in consumer:
-            logger.info("데이터 수신")
+
+            logger.info("원본 데이터")
+            logger.info(msg)
+
             await asyncio.sleep(1)            
             data = ProblemData(**msg.value)                 # Dict to Class Type (카프카를 통해 consume한 데이터를 Python 클래스 형태로 변환)
             asyncio.create_task(processing(data, send))     # 비즈니스 로직 수행 
     finally:
-        logger.info("카프카 컨슈머 에러 - 컨슈머 종료")
+        logger.error("카프카 컨슈머 에러 - 컨슈머 종료")
         await consumer.stop()                               # anomaly 상태일 때 종료 
 
 
@@ -53,7 +56,7 @@ async def send(topic : str, message_dto : BaseModel):
         request_timeout_ms=500,                                                              # 요청 만료 시간 설정 (예: 500ms)
     )
     await producer.start()
-    logger.info("Send to " + topic + " : " + str(message_dto))
+    # logger.info("Send to " + topic + " : " + str(message_dto))
 
     serialized_message = message_dto.dict()
     await producer.send_and_wait(topic, serialized_message)
