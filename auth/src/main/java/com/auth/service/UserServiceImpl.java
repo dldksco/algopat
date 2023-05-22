@@ -17,6 +17,13 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
   private final UserServiceFeignClient userServiceFeignClient;
+
+  /**
+   * User Service에 ID가 존재하는지 체크합니다
+   * @author Lee an chae
+   * @param gitHubUserResponseDTO
+   * @return
+   */
   @Override
   public UserServiceIdResponseDTO checkId(GithubUserResponseDTO gitHubUserResponseDTO) {
 

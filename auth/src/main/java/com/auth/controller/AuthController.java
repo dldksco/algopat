@@ -29,7 +29,13 @@ public class AuthController {
   @Value("${client-id}")
   private String clientId;
 
-
+  /**
+   * 깃허브로부터 받은 code를 이용해 회원가입 및 로그인을 수행합니다.
+   * @author Lee an chae
+   * @param codeDTO
+   * @param response
+   * @return
+   */
   @PostMapping("/code")
   public ResponseEntity<?> getCode (@RequestBody CodeDTO codeDTO, HttpServletResponse response){
     LoginProcessDTO loginProcessDTO =authService.loginProcess(GithubCodeResponseDTO.builder().code(
@@ -37,10 +43,15 @@ public class AuthController {
     response.addHeader("Authorization",loginProcessDTO.getAccessToken());
     response.addCookie(loginProcessDTO.getCookie());
 
-    return new ResponseEntity<>("fd",HttpStatus.OK);
+    return new ResponseEntity<>("",HttpStatus.OK);
   }
 
-
+  /**
+   * github 인증을 위한 페이지로 redirect 시킵니다.
+   * @author Lee an chae
+   * @param response
+   * @return
+   */
 
   @GetMapping("/github")
   public RedirectView redirect(HttpServletResponse response){
@@ -51,6 +62,12 @@ public class AuthController {
     return redirectView;
   }
 
+  /**
+   * 토큰이 타당한지 확인 후, 인증을 해주는 로직입니다.
+   * @author Lee an chae
+   * @param jwt
+   * @return
+   */
   @GetMapping("/validate")
   public ResponseEntity<?> checkTokenValidate(@RequestHeader("Authorization") String jwt){
     if(jwt != null){
