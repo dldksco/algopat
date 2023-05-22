@@ -53,7 +53,7 @@ async def processing(data : ProblemData, send_callback):
         user_seq = data.userSeq      # 회원 식별 번호 
         problem_id = data.problemId  # 문제 아이디 
         
-        logger.info("요청한 유저 : " + str(user_seq))
+        logger.info("요청한 유저 식별 번호 : " + str(user_seq))
 
         ### SSE 1 
         message_dto = MessageDTO(progress_info="코드 분석 시작", percentage=20, state="ok", user_seq=user_seq)
@@ -104,6 +104,9 @@ async def processing(data : ProblemData, send_callback):
         # DB에서 문제 요약 정보 조회 
         gpt_problem_summary = await get_gpt_problem_summary(problem_id)
 
+        logger.info("문제 요약 정보")
+        logger.info(gpt_problem_summary)
+
         logger.info("코드 요약 시작")
         
         summary_code_complexity_coroutine = summary_code_complexity(chat_llm_0, data, gpt_problem_summary)
@@ -117,6 +120,11 @@ async def processing(data : ProblemData, send_callback):
 
         summary_code_complexity_result, summary_code_refactor_result = await gather(summary_code_complexity_coroutine, summary_code_refactor_coroutine)
 
+        logger.info("시간, 공간 복잡도 요약 결과")
+        logger.info(summary_code_complexity_result)
+        logger.info("리팩토링 요약 결과")
+        logger.info(summary_code_refactor_result)
+
         ### SSE 3
         message_dto = MessageDTO(progress_info="코드 요약중", percentage=60, state="ok", user_seq=user_seq)
         await send_callback("alert", message_dto)
@@ -127,7 +135,8 @@ async def processing(data : ProblemData, send_callback):
         summary_code_text = f"{OPEN_BRACE}{summary_code_complexity_result}\n {summary_code_refactor_result}\n total_score: 0\n{CLOSE_BRACE}"
         preprocessed_summary_code = await json_chain.arun(data = summary_code_text)
         summary_code_json = await parse_summary_code(chat_llm_0, preprocessed_summary_code)
-        # logger.info("코드 요약 json 타입으로 변환 완료")
+        logger.info("코드 요약 -> JSON 타입 변환 결과")
+        logger.info(summary_code_json)
 
         logger.info("데이터 번역 작업 시작")
 
@@ -136,8 +145,8 @@ async def processing(data : ProblemData, send_callback):
         await send_callback("alert", message_dto)
         
         result = await translate_texts(chat_llm_0, summary_code_json)
-        # logger.info("데이터 번역 작업 완료")
-
+        logger.info("데이터 번역 결과")
+        logger.info(result)
         
         if (result.gpt_solution_space_score is not None) and (result.gpt_solution_time_score is not None) and (result.gpt_solution_clean_score is not None) : 
             score_sum = result.gpt_solution_time_score + result.gpt_solution_space_score + result.gpt_solution_clean_score
@@ -226,8 +235,9 @@ async def summary_problem(problem_id : int, data : ProblemData, chat_llm, json_c
     
 async def filtering_input_data(data : ProblemData, user_seq : int, send_callback):
     code_language = await parse_lang_type(data.language)
+
     if code_language == "unknown":
-        logger.info("지원하지 않는 언어")
+        logger.error("지원하지 않는 언어")
 
         # User 서버에게 실패 이벤트 전송  
         user_service_dto = UserServiceDTO(isSuccess="NO", userSeq=user_seq)
@@ -237,7 +247,7 @@ async def filtering_input_data(data : ProblemData, user_seq : int, send_callback
         await send_callback("alert", message_dto)
         return True
     if data.resultCategory != "ac":
-        logger.info("오답 코드")
+        logger.error("오답 코드")
 
         # User 서버에게 실패 이벤트 전송  
         user_service_dto = UserServiceDTO(isSuccess="NO", userSeq=data.userSeq)
