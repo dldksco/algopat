@@ -121,13 +121,13 @@ async def processing(data : ProblemData, send_callback):
         message_dto = MessageDTO(progress_info="코드 요약중", percentage=60, state="ok", user_seq=user_seq)
         await send_callback("alert", message_dto)
 
-        logger.info("코드 요약 완료")
+        # logger.info("코드 요약 완료")
         
         logger.info("코드 요약 json 타입으로 변환 시작")
         summary_code_text = f"{OPEN_BRACE}{summary_code_complexity_result}\n {summary_code_refactor_result}\n total_score: 0\n{CLOSE_BRACE}"
         preprocessed_summary_code = await json_chain.arun(data = summary_code_text)
         summary_code_json = await parse_summary_code(chat_llm_0, preprocessed_summary_code)
-        logger.info("코드 요약 json 타입으로 변환 완료")
+        # logger.info("코드 요약 json 타입으로 변환 완료")
 
         logger.info("데이터 번역 작업 시작")
 
@@ -136,7 +136,7 @@ async def processing(data : ProblemData, send_callback):
         await send_callback("alert", message_dto)
         
         result = await translate_texts(chat_llm_0, summary_code_json)
-        logger.info("데이터 번역 작업 완료")
+        # logger.info("데이터 번역 작업 완료")
 
         
         if (result.gpt_solution_space_score is not None) and (result.gpt_solution_time_score is not None) and (result.gpt_solution_clean_score is not None) : 
@@ -149,11 +149,12 @@ async def processing(data : ProblemData, send_callback):
         ### DB 접근 ###
         logger.info("메인 트랜잭션 시작")
         await main_transaction(problem_id, user_seq, data, result, send_callback)
-        logger.info("메인 트랜잭션 종료")
+        # logger.info("메인 트랜잭션 종료")
 
         ### SSE 5
         message_dto = MessageDTO(progress_info="코드 분석 완료", percentage=100, state="finish", user_seq=user_seq)
         await send_callback("alert", message_dto)
+
     except Exception as e:
         logger.error(f"서버 에러 발생: {e}")
 
