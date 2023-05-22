@@ -28,6 +28,13 @@ public class GrassController {
     private final GrassService grassService;
 
     private static final Logger logger = LoggerFactory.getLogger(GrassController.class);
+
+    /**
+     * 유저가 365일 이내 날짜별 문제 푼 횟수를 리턴합니다
+     * @author Lee an chae
+     * @param userSeq
+     * @return
+     */
     @GetMapping("")
     public ResponseEntity<List<DateGrassCountDTO>> getGrassCount (@RequestHeader("userSeq") long userSeq){
         return new ResponseEntity<>(grassService.getGrassCount(UserGrassCountRequestDTO.builder()
@@ -35,6 +42,13 @@ public class GrassController {
             .build()),HttpStatus.OK);
     }
 
+    /**
+     * 원하는 날짜에 유저가 무슨 문제를 풀었는지 리턴합니다.
+     * @author Lee an chae
+     * @param userSeq
+     * @param targetDate
+     * @return
+     */
     @GetMapping("/{targetDate}")
     public Page<DateGrassInfoDTO> getDateGrassInfo(@RequestHeader("userSeq") long userSeq, @PathVariable("targetDate") String targetDate) {
         LocalDate targetLocalDate = LocalDate.parse(targetDate, DateTimeFormatter.BASIC_ISO_DATE);
