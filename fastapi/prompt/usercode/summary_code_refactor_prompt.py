@@ -28,6 +28,8 @@ SUMMARY_CODE_REFACTORING_TMPL = (
     "14. Refrain from engaging in discussions on modifying the algorithm. The sole purpose of suggestions is to create cleaner code.\n"
     "15. Again, avoid making suggestions related to comments.\n"
     "16. Keep in mind that the provided code snippet is just a fraction of the whole. If the beginning and end seem odd, it's likely due to being taken out of context.\n"
+    "You should respond only as described below\n"
+    "You should never be missing any of the 2 items below\n"
     "RESPONSE FORMAT:\n"
     "--------\n"
     "gpt_solution_refactoring_suggestion: <Suggestions for refactoring the user's code (numbered list, replace commas with spaces, be as detailed as possible)>,\n"
