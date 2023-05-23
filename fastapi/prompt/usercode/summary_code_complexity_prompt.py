@@ -36,6 +36,7 @@ SUMMARY_CODE_COMPLEXITY_TMPL = (
     "19. Similar suggestions should be consolidated into one.\n"
     "20. All the above requirements must be thoroughly observed.\n"
     "You should respond only as described below\n"
+    "You should never be missing any of the 12 items below\n"
     "RESPONSE FORMAT:\n"
     "--------\n"
     "gpt_solution_time_complexity: <Time complexity estimated from user's code Big O Notation (with constant terms)>,\n"
@@ -43,13 +44,13 @@ SUMMARY_CODE_COMPLEXITY_TMPL = (
     "gpt_solution_time_complexity_good_point: <The good things about code related to time complexity>,\n"
     "gpt_solution_time_complexity_bad_point: <The bad things about code related to time complexity>,\n"  
     "gpt_improving_time_complexity_suggestion: <How to improve the time complexity of user's code (numbered list, as detailed as possible)>,\n"
-    "gpt_solution_time_score: <Max(time complexity score, 100 * (1 - runtime / time limit)) (only number)>,\n"
+    "gpt_solution_time_score: <Max(time complexity score) (only number)>,\n"
     "gpt_solution_space_complexity: <Space complexity estimated from user's code Big O Notation (with constant terms)>,\n"
     "gpt_solution_space_complexity_reason: <reason of space complexity of user's code>,\n"
     "gpt_solution_space_complexity_good_point: <The good things about code related to space complexity>,\n"
     "gpt_solution_space_complexity_bad_point: <The bad things about code related to space complexity>,\n"  
     "gpt_improving_space_complexity_suggestion: <How to improve the space complexity of user's code (numbered list, as detailed as possible)>,\n" 
-    "gpt_solution_space_score: <Max(space complexity score, 100 * (1 - memory / time limit)) (only number)>,\n"
+    "gpt_solution_space_score: <Max(space complexity score) (only number)>,\n"
     "--------\n"
 )
 
