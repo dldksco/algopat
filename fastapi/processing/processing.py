@@ -66,17 +66,17 @@ async def processing(data : ProblemData, send_callback):
             
         data.language = await parse_lang_type(data.language)
         local_chat_llm_0 = ChatOpenAI(temperature=0, openai_api_key=local_open_ai_api_key, request_timeout=120)
-        local_chat_llm_2 = ChatOpenAI(temperature=0.2, openai_api_key=local_open_ai_api_key, request_timeout=120)
+        local_chat_llm_1 = ChatOpenAI(temperature=0.1, openai_api_key=local_open_ai_api_key, request_timeout=120)
 
         if data.openai_api_key == "0" :     # 회원 OPEN_AI_API_KEY 없음 
             chat_llm_0 = local_chat_llm_0 
-            chat_llm_2 =local_chat_llm_2
+            chat_llm_1 =local_chat_llm_1
         else :                              # 회원 OPEN_AI_API_KEY 있음  
             decoded_data = b64decode(data.openai_api_key)
             decrypted_api_key = cipher.decrypt(decoded_data)
             api_key = decrypted_api_key.decode().rstrip('\r')
             chat_llm_0 = ChatOpenAI(temperature=0, openai_api_key=api_key, request_timeout=120)
-            chat_llm_2 = ChatOpenAI(temperature=0.2, openai_api_key=api_key, request_timeout=120)
+            chat_llm_1 = ChatOpenAI(temperature=0.1, openai_api_key=api_key, request_timeout=120)
 
         json_chain = await json_formatter(chat_llm_0)
         
@@ -115,7 +115,7 @@ async def processing(data : ProblemData, send_callback):
         message_dto = MessageDTO(progress_info="문제 정보 분석중", percentage=40, state="ok", user_seq=user_seq)
         await send_callback("alert", message_dto)
 
-        summary_code_refactor_coroutine = summary_code_refactor(chat_llm_2, data, gpt_problem_summary)
+        summary_code_refactor_coroutine = summary_code_refactor(chat_llm_1, data, gpt_problem_summary)
 
 
         summary_code_complexity_result, summary_code_refactor_result = await gather(summary_code_complexity_coroutine, summary_code_refactor_coroutine)
