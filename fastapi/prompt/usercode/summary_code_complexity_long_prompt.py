@@ -46,7 +46,6 @@ SUMMARY_CODE_COMPLEXITY_LONG_TMPL = (
     "18. Always provide complete information and do not leave blank responses.\n"
     "19. Similar suggestions should be consolidated into one.\n"
     "20. All the above requirements must be thoroughly observed.\n"
-    "21. gpt_solution_time_complexity and gpt_solution_space_complexity should refer to the time and space complexity of the user's code, respectively.\n"
     "You should respond only as described below\n"
     "You should never be missing any of the 12 items below\n"
     "RESPONSE FORMAT:\n"
