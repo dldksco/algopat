@@ -34,10 +34,10 @@ class ProblemSummary(BaseModel):
     gpt_problem_summary_input: Optional[str] = None
     gpt_problem_summary_constraints: Optional[str] = None
     gpt_problem_summary_output: Optional[str] = None
-    gpt_time_complexity: Optional[str] = None
     gpt_time_complexity_reason: Optional[str] = None
-    gpt_space_complexity: Optional[str] = None
+    gpt_time_complexity: Optional[str] = None
     gpt_space_complexity_reason: Optional[str] = None
+    gpt_space_complexity: Optional[str] = None
     problem_algorithm_type: Optional[str] = None
     problem_time_limit: Optional[str] = None
     problem_space_limit: Optional[str] = None
